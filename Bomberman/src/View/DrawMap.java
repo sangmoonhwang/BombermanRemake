@@ -28,7 +28,6 @@ public class DrawMap extends JComponent{
 		gameFrame.setLocation(dim.width/2-gameFrame.getSize().width/2, dim.height/2-gameFrame.getSize().height/2);
 		
 		gameFrame.getContentPane().add(new DrawMap());
-		
 		gameFrame.setVisible(true);
 	}
 	
