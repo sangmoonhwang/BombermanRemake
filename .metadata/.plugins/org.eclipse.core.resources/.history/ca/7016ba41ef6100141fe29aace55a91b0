@@ -1,0 +1,15 @@
+package Model;
+
+public class Tile {
+
+	
+	public Tile() {
+		
+		
+	}
+	
+	public void collisionDetection() {
+		
+		
+	}
+}

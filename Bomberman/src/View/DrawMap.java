@@ -15,12 +15,7 @@ public class DrawMap extends JComponent{
 	public DrawMap(){
 		gameFrame = new JFrame("Bomberman");
 	}
-	
-	public static void main (String [] args){
-		DrawMap test = new DrawMap();
-		test.makeFrame();
-	}
-	
+
 	public void makeFrame(){
 		gameFrame.setSize(676,608);
 		gameFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
