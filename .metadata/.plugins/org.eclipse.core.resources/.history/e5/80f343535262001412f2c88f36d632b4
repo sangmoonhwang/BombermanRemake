@@ -13,7 +13,7 @@ public class Bomberman implements Movable{
 	private boolean flamePass;
 	
 	public Bomberman(){
-		xval = yval = 50;
+		xval = yval = 0;
 	}
 	
 	public float getXval(){

@@ -80,8 +80,8 @@ public class DrawMap extends JComponent{
       
       
             g.setColor(Color.ORANGE);
-            //g.fillRect((int)bombman.getXval(), (int)bombman.getYval(), 40, 50); //change to rocket
-            g.drawImage(bombermanSprite,(int)bombman.getXval(),(int)bombman.getYval(),50,50,this);
+            g.fillRect(bombman.getXval(), bombman.getYval(), 40, 50); //change to rocket
+            //g.drawImage(bombermanSprite,bombman.getXval(),bombman.getYval(),50,50,this);
         }
   
  }
