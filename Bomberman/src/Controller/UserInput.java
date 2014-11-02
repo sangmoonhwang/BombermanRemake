@@ -122,8 +122,8 @@ public class UserInput implements KeyListener, FocusListener{
 		d.getBomberman().setXval(xVel);
 		d.getBomberman().setYval(yVel);
 		for (int i = 0; i < 100; i++){
-			if(d.getBomberman().getXval()+35 > d.indestructibles[i].getXval()*50 && d.getBomberman().getYval() < d.indestructibles[i].getYval()*50+35 &&
-					d.getBomberman().getXval() < d.indestructibles[i].getXval()*50+35 && d.getBomberman().getYval()+35 > d.indestructibles[i].getYval()*50){
+			if(d.getBomberman().getXval()+40 > d.indestructibles[i].getXval()*50 && d.getBomberman().getYval() < d.indestructibles[i].getYval()*50+48 &&
+					d.getBomberman().getXval() < d.indestructibles[i].getXval()*50+40 && d.getBomberman().getYval()+44 > d.indestructibles[i].getYval()*50){
 				d.getBomberman().setXval(-xVel);
 				d.getBomberman().setYval(-yVel);
 			}
