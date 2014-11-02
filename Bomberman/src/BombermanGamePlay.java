@@ -5,10 +5,10 @@ import View.DrawMenu;
 
 public class BombermanGamePlay {
 
-	public static void main(String[] args) {
-		DrawMap mapDraw = new DrawMap();
-		mapDraw.makeFrame();
+ public static void main(String[] args) {
+  DrawMap mapDraw = new DrawMap();
+  mapDraw.makeFrame();
 
-	}
+ }
 
 }

@@ -1,16 +1,16 @@
 package Model.Enemies;
 
-public class Pass {
+public class Pontan {
   private int intelligence;
   private int speed;
   private int points;
   private boolean wallPass;
   
-  public Pass(){
+  public Pontan(){
     speed = 4;
     intelligence = 3;
-    points = 4000;
-    wallPass = false;
+    points = 8000;
+    wallPass = true;
     
   }
   
