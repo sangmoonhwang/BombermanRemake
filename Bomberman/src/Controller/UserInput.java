@@ -49,36 +49,65 @@ public class UserInput implements KeyListener, FocusListener{
 	
 	public void keyPressed ( KeyEvent e ){
         int value = e.getKeyCode();
-        
-        switch(value){
-            case KeyEvent.VK_DOWN:setVelY(1);
-            break;
-            case KeyEvent.VK_UP:setVelY(-1);
-            break;
-            case KeyEvent.VK_RIGHT:setVelX(1);
-            break;
-            case KeyEvent.VK_LEFT:setVelX(-1);
-            break;
+        if (value == KeyEvent.VK_DOWN && value !=KeyEvent.VK_UP){
+        	setVelY(2);
         }
+        else if(value != KeyEvent.VK_DOWN && value ==KeyEvent.VK_UP){
+        	setVelY(-2);
+        }
+        else if(value == KeyEvent.VK_LEFT && value !=KeyEvent.VK_RIGHT){
+        	setVelX(-2);
+        }
+        else if(value == KeyEvent.VK_RIGHT && value !=KeyEvent.VK_LEFT){
+        	setVelX(2);
+        }
+//        switch(value){
+//            case KeyEvent.VK_DOWN:setVelY(1);
+//            break;
+//            case KeyEvent.VK_UP:setVelY(-1);
+//            break;
+//            case KeyEvent.VK_RIGHT:setVelX(1);
+//            break;
+//            case KeyEvent.VK_LEFT:setVelX(-1);
+//            break;
+//        }
    }
 	
 	public void keyTyped(KeyEvent e) {
 	}
 
 	public void keyReleased(KeyEvent e) {
-		
         int value = e.getKeyCode();
-        
-        switch(value){
-            case KeyEvent.VK_DOWN:setVelY(0);
-            break;
-            case KeyEvent.VK_UP:setVelY(0);
-            break;
-            case KeyEvent.VK_RIGHT:setVelX(0);
-            break;
-            case KeyEvent.VK_LEFT:setVelX(0);
-            break;
+        if (value == KeyEvent.VK_DOWN){
+        	if(yVel == 2)
+        	setVelY(0);
         }
+        else if(value ==KeyEvent.VK_UP){
+        	if(yVel == -2)
+        	setVelY(0);
+        }
+        else if(value == KeyEvent.VK_LEFT){
+        	if(xVel == -2)
+        	setVelX(0);
+        }
+        else if(value == KeyEvent.VK_RIGHT){
+        	if(xVel ==2)
+        	setVelX(0);
+        }
+        else{
+        	setVelX(0);
+        	setVelY(0);
+        }
+//        switch(value){
+//            case KeyEvent.VK_DOWN:setVelY(0);
+//            break;
+//            case KeyEvent.VK_UP:setVelY(0);
+//            break;
+//            case KeyEvent.VK_RIGHT:setVelX(0);
+//            break;
+//            case KeyEvent.VK_LEFT:setVelX(0);
+//            break;
+//        }
 	}    
 
 	public void focusGained(FocusEvent e) {
