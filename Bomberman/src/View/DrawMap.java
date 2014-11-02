@@ -3,6 +3,7 @@ package View;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Toolkit;
 
 import javax.swing.JComponent;
@@ -16,16 +17,13 @@ import Model.Bomberman;
 public class DrawMap extends JComponent{
 	private JFrame gameFrame;
     private DrawingArea canvas;
-    private Bomberman b;
+    private Bomberman bombman;
+    private Image bombermanSprite;
 	
 	public DrawMap(){
 		gameFrame = new JFrame("Bomberman");
-		b = new Bomberman();
-	}
-	
-	public static void main (String [] args){
-		DrawMap test = new DrawMap();
-		test.run();
+		bombman = new Bomberman();
+        bombermanSprite = Toolkit.getDefaultToolkit().getImage("Bomberman.GIF");
 	}
 	
 	public void run(){
@@ -61,13 +59,14 @@ public class DrawMap extends JComponent{
     		    }
     		}
             g.setColor(Color.ORANGE);
-            g.fillOval(b.getXval(), b.getYval(), 50, 50); //change to rocket
+            //g.fillOval(b.getXval(), b.getYval(), 50, 50); //change to rocket
+            g.drawImage(bombermanSprite,bombman.getXval(),bombman.getYval(),50,50,this);
         }
 		
 	}
 	
 	public Bomberman getBomberman(){
-		return b;
+		return bombman;
 	}
 	
 	public DrawingArea getCanvas(){

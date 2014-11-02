@@ -1,3 +1,6 @@
+// next step http://stackoverflow.com/questions/7537570/eliminating-initial-keypress-delay
+
+
 package Controller;
 
 import java.awt.event.*;
@@ -26,13 +29,13 @@ public class UserInput implements KeyListener, FocusListener{
 	public void keyPressed ( KeyEvent e ){
         int value = e.getKeyCode();
         switch(value){
-            case KeyEvent.VK_DOWN:d.getBomberman().incrementYval(50);
+            case KeyEvent.VK_DOWN:d.getBomberman().incrementYval(10);
             break;
-            case KeyEvent.VK_UP:d.getBomberman().incrementYval(-50);
+            case KeyEvent.VK_UP:d.getBomberman().incrementYval(-10);
             break;
-            case KeyEvent.VK_RIGHT:d.getBomberman().incrementXval(50);
+            case KeyEvent.VK_RIGHT:d.getBomberman().incrementXval(10);
             break;
-            case KeyEvent.VK_LEFT:d.getBomberman().incrementXval(-50);
+            case KeyEvent.VK_LEFT:d.getBomberman().incrementXval(-10);
             break;
         }
         d.update();
