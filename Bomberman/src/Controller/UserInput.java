@@ -105,13 +105,19 @@ public class UserInput implements KeyListener, FocusListener{
   d.getBomberman().setXval(xVel);
   d.getBomberman().setYval(yVel);
   //hard-coded bomberman/indestructibles collision detection for demo purposes
-  for (int i = 0; i < 100; i++){
+  for(int i = 0; i < 100; i++){
+	  if(d.getTile().collisionDetection(d.getBomberman(), d.getIndestructible(i))){
+		  d.getBomberman().setXval(-xVel);
+		  d.getBomberman().setYval(-yVel);
+	  }
+  }
+  /*for (int i = 0; i < 100; i++){
    if(d.getBomberman().getXval()+42 > d.indestructibles[i].getXval()*50 && d.getBomberman().getYval() < d.indestructibles[i].getYval()*50+50 &&
      d.getBomberman().getXval() < d.indestructibles[i].getXval()*50+50 && d.getBomberman().getYval()+42 > d.indestructibles[i].getYval()*50){
     d.getBomberman().setXval(-xVel);
     d.getBomberman().setYval(-yVel);
    }
-  }
+  }*/
  }
 
  public void setVelX(float xVel) {
