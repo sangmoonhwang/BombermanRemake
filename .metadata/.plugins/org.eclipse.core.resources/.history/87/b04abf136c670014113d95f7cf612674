@@ -1,0 +1,32 @@
+package Model;
+
+import java.io.FileWriter;
+import java.io.IOException;
+
+import au.com.bytecode.opencsv.CSVWriter;
+
+public class Database {
+	
+	public String username;
+	public String password;
+	public String realname;
+	public int numOfPlay;
+	public int totalScore;
+	public int levelCompleted;
+	public String[] savedGame;
+	
+	
+	public Database() {
+		
+	}
+	
+	public String[] writeCSVEntry() {
+		String[] entry = new String[]{mName, Integer.toString(mMoney)};
+		return entry;
+	}
+	
+	public String[] readCSVEntry() {
+		
+	}
+
+}

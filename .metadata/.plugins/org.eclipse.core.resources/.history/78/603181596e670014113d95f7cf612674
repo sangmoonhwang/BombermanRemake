@@ -1,0 +1,50 @@
+package Model;
+
+import java.io.FileWriter;
+import java.io.IOException;
+
+import au.com.bytecode.opencsv.CSVWriter;
+
+public class Database {
+	
+	public String username;
+	public String password;
+	public String realName;
+	public int numOfPlay;
+	public int totalScore;
+	public int levelCompleted;
+	public String savedGame;
+	
+	
+	public Database() {
+		
+	}
+	
+	//order of user file is in username-password-realName-numOfPlay-totalScore-levelCompleted-savedGame
+	public void writeUserCSVEntry() throws IOException {
+		CSVWriter writer = new CSVWriter(new FileWriter(username+".csv"), ',');
+		String[] entry = new String[]{username, password, realName, Integer.toString(0), Integer.toString(0),
+									Integer.toString(0)};
+		writer.writeNext(entry);
+		
+		writer.close();
+	}
+	
+	public String[] readUserCSVEntry() {
+		
+		
+		
+	}
+	
+	public void writeGameDataCSVEntry() throws IOException {
+		CSVWriter writer = new CSVWriter(new FileWriter(username+"GameData.csv"), ',');
+		String[] entry = new String[]{savedGame};
+		return entry;
+	}
+	
+	public String[] readGameDataCSVEntry() {
+		
+	}
+
+
+}

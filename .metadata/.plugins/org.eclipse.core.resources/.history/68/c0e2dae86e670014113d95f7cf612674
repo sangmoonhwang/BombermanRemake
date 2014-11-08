@@ -1,0 +1,27 @@
+package Model;
+
+public class User {
+	
+	public String username;
+	public String password;
+	public String realname;
+	public int numOfPlay;
+	public int totalScore;
+	public int levelCompleted;
+	public String[] savedGame;
+	
+	public User(String[] data) {
+		username = data[0];
+		password = data[1];
+		realname = data[2];
+		numOfPlay = data[3];
+		totalScore = data[4];
+		levelCompleted = data[5];
+	}
+	
+	public Account(String[] a){
+		mName = a[0];
+		mMoney = Integer.parseInt(a[1]);
+	}
+	
+}

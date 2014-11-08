@@ -1,0 +1,20 @@
+package Controller;
+
+import Model.User;
+
+public class CreateAccount {
+	
+	public String username;
+	public String password;
+	public String realName;
+	public int numOfPlay;
+	public int totalScore;
+	public int levelCompleted;
+	
+	public CreateAccount(String username, String password, String realName) {
+		User newUser = new User(username, password, realName);
+		
+		
+	}
+
+}

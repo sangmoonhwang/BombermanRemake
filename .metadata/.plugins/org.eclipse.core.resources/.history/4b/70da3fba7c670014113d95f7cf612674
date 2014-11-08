@@ -1,0 +1,30 @@
+package Controller;
+
+import Model.User;
+import Model.Database;
+
+public class CreateAccount extends Database {
+	
+	public String username;
+	public String password;
+	public String realName;
+	
+	//draw create account and button listener
+	public CreateAccount() {
+		
+		
+	}
+	
+	public void accountCreate(String username, String password, String realName) {
+		User newUser = new User(username, password, realName);
+		
+		try {
+			writeUserCSVEntry(newUser);
+		} catch(IOException ex) {
+			
+		}
+		
+		
+	}
+
+}

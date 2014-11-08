@@ -1,0 +1,12 @@
+package Controller;
+
+public class CreateAccount {
+	
+	public String username;
+	public String password;
+	public String realname;
+	public int numOfPlay;
+	public int totalScore;
+	public int levelCompleted;
+
+}

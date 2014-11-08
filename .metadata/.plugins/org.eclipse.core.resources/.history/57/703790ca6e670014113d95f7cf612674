@@ -1,0 +1,16 @@
+package Model;
+
+public class User {
+	
+	public String username;
+	public String password;
+	public String realname;
+	public int numOfPlay;
+	public int totalScore;
+	public int levelCompleted;
+	public String[] savedGame;
+	
+	public User() {
+		
+	}
+}

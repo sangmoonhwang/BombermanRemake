@@ -1,0 +1,47 @@
+package Model;
+
+import java.io.FileWriter;
+import java.io.IOException;
+
+import au.com.bytecode.opencsv.CSVWriter;
+
+public class Database {
+	
+	public String username;
+	public String password;
+	public String realName;
+	public int numOfPlay;
+	public int totalScore;
+	public int levelCompleted;
+	public String savedGame;
+	
+	
+	public Database() {
+		
+	}
+	
+	public String[] writeUserCSVEntry() throws IOException {
+		CSVWriter writer = new CSVWriter(new FileWriter(username+".csv"), ',');
+		String[] entry = new String[]{username, password, realName, Integer.toString(numOfPlay), Integer.toString(totalScore),
+									Integer.toString(levelCompleted)};
+		return entry;
+	}
+	
+	public String[] readUserCSVEntry() {
+		
+		
+		
+	}
+	
+	public String[] writeGameDataCSVEntry() throws IOException {
+		CSVWriter writer = new CSVWriter(new FileWriter(username+".csv"), ',');
+		String[] entry = new String[]{savedGame};
+		return entry;
+	}
+	
+	public String[] readGameDataCSVEntry() {
+		
+	}
+
+
+}

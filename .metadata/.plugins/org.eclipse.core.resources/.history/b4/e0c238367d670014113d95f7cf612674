@@ -1,0 +1,43 @@
+package Controller;
+
+import java.io.IOException;
+
+import Model.User;
+import Model.Database;
+
+public class Login extends Database {
+	
+	//draw login with button listener
+	public Login() {
+		
+	}
+	
+	//if user exists then login to menu else display user does not exist
+	public void loginUser(String username, String password) {
+		try {
+			
+			User user = new User();
+			user = readUserCSVEntry(username);
+			
+			//if password match
+			if(user.password == password) {
+				
+			} else {
+				
+			}
+			
+		} catch(IOException ex) {
+	        System.out.println (ex.toString());
+		}
+	}
+	
+	//call create account class
+	public void createUser(String username, String password, String realName) {
+		
+	}
+	
+	//call modifyAccount Class
+	public void modifyUser() {
+		
+	}
+}

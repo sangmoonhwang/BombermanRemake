@@ -1,0 +1,37 @@
+package Model;
+
+public class User {
+	
+	public String username;
+	public String password;
+	public String realName;
+	public int numOfPlay;
+	public int totalScore;
+	public int levelCompleted;
+	public String[] savedGame;
+	
+	//creating new user
+	public User(String username, String password, String realName) {
+		this.username = user.username;
+		this.password = user.password;
+		this.realName = user.realName;
+		numOfPlay = user.numOfPlay;
+		totalScore = user.totalScore;
+		levelCompleted = user.levelCompleted;
+	}
+	
+	//existing user
+	public User(User user) {
+		this.username = user.username;
+		this.password = user.password;
+		this.realName = user.realName;
+		numOfPlay = user.numOfPlay;
+		totalScore = user.totalScore;
+		levelCompleted = user.levelCompleted;
+	}
+	
+	public User() {
+		
+	}
+	
+}

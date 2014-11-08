@@ -1,0 +1,26 @@
+package Controller;
+
+public class Login {
+	
+	//draw login
+	public Login() {
+		
+	}
+	
+	//
+	public boolean checkUser() {
+		
+		return true;
+		
+	}
+	
+	//if user exists then login to menu else display user not exists
+	public void loginUser() {
+		
+	}
+	
+	//call create account class
+	public void createUser() {
+		
+	}
+}
