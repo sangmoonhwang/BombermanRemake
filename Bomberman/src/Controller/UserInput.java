@@ -10,7 +10,6 @@ import View.DrawMap;
 
 public class UserInput implements KeyListener, FocusListener{
  private DrawMap d;
- //private Indestructible[] idstr = d.getindestructible();
  private float xVel = 0;
  private float yVel = 0;
  private static boolean running = false;

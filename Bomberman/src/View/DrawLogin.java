@@ -80,6 +80,7 @@ public class DrawLogin extends JFrame{
 	 final JPasswordField passwordText = new JPasswordField(6);
 	 
 	 JButton verifyButton = new JButton("Login");
+	 JButton createButton = new JButton("Create New Account");
 	 verifyButton.addActionListener(new ActionListener() {
 		 public void actionPerformed(ActionEvent e) {
 			 username = userText.getText();
@@ -90,12 +91,18 @@ public class DrawLogin extends JFrame{
 			 statusLabel.setText(data);
 		 }
 	 });
+	 createButton.addActionListener(new ActionListener() {
+		 public void actionPerformed(ActionEvent e) {
+			 System.out.println("Create New Account!");
+		 }
+	 });
 	 
 	 controlPanel.add(namelabel);
 	 controlPanel.add(userText);
 	 controlPanel.add(passwordLabel);
 	 controlPanel.add(passwordText);
 	 controlPanel.add(verifyButton);
+	 controlPanel.add(createButton);
 	 mainFrame.setVisible(true);
  }
  
