@@ -32,8 +32,21 @@ public class Login extends Database implements KeyListener, FocusListener {
 	 }
 	
 	//if user exists then login to menu else display user does not exist
-	public void loginUser(String username, String password) {
-		try {
+	public static void loginUser(String username, String password) {
+		boolean user = false;
+		boolean pass = false;
+		if(username.equals(DrawLogin.getUsername())){
+			user = true;
+		}
+		if(password.equals(DrawLogin.getPassword())){
+			pass = true;
+		}
+		if(user && pass){
+			System.out.println("Great Success");
+		} else {
+			System.out.println("Try Again");
+		}
+		/*try {
 			
 			User user = readUserCSVEntry(username);
 			
@@ -46,7 +59,7 @@ public class Login extends Database implements KeyListener, FocusListener {
 			
 		} catch(IOException ex) {
 	        System.out.println (ex.toString());
-		}
+		}*/
 	}
 	
 	//call create account class

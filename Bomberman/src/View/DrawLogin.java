@@ -7,21 +7,19 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.WindowConstants;
 import javax.swing.JTextField;
+
+import Controller.Login;
 
 
 
@@ -33,19 +31,18 @@ public class DrawLogin extends JFrame{
  private JLabel headerLabel;
  private JLabel statusLabel;
  private JPanel controlPanel;
+ private static String username;
+ private static String password;
 
  public DrawLogin(){
   //prepareGui();
   mainFrame = new JFrame("Login");
   
-  
-  //created arrays of tiles/indestructibles/bomberman
-  
  }
 
  public void prepareGui() {
 	mainFrame = new JFrame("Login");
-	mainFrame.setSize(1000, 1000);
+	mainFrame.setSize(800, 800);
 	mainFrame.setLayout(new GridLayout(3,1));
 	mainFrame.addWindowListener(new WindowAdapter() {
 		public void windowClosing(WindowEvent windowEvent){
@@ -85,6 +82,9 @@ public class DrawLogin extends JFrame{
 	 JButton verifyButton = new JButton("Login");
 	 verifyButton.addActionListener(new ActionListener() {
 		 public void actionPerformed(ActionEvent e) {
+			 username = userText.getText();
+			 password = new String(passwordText.getPassword());
+			 Login.loginUser("Alex","Makri");
 			 String data = "Username " + userText.getText();
 			 data += ", Password: " + new String(passwordText.getPassword());
 			 statusLabel.setText(data);
@@ -97,6 +97,13 @@ public class DrawLogin extends JFrame{
 	 controlPanel.add(passwordText);
 	 controlPanel.add(verifyButton);
 	 mainFrame.setVisible(true);
+ }
+ 
+ public static String getUsername(){
+	 return username;
+ }
+ public static String getPassword(){
+	 return password;
  }
 
 
