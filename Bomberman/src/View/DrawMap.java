@@ -64,7 +64,8 @@ public class DrawMap extends JComponent{
  }
 
  public class DrawingArea extends JPanel{ //what does this do
-  public void paintComponent(Graphics g){
+  @Override
+public void paintComponent(Graphics g){
    super.paintComponent(g);
    int width = 50;
    int height = 50;

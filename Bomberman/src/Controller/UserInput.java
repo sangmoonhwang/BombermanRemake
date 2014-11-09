@@ -5,7 +5,6 @@ package Controller;
 
 import java.awt.event.*;
 
-import Model.Indestructible;
 import View.DrawMap;
 
 public class UserInput implements KeyListener, FocusListener{
@@ -49,7 +48,8 @@ public class UserInput implements KeyListener, FocusListener{
  }
 
  //react to keyPress by moving Bomberman
- public void keyPressed ( KeyEvent e ){
+ @Override
+public void keyPressed ( KeyEvent e ){
   int value = e.getKeyCode();
   if (value == KeyEvent.VK_DOWN && value !=KeyEvent.VK_UP){
    setVelY(2);
@@ -65,11 +65,13 @@ public class UserInput implements KeyListener, FocusListener{
   }
  }
 
- public void keyTyped(KeyEvent e) {
+ @Override
+public void keyTyped(KeyEvent e) {
  }
 
  //stop moving when key is released
- public void keyReleased(KeyEvent e) {
+ @Override
+public void keyReleased(KeyEvent e) {
   int value = e.getKeyCode();
   if (value == KeyEvent.VK_DOWN){
    if(yVel == 2)
@@ -93,10 +95,12 @@ public class UserInput implements KeyListener, FocusListener{
   }
  }    
 
- public void focusGained(FocusEvent e) {
+ @Override
+public void focusGained(FocusEvent e) {
  }
 
- public void focusLost(FocusEvent e) {
+ @Override
+public void focusLost(FocusEvent e) {
  }
 
  

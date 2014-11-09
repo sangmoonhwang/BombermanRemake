@@ -33,6 +33,7 @@ public class Bomberman implements Movable{
   yval += i;
  }
 
- public void move() {
+ @Override
+public void move() {
  }
 }

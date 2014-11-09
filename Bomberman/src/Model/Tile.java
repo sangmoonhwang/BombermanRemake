@@ -19,6 +19,7 @@ public class Tile implements GameObject {
 		return collision;
 	}
 	
+	@Override
 	public void spawn() {
 		
 	}

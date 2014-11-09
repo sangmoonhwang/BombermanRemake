@@ -4,18 +4,19 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.IOException;
 
-import Model.User;
 import Model.Database;
 import View.DrawLogin;
 
 public class Login extends Database implements KeyListener, FocusListener {
-	private DrawLogin d;
+	private static DrawLogin d;
 	private static boolean running = false;
 
 	CreateAccount newUser;
 	ModifyAccount modifyUser;
+	
+	//to keep the structure of the components static
+	static String blank = "                                         ";
 	
 	//draw login with button listener
 	public Login() {
@@ -35,15 +36,24 @@ public class Login extends Database implements KeyListener, FocusListener {
 	public static void loginUser(String username, String password) {
 		boolean user = false;
 		boolean pass = false;
-		if(username.equals(DrawLogin.getUsername())){
+		d.name_typed.setText (blank);//("                                         ");
+		d.password_typed.setText (blank);//("                                         ");
+		if(username.equals("")){
+			d.name_typed.setText("Enter your username!");
+		}
+		if(password.equals("")){
+			d.password_typed.setText("Enter your password!");
+		}
+		if(username.equals("Alex")){ // @Todo: "Alex" to be replaced by the database username
 			user = true;
 		}
-		if(password.equals(DrawLogin.getPassword())){
+		if(password.equals("Makri")){// @Todo: "Makri" to be replaced by the database password
 			pass = true;
 		}
 		if(user && pass){
 			System.out.println("Great Success");
-		} else {
+		}
+		else {
 			System.out.println("Try Again");
 		}
 		/*try {
