@@ -160,15 +160,16 @@ public class CreateAccount extends Database {
 		User newUser = new User(username, password, realName);
 
 				if(!usernameValidate(username)){
-					status.setText("Wrong username type");
+					status.setText("Username must consist of 6-20 alphanumeric characters.");
 					return false;
 				}
 				if(!realNameValidate(realName)){
-					status.setText("Wrong realname type");
+					status.setText("Realname must consist of only alphabet characters.");
 					return false;
 				}
 				if(!passwordValidate(password)){
-					status.setText("Wrong password type");
+					status.setText("Password must be 8-20 characters and contain at least one capital "
+							+ "letter, one lowercase letter, one number and one special character.");
 					return false;
 				}
 
