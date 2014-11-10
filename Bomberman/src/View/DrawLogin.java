@@ -4,12 +4,12 @@ package View;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -51,7 +51,10 @@ public class DrawLogin extends JFrame{
 
 	public void prepareGui() {
 		mainFrame = new JFrame("Login");
-		mainFrame.setSize(800, 800);
+		mainFrame.setSize(800, 500);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		mainFrame.setLocation(dim.width/2-mainFrame.getSize().width/2, dim.height/2-mainFrame.getSize().height/2);
+
 		mainFrame.setLayout(new GridLayout(3,1));
 		mainFrame.addWindowListener(new WindowAdapter() {
 			@Override
@@ -111,8 +114,6 @@ public class DrawLogin extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				CreateAccount ca = new CreateAccount(headerLabel, controlPanel, statusLabel, mainFrame);
-
-				System.out.println("Create New Account!");
 			}
 		});
 

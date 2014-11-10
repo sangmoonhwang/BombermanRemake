@@ -30,9 +30,6 @@ public class CreateAccount extends Database {
 	public String realName;
 	public static String n_typed = "Enter your username!";
 	public static String p_typed = "Enter your password!";
-	private Pattern forUser;
-	private Pattern forPassword;
-	private Matcher matcher;
 	private JFrame main;
 	private JPanel controlPanel;	
 	private JLabel status;
@@ -50,8 +47,6 @@ public class CreateAccount extends Database {
 		header_login = label_Header;
 		status = label_Status;
 		drawpanel();
-		forUser = Pattern.compile(usernamePattern);
-		forPassword = Pattern.compile(passwordPattern);
 	}
 	
 	//for test purpose 
@@ -212,8 +207,8 @@ public class CreateAccount extends Database {
 				username = userText.getText();
 				password = new String(passwordText.getPassword());
 				Login.loginUser(username,password);
-				String data = "Username: " + userText.getText();
-				data += ", Password: " + new String(passwordText.getPassword());
+				//String data = "Username: " + userText.getText();
+				//data += ", Password: " + new String(passwordText.getPassword());
 				//status.setText(data);
 			}
 		});
@@ -221,8 +216,7 @@ public class CreateAccount extends Database {
 		createButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				drawpanel();				 
-				System.out.println("Create New Account!");
+				drawpanel();
 			}
 		});
 
@@ -232,8 +226,8 @@ public class CreateAccount extends Database {
 				username = userText.getText();
 				password = new String(passwordText.getPassword());
 				Login.loginUser(username,password);
-				String data = "Username: " + userText.getText();
-				data += ", Password: " + new String(passwordText.getPassword());
+				//String data = "Username: " + userText.getText();
+				//data += ", Password: " + new String(passwordText.getPassword());
 				//status.setText(data);
 			}
 		});
@@ -244,8 +238,8 @@ public class CreateAccount extends Database {
 				username = userText.getText();
 				password = new String(passwordText.getPassword());
 				Login.loginUser(username,password);
-				String data = "Username: " + userText.getText();
-				data += ", Password: " + new String(passwordText.getPassword());
+				//String data = "Username: " + userText.getText();
+				//data += ", Password: " + new String(passwordText.getPassword());
 				//status.setText(data);
 			}
 		});
@@ -312,7 +306,7 @@ public class CreateAccount extends Database {
 		//matcher = forPassword.matcher(password);
 		//return matcher.matches();
 		//return password.matches("((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%]).{8,20})");
-		return true;
+		return password.matches("((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%]).{8,20})");
 	}
 
 	/**
