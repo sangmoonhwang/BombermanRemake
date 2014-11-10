@@ -177,6 +177,8 @@ public class DrawLogin extends JFrame{
 		c.insets = new Insets(1, 1, 0, 0);
 		controlPanel.add(password_typed,c);
 		mainFrame.setVisible(true);
+		mainFrame.revalidate();
+		mainFrame.repaint();
 		userText.requestFocus();
 	}
 
