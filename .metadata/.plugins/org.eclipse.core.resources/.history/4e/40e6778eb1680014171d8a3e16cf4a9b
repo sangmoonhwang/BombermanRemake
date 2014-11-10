@@ -1,0 +1,41 @@
+package Controller;
+
+import static org.junit.Assert.*;
+
+import java.io.IOException;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import Model.Database;
+import Model.User;
+
+public class CreateAccountTest {
+	Database data;
+	User user, user2;
+	String username = "david252";
+	String password = "david252!";
+	String realName = "Young";
+	
+	@Before
+	public void setup() throws IOException {
+		data = new Database();
+	}
+	@Test
+	public void test() throws IOException {
+		user = new User(username,password,realName);
+		data.writeUserCSVEntry(user);
+		
+		accountCreate(username,password,realName);
+		
+		user2 = data.readUserCSVEntry(username);
+		System.out.println(user2.getUsername());
+		assertTrue("user name", username.equals(user2.getUsername()));
+		assertTrue("password name", password.equals(user2.getPassword()));
+		assertTrue("real name", realName.equals(user2.getRealName()));
+		assertTrue("num play", 0 == user2.getNumOfPlay());
+		assertTrue("total score", 0 == user2.getTotalScore());
+		assertTrue("level completed", 0 == user.getLevelCompleted());
+		
+	}
+}

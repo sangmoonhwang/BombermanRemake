@@ -1,0 +1,28 @@
+package Controller;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class CreateAccountTest {
+
+	@Before
+	public void setup() throws IOException {
+		data = new Database();
+	}
+	@Test
+	public void test() throws IOException {
+		user = new User(username,password,realName);
+		data.writeUserCSVEntry(user);
+		
+		user2 = data.readUserCSVEntry(username);
+		System.out.println(user2.getUsername());
+		assertTrue("user name", username.equals(user2.getUsername()));
+		assertTrue("password name", password.equals(user2.getPassword()));
+		assertTrue("real name", realName.equals(user2.getRealName()));
+		assertTrue("num play", 0 == user2.getNumOfPlay());
+		assertTrue("total score", 0 == user2.getTotalScore());
+		assertTrue("level completed", 0 == user.getLevelCompleted());
+		
+	}
+}

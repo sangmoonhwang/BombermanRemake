@@ -53,6 +53,11 @@ public class CreateAccount extends Database {
 		forUser = Pattern.compile(usernamePattern);
 		forPassword = Pattern.compile(passwordPattern);
 	}
+	
+	//for test purpose 
+	public CreateAccount() {
+		
+	}
 
 	private void drawpanel() {
 		header_login.setText("Create An account to play!");
@@ -163,12 +168,12 @@ public class CreateAccount extends Database {
 					status.setText("Wrong username type");
 					return false;
 				}
-				if(!passwordValidate(password)){
-					status.setText("Wrong password type");
-					return false;
-				}
 				if(!realNameValidate(realName)){
 					status.setText("Wrong realname type");
+					return false;
+				}
+				if(!passwordValidate(password)){
+					status.setText("Wrong password type");
 					return false;
 				}
 
@@ -293,8 +298,9 @@ public class CreateAccount extends Database {
 	 * @return true if it passes the requirements, otherwise false
 	 */
 	public boolean usernameValidate(String username) {
-		matcher = forUser.matcher(username);
-		return matcher.matches();
+		//matcher = forUser.matcher(username);
+		//return matcher.matches();
+		return username.matches("((?=.+\\w).{6,20})");
 	}
 
 	/**
@@ -303,8 +309,9 @@ public class CreateAccount extends Database {
 	 * @return true if it passes the requirements, otherwise false
 	 */
 	public boolean passwordValidate(String password) {
-		matcher = forPassword.matcher(password);
-		return matcher.matches();
+		//matcher = forPassword.matcher(password);
+		//return matcher.matches();
+		return password.matches("((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%]).{8,20})");
 	}
 
 	/**

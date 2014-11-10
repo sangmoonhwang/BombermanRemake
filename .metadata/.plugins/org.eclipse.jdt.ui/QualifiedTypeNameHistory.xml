@@ -2,6 +2,8 @@
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="au.com.bytecode.opencsv.CSVReader"/>
 <fullyQualifiedTypeName name="java.io.FileReader"/>
-<fullyQualifiedTypeName name="Model.User"/>
+<fullyQualifiedTypeName name="org.junit.Before"/>
 <fullyQualifiedTypeName name="java.io.IOException"/>
+<fullyQualifiedTypeName name="Model.Database"/>
+<fullyQualifiedTypeName name="Model.User"/>
 </qualifiedTypeNameHistroy>

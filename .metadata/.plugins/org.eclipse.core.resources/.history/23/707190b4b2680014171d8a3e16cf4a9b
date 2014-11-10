@@ -1,0 +1,323 @@
+package Controller;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
+import Model.User;
+import Model.Database;
+import View.DrawLogin;
+
+public class CreateAccount extends Database {
+
+	public String username;
+	public String password;
+	public String realName;
+	public static String n_typed = "Enter your username!";
+	public static String p_typed = "Enter your password!";
+	private Pattern forUser;
+	private Pattern forPassword;
+	private Matcher matcher;
+	private JFrame main;
+	private JPanel controlPanel;	
+	private JLabel status;
+	private JLabel header_login;
+	public boolean success = false;
+	private static final String usernamePattern = 
+			"((*\\w).{6,20})";
+	private static final String passwordPattern = 
+			"((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20})";
+
+	//draw create account and button listener
+	public CreateAccount(JLabel label_Header, JPanel panel_Login, JLabel label_Status, JFrame main) {
+		this.main = main;
+		controlPanel = panel_Login;
+		header_login = label_Header;
+		status = label_Status;
+		drawpanel();
+		forUser = Pattern.compile(usernamePattern);
+		forPassword = Pattern.compile(passwordPattern);
+	}
+	
+	//for test purpose 
+	public CreateAccount() {
+		
+	}
+
+	private void drawpanel() {
+		header_login.setText("Create An account to play!");
+		controlPanel.removeAll();
+
+		JLabel namelabel = new JLabel("Username: ", SwingConstants.RIGHT);
+		JLabel realNamelabel = new JLabel("Realname: ", SwingConstants.RIGHT);
+		JLabel passwordLabel = new JLabel("Password: ", SwingConstants.CENTER);
+		namelabel.setFont(new Font("Serif", Font.BOLD, 20));
+		realNamelabel.setFont(new Font("Serif", Font.BOLD, 20));
+		passwordLabel.setFont(new Font("Serif", Font.BOLD, 20));
+
+		final JTextField userText = new JTextField(13);
+		final JTextField realNameText = new JTextField(13);
+		final JPasswordField passwordText = new JPasswordField(13);
+
+		JButton createButton = new JButton("Create");
+
+		createButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				username = userText.getText();
+				realName = realNameText.getText();
+				password = new String(passwordText.getPassword());
+				accountCreate(username, password, realName);
+			}
+		});
+
+		userText.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				username = userText.getText();
+				realName = realNameText.getText();
+				password = new String(passwordText.getPassword());
+				accountCreate(username, password, realName);
+			}
+		});
+
+		realNameText.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				username = userText.getText();
+				realName = realNameText.getText();
+				password = new String(passwordText.getPassword());
+				accountCreate(username, password, realName);
+			}
+		});
+
+		passwordText.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				username = userText.getText();
+				realName = realNameText.getText();
+				password = new String(passwordText.getPassword());
+				accountCreate(username, password, realName);
+			}
+		});
+		GridBagConstraints c = new GridBagConstraints();
+
+		c.gridwidth = 1;
+		c.gridheight = 1;
+
+		c.gridx = 0;
+		c.gridy = 0;
+		c.insets = new Insets(0, 0, 1, 0);
+		controlPanel.add(namelabel,c);
+
+		c.gridx = 1;
+		c.gridy = 0;
+		c.insets = new Insets(0, 0, 1, 0);
+		controlPanel.add(userText,c);
+
+		c.gridx = 0;
+		c.gridy = 1;
+		c.insets = new Insets(1, 0, 0, 0);
+		controlPanel.add(realNamelabel,c);
+
+		c.gridx = 1;
+		c.gridy = 1;
+		c.insets = new Insets(1, 0, 0, 0);
+		controlPanel.add(realNameText,c);
+
+		c.gridx = 0;
+		c.gridy = 2;
+		c.insets = new Insets(1, 0, 0, 0);
+		controlPanel.add(passwordLabel,c);
+
+		c.gridx = 1;
+		c.gridy = 2;
+		c.insets = new Insets(1, 0, 0, 0);
+		controlPanel.add(passwordText,c);
+
+		c.gridx = 1;
+		c.gridy = 3;
+		c.insets = new Insets(10, 1, 0, 1);
+		controlPanel.add(createButton,c);
+		main.revalidate();
+		main.repaint();
+		userText.requestFocus();
+
+	}
+
+	//creates the account after create button being pressed
+	public boolean accountCreate(String username, String password, String realName) {
+		User newUser = new User(username, password, realName);
+
+			//	if(!usernameValidate(username)){
+		//			status.setText("Wrong username type");
+		//			return false;
+		//		}
+				if(!passwordValidate(password)){
+					status.setText("Wrong password type");
+					return false;
+				}
+				if(!realNameValidate(realName)){
+					status.setText("Wrong realname type");
+					return false;
+				}
+
+		try {
+			writeUserCSVEntry(newUser);
+			header_login.setText("Login to play BomberMan!");
+			status.setText("Creation successful");
+			controlPanel.removeAll();
+			showlogin();
+			return true;
+		} catch(IOException ex) {
+			System.out.println (ex.toString());
+		}
+
+		return false;
+	}
+
+	private void showlogin() {
+		header_login.setText("Login to play BomberMan!");
+		JLabel namelabel = new JLabel("Username: ", SwingConstants.RIGHT);
+		JLabel passwordLabel = new JLabel("Password: ", SwingConstants.CENTER);
+		namelabel.setFont(new Font("Serif", Font.BOLD, 20));
+		passwordLabel.setFont(new Font("Serif", Font.BOLD, 20));
+
+		final JTextField userText = new JTextField(13);
+		final JPasswordField passwordText = new JPasswordField(13);
+		DrawLogin.name_typed.setForeground(Color.RED);
+		DrawLogin.password_typed.setForeground(Color.RED);
+
+		JButton verifyButton = new JButton("Login");
+		JButton createButton = new JButton("Create New Account");
+
+		verifyButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				username = userText.getText();
+				password = new String(passwordText.getPassword());
+				Login.loginUser(username,password);
+				String data = "Username: " + userText.getText();
+				data += ", Password: " + new String(passwordText.getPassword());
+				status.setText(data);
+			}
+		});
+
+		createButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				drawpanel();				 
+				System.out.println("Create New Account!");
+			}
+		});
+
+		userText.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				username = userText.getText();
+				password = new String(passwordText.getPassword());
+				Login.loginUser(username,password);
+				String data = "Username: " + userText.getText();
+				data += ", Password: " + new String(passwordText.getPassword());
+				status.setText(data);
+			}
+		});
+
+		passwordText.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				username = userText.getText();
+				password = new String(passwordText.getPassword());
+				Login.loginUser(username,password);
+				String data = "Username: " + userText.getText();
+				data += ", Password: " + new String(passwordText.getPassword());
+				status.setText(data);
+			}
+		});
+
+		GridBagConstraints c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridwidth = 1;
+		c.gridheight = 1;
+		c.insets = new Insets(0, 0, 1, 0);
+		controlPanel.add(namelabel,c);
+		c.gridx = 1;
+		c.gridy = 0;
+		c.insets = new Insets(0, 0, 1, 0);
+		controlPanel.add(userText,c);
+		c.gridx = 0;
+		c.gridy = 1;
+		c.insets = new Insets(1, 0, 0, 0);
+		controlPanel.add(passwordLabel,c);
+		c.gridx = 1;
+		c.gridy = 1;
+		c.insets = new Insets(1, 0, 0, 0);
+		controlPanel.add(passwordText,c);
+		c.gridx = 1;
+		c.gridy = 2;
+		c.insets = new Insets(10, 1, 0, 1);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		controlPanel.add(verifyButton,c);
+		c.gridx = 1;
+		c.gridy = 3;
+		c.insets = new Insets(10, 1, 0, 1);
+		controlPanel.add(createButton,c);
+		c.gridx = 2;
+		c.gridy = 0;
+		c.insets = new Insets(1, 1, 0, 0);
+		controlPanel.add(DrawLogin.name_typed,c);
+		c.gridx = 2;
+		c.gridy = 1;
+		c.insets = new Insets(1, 1, 0, 0);
+		controlPanel.add(DrawLogin.password_typed,c);
+		main.revalidate();
+		main.repaint();
+		userText.requestFocus();
+
+	}
+
+	/**
+	 * Validate password 
+	 * @param password to validate
+	 * @return true if it passes the requirements, otherwise false
+	 */
+	public boolean usernameValidate(String username) {
+		matcher = forUser.matcher(username);
+		return matcher.matches();
+	}
+
+	/**
+	 * Validate password 
+	 * @param password to validate
+	 * @return true if it passes the requirements, otherwise false
+	 */
+	public boolean passwordValidate(String password) {
+		matcher = forPassword.matcher(password);
+		return matcher.matches();
+	}
+
+	/**
+	 * Validate real name for only containing alphabets.
+	 * @param real name for validation
+	 * @return true if contains only alphabets, otherwise false
+	 */
+	public boolean realNameValidate(String realName) {
+		return realName.matches("[a-zA-Z]+");
+	}
+}
