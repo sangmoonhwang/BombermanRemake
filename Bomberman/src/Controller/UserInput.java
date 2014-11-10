@@ -17,6 +17,8 @@ public class UserInput implements KeyListener, FocusListener{
 	static boolean running = false;
 	public UserInput(){
 		d = new DrawMap();
+		running = true;
+		this.run();
 	}
 
 	// public static void main(String[] args){

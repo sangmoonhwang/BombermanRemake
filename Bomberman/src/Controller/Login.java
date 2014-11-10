@@ -64,11 +64,18 @@ public class Login extends Database implements KeyListener, FocusListener {
 		}
 		if(user && pass){
 			DrawLogin.setStatus("Login Successful!");
-			/*d.mainFrame.removeAll();
-
-			UserInput testP = new UserInput(d.mainFrame);
-			d.mainFrame.revalidate();
-			d.mainFrame.repaint();*/
+//			d.mainFrame.setVisible(false);
+			d.mainFrame.dispose();
+//			d.mainFrame.removeAll();
+//			d.mainFrame.revalidate();
+//			d.mainFrame.repaint();
+			Thread thread = new Thread() {
+		        public void run() {
+		        	UserInput testP = new UserInput();
+		        }
+		    };
+		    thread.start();
+			
 		}
 		else {
 			DrawLogin.setStatus("Login unsuccessful, please try again");

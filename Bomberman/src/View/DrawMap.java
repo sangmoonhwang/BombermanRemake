@@ -67,7 +67,7 @@ public class DrawMap extends JComponent{
 		canvas = new DrawingArea();
 		makeFrame();
 		gameFrame.getContentPane().add(canvas);
-//		gameFrame.setVisible(true);
+		gameFrame.setVisible(true);
 	}
 
 	public void makeFrame(){
@@ -77,7 +77,7 @@ public class DrawMap extends JComponent{
 		gameFrame.setLocation(dim.width/2-gameFrame.getSize().width/2, dim.height/2-gameFrame.getSize().height/2);
 
 		gameFrame.getContentPane().add(new DrawMap());
-//		gameFrame.setVisible(true);
+		gameFrame.setVisible(true);
 	}
 
 	public class DrawingArea extends JPanel{ //what does this do
