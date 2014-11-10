@@ -9,6 +9,7 @@ import java.io.IOException;
 import Model.Database;
 import Model.User;
 import View.DrawLogin;
+import View.DrawMenu;
 
 public class Login extends Database implements KeyListener, FocusListener {
 	private static DrawLogin d;
@@ -24,16 +25,12 @@ public class Login extends Database implements KeyListener, FocusListener {
 	//draw login with button listener
 	public Login() {
 		d = new DrawLogin();
+		running = true;
 	}
 	
-	public static void main(String[] args){
-		Login test = new Login();
-		running = true;
-		test.run();
+	public void run(){
+		d.run();
 	}
-	 public void run(){
-		  d.run();
-	 }
 	
 	//if user exists then login to menu else display user does not exist
 	public static void loginUser(String username, String password) {
@@ -64,14 +61,11 @@ public class Login extends Database implements KeyListener, FocusListener {
 		}
 		if(user && pass){
 			DrawLogin.setStatus("Login Successful!");
-//			d.mainFrame.setVisible(false);
 			d.mainFrame.dispose();
-//			d.mainFrame.removeAll();
-//			d.mainFrame.revalidate();
-//			d.mainFrame.repaint();
 			Thread thread = new Thread() {
 		        public void run() {
-		        	UserInput testP = new UserInput();
+		        	DrawMenu testd = new DrawMenu();
+		        	testd.run();
 		        }
 		    };
 		    thread.start();
@@ -80,27 +74,7 @@ public class Login extends Database implements KeyListener, FocusListener {
 		else {
 			DrawLogin.setStatus("Login unsuccessful, please try again");
 		}
-		/*try {
-			
-			User user = readUserCSVEntry(username);
-			
-			//if password match
-			if(user.getPassword() == password) {
-				
-			} else {
-				
-			}
-			
-		} catch(IOException ex) {
-	        System.out.println (ex.toString());
-		}*/
 	}
-	
-	//call create account class
-//	public void createUser() {
-//		newUser = new CreateAccount();
-//	
-//	}
 	
 	//call modifyAccount Class
 	public void modifyUser() {

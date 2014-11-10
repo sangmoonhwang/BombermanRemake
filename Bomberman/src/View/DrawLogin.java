@@ -27,9 +27,6 @@ import Controller.CreateAccount;
 import Controller.Login;
 
 
-
-
-
 public class DrawLogin extends JFrame{
 
 	public static JFrame mainFrame;
@@ -37,8 +34,8 @@ public class DrawLogin extends JFrame{
 	private static JLabel statusLabel;
 	private static JPanel controlPanel;
 	static String blank = "                                         ";
-	public static String n_typed = "Enter your username!";
-	public static String p_typed = "Enter your password!";
+	public static String n_typed = "                                         ";
+	public static String p_typed = "                                         ";
 	private static String username;
 	private static String password;
 	public static JLabel name_typed = new JLabel(n_typed, SwingConstants.CENTER);
@@ -73,8 +70,6 @@ public class DrawLogin extends JFrame{
 		mainFrame.setVisible(true);
 
 	}
-
-
 
 	public void run(){
 		prepareGui();
