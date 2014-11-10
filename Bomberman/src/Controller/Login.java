@@ -52,6 +52,11 @@ public class Login extends Database implements KeyListener, FocusListener {
 		}
 		if(user && pass){
 			System.out.println("Great Success");
+			d.mainFrame.removeAll();
+
+			UserInput testP = new UserInput(d.mainFrame);
+			d.mainFrame.revalidate();
+			d.mainFrame.repaint();
 		}
 		else {
 			System.out.println("Try Again");
@@ -73,10 +78,10 @@ public class Login extends Database implements KeyListener, FocusListener {
 	}
 	
 	//call create account class
-	public void createUser() {
-		newUser = new CreateAccount();
-	
-	}
+//	public void createUser() {
+//		newUser = new CreateAccount();
+//	
+//	}
 	
 	//call modifyAccount Class
 	public void modifyUser() {
