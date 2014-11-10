@@ -1,6 +1,8 @@
 package Controller;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import Model.User;
 import Model.Database;
@@ -10,25 +12,68 @@ public class CreateAccount extends Database {
 	public String username;
 	public String password;
 	public String realName;
+	private Pattern forUser;
+	private Pattern forPassword;
+	private Matcher matcher;
+	private static final String usernamePattern = 
+            "((*\\w).{6,20})";
+	private static final String passwordPattern = 
+            "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20})";
 	
 	//draw create account and button listener
 	public CreateAccount() {
 		
-		
+		forUser = Pattern.compile(usernamePattern);
+		forPassword = Pattern.compile(passwordPattern);
 	}
 	
 	//creates the account after create button being pressed
-	public void accountCreate(String username, String password, String realName) {
+	public boolean accountCreate(String username, String password, String realName) {
 		User newUser = new User(username, password, realName);
+		
+		if(!usernameValidate(username))
+			return false;
+		if(!passwordValidate(password))
+			return false;
+		if(!realNameValidate(realName))
+			return false;
 		
 		try {
 			writeUserCSVEntry(newUser);
-			
+			return true;
 		} catch(IOException ex) {
 			System.out.println (ex.toString());
 		}
 		
-		
+		return false;
 	}
-
+	
+	/**
+	* Validate password 
+	* @param password to validate
+	* @return true if it passes the requirements, otherwise false
+	*/
+	public boolean usernameValidate(String username) {
+		matcher = forUser.matcher(username);
+		  return matcher.matches();
+	}
+	
+	/**
+	* Validate password 
+	* @param password to validate
+	* @return true if it passes the requirements, otherwise false
+	*/
+	public boolean passwordValidate(String password) {
+	  matcher = forPassword.matcher(password);
+	  return matcher.matches();
+	}
+	
+	/**
+	* Validate real name for only containing alphabets.
+	* @param real name for validation
+	* @return true if contains only alphabets, otherwise false
+	*/
+	public boolean realNameValidate(String realName) {
+		return realName.matches("[a-zA-Z]+");
+	}
 }
