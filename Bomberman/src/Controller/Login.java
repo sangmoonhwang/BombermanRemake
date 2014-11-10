@@ -4,13 +4,16 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 
 import Model.Database;
+import Model.User;
 import View.DrawLogin;
 
 public class Login extends Database implements KeyListener, FocusListener {
 	private static DrawLogin d;
 	private static boolean running = false;
+	private static User u;
 
 	CreateAccount newUser;
 	ModifyAccount modifyUser;
@@ -44,22 +47,31 @@ public class Login extends Database implements KeyListener, FocusListener {
 		if(password.equals("")){
 			d.password_typed.setText("Enter your password!");
 		}
-		if(username.equals("Alex")){ // @Todo: "Alex" to be replaced by the database username
-			user = true;
+		try {
+			u = readUserCSVEntry(username);
+		} catch (IOException e) {
+			//display "Username not found"
 		}
-		if(password.equals("Makri")){// @Todo: "Makri" to be replaced by the database password
-			pass = true;
+		try {
+		  if(username.equals(u.getUsername())){ 
+			  user = true;
+		  }
+		  if(password.equals(u.getPassword())){
+			  pass = true;
+		  }
+		} catch (NullPointerException e){
+			
 		}
 		if(user && pass){
-			System.out.println("Great Success");
-			d.mainFrame.removeAll();
+			DrawLogin.setStatus("Login Successful!");
+			/*d.mainFrame.removeAll();
 
 			UserInput testP = new UserInput(d.mainFrame);
 			d.mainFrame.revalidate();
-			d.mainFrame.repaint();
+			d.mainFrame.repaint();*/
 		}
 		else {
-			System.out.println("Try Again");
+			DrawLogin.setStatus("Login unsuccessful, please try again");
 		}
 		/*try {
 			

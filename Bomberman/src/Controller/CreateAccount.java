@@ -37,6 +37,7 @@ public class CreateAccount extends Database {
 	private JPanel controlPanel;	
 	private JLabel status;
 	private JLabel header_login;
+	private static DrawLogin d;
 	public boolean success = false;
 	private static final String usernamePattern = 
 			"((*\\w).{6,20})";
@@ -182,7 +183,8 @@ public class CreateAccount extends Database {
 			header_login.setText("Login to play BomberMan!");
 			status.setText("Creation successful");
 			controlPanel.removeAll();
-			showlogin();
+			d = new DrawLogin();
+			DrawLogin.showLogin();
 			return true;
 		} catch(IOException ex) {
 			System.out.println (ex.toString());
@@ -214,7 +216,7 @@ public class CreateAccount extends Database {
 				Login.loginUser(username,password);
 				String data = "Username: " + userText.getText();
 				data += ", Password: " + new String(passwordText.getPassword());
-				status.setText(data);
+				//status.setText(data);
 			}
 		});
 
@@ -234,7 +236,7 @@ public class CreateAccount extends Database {
 				Login.loginUser(username,password);
 				String data = "Username: " + userText.getText();
 				data += ", Password: " + new String(passwordText.getPassword());
-				status.setText(data);
+				//status.setText(data);
 			}
 		});
 
@@ -246,7 +248,7 @@ public class CreateAccount extends Database {
 				Login.loginUser(username,password);
 				String data = "Username: " + userText.getText();
 				data += ", Password: " + new String(passwordText.getPassword());
-				status.setText(data);
+				//status.setText(data);
 			}
 		});
 
@@ -311,7 +313,8 @@ public class CreateAccount extends Database {
 	public boolean passwordValidate(String password) {
 		//matcher = forPassword.matcher(password);
 		//return matcher.matches();
-		return password.matches("((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%]).{8,20})");
+		//return password.matches("((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%]).{8,20})");
+		return true;
 	}
 
 	/**

@@ -23,7 +23,7 @@ public class Database {
 		writer.close();
 	}
 	
-	public User readUserCSVEntry(String username) throws IOException {
+	public static User readUserCSVEntry(String username) throws IOException {
 		CSVReader reader = new CSVReader(new FileReader(username+ ".csv"));
 		  
 		String [] nextLine;

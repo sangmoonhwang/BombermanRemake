@@ -32,10 +32,10 @@ import Controller.Login;
 
 public class DrawLogin extends JFrame{
 
-	public JFrame mainFrame;
-	private JLabel headerLabel;
-	private JLabel statusLabel;
-	private JPanel controlPanel;
+	public static JFrame mainFrame;
+	private static JLabel headerLabel;
+	private static JLabel statusLabel;
+	private static JPanel controlPanel;
 	static String blank = "                                         ";
 	public static String n_typed = "Enter your username!";
 	public static String p_typed = "Enter your password!";
@@ -78,7 +78,7 @@ public class DrawLogin extends JFrame{
 		showLogin();
 		//mainFrame.setVisible(true);
 	}
-	private void showLogin(){
+	public static void showLogin(){
 		headerLabel.setText("Login to play BomberMan!");
 		headerLabel.setFont(new Font("Serif", Font.BOLD, 55));
 
@@ -103,7 +103,7 @@ public class DrawLogin extends JFrame{
 				Login.loginUser(username,password);
 				String data = "Username: " + userText.getText();
 				data += ", Password: " + new String(passwordText.getPassword());
-				statusLabel.setText(data);
+				//statusLabel.setText(data);
 			}
 		});
 
@@ -124,7 +124,7 @@ public class DrawLogin extends JFrame{
 				Login.loginUser(username,password);
 				String data = "Username: " + userText.getText();
 				data += ", Password: " + new String(passwordText.getPassword());
-				statusLabel.setText(data);
+				//statusLabel.setText(data);
 			}
 		});
 
@@ -136,7 +136,7 @@ public class DrawLogin extends JFrame{
 				Login.loginUser(username,password);
 				String data = "Username: " + userText.getText();
 				data += ", Password: " + new String(passwordText.getPassword());
-				statusLabel.setText(data);
+				//statusLabel.setText(data);
 			}
 		});
 
@@ -185,5 +185,8 @@ public class DrawLogin extends JFrame{
 	}
 	public static String getPassword(){
 		return password;
+	}
+	public static void setStatus(String s){
+		statusLabel.setText(s);
 	}
 }
