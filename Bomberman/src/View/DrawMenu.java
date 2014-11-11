@@ -56,6 +56,7 @@ public class DrawMenu extends JFrame{
 			        	UserInput play = new UserInput();
 			        }
 			    };
+			    menuFrame.dispose();
 			    thread.start();
 			}
 		});
@@ -69,6 +70,7 @@ public class DrawMenu extends JFrame{
 			        	logout.run();
 			        }
 			    };
+			    menuFrame.dispose();
 			    thread.start();
 			}
 		});

@@ -25,6 +25,7 @@ public class CreateAccount extends Database {
 	public String username;
 	public String password;
 	public String realName;
+	private String error = "Username must consist of 6-20 alphanumeric characters.";
 	public static String n_typed = "Enter your username!";
 	public static String p_typed = "Enter your password!";
 	private JFrame main;
@@ -158,7 +159,7 @@ public class CreateAccount extends Database {
 		User newUser = new User(username, password, realName);
 
 				if(!usernameValidate(username)){
-					status.setText("Username must consist of 6-20 alphanumeric characters.");
+					status.setText(error);
 					return false;
 				}
 				//if(!realNameValidate(realName)){
@@ -300,7 +301,7 @@ public class CreateAccount extends Database {
 		}
 		try {
 			if(username.equals(u.getUsername())){
-				//add error message
+				error = "An account with this username already exists.";
 				return false;
 			}
 		} 

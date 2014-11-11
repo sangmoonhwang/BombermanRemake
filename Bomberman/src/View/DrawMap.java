@@ -1,16 +1,18 @@
 package View;
 
 import java.awt.Color;
-
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
+
 
 
 import Model.Bomberman;
@@ -26,6 +28,7 @@ public class DrawMap extends JComponent{
 	public Indestructible[] indestructibles;
 	private Tile[] tiles;
 	private Image bombermanSprite;
+	private static DrawMenu d;
 
 	public DrawMap(){
 		gameFrame = new JFrame("Bomberman");
@@ -72,13 +75,21 @@ public class DrawMap extends JComponent{
 
 	public void makeFrame(){
 		gameFrame.setSize(751,673);
-		gameFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		//gameFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		gameFrame.setLocation(dim.width/2-gameFrame.getSize().width/2, dim.height/2-gameFrame.getSize().height/2);
 
 		gameFrame.getContentPane().add(new DrawMap());
 		gameFrame.setVisible(true);
+		gameFrame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent windowEvent){
+				d = new DrawMenu();
+				d.run();
+			}
+		});
 	}
+
 
 	public class DrawingArea extends JPanel{ //what does this do
 		@Override
