@@ -36,6 +36,7 @@ public class CreateAccount extends Database {
 			"((*\\w).{6,20})";
 	private static final String passwordPattern = 
 			"((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20})";
+	private static User u;
 
 	//draw create account and button listener
 	public CreateAccount(JLabel label_Header, JPanel panel_Login, JLabel label_Status, JFrame main) {
@@ -160,10 +161,10 @@ public class CreateAccount extends Database {
 					status.setText("Username must consist of 6-20 alphanumeric characters.");
 					return false;
 				}
-				if(!realNameValidate(realName)){
-					status.setText("Realname must consist of only alphabet characters.");
-					return false;
-				}
+				//if(!realNameValidate(realName)){
+				//	status.setText("Realname must consist of only alphabet characters.");
+				//	return false;
+				//}
 				if(!passwordValidate(password)){
 					status.setText("Password must be 8-20 characters and contain at least one capital "
 							+ "letter, one lowercase letter, one number and one special character.");
@@ -292,6 +293,20 @@ public class CreateAccount extends Database {
 	public boolean usernameValidate(String username) {
 		//matcher = forUser.matcher(username);
 		//return matcher.matches();
+		try {
+			u = readUserCSVEntry(username);
+		} catch (IOException e) {
+			//display "Username not found"
+		}
+		try {
+			if(username.equals(u.getUsername())){
+				//add error message
+				return false;
+			}
+		} 
+		catch (NullPointerException e){
+			return username.matches("((?=.+\\w).{6,20})");
+		}
 		return username.matches("((?=.+\\w).{6,20})");
 	}
 

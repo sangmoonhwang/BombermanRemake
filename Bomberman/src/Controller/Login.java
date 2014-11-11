@@ -71,6 +71,9 @@ public class Login extends Database implements KeyListener, FocusListener {
 		    thread.start();
 			
 		}
+		if(!user || !pass){
+			DrawLogin.setStatus("Wrong username or password, please try again");
+		}
 		else {
 			DrawLogin.setStatus("Login unsuccessful, please try again");
 		}
