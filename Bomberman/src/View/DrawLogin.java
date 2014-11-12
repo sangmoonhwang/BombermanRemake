@@ -198,8 +198,8 @@ public class DrawLogin extends JFrame{
 		statusLabel.setText(s);
 	}
 	public void viewFrame(boolean b){
-		mainFrame.setVisible(b);
 		clearText();
+		mainFrame.setVisible(b);
 	}
 	public void clearText(){
 		userText.setText("");

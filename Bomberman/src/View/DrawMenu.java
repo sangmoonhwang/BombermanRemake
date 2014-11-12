@@ -56,15 +56,16 @@ public class DrawMenu extends JFrame{
 		playButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				Thread thread = new Thread() {
-			        public void run() {
-			        	UserInput play = new UserInput();
-			        }
-			    };
-			    thread.start();
+				Thread thread = new Thread(){
+					public void run(){
+						UserInput play = new UserInput();
+					}
+				};
+				viewFrame(false);
+				thread.start();
 			}
 		});
+		
 		
 		logoutButton.addActionListener(new ActionListener() {
 			@Override

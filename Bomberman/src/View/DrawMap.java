@@ -1,17 +1,17 @@
 package View;
 
 import java.awt.Color;
-
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
-
 
 import Model.Bomberman;
 import Model.Indestructible;
@@ -26,9 +26,12 @@ public class DrawMap extends JComponent{
 	public Indestructible[] indestructibles;
 	private Tile[] tiles;
 	private Image bombermanSprite;
-
-	public DrawMap(){
+	private static DrawMap instance = new DrawMap();
+	private static DrawMenu menuFrame;
+	
+	private DrawMap(){
 		gameFrame = new JFrame("Bomberman");
+		menuFrame = DrawMenu.getInstance();
 
 		//create bomberman
 		bombman = new Bomberman();
@@ -46,6 +49,10 @@ public class DrawMap extends JComponent{
 
 	}
 
+	public static DrawMap getInstance(){
+		return instance;
+	}
+	
 	public DrawMap(JFrame main) {
 		gameFrame = main;
 
@@ -72,12 +79,18 @@ public class DrawMap extends JComponent{
 
 	public void makeFrame(){
 		gameFrame.setSize(751,673);
-		gameFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		gameFrame.setLocation(dim.width/2-gameFrame.getSize().width/2, dim.height/2-gameFrame.getSize().height/2);
 
 		gameFrame.getContentPane().add(new DrawMap());
 		gameFrame.setVisible(true);
+	
+		gameFrame.addWindowListener(new WindowAdapter(){
+		    public void windowClosing(WindowEvent e){
+		    	menuFrame.viewFrame(true);
+		        viewFrame(false);
+		    }
+		});
 	}
 
 	public class DrawingArea extends JPanel{ //what does this do
@@ -141,9 +154,8 @@ public class DrawMap extends JComponent{
 	public void update(){
 		canvas.repaint();
 	}
-
-	//public Indestructible[] getindestructible() {
-	// // TODO Auto-generated method stub
-	// return this.indestructibles;
-	//}
+	
+	public void viewFrame(boolean b){
+		gameFrame.setVisible(b);
+	}
 }

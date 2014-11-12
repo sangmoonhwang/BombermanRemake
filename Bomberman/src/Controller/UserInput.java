@@ -11,12 +11,12 @@ import View.DrawMap;
 
 public class UserInput implements KeyListener, FocusListener{
 	public JFrame main;
-	private DrawMap d;
+	private static DrawMap d;
 	private float xVel = 0;
 	private float yVel = 0;
 	static boolean running = false;
 	public UserInput(){
-		d = new DrawMap();
+		d = DrawMap.getInstance();
 		running = true;
 		this.run();
 	}
