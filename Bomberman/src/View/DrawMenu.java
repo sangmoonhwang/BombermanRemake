@@ -21,11 +21,16 @@ public class DrawMenu extends JFrame{
 	
 	private JButton playButton;
 	private JButton logoutButton;
+	private static DrawMenu instance = new DrawMenu();
 	
-	public DrawMenu(){
+	private DrawMenu(){
 		playButton = new JButton("Play");
 		logoutButton = new JButton("Logout");
 		menuFrame = new JFrame();
+	}
+	
+	public static DrawMenu getInstance(){
+		return instance;
 	}
 	
 	public void run(){
@@ -51,6 +56,7 @@ public class DrawMenu extends JFrame{
 		playButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
 				Thread thread = new Thread() {
 			        public void run() {
 			        	UserInput play = new UserInput();
@@ -63,14 +69,14 @@ public class DrawMenu extends JFrame{
 		logoutButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Thread thread = new Thread() {
-			        public void run(){
-			        	Login logout = new Login();
-			        	logout.run();
-			        }
-			    };
-			    thread.start();
+				DrawLogin loginMenu = DrawLogin.getInstance();
+				loginMenu.viewFrame(true);
+				viewFrame(false);
 			}
 		});
+	}
+	
+	public void viewFrame(boolean b){
+		menuFrame.setVisible(b);
 	}
 }

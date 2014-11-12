@@ -12,9 +12,9 @@ import View.DrawLogin;
 import View.DrawMenu;
 
 public class Login extends Database implements KeyListener, FocusListener {
-	private static DrawLogin d;
 	private static boolean running = false;
 	private static User u;
+	private static DrawLogin loginFrame;
 
 	CreateAccount newUser;
 	ModifyAccount modifyUser;
@@ -24,25 +24,25 @@ public class Login extends Database implements KeyListener, FocusListener {
 	
 	//draw login with button listener
 	public Login() {
-		d = new DrawLogin();
 		running = true;
+		loginFrame = DrawLogin.getInstance();
 	}
 	
 	public void run(){
-		d.run();
+		loginFrame.run();
 	}
 	
 	//if user exists then login to menu else display user does not exist
 	public static void loginUser(String username, String password) {
 		boolean user = false;
 		boolean pass = false;
-		d.name_typed.setText (blank);//("                                         ");
-		d.password_typed.setText (blank);//("                                         ");
+		loginFrame.name_typed.setText (blank);//("                                         ");
+		loginFrame.password_typed.setText (blank);//("                                         ");
 		if(username.equals("")){
-			d.name_typed.setText("Enter your username!");
+			loginFrame.name_typed.setText("Enter your username!");
 		}
 		if(password.equals("")){
-			d.password_typed.setText("Enter your password!");
+			loginFrame.password_typed.setText("Enter your password!");
 		}
 		try {
 			u = readUserCSVEntry(username);
@@ -61,11 +61,11 @@ public class Login extends Database implements KeyListener, FocusListener {
 		}
 		if(user && pass){
 			DrawLogin.setStatus("Login Successful!");
-			d.mainFrame.dispose();
 			Thread thread = new Thread() {
 		        public void run() {
-		        	DrawMenu testd = new DrawMenu();
-		        	testd.run();
+		        	DrawMenu menuFrame = DrawMenu.getInstance();
+		        	menuFrame.run();
+		        	loginFrame.viewFrame(false);
 		        }
 		    };
 		    thread.start();

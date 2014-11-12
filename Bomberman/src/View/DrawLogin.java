@@ -30,20 +30,32 @@ import Controller.Login;
 public class DrawLogin extends JFrame{
 
 	public static JFrame mainFrame;
+	
+	static String blank = "                                         ";
+	
+	public static String n_typed = "                                         ";
+	public static String p_typed = "                                         ";
+	public static JLabel name_typed = new JLabel(n_typed, SwingConstants.CENTER);
+	public static JLabel password_typed = new JLabel(p_typed, SwingConstants.CENTER);
+	
+	private final JTextField userText;
+	private final JPasswordField passwordText;
 	private static JLabel headerLabel;
 	private static JLabel statusLabel;
 	private static JPanel controlPanel;
-	static String blank = "                                         ";
-	public static String n_typed = "                                         ";
-	public static String p_typed = "                                         ";
 	private static String username;
 	private static String password;
-	public static JLabel name_typed = new JLabel(n_typed, SwingConstants.CENTER);
-	public static JLabel password_typed = new JLabel(p_typed, SwingConstants.CENTER);
+	private static DrawLogin instance = new DrawLogin();
 
-	public DrawLogin(){
+	private DrawLogin(){
+		userText = new JTextField(13);
+		passwordText = new JPasswordField(13);
 		//prepareGui();
 		mainFrame = new JFrame("Login");
+	}
+	
+	public static DrawLogin getInstance() {
+		return instance;
 	}
 
 	public void prepareGui() {
@@ -76,7 +88,7 @@ public class DrawLogin extends JFrame{
 		showLogin();
 		//mainFrame.setVisible(true);
 	}
-	public static void showLogin(){
+	public void showLogin(){
 		headerLabel.setText("Login to play BomberMan!");
 		headerLabel.setFont(new Font("Serif", Font.BOLD, 55));
 
@@ -85,8 +97,6 @@ public class DrawLogin extends JFrame{
 		namelabel.setFont(new Font("Serif", Font.BOLD, 20));
 		passwordLabel.setFont(new Font("Serif", Font.BOLD, 20));
 
-		final JTextField userText = new JTextField(13);
-		final JPasswordField passwordText = new JPasswordField(13);
 		name_typed.setForeground(Color.RED);
 		password_typed.setForeground(Color.RED);
 
@@ -186,5 +196,13 @@ public class DrawLogin extends JFrame{
 	}
 	public static void setStatus(String s){
 		statusLabel.setText(s);
+	}
+	public void viewFrame(boolean b){
+		mainFrame.setVisible(b);
+		clearText();
+	}
+	public void clearText(){
+		userText.setText("");
+		passwordText.setText("");
 	}
 }

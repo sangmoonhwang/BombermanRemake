@@ -176,7 +176,8 @@ public class CreateAccount extends Database {
 			header_login.setText("Login to play BomberMan!");
 			status.setText("Creation successful");
 			controlPanel.removeAll();
-			DrawLogin.showLogin();
+			DrawLogin loginFrame = DrawLogin.getInstance();
+			loginFrame.showLogin();
 			return true;
 		} catch(IOException ex) {
 			System.out.println (ex.toString());

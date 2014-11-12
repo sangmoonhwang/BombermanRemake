@@ -72,7 +72,7 @@ public class DrawMap extends JComponent{
 
 	public void makeFrame(){
 		gameFrame.setSize(751,673);
-		gameFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		gameFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		gameFrame.setLocation(dim.width/2-gameFrame.getSize().width/2, dim.height/2-gameFrame.getSize().height/2);
 
