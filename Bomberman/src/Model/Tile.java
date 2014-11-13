@@ -19,6 +19,50 @@ public class Tile implements GameObject {
 		return collision;
 	}
 	
+	public boolean emptyAbove(Bomberman b, Indestructible i, float x) {
+		Bomberman test = new Bomberman();
+		test.setYval(b.getYval()-1);
+		test.setXval(b.getXval()+x);
+		
+		if(collisionDetection(test,i)){
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean emptyBelow(Bomberman b, Indestructible i, float x) {
+		Bomberman test = new Bomberman();
+		test.setYval(b.getYval()+1);
+		test.setXval(b.getXval()+x);
+		
+		if(collisionDetection(test,i)){
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean emptyLeft(Bomberman b, Indestructible i, float y) {
+		Bomberman test = new Bomberman();
+		test.setYval(b.getYval()+y);
+		test.setXval(b.getXval()-1);
+		
+		if(collisionDetection(test,i)){
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean emptyRight(Bomberman b, Indestructible i, float y) {
+		Bomberman test = new Bomberman();
+		test.setYval(b.getYval()+y);
+		test.setXval(b.getXval()+1);
+		
+		if(collisionDetection(test,i)){
+			return false;
+		}
+		return true;
+	}
+	
 	public boolean collisionDetection(Bomberman b, Destructible i) {
 		boolean collision = false;
 		if ((b.getXval()+40 > i.getXval()*50 &&

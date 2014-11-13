@@ -195,13 +195,23 @@ public class Map implements KeyListener, FocusListener{
 
 
 	public void tick() {
-		bombman.setXval(xVel);
-		bombman.setYval(yVel);
+		bombman.incrementXval(xVel);
+		bombman.incrementYval(yVel);
 		//hard-coded bomberman/indestructibles collision detection for demo purposes
 		for(int i = 0; i < 100; i++){
 			if(tiles[0].collisionDetection(bombman, indestructibles[i])){
-				bombman.setXval(-xVel);
-				bombman.setYval(-yVel);
+				if( (tiles[0].emptyLeft(bombman, indestructibles[i], -yVel) && xVel <= 0)
+						||(tiles[0].emptyRight(bombman, indestructibles[i], -yVel) && xVel >= 0) ){
+					bombman.incrementYval(-yVel);
+				}
+				else if( (tiles[0].emptyAbove(bombman, indestructibles[i], -xVel) && yVel <= 0)
+						|| (tiles[0].emptyBelow(bombman, indestructibles[i], -xVel) && yVel >= 0) ){
+					bombman.incrementXval(-xVel);
+				}
+				else{
+					bombman.incrementXval(-xVel);
+					bombman.incrementYval(-yVel);
+				}
 			}
 		}
 		/*for(int i = 0; i < 400; i++){
@@ -253,23 +263,4 @@ public class Map implements KeyListener, FocusListener{
 		return bombman;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 }
