@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
+import Controller.Map;
 import Model.Bomberman;
 import Model.Indestructible;
 import Model.Tile;
@@ -22,9 +23,6 @@ import Model.Tile;
 public class DrawMap extends JComponent{
 	private JFrame gameFrame;
 	private DrawingArea canvas;
-	private Bomberman bombman;
-	public Indestructible[] indestructibles;
-	private Tile[] tiles;
 	private Image bombermanSprite;
 	private static DrawMap instance = new DrawMap();
 	private static DrawMenu menuFrame;
@@ -32,20 +30,7 @@ public class DrawMap extends JComponent{
 	private DrawMap(){
 		gameFrame = new JFrame("Bomberman");
 		menuFrame = DrawMenu.getInstance();
-
-		//create bomberman
-		bombman = new Bomberman();
 		bombermanSprite = Toolkit.getDefaultToolkit().getImage("Bomberman.gif");
-
-		//create an array of 101 indestructible blocks
-		indestructibles = new Indestructible[101];
-		for (int i = 0; i < 100; i++){
-			indestructibles[i] = new Indestructible();
-		}
-		tiles = new Tile[195];
-		for (int i = 0; i < 194; i++){
-			tiles[i] = new Tile();
-		}
 
 	}
 
@@ -53,22 +38,6 @@ public class DrawMap extends JComponent{
 		return instance;
 	}
 	
-	public DrawMap(JFrame main) {
-		gameFrame = main;
-
-		bombman = new Bomberman();
-		bombermanSprite = Toolkit.getDefaultToolkit().getImage("Bomberman.gif");
-
-		//create an array of 101 indestructible blocks
-		indestructibles = new Indestructible[101];
-		for (int i = 0; i < 100; i++){
-			indestructibles[i] = new Indestructible();
-		}
-		tiles = new Tile[195];
-		for (int i = 0; i < 194; i++){
-			tiles[i] = new Tile();
-		}
-	}
 
 	public void run(){
 		canvas = new DrawingArea();
@@ -98,17 +67,18 @@ public class DrawMap extends JComponent{
 		@Override
 		public void paintComponent(Graphics g){
 			super.paintComponent(g);
-			int width = 50;
-			int height = 50;
+			int width = Map.getWidth();
+			int height = Map.getHeight();
+			Bomberman bombman = Map.getBomberman();
+			
+			
 
 			//draw tiles
 			int i = 0;
 			for(int x = 0; x<15; x++){
 				for(int y = 0; y<13; y++){
-					tiles[i].setYval(y);
-					tiles[i].setXval(x);
 					g.setColor(Color.BLACK);
-					g.drawRect(tiles[i].getXval()*width,tiles[i].getYval()*height,width,height);
+					g.drawRect(Map.getTile(i).getXval()*width,Map.getTile(i).getYval()*height,width,height);
 				}
 			}
 
@@ -118,10 +88,8 @@ public class DrawMap extends JComponent{
 			for(int x=0; x<15; x++){
 				for(int y=0; y<13; y++){
 					if( (x == 0 || y == 0 || y == 12 || x == 14) || (x%2 == 0 && y%2 == 0)){
-						indestructibles[j].setYval(y);
-						indestructibles[j].setXval(x);
 						g.setColor(Color.GRAY);
-						g.fillRect(indestructibles[j].getXval()*width,indestructibles[j].getYval()*height,width,height);
+						g.fillRect(Map.getIndestructible(j).getXval()*width,Map.getIndestructible(j).getYval()*height,width,height);
 						j++;
 					}
 				}
@@ -130,23 +98,11 @@ public class DrawMap extends JComponent{
 
 			//draw Bomberman
 			g.setColor(Color.ORANGE);
-			//g.fillRect((int)bombman.getXval(), (int)bombman.getYval(), 42, 42); //change to rocket
 			g.drawImage(bombermanSprite,(int)bombman.getXval(),(int)bombman.getYval(),50,50,this);
 		}
 
 	}
 
-	public Bomberman getBomberman(){
-		return bombman;
-	}
-
-	public Tile getTile(){
-		return tiles[0];
-	}
-
-	public Indestructible getIndestructible(int i){
-		return indestructibles[i];
-	}
 
 	public DrawingArea getCanvas(){
 		return canvas;

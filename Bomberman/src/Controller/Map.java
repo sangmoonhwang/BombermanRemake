@@ -3,33 +3,70 @@
 
 package Controller;
 
+import java.awt.Color;
 import java.awt.event.*;
 
 import javax.swing.JFrame;
 
+import Model.Bomberman;
+import Model.Indestructible;
+import Model.Tile;
 import View.DrawMap;
 
-public class UserInput implements KeyListener, FocusListener{
+public class Map implements KeyListener, FocusListener{
 	public JFrame main;
 	private static DrawMap d;
+	private static Bomberman bombman;
+	private static Indestructible[] indestructibles;
+	private static Tile[] tiles;
 	private float xVel = 0;
 	private float yVel = 0;
+	private static int width;
+	private static int height;
 	static boolean running = false;
-	public UserInput(){
+	
+	public Map(){
+		width = 50;
+		height = 50;
+		bombman = new Bomberman();
+		indestructibles = new Indestructible[101];
+		for (int i = 0; i < 100; i++){
+			indestructibles[i] = new Indestructible();
+		}
+		tiles = new Tile[401];
+		for (int i = 0; i < 400; i++){
+			tiles[i] = new Tile();
+		}
+		
+		int i = 0;
+		for(int x = 0; x<15; x++){
+			for(int y = 0; y<13; y++){
+				tiles[i].setYval(y);
+				tiles[i].setXval(x);
+				i++;
+			}
+		}
+
+		int j = 0;
+		for(int x=0; x<15; x++){
+			for(int y=0; y<13; y++){
+				if( (x == 0 || y == 0 || y == 12 || x == 14) || (x%2 == 0 && y%2 == 0)){
+					indestructibles[j].setYval(y);
+					indestructibles[j].setXval(x);
+					j++;
+				}
+			}
+		}
+		
 		d = DrawMap.getInstance();
 		running = true;
 		this.run();
 	}
 
-	// public static void main(String[] args){
-	//  UserInput test = new UserInput();
-	//  running = true;
-	//  test.run();
-	// }
 
-	public UserInput(JFrame mainFrame) {
+	public Map(JFrame mainFrame) {
 		main = mainFrame;
-		d = new DrawMap(main);
+		d = DrawMap.getInstance();
 		running = true;
 		this.run();
 	}
@@ -117,22 +154,15 @@ public class UserInput implements KeyListener, FocusListener{
 
 
 	public void tick() {
-		d.getBomberman().setXval(xVel);
-		d.getBomberman().setYval(yVel);
+		bombman.setXval(xVel);
+		bombman.setYval(yVel);
 		//hard-coded bomberman/indestructibles collision detection for demo purposes
 		for(int i = 0; i < 100; i++){
-			if(d.getTile().collisionDetection(d.getBomberman(), d.getIndestructible(i))){
-				d.getBomberman().setXval(-xVel);
-				d.getBomberman().setYval(-yVel);
+			if(tiles[0].collisionDetection(bombman, indestructibles[i])){
+				bombman.setXval(-xVel);
+				bombman.setYval(-yVel);
 			}
 		}
-		/*for (int i = 0; i < 100; i++){
-   if(d.getBomberman().getXval()+42 > d.indestructibles[i].getXval()*50 && d.getBomberman().getYval() < d.indestructibles[i].getYval()*50+50 &&
-     d.getBomberman().getXval() < d.indestructibles[i].getXval()*50+50 && d.getBomberman().getYval()+42 > d.indestructibles[i].getYval()*50){
-    d.getBomberman().setXval(-xVel);
-    d.getBomberman().setYval(-yVel);
-   }
-  }*/
 	}
 
 	public void setVelX(float xVel) {
@@ -142,5 +172,43 @@ public class UserInput implements KeyListener, FocusListener{
 	public void setVelY(float yVel) {
 		this.yVel = yVel;
 	}
+	
+	public static Tile getTile(int i){
+		return tiles[i];
+	}
+	
+	public static int getWidth(){
+		return width;
+	}
+	public static int getHeight(){
+		return height;
+	}
+	
+	public static Indestructible getIndestructible(int i){
+		return indestructibles[i];
+	}
+	
+	public static Bomberman getBomberman(){
+		return bombman;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

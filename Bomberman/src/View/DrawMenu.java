@@ -13,7 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 import Controller.Login;
-import Controller.UserInput;
+import Controller.Map;
 
 
 public class DrawMenu extends JFrame{
@@ -58,7 +58,7 @@ public class DrawMenu extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				Thread thread = new Thread(){
 					public void run(){
-						UserInput play = new UserInput();
+						Map play = new Map();
 					}
 				};
 				viewFrame(false);
