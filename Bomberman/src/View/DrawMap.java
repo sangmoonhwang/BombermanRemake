@@ -84,7 +84,7 @@ public class DrawMap extends JComponent{
 
 		gameFrame.getContentPane().add(new DrawMap());
 		gameFrame.setVisible(true);
-	
+		
 		gameFrame.addWindowListener(new WindowAdapter(){
 		    public void windowClosing(WindowEvent e){
 		    	menuFrame.viewFrame(true);
@@ -92,6 +92,7 @@ public class DrawMap extends JComponent{
 		    }
 		});
 	}
+
 
 	public class DrawingArea extends JPanel{ //what does this do
 		@Override
