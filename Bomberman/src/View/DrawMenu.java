@@ -21,11 +21,19 @@ public class DrawMenu extends JFrame{
 	
 	private JButton playButton;
 	private JButton logoutButton;
+	private JButton modifyButton;
+	private JButton leaderButton;
+	private JButton loadButton;
+	private JButton saveButton;
 	private static DrawMenu instance = new DrawMenu();
 	
 	private DrawMenu(){
-		playButton = new JButton("Play");
+		playButton = new JButton("New Game");
+		loadButton = new JButton("Load saved game");
+		leaderButton = new JButton("View Leaderboards");
+		modifyButton = new JButton("Modify Account");
 		logoutButton = new JButton("Logout");
+		saveButton = new JButton("Save Game");
 		menuFrame = new JFrame();
 	}
 	
@@ -50,7 +58,11 @@ public class DrawMenu extends JFrame{
 			}
 		});
 		menuFrame.add(playButton);
+		menuFrame.add(modifyButton);
 		menuFrame.add(logoutButton);
+		menuFrame.add(leaderButton);
+		menuFrame.add(loadButton);
+		menuFrame.add(saveButton);
 		menuFrame.setVisible(true);
 	
 		playButton.addActionListener(new ActionListener() {
@@ -73,6 +85,38 @@ public class DrawMenu extends JFrame{
 				DrawLogin loginMenu = DrawLogin.getInstance();
 				loginMenu.viewFrame(true);
 				viewFrame(false);
+			}
+		});
+		
+		loadButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//Show user's loaded games
+				System.out.println("Load Game");
+			}
+		});
+		
+		saveButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//Save the user's current game, shouldn't be clickable if user is not in game
+				System.out.println("Save Game");
+			}
+		});
+		
+		modifyButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//Show modifyAccount GUI
+				System.out.println("Modify Account");
+			}
+		});
+		
+		leaderButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//Display leaderboard
+				System.out.println("View Leaderboards");
 			}
 		});
 	}

@@ -5,12 +5,15 @@ package Controller;
 
 import java.awt.Color;
 import java.awt.event.*;
+import java.util.Random;
 
 import javax.swing.JFrame;
 
 import Model.Bomberman;
+import Model.Destructible;
 import Model.Indestructible;
 import Model.Tile;
+import Model.Enemies.Enemy;
 import View.DrawMap;
 
 public class Map implements KeyListener, FocusListener{
@@ -19,6 +22,8 @@ public class Map implements KeyListener, FocusListener{
 	private static Bomberman bombman;
 	private static Indestructible[] indestructibles;
 	private static Tile[] tiles;
+	private static Destructible[] bricks;
+	private static Enemy[] enemies;
 	private float xVel = 0;
 	private float yVel = 0;
 	private static int width;
@@ -29,14 +34,39 @@ public class Map implements KeyListener, FocusListener{
 		width = 50;
 		height = 50;
 		bombman = new Bomberman();
+		
+		enemies = new Enemy[8];
+		for(int i = 0; i < 7; i++){
+			enemies[i] = new Enemy();
+			Random r = new Random();
+			int ans = r.nextInt(13)+1;
+			enemies[i].setXval(ans);
+			ans = r.nextInt(13)+1;
+			enemies[i].setYval(ans);
+		}
+		
+		bricks = new Destructible[201];
+		for(int i =0; i < 200; i++){
+			bricks[i] = new Destructible();
+			Random r = new Random();
+			int ans = r.nextInt(100) + 1;
+			if(ans < 32){
+				bricks[i].setExists(true);
+			} else {
+				bricks[i].setExists(false);
+			}
+		}
+		
 		indestructibles = new Indestructible[101];
 		for (int i = 0; i < 100; i++){
 			indestructibles[i] = new Indestructible();
 		}
+		
 		tiles = new Tile[401];
 		for (int i = 0; i < 400; i++){
 			tiles[i] = new Tile();
 		}
+		
 		
 		int i = 0;
 		for(int x = 0; x<15; x++){
@@ -44,6 +74,17 @@ public class Map implements KeyListener, FocusListener{
 				tiles[i].setYval(y);
 				tiles[i].setXval(x);
 				i++;
+			}
+		}
+		
+		int k = 0;
+		for(int x = 0; x<15; x++){
+			for(int y = 0; y<13; y++){
+				if(bricks[k] != null){
+					bricks[k].setYval(y);
+					bricks[k].setXval(x);
+				}
+				k++;
 			}
 		}
 
@@ -163,6 +204,14 @@ public class Map implements KeyListener, FocusListener{
 				bombman.setYval(-yVel);
 			}
 		}
+		/*for(int i = 0; i < 400; i++){
+			if(bricks[i] != null){
+				if(tiles[0].collisionDetection(bombman, bricks[i])){
+					bombman.setXval(-xVel);
+					bombman.setYval(-yVel);
+				}
+			}
+		}*/
 	}
 
 	public void setVelX(float xVel) {
@@ -186,6 +235,18 @@ public class Map implements KeyListener, FocusListener{
 	
 	public static Indestructible getIndestructible(int i){
 		return indestructibles[i];
+	}
+	
+	public static Destructible getDestructible(int i){
+		if(bricks[i].getExists()){
+			return bricks[i];
+		} else {
+			return null;
+		}
+	}
+	
+	public static Enemy getEnemy(int i){
+		return enemies[i];
 	}
 	
 	public static Bomberman getBomberman(){

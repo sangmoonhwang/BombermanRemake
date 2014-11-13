@@ -24,6 +24,10 @@ public class DrawMap extends JComponent{
 	private JFrame gameFrame;
 	private DrawingArea canvas;
 	private Image bombermanSprite;
+	private Image HardBlock;
+	private Image Floor;
+	private Image Brick;
+	private Image Enemy;
 	private static DrawMap instance = new DrawMap();
 	private static DrawMenu menuFrame;
 	
@@ -31,6 +35,10 @@ public class DrawMap extends JComponent{
 		gameFrame = new JFrame("Bomberman");
 		menuFrame = DrawMenu.getInstance();
 		bombermanSprite = Toolkit.getDefaultToolkit().getImage("Bomberman.gif");
+		HardBlock = Toolkit.getDefaultToolkit().getImage("HardBlock.png");
+		Floor = Toolkit.getDefaultToolkit().getImage("Tile.jpg");
+		Brick = Toolkit.getDefaultToolkit().getImage("Brick.jpg");
+		Enemy = Toolkit.getDefaultToolkit().getImage("Enemy.png");
 
 	}
 
@@ -78,7 +86,21 @@ public class DrawMap extends JComponent{
 			for(int x = 0; x<15; x++){
 				for(int y = 0; y<13; y++){
 					g.setColor(Color.BLACK);
-					g.drawRect(Map.getTile(i).getXval()*width,Map.getTile(i).getYval()*height,width,height);
+					//g.drawRect(Map.getTile(i).getXval()*width,Map.getTile(i).getYval()*height,width,height);
+					g.drawImage(Floor,Map.getTile(i).getXval()*width,Map.getTile(i).getYval()*height,width,height,this);
+					i++;
+				}
+			}
+			
+			int k = 0;
+			for(int x = 0; x<15; x++){
+				for(int y = 0; y<13; y++){
+					g.setColor(Color.BLACK);
+					//g.drawRect(Map.getTile(i).getXval()*width,Map.getTile(i).getYval()*height,width,height);
+					if(Map.getDestructible(k) != null){
+						g.drawImage(Brick,Map.getDestructible(k).getXval()*width,Map.getDestructible(k).getYval()*height,width,height,this);
+					}
+					k++;
 				}
 			}
 
@@ -89,10 +111,16 @@ public class DrawMap extends JComponent{
 				for(int y=0; y<13; y++){
 					if( (x == 0 || y == 0 || y == 12 || x == 14) || (x%2 == 0 && y%2 == 0)){
 						g.setColor(Color.GRAY);
-						g.fillRect(Map.getIndestructible(j).getXval()*width,Map.getIndestructible(j).getYval()*height,width,height);
+						//g.fillRect(Map.getIndestructible(j).getXval()*width,Map.getIndestructible(j).getYval()*height,width,height);
+						g.drawImage(HardBlock, Map.getIndestructible(j).getXval()*width,Map.getIndestructible(j).getYval()*height,width,height,this);
 						j++;
 					}
 				}
+			}
+			
+			for(int q = 0; q < 7; q++){
+				g.setColor(Color.BLACK);
+				g.drawImage(Enemy,(int)Map.getEnemy(q).getXval()*width,(int)Map.getEnemy(q).getYval()*height,width,height,this);
 			}
 
 
