@@ -63,7 +63,7 @@ public class Tile implements GameObject {
 		return true;
 	}
 	
-	public boolean collisionDetection(Bomberman b, Destructible i) {
+	public boolean collisionDetection(Movable b, Destructible i) {
 		boolean collision = false;
 		if ((b.getXval()+40 > i.getXval()*50 &&
 				b.getYval() < i.getYval()*50+45 &&
