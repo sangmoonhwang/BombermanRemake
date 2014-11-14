@@ -37,12 +37,13 @@ public class Map implements KeyListener, FocusListener{
 		
 		enemies = new Enemy[8];
 		for(int i = 0; i < 7; i++){
-			enemies[i] = new Enemy();
+
 			Random r = new Random();
-			int ans = r.nextInt(13)+1;
-			enemies[i].setXval(ans);
-			ans = r.nextInt(13)+1;
-			enemies[i].setYval(ans);
+			int x = r.nextInt(13)+1;
+			int y = r.nextInt(13)+1;
+			enemies[i] = new Enemy();
+			enemies[i].setXval(x);
+			enemies[i].setYval(y);
 		}
 		
 		bricks = new Destructible[201];
