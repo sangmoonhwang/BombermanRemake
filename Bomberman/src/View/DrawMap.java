@@ -123,7 +123,7 @@ public class DrawMap extends JComponent{
 			
 			for(int q = 0; q < 7; q++){
 				g.setColor(Color.BLACK);
-				g.drawImage(Enemy,(int)Map.getEnemy(q).getXval()*width,(int)Map.getEnemy(q).getYval()*height,width,height,this);
+				g.drawImage(Enemy,(int)Map.getEnemy(q).getXval(),(int)Map.getEnemy(q).getYval(),width,height,this);
 			}
 
 

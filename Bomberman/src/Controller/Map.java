@@ -49,8 +49,8 @@ public class Map implements KeyListener, FocusListener{
 			int x = r.nextInt(13)+1;
 			int y = r.nextInt(13)+1;
 			enemies[i] = new Enemy();
-			enemies[i].setXval(x);
-			enemies[i].setYval(y);
+			enemies[i].setXval(50*x);
+			enemies[i].setYval(50*y);
 		}
 		
 		bricks = new Destructible[201];
@@ -220,6 +220,13 @@ public class Map implements KeyListener, FocusListener{
 	public void tick() {
 		bombman.incrementXval(xVel);
 		bombman.incrementYval(yVel);
+		for(int i = 0; i < 7; i++){
+			Random r = new Random();
+			int x = r.nextInt(3) - 1;
+			int y = r.nextInt(3) - 1;
+			enemies[i].incrementXval(x);
+			enemies[i].incrementYval(y);
+		}
 		//hard-coded bomberman/indestructibles collision detection for demo purposes
 		for(int i = 0; i < 100; i++){
 			if(tiles[0].collisionDetection(bombman, indestructibles[i])){

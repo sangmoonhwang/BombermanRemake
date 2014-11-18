@@ -10,7 +10,7 @@ public class Enemy {
   
   	
   	public Enemy(){
-  		int xval, yval;
+  		float xval, yval;
   	}
   	
 	 //getter
@@ -22,11 +22,20 @@ public class Enemy {
 	   return yval;
 	 }
 	 //setter
-	 public void setXval(int i){
+	 public void setXval(float i){
 	   xval = i;
 	 }
 	 //setter
-	 public void setYval(int i){
+	 public void setYval(float i){
 	   yval = i;
+	 }
+	 public void patrol(){
+		 
+	 }
+	 public void incrementXval(float i){
+			xval += i;
+	 }
+	 public void incrementYval(float i){
+			yval += i;
 	 }
 }
