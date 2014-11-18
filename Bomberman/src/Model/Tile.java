@@ -1,5 +1,7 @@
 package Model;
 
+import Model.Enemies.Enemy;
+
 public class Tile implements GameObject {
 	private int xval, yval;
 
@@ -17,6 +19,62 @@ public class Tile implements GameObject {
 			collision = true;
 		}
 		return collision;
+	}
+	
+	public boolean collisionDetection(Enemy e, Indestructible i) {
+		boolean collision = false;
+		if ((e.getXval()+40 > i.getXval()*50 &&
+				e.getYval() < i.getYval()*50+45 &&
+			     e.getXval() < i.getXval()*50+40 && 
+			     e.getYval()+45 > i.getYval()*50)){
+			collision = true;
+		}
+		return collision;
+		
+	}
+	
+	public boolean emptyLeft(Enemy e, Indestructible i, float y) {
+		Enemy test = new Enemy();
+		test.setYval(e.getYval()+y);
+		test.setXval(e.getXval()-1);
+		
+		if(collisionDetection(test,i)){
+			return false;
+		}
+		return true;
+	}
+
+	public boolean emptyRight(Enemy e, Indestructible i, float y) {
+		Enemy test = new Enemy();
+		test.setYval(e.getYval()+y);
+		test.setXval(e.getXval()+1);
+		
+		if(collisionDetection(test,i)){
+			return false;
+		}
+		return true;
+	}
+
+	public boolean emptyBelow(Enemy e, Indestructible i, float x) {
+		Enemy test = new Enemy();
+		test.setYval(e.getYval()+1);
+		test.setXval(e.getXval()+x);
+		
+		if(collisionDetection(test,i)){
+			return false;
+		}
+		return true;
+	}
+
+	public boolean emptyAbove(Enemy e, Indestructible i, float x) {
+		Enemy test = new Enemy();
+		test.setYval(e.getYval()-1);
+		test.setXval(e.getXval()+x);
+		
+		if(collisionDetection(test,i)){
+			return false;
+		}
+		return true;
 	}
 	
 	public boolean emptyAbove(Bomberman b, Indestructible i, float x) {
@@ -94,4 +152,5 @@ public class Tile implements GameObject {
 	 public void setYval(int i){
 	   yval = i;
 	 }
+
 }

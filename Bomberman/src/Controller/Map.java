@@ -219,13 +219,13 @@ public class Map implements KeyListener, FocusListener{
 
 	public void tick() {
 		bombman.incrementXval(xVel);
+		Random r = new Random();
+		int[] enemy_xvel = {r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1};
+		int[] enemy_yvel = {r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1};
 		bombman.incrementYval(yVel);
 		for(int i = 0; i < 7; i++){
-			Random r = new Random();
-			int x = r.nextInt(3) - 1;
-			int y = r.nextInt(3) - 1;
-			enemies[i].incrementXval(x);
-			enemies[i].incrementYval(y);
+			enemies[i].incrementXval(enemy_xvel[i]);
+			enemies[i].incrementYval(enemy_yvel[i]);
 		}
 		//hard-coded bomberman/indestructibles collision detection for demo purposes
 		for(int i = 0; i < 100; i++){
@@ -237,10 +237,24 @@ public class Map implements KeyListener, FocusListener{
 				else if( (tiles[0].emptyAbove(bombman, indestructibles[i], -xVel) && yVel <= 0)
 						|| (tiles[0].emptyBelow(bombman, indestructibles[i], -xVel) && yVel >= 0) ){
 					bombman.incrementXval(-xVel);
-				}
-				else{
+				} else {
 					bombman.incrementXval(-xVel);
 					bombman.incrementYval(-yVel);
+				}
+			}
+			for(int j=0;j<7;j++){
+				if(tiles[0].collisionDetection(enemies[j], indestructibles[i])){
+					if( (tiles[0].emptyLeft(enemies[j], indestructibles[i], -enemy_yvel[j]) && enemy_xvel[j] <= 0)
+							||(tiles[0].emptyRight(enemies[j], indestructibles[i], -enemy_yvel[j]) && enemy_xvel[j] >= 0) ){
+						enemies[j].incrementYval(-enemy_yvel[j]);
+					}
+					else if( (tiles[0].emptyAbove(enemies[j], indestructibles[i], -enemy_xvel[j]) && enemy_yvel[j] <= 0)
+							|| (tiles[0].emptyBelow(enemies[j], indestructibles[i], -enemy_xvel[j]) && enemy_yvel[j] >= 0) ){
+						enemies[j].incrementXval(-enemy_xvel[j]);
+					}  else  {
+							enemies[j].incrementXval(-enemy_xvel[j]);
+							enemies[j].incrementYval(-enemy_yvel[j]);
+					}
 				}
 			}
 		}
