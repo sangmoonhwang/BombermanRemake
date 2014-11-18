@@ -7,6 +7,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Timer;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -28,6 +29,7 @@ public class DrawMap extends JComponent{
 	private Image Floor;
 	private Image Brick;
 	private Image Enemy;
+	private Image Bomb;
 	private static DrawMap instance = new DrawMap();
 	private static DrawMenu menuFrame;
 	
@@ -39,6 +41,7 @@ public class DrawMap extends JComponent{
 		Floor = Toolkit.getDefaultToolkit().getImage("Tile.jpg");
 		Brick = Toolkit.getDefaultToolkit().getImage("Brick.jpg");
 		Enemy = Toolkit.getDefaultToolkit().getImage("Enemy.png");
+		Bomb = Toolkit.getDefaultToolkit().getImage("Bomb.png");
 
 	}
 
@@ -127,6 +130,9 @@ public class DrawMap extends JComponent{
 			//draw Bomberman
 			g.setColor(Color.ORANGE);
 			g.drawImage(bombermanSprite,(int)bombman.getXval(),(int)bombman.getYval(),50,50,this);
+			if(Map.getBomb().isActive()){
+				g.drawImage(Bomb, Map.getBomb().getXval(), Map.getBomb().getYval(), 50,50,this);
+			}
 		}
 
 	}

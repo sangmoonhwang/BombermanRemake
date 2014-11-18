@@ -6,9 +6,12 @@ package Controller;
 import java.awt.Color;
 import java.awt.event.*;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JFrame;
 
+import Model.Bomb;
 import Model.Bomberman;
 import Model.Destructible;
 import Model.Indestructible;
@@ -24,16 +27,20 @@ public class Map implements KeyListener, FocusListener{
 	private static Tile[] tiles;
 	private static Destructible[] bricks;
 	private static Enemy[] enemies;
+	private static Bomb bomb;
 	private float xVel = 0;
 	private float yVel = 0;
 	private static int width;
 	private static int height;
+	private Timer explodeTimer;
 	static boolean running = false;
 	
 	public Map(){
 		width = 50;
 		height = 50;
 		bombman = new Bomberman();
+		
+		bomb = new Bomb();
 		
 		enemies = new Enemy[8];
 		for(int i = 0; i < 7; i++){
@@ -154,6 +161,18 @@ public class Map implements KeyListener, FocusListener{
 		else if(value == KeyEvent.VK_RIGHT && value !=KeyEvent.VK_LEFT){
 			setVelX(2);
 		}
+		else if(value == KeyEvent.VK_SPACE){
+			bomb.setXval((int)bombman.getXval());
+			bomb.setYval((int)bombman.getYval());
+			bomb.setActive(true);
+			int delay = 2000;
+			explodeTimer = new Timer();
+			explodeTimer.schedule(new TimerTask(){
+				public void run(){
+					bomb.setActive(false);
+				};
+			},2000);
+		}
 	}
 
 	@Override
@@ -183,6 +202,9 @@ public class Map implements KeyListener, FocusListener{
 		else{
 			setVelX(0);
 			setVelY(0);
+		}
+		if (value == KeyEvent.VK_SPACE){
+			//bomb.setActive();
 		}
 	}    
 
@@ -262,6 +284,9 @@ public class Map implements KeyListener, FocusListener{
 	
 	public static Bomberman getBomberman(){
 		return bombman;
+	}
+	public static Bomb getBomb(){
+		return bomb;
 	}
 	
 }
