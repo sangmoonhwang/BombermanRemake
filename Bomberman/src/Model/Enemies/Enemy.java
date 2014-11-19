@@ -1,8 +1,10 @@
 package Model.Enemies;
+import Model.Movable;
 
-public class Enemy {
+public class Enemy extends Movable{
 	private String identity;
-	private float xval, yval;
+	private float xval;
+	private float yval;
 	private int intelligence;
 	private int speed;
   	private boolean wallPass;
@@ -10,7 +12,8 @@ public class Enemy {
   
   	
   	public Enemy(){
-  		float xval, yval;
+  		xval= 0;
+  		yval= 0;
   	}
   	
 	 //getter
@@ -22,20 +25,21 @@ public class Enemy {
 	   return yval;
 	 }
 	 //setter
-	 public void setXval(float i){
+	 public void setXval(int i){
 	   xval = i;
 	 }
 	 //setter
-	 public void setYval(float i){
+	 public void setYval(int i){
 	   yval = i;
 	 }
 	 public void patrol(){
 		 
 	 }
-	 public void incrementXval(float i){
+	 public void incrementXval(int i){
 			xval += i;
 	 }
-	 public void incrementYval(float i){
+	 public void incrementYval(int i){
 			yval += i;
 	 }
+
 }

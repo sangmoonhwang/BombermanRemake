@@ -41,7 +41,7 @@ public class DrawMap extends JComponent{
 		Floor = Toolkit.getDefaultToolkit().getImage("Tile.jpg");
 		Brick = Toolkit.getDefaultToolkit().getImage("Brick.jpg");
 		Enemy = Toolkit.getDefaultToolkit().getImage("Enemy.png");
-		Bomb = Toolkit.getDefaultToolkit().getImage("Bomb.png");
+		Bomb = Toolkit.getDefaultToolkit().getImage("Bomb.gif");
 
 	}
 
@@ -128,11 +128,10 @@ public class DrawMap extends JComponent{
 
 
 			//draw Bomberman
-			g.setColor(Color.ORANGE);
-			g.drawImage(bombermanSprite,(int)bombman.getXval(),(int)bombman.getYval(),50,50,this);
 			if(Map.getBomb().isActive()){
 				g.drawImage(Bomb, Map.getBomb().getXval(), Map.getBomb().getYval(), 50,50,this);
 			}
+			g.drawImage(bombermanSprite,(int)bombman.getXval(),(int)bombman.getYval(),50,50,this);
 		}
 
 	}

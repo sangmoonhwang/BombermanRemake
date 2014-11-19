@@ -1,14 +1,26 @@
 package Model;
 
-public interface Movable {
+public class Movable {
 	
-	public void move();
+	private float xVal;
+	private float yVal;
 	
-	public void setXval(float i);
+	private int height;
+	private int width;	
 	
-	public void setYval(float i);
+	public void setXval(float i){
+		xVal = i;
+	}
+	
+	public void setYval(float i){
+		yVal = i;
+	}
 
-	public float getXval();
+	public float getXval(){
+		return xVal;
+	}
 	
-	public float getYval();
+	public float getYval(){
+		return yVal;
+	}
 }

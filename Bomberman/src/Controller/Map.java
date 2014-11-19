@@ -219,14 +219,15 @@ public class Map implements KeyListener, FocusListener{
 
 	public void tick() {
 		bombman.incrementXval(xVel);
+		bombman.incrementYval(yVel);
 		Random r = new Random();
 		int[] enemy_xvel = {r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1};
 		int[] enemy_yvel = {r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1};
-		bombman.incrementYval(yVel);
 		for(int i = 0; i < 7; i++){
-			enemies[i].incrementXval(enemy_xvel[i]);
-			enemies[i].incrementYval(enemy_yvel[i]);
+			//enemies[i].incrementXval(enemy_xvel[i]);
+			//enemies[i].incrementYval(enemy_yvel[i]);
 		}
+		
 		//hard-coded bomberman/indestructibles collision detection for demo purposes
 		for(int i = 0; i < 100; i++){
 			if(tiles[0].collisionDetection(bombman, indestructibles[i])){
@@ -242,7 +243,7 @@ public class Map implements KeyListener, FocusListener{
 					bombman.incrementYval(-yVel);
 				}
 			}
-			for(int j=0;j<7;j++){
+			for(int j=0;j<enemies.length -1;j++){
 				if(tiles[0].collisionDetection(enemies[j], indestructibles[i])){
 					if( (tiles[0].emptyLeft(enemies[j], indestructibles[i], -enemy_yvel[j]) && enemy_xvel[j] <= 0)
 							||(tiles[0].emptyRight(enemies[j], indestructibles[i], -enemy_yvel[j]) && enemy_xvel[j] >= 0) ){
@@ -258,14 +259,16 @@ public class Map implements KeyListener, FocusListener{
 				}
 			}
 		}
-		/*for(int i = 0; i < 400; i++){
-			if(bricks[i] != null){
-				if(tiles[0].collisionDetection(bombman, bricks[i])){
-					bombman.setXval(-xVel);
-					bombman.setYval(-yVel);
+		for (int i=0; i<enemies.length -1; i++){
+			if(tiles[0].collisionDetection(bombman, enemies[i])){
+				if(tiles[0].collisionDetection(bombman, enemies[i])){
+					bombman.incrementXval(-xVel);
+					bombman.incrementYval(-yVel);
 				}
 			}
-		}*/
+		}
+	
+		
 	}
 
 	public void setVelX(float xVel) {

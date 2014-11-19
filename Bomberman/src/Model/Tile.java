@@ -10,75 +10,41 @@ public class Tile implements GameObject {
 		int xval, yval;
 	}
 	
-	public boolean collisionDetection(Bomberman b, Indestructible i) {
+	public boolean collisionDetection(Movable test, Indestructible i) {
 		boolean collision = false;
-		if ((b.getXval()+40 > i.getXval()*50 &&
-				b.getYval() < i.getYval()*50+45 &&
-			     b.getXval() < i.getXval()*50+40 && 
-			     b.getYval()+45 > i.getYval()*50)){
+		if ((test.getXval()+40 > i.getXval()*50 &&
+				test.getYval() < i.getYval()*50+45 &&
+			     test.getXval() < i.getXval()*50+40 && 
+			     test.getYval()+45 > i.getYval()*50)){
+			collision = true;
+		}
+		return collision;
+	}
+
+	public boolean collisionDetection(Movable test, Movable test1) {
+		boolean collision = false;
+		if ((test.getXval()+40 > test1.getXval() &&
+				test.getYval() < test1.getYval()+45 &&
+			     test.getXval() < test1.getXval()+40 && 
+			     test.getYval()+45 > test1.getYval())){
 			collision = true;
 		}
 		return collision;
 	}
 	
-	public boolean collisionDetection(Enemy e, Indestructible i) {
+	public boolean collisionDetection(Movable test, Destructible i) {
 		boolean collision = false;
-		if ((e.getXval()+40 > i.getXval()*50 &&
-				e.getYval() < i.getYval()*50+45 &&
-			     e.getXval() < i.getXval()*50+40 && 
-			     e.getYval()+45 > i.getYval()*50)){
+		if ((test.getXval()+40 > i.getXval()*50 &&
+				test.getYval() < i.getYval()*50+45 &&
+			     test.getXval() < i.getXval()*50+40 && 
+			     test.getYval()+45 > i.getYval()*50)){
 			collision = true;
 		}
 		return collision;
-		
 	}
 	
-	public boolean emptyLeft(Enemy e, Indestructible i, float y) {
-		Enemy test = new Enemy();
-		test.setYval(e.getYval()+y);
-		test.setXval(e.getXval()-1);
-		
-		if(collisionDetection(test,i)){
-			return false;
-		}
-		return true;
-	}
-
-	public boolean emptyRight(Enemy e, Indestructible i, float y) {
-		Enemy test = new Enemy();
-		test.setYval(e.getYval()+y);
-		test.setXval(e.getXval()+1);
-		
-		if(collisionDetection(test,i)){
-			return false;
-		}
-		return true;
-	}
-
-	public boolean emptyBelow(Enemy e, Indestructible i, float x) {
-		Enemy test = new Enemy();
-		test.setYval(e.getYval()+1);
-		test.setXval(e.getXval()+x);
-		
-		if(collisionDetection(test,i)){
-			return false;
-		}
-		return true;
-	}
-
-	public boolean emptyAbove(Enemy e, Indestructible i, float x) {
-		Enemy test = new Enemy();
-		test.setYval(e.getYval()-1);
-		test.setXval(e.getXval()+x);
-		
-		if(collisionDetection(test,i)){
-			return false;
-		}
-		return true;
-	}
-	
-	public boolean emptyAbove(Bomberman b, Indestructible i, float x) {
-		Bomberman test = new Bomberman();
+	public boolean emptyAbove(Movable b, Indestructible i, float x) {
+		Movable test = new Movable();
 		test.setYval(b.getYval()-1);
 		test.setXval(b.getXval()+x);
 		
@@ -88,8 +54,8 @@ public class Tile implements GameObject {
 		return true;
 	}
 	
-	public boolean emptyBelow(Bomberman b, Indestructible i, float x) {
-		Bomberman test = new Bomberman();
+	public boolean emptyBelow(Movable b, Indestructible i, float x) {
+		Movable test = new Movable();
 		test.setYval(b.getYval()+1);
 		test.setXval(b.getXval()+x);
 		
@@ -99,8 +65,8 @@ public class Tile implements GameObject {
 		return true;
 	}
 	
-	public boolean emptyLeft(Bomberman b, Indestructible i, float y) {
-		Bomberman test = new Bomberman();
+	public boolean emptyLeft(Movable b, Indestructible i, float y) {
+		Movable test = new Movable();
 		test.setYval(b.getYval()+y);
 		test.setXval(b.getXval()-1);
 		
@@ -110,8 +76,8 @@ public class Tile implements GameObject {
 		return true;
 	}
 	
-	public boolean emptyRight(Bomberman b, Indestructible i, float y) {
-		Bomberman test = new Bomberman();
+	public boolean emptyRight(Movable b, Indestructible i, float y) {
+		Movable test = new Movable();
 		test.setYval(b.getYval()+y);
 		test.setXval(b.getXval()+1);
 		
@@ -119,17 +85,6 @@ public class Tile implements GameObject {
 			return false;
 		}
 		return true;
-	}
-	
-	public boolean collisionDetection(Movable b, Destructible i) {
-		boolean collision = false;
-		if ((b.getXval()+40 > i.getXval()*50 &&
-				b.getYval() < i.getYval()*50+45 &&
-			     b.getXval() < i.getXval()*50+40 && 
-			     b.getYval()+45 > i.getYval()*50)){
-			collision = true;
-		}
-		return collision;
 	}
 	
 	@Override

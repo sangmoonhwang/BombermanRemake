@@ -1,7 +1,8 @@
 package Model;
 
-public class Bomberman implements Movable{
-	private float xval, yval;
+public class Bomberman extends Movable{
+	private float xval;
+	private float yval;
 	private int score;
 	private int life;
 	private int speed;
@@ -37,9 +38,5 @@ public class Bomberman implements Movable{
 	}
 	public void setYval(float i){
 		yval = i;
-	}
-
-	@Override
-	public void move() {
 	}
 }
