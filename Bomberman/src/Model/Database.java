@@ -44,6 +44,10 @@ public class Database {
 		       if(username.equals(nextLine[0]))
 		    	   break;
 		}
+		
+		if(nextLine == null)
+			return null;
+		
 	    return new User(nextLine);
 	}
 	

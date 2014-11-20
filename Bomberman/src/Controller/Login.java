@@ -47,34 +47,38 @@ public class Login extends Database implements KeyListener, FocusListener {
 		try {
 			u = readUserCSVEntry(username);
 		} catch (IOException e) {
-			//display "Username not found"
-		}
-		try {
-		  if(username.equals(u.getUsername())){ 
-			  user = true;
-		  }
-		  if(password.equals(u.getPassword())){
-			  pass = true;
-		  }
-		} catch (NullPointerException e){
 			
 		}
-		if(user && pass){
-			DrawLogin.setStatus("Login Successful!");
-			Thread thread = new Thread() {
-		        public void run() {
-		        	DrawMenu menuFrame = DrawMenu.getInstance();
-		        	menuFrame.run();
-		        	loginFrame.viewFrame(false);
-		        }
-		    };
-		    thread.start();
-			
+		
+		if(u != null) {
+			try {
+			  if(username.equals(u.getUsername())){ 
+				  user = true;
+			  }
+			  if(password.equals(u.getPassword())){
+				  pass = true;
+			  }
+			} catch (NullPointerException e){
+				
+			}
+			if(user && pass){
+				DrawLogin.setStatus("Login Successful!");
+				Thread thread = new Thread() {
+			        public void run() {
+			        	DrawMenu menuFrame = DrawMenu.getInstance();
+			        	menuFrame.run();
+			        	loginFrame.viewFrame(false);
+			        }
+			    };
+			    thread.start();
+				
+			}
 		}
-		if(!user || !pass){
+		if((!user || !pass) && u != null){
 			DrawLogin.setStatus("Wrong username or password, please try again");
-		}
-		else {
+		} else if(u == null) {
+			DrawLogin.setStatus("User account does not exist");
+		} else {
 			DrawLogin.setStatus("Login unsuccessful, please try again");
 		}
 	}
