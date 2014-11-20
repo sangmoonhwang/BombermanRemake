@@ -17,7 +17,6 @@ import javax.swing.WindowConstants;
 import Controller.Map;
 import Model.Bomberman;
 import Model.Indestructible;
-import Model.Tile;
 
 
 
@@ -81,19 +80,6 @@ public class DrawMap extends JComponent{
 			int width = Map.getWidth();
 			int height = Map.getHeight();
 			Bomberman bombman = Map.getBomberman();
-			
-			
-
-			//draw tiles
-			int i = 0;
-			for(int x = 0; x<15; x++){
-				for(int y = 0; y<13; y++){
-					g.setColor(Color.BLACK);
-					//g.drawRect(Map.getTile(i).getXval()*width,Map.getTile(i).getYval()*height,width,height);
-					g.drawImage(Floor,Map.getTile(i).getXval()*width,Map.getTile(i).getYval()*height,width,height,this);
-					i++;
-				}
-			}
 			
 			int k = 0;
 			for(int x = 0; x<15; x++){

@@ -14,7 +14,6 @@ import Model.Bomb;
 import Model.Bomberman;
 import Model.Destructible;
 import Model.Indestructible;
-import Model.Tile;
 import Model.Enemies.Enemy;
 import View.DrawMap;
 
@@ -23,7 +22,6 @@ public class Map implements KeyListener, FocusListener{
 	private static DrawMap d;
 	private static Bomberman bombman;
 	private static Indestructible[] indestructibles;
-	private static Tile[] tiles;
 	private static Destructible[] bricks;
 	private static Enemy[] enemies;
 	private static Bomb bomb;
@@ -49,11 +47,10 @@ public class Map implements KeyListener, FocusListener{
 		spawn = new SpawnGameObjects();
 
 		//spawn gameObjects
-		tiles = spawn.spawnTiles();
 		indestructibles = spawn.spawnIndestructibles();
 		bricks = spawn.spawnBricks();
 		enemies = spawn.spawnEnemies();
-	
+
 		d = DrawMap.getInstance();
 		running = true;
 		this.run();
@@ -106,9 +103,14 @@ public class Map implements KeyListener, FocusListener{
 		else if(value == KeyEvent.VK_RIGHT && value !=KeyEvent.VK_LEFT){
 			setVelX(2);
 		}
-		else if(value == KeyEvent.VK_SPACE){
-			bomb.setXval((int)bombman.getXval());
-			bomb.setYval((int)bombman.getYval());
+		if(value == KeyEvent.VK_SPACE){
+			int tilex = (int)bombman.getXval() + (int)(0.5*bombman.getWidth());
+			int tiley = (int)bombman.getYval() + (int)(0.5*bombman.getHeight());
+			tilex = (tilex/50) * 50;
+			tiley = (tiley/50) * 50;
+			
+			bomb.setXval(tilex);
+			bomb.setYval(tiley);
 			bomb.setActive(true);
 			int delay = 2000;
 			explodeTimer = new Timer();
@@ -116,7 +118,7 @@ public class Map implements KeyListener, FocusListener{
 				public void run(){
 					bomb.setActive(false);
 				};
-			},2000);
+			},delay);
 		}
 	}
 
@@ -182,6 +184,22 @@ public class Map implements KeyListener, FocusListener{
 				}
 			}*/
 		}
+		for(int i=0; i<200; i++){
+			if(bricks[i].getExists()){
+				if(!detect.emptyLeft(bombman, bricks[i]) && xVel <= 0){
+					bombermanXtemp = 0;
+				}
+				if(!detect.emptyRight(bombman, bricks[i]) && xVel >= 0){
+					bombermanXtemp = 0;
+				}
+				if(!detect.emptyAbove(bombman, bricks[i]) && yVel <= 0){
+					bombermanYtemp = 0;
+				}
+				if(!detect.emptyBelow(bombman, bricks[i]) && yVel >= 0){
+					bombermanYtemp = 0;
+				}
+			}
+		}
 		bombman.incrementXval(bombermanXtemp);
 		bombman.incrementYval(bombermanYtemp);
 
@@ -210,10 +228,6 @@ public class Map implements KeyListener, FocusListener{
 		this.yVel = yVel;
 	}
 
-	public static Tile getTile(int i){
-		return tiles[i];
-	}
-
 	//getters
 	public static int getWidth(){
 		return width;
@@ -240,7 +254,7 @@ public class Map implements KeyListener, FocusListener{
 	public static Bomb getBomb(){
 		return bomb;
 	}
-	
+
 	//empty methods
 	public void keyTyped(KeyEvent e) {
 	}

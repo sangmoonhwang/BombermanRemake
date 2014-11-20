@@ -1,12 +1,13 @@
 package Controller;
 
+import Model.Block;
 import Model.Destructible;
 import Model.Indestructible;
 import Model.Movable;
 
 public class CollissionDetection {
 	
-	public boolean collisionDetection(Movable test, Indestructible i) {
+	public boolean collisionDetection(Movable test, Block i) {
 		boolean collision = false;
 		if ((test.getXval() + test.getWidth() > i.getXval()*50 &&
 				test.getYval() < i.getYval()*50 + test.getHeight() &&
@@ -17,16 +18,16 @@ public class CollissionDetection {
 		return collision;
 	}
 
-	public boolean collisionDetection(Movable test, Destructible i) {
-		boolean collision = false;
-		if ((test.getXval() + test.getWidth() > i.getXval()*50 &&
-				test.getYval() < i.getYval()*50+45 &&
-			     test.getXval() < i.getXval()*50+40 && 
-			     test.getYval() + test.getHeight() > i.getYval()*50)){
-			collision = true;
-		}
-		return collision;
-	}
+//	public boolean collisionDetection(Movable test, Destructible i) {
+//		boolean collision = false;
+//		if ((test.getXval() + test.getWidth() > i.getXval()*50 &&
+//				test.getYval() < i.getYval()*50+test.getHeight() &&
+//			     test.getXval() < i.getXval()*50+test.getWidth() && 
+//			     test.getYval() + test.getHeight() > i.getYval()*50)){
+//			collision = true;
+//		}
+//		return collision;
+//	}
 
 	public boolean collisionDetection(Movable test, Movable test1) {
 		boolean collision = false;
@@ -40,7 +41,7 @@ public class CollissionDetection {
 	}
 	
 	
-	public boolean emptyAbove(Movable b, Indestructible i) {
+	public boolean emptyAbove(Movable b, Block i) {
 		Movable copy = new Movable();
 		copy.setYval(b.getYval()-2);
 		copy.setXval(b.getXval());
@@ -53,7 +54,7 @@ public class CollissionDetection {
 		return true;
 	}
 	
-	public boolean emptyBelow(Movable b, Indestructible i) {
+	public boolean emptyBelow(Movable b, Block i) {
 		Movable copy = new Movable();
 		copy.setYval(b.getYval()+2);
 		copy.setXval(b.getXval());
@@ -66,7 +67,7 @@ public class CollissionDetection {
 		return true;
 	}
 	
-	public boolean emptyLeft(Movable b, Indestructible i) {
+	public boolean emptyLeft(Movable b, Block i) {
 		Movable copy = new Movable();
 		copy.setYval(b.getYval());
 		copy.setXval(b.getXval()-2);
@@ -79,7 +80,7 @@ public class CollissionDetection {
 		return true;
 	}
 	
-	public boolean emptyRight(Movable b, Indestructible i) {
+	public boolean emptyRight(Movable b, Block i) {
 		Movable copy = new Movable();
 		copy.setYval(b.getYval());
 		copy.setXval(b.getXval()+2);

@@ -1,10 +1,15 @@
 package Model;
 
-public class Indestructible extends Block{
+import Model.Enemies.Enemy;
+
+public class Block{
+
+	//physical attributes
 	private int xval, yval;
 	private int height, width;
 
-	public Indestructible() {
+
+	public Block() {
 		xval = yval = 0;
 		height = width = 50;
 	}
@@ -16,7 +21,7 @@ public class Indestructible extends Block{
 	public void setYval(int i){
 		yval = i;
 	}
-	
+
 	//getters
 	public int getXval(){
 		return xval;
@@ -30,4 +35,5 @@ public class Indestructible extends Block{
 	public int getWidth(){
 		return width;
 	}
+
 }

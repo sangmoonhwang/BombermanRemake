@@ -4,13 +4,11 @@ import java.util.Random;
 
 import Model.Destructible;
 import Model.Indestructible;
-import Model.Tile;
 import Model.Enemies.Enemy;
 
 public class SpawnGameObjects {
 	
 	private static Indestructible[] indestructibles;
-	private static Tile[] tiles;
 	private static Destructible[] bricks;
 	private static Enemy[] enemies;
 	
@@ -34,7 +32,7 @@ public class SpawnGameObjects {
 	}
 
 	public Destructible[] spawnBricks(){
-		bricks = new Destructible[201];
+		bricks = new Destructible[200];
 		for(int i =0; i < 200; i++){
 			bricks[i] = new Destructible();
 			Random r = new Random();
@@ -75,20 +73,4 @@ public class SpawnGameObjects {
 		return enemies;
 	}
 
-	public Tile[] spawnTiles(){
-		tiles = new Tile[401];
-		for (int i = 0; i < 400; i++){
-			tiles[i] = new Tile();
-		}
-
-		int a = 0;
-		for(int x = 0; x<15; x++){
-			for(int y = 0; y<13; y++){
-				tiles[a].setYval(y);
-				tiles[a].setXval(x);
-				a++;
-			}
-		}
-		return tiles;
-	}
 }
