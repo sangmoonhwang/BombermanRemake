@@ -1,5 +1,15 @@
 package Model.PowerUps;
 
-public class Flamepass {
+import Model.Bomberman;
+
+public class Flamepass extends Powerup{
+
+	public Flamepass(){
+		super();
+	}
+	@Override
+	public void activate() {
+		Bomberman.flamePass = true;
+	}
 
 }

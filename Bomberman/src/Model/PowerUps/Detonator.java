@@ -1,5 +1,17 @@
 package Model.PowerUps;
 
-public class Detonator {
+import Model.Bomberman;
+
+public class Detonator extends Powerup{
+
+	public Detonator(){
+		super();
+	}
+	
+	@Override
+	public void activate() {
+		Bomberman.detonate = true;
+	}
+
 
 }
