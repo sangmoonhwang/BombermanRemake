@@ -35,8 +35,11 @@ public class Map implements KeyListener, FocusListener{
 	private static int height;
 	private Timer explodeTimer;
 	static boolean running = false;
+	private CollissionDetection detect;
 	
 	public Map(){
+		
+		detect = new CollissionDetection();
 		width = 50;
 		height = 50;
 		bombman = new Bomberman();
@@ -147,7 +150,6 @@ public class Map implements KeyListener, FocusListener{
 	}
 
 	//react to keyPress by moving Bomberman
-	@Override
 	public void keyPressed ( KeyEvent e ){
 		int value = e.getKeyCode();
 		if (value == KeyEvent.VK_DOWN && value !=KeyEvent.VK_UP){
@@ -176,12 +178,10 @@ public class Map implements KeyListener, FocusListener{
 		}
 	}
 
-	@Override
 	public void keyTyped(KeyEvent e) {
 	}
 
 	//stop moving when key is released
-	@Override
 	public void keyReleased(KeyEvent e) {
 		int value = e.getKeyCode();
 		if (value == KeyEvent.VK_DOWN){
@@ -204,69 +204,61 @@ public class Map implements KeyListener, FocusListener{
 			setVelX(0);
 			setVelY(0);
 		}
-		if (value == KeyEvent.VK_SPACE){
-			//bomb.setActive();
-		}
 	}    
 
-	@Override
 	public void focusGained(FocusEvent e) {
 	}
 
-	@Override
 	public void focusLost(FocusEvent e) {
 	}
-
 
 	public void tick() {
 		float bombermanXtemp = xVel;
 		float bombermanYtemp = yVel;
 		
-		float enemyX = 0;
-		float enemyY = 0;
-//		Random r = new Random();
-//		int[] enemy_xvel = {r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1};
-//		int[] enemy_yvel = {r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1};
-//		for(int i = 0; i < 7; i++){
-//			enemies[i].incrementXval(enemy_xvel[i]);
-//			enemies[i].incrementYval(enemy_yvel[i]);
-//		}
+//		float enemyX = 2;
+//		float enemyY = 2;
 		
-		//hard-coded bomberman/indestructibles collision detection for demo purposes
+		
 		for(int i = 0; i < 100; i++){
-			if(!tiles[0].emptyLeft(bombman, indestructibles[i], 0) && xVel <= 0){
+			if(!detect.emptyLeft(bombman, indestructibles[i]) && xVel <= 0){
 				bombermanXtemp = 0;
 			}
-			if(!tiles[0].emptyRight(bombman, indestructibles[i], 0) && xVel >= 0){
+			if(!detect.emptyRight(bombman, indestructibles[i]) && xVel >= 0){
 				bombermanXtemp = 0;
 			}
-			if(!tiles[0].emptyAbove(bombman, indestructibles[i], 0) && yVel <= 0){
+			if(!detect.emptyAbove(bombman, indestructibles[i]) && yVel <= 0){
 				bombermanYtemp = 0;
 			}
-			if(!tiles[0].emptyBelow(bombman, indestructibles[i], 0) && yVel >= 0){
+			if(!detect.emptyBelow(bombman, indestructibles[i]) && yVel >= 0){
 				bombermanYtemp = 0;
 			}
-			for(int j=0;j<enemies.length -1;j++){
-				//if(!tiles[0].emptyLeft(enemies[i], indestructibles[i], 0) && xVel <= 0){
-				//	bombermanXtemp = 0;
-				//}
-				//if(!tiles[0].emptyRight(enemies[i], indestructibles[i], 0) && xVel >= 0){
-				//	bombermanXtemp = 0;
-				//}
-				//if(!tiles[0].emptyAbove(enemies[i], indestructibles[i], 0) && yVel <= 0){
-				//	bombermanYtemp = 0;
-				//}
-				//if(!tiles[0].emptyBelow(enemies[i], indestructibles[i], 0) && yVel >= 0){
-				//	bombermanYtemp = 0;
-				//}
-			}
+			/*for(int j=0;j<enemies.length -1;j++){
+				if(tiles[0].emptyLeft(enemies[j], indestructibles[i]) && xVel <= 0){
+					enemyX = -enemyX;
+				}
+				if(tiles[0].emptyRight(enemies[j], indestructibles[i]) && xVel >= 0){
+					enemyX = -enemyX;
+				}
+				if(tiles[0].emptyAbove(enemies[j], indestructibles[i]) && yVel <= 0){
+					enemyY = -enemyY;
+				}
+				if(tiles[0].emptyBelow(enemies[j], indestructibles[i]) && yVel >= 0){
+					enemyY = -enemyY;
+				}
+			}*/
 		}
 		bombman.incrementXval(bombermanXtemp);
 		bombman.incrementYval(bombermanYtemp);
 		
+		/*for(int j=0;j<enemies.length -1;j++){
+			enemies[j].incrementXval(2);
+			enemies[j].incrementYval(2);
+		}*/
+		
 		for (int i=0; i<enemies.length -1; i++){
-			if(tiles[0].collisionDetection(bombman, enemies[i])){
-				if(tiles[0].collisionDetection(bombman, enemies[i])){
+			if(detect.collisionDetection(bombman, enemies[i])){
+				if(detect.collisionDetection(bombman, enemies[i])){
 					bombman.incrementXval(-xVel);
 					bombman.incrementYval(-yVel);
 				}
