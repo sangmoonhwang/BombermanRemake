@@ -33,11 +33,6 @@ public class CreateAccount extends Database {
 	private JLabel status;
 	private JLabel header_login;
 	public boolean success = false;
-	private static final String usernamePattern = 
-			"((*\\w).{6,20})";
-	private static final String passwordPattern = 
-			"((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20})";
-	private static User u;
 
 	//draw create account and button listener
 	public CreateAccount(JLabel label_Header, JPanel panel_Login, JLabel label_Status, JFrame main) {
@@ -158,20 +153,28 @@ public class CreateAccount extends Database {
 	public boolean accountCreate(String username, String password, String realName) {
 		User newUser = new User(username, password, realName);
 
-				if(!usernameValidate(username)){
-					status.setText(error);
-					return false;
-				}
-				//if(!realNameValidate(realName)){
-				//	status.setText("Realname must consist of only alphabet characters.");
-				//	return false;
-				//}
-				if(!passwordValidate(password)){
-					status.setText("Password must be 8-20 characters and contain at least one capital "
-							+ "letter, one lowercase letter, one number and one special character.");
-					return false;
-				}
-
+		if(!usernameValidate(username)){
+			status.setText("Username should contain only numbers and alphabets");
+			return false;
+		}
+		
+		try {
+			if(isUserExist(username)) {
+				status.setText("An account with this username already exists.");
+				return false;
+			}
+		} catch (IOException e1) {
+			System.out.println(e1.toString());
+		}
+		
+		if(!passwordValidate(password)){
+			status.setText("Password must be 8-20 characters and contain at least one capital "
+					+ "letter, one lowercase letter, one number and one special character.");
+			return false;
+		}
+		
+		//after successful login it should proceed to menu not the login screen
+		//TODO
 		try {
 			writeUserCSVEntry(newUser);
 			header_login.setText("Login to play BomberMan!");
@@ -288,13 +291,15 @@ public class CreateAccount extends Database {
 	}
 
 	/**
-	 * Validate password 
-	 * @param password to validate
+	 * Validate username 
+	 * @param username to validate
 	 * @return true if it passes the requirements, otherwise false
 	 */
 	public boolean usernameValidate(String username) {
-		//matcher = forUser.matcher(username);
-		//return matcher.matches();
+		return username.matches("((?=.+\\w).{6,20})");
+	}	
+	/*	
+	
 		try {
 			u = readUserCSVEntry(username);
 		} catch (IOException e) {
@@ -309,8 +314,9 @@ public class CreateAccount extends Database {
 		catch (NullPointerException e){
 			return username.matches("((?=.+\\w).{6,20})");
 		}
-		return username.matches("((?=.+\\w).{6,20})");
-	}
+		
+		
+	*/
 
 	/**
 	 * Validate password 
@@ -318,18 +324,7 @@ public class CreateAccount extends Database {
 	 * @return true if it passes the requirements, otherwise false
 	 */
 	public boolean passwordValidate(String password) {
-		//matcher = forPassword.matcher(password);
-		//return matcher.matches();
-		//return password.matches("((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%]).{8,20})");
 		return password.matches("((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%]).{8,20})");
 	}
 
-	/**
-	 * Validate real name for only containing alphabets.
-	 * @param real name for validation
-	 * @return true if contains only alphabets, otherwise false
-	 */
-	public boolean realNameValidate(String realName) {
-		return realName.matches("[a-zA-Z]+");
-	}
 }
