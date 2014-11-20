@@ -15,6 +15,7 @@ import Model.Bomb;
 import Model.Bomberman;
 import Model.Destructible;
 import Model.Indestructible;
+import Model.Movable;
 import Model.Tile;
 import Model.Enemies.Enemy;
 import View.DrawMap;
@@ -196,7 +197,7 @@ public class Map implements KeyListener, FocusListener{
 				setVelX(0);
 		}
 		else if(value == KeyEvent.VK_RIGHT){
-			if(xVel ==2)
+			if(xVel == 2)
 				setVelX(0);
 		}
 		else{
@@ -218,47 +219,51 @@ public class Map implements KeyListener, FocusListener{
 
 
 	public void tick() {
-		bombman.incrementXval(xVel);
-		bombman.incrementYval(yVel);
-		Random r = new Random();
-		int[] enemy_xvel = {r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1};
-		int[] enemy_yvel = {r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1};
-		for(int i = 0; i < 7; i++){
-			//enemies[i].incrementXval(enemy_xvel[i]);
-			//enemies[i].incrementYval(enemy_yvel[i]);
-		}
+		float bombermanXtemp = xVel;
+		float bombermanYtemp = yVel;
+		
+		float enemyX = 0;
+		float enemyY = 0;
+//		Random r = new Random();
+//		int[] enemy_xvel = {r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1};
+//		int[] enemy_yvel = {r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1,r.nextInt(3) - 1};
+//		for(int i = 0; i < 7; i++){
+//			enemies[i].incrementXval(enemy_xvel[i]);
+//			enemies[i].incrementYval(enemy_yvel[i]);
+//		}
 		
 		//hard-coded bomberman/indestructibles collision detection for demo purposes
 		for(int i = 0; i < 100; i++){
-			if(tiles[0].collisionDetection(bombman, indestructibles[i])){
-				if( (tiles[0].emptyLeft(bombman, indestructibles[i], -yVel) && xVel <= 0)
-						||(tiles[0].emptyRight(bombman, indestructibles[i], -yVel) && xVel >= 0) ){
-					bombman.incrementYval(-yVel);
-				}
-				else if( (tiles[0].emptyAbove(bombman, indestructibles[i], -xVel) && yVel <= 0)
-						|| (tiles[0].emptyBelow(bombman, indestructibles[i], -xVel) && yVel >= 0) ){
-					bombman.incrementXval(-xVel);
-				} else {
-					bombman.incrementXval(-xVel);
-					bombman.incrementYval(-yVel);
-				}
+			if(!tiles[0].emptyLeft(bombman, indestructibles[i], 0) && xVel <= 0){
+				bombermanXtemp = 0;
+			}
+			if(!tiles[0].emptyRight(bombman, indestructibles[i], 0) && xVel >= 0){
+				bombermanXtemp = 0;
+			}
+			if(!tiles[0].emptyAbove(bombman, indestructibles[i], 0) && yVel <= 0){
+				bombermanYtemp = 0;
+			}
+			if(!tiles[0].emptyBelow(bombman, indestructibles[i], 0) && yVel >= 0){
+				bombermanYtemp = 0;
 			}
 			for(int j=0;j<enemies.length -1;j++){
-				if(tiles[0].collisionDetection(enemies[j], indestructibles[i])){
-					if( (tiles[0].emptyLeft(enemies[j], indestructibles[i], -enemy_yvel[j]) && enemy_xvel[j] <= 0)
-							||(tiles[0].emptyRight(enemies[j], indestructibles[i], -enemy_yvel[j]) && enemy_xvel[j] >= 0) ){
-						enemies[j].incrementYval(-enemy_yvel[j]);
-					}
-					else if( (tiles[0].emptyAbove(enemies[j], indestructibles[i], -enemy_xvel[j]) && enemy_yvel[j] <= 0)
-							|| (tiles[0].emptyBelow(enemies[j], indestructibles[i], -enemy_xvel[j]) && enemy_yvel[j] >= 0) ){
-						enemies[j].incrementXval(-enemy_xvel[j]);
-					}  else  {
-							enemies[j].incrementXval(-enemy_xvel[j]);
-							enemies[j].incrementYval(-enemy_yvel[j]);
-					}
-				}
+				//if(!tiles[0].emptyLeft(enemies[i], indestructibles[i], 0) && xVel <= 0){
+				//	bombermanXtemp = 0;
+				//}
+				//if(!tiles[0].emptyRight(enemies[i], indestructibles[i], 0) && xVel >= 0){
+				//	bombermanXtemp = 0;
+				//}
+				//if(!tiles[0].emptyAbove(enemies[i], indestructibles[i], 0) && yVel <= 0){
+				//	bombermanYtemp = 0;
+				//}
+				//if(!tiles[0].emptyBelow(enemies[i], indestructibles[i], 0) && yVel >= 0){
+				//	bombermanYtemp = 0;
+				//}
 			}
 		}
+		bombman.incrementXval(bombermanXtemp);
+		bombman.incrementYval(bombermanYtemp);
+		
 		for (int i=0; i<enemies.length -1; i++){
 			if(tiles[0].collisionDetection(bombman, enemies[i])){
 				if(tiles[0].collisionDetection(bombman, enemies[i])){
