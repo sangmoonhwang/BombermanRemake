@@ -86,7 +86,6 @@ public class DrawLogin{
 	public void run(){
 		prepareGui();
 		showLogin();
-		//mainFrame.setVisible(true);
 	}
 	public void showLogin(){
 		headerLabel.setText("Login to play BomberMan!");
@@ -111,7 +110,6 @@ public class DrawLogin{
 				Login.loginUser(username,password);
 				String data = "Username: " + userText.getText();
 				data += ", Password: " + new String(passwordText.getPassword());
-				//statusLabel.setText(data);
 			}
 		});
 

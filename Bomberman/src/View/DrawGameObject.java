@@ -18,6 +18,8 @@ public class DrawGameObject extends JFrame{
 	private Image Enemy;
 	private Image Bomb;
 	private Image Explode;
+	private int previousPosOfBomberman;
+	private int xVisible;
 	
 	public DrawGameObject(){
 
@@ -27,11 +29,12 @@ public class DrawGameObject extends JFrame{
 		Enemy = Toolkit.getDefaultToolkit().getImage("Enemy.png");
 		Bomb = Toolkit.getDefaultToolkit().getImage("Bomb.gif");
 		Explode = Toolkit.getDefaultToolkit().getImage("Explosion.jpg");
+		
+		previousPosOfBomberman = 0;
+		xVisible = 0;
 	}
 	
 	public void paintComponent(Graphics g){
-		int previousPosOfBomberman = 0;
-		int xVisible = 0;
 		int width = Map.getWidth();
 		int height = Map.getHeight();
 		Bomberman bombman = Map.getBomberman();
