@@ -9,6 +9,7 @@ public class Balloom extends Enemy{
   private int points;
   private boolean wallPass;
   private int state;
+  private int scoreValue;
 
   /**
    * Sets the attribute for the Ballom. state indicated the movement direction(0-right, 1-left, 2-down, 3-up)
@@ -22,6 +23,7 @@ public class Balloom extends Enemy{
     points = 100;
     wallPass = false;
     state = (int) (Math.random()*3) + 1;
+    scoreValue = 1000;
 
   }
   
@@ -75,6 +77,10 @@ public class Balloom extends Enemy{
   
   public int getPoints() {
 	  return points;
+  }
+  
+  public int getScore(){
+	  return scoreValue;
   }
   
   public boolean getWallPass() {

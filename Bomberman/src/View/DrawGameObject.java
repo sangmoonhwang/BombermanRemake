@@ -70,14 +70,6 @@ public class DrawGameObject extends JFrame{
 			}
 		}
 		
-		//draw indestructible blocks
-		for (int i = 0; i < Map.getIndestructible().size() - 1; i++){
-			int indestructiblex = Map.getIndestructible().get(i).getXval();
-			int indestructibley = Map.getIndestructible().get(i).getYval();
-			g.setColor(Color.GRAY);
-			g.drawImage(HardBlock, indestructiblex, indestructibley, 50, 50, this);
-		}
-
 		
 		//draw Door
 		int doorx = Map.getDoor().getXval();
@@ -89,6 +81,15 @@ public class DrawGameObject extends JFrame{
 			int brickx = Map.getDestructible().get(i).getXval();
 			int bricky = Map.getDestructible().get(i).getYval();
 			g.drawImage(Brick, brickx, bricky, 50, 50, this);
+		}
+		
+		
+		//draw indestructible blocks
+		for (int i = 0; i < Map.getIndestructible().size() - 1; i++){
+			int indestructiblex = Map.getIndestructible().get(i).getXval();
+			int indestructibley = Map.getIndestructible().get(i).getYval();
+			g.setColor(Color.GRAY);
+			g.drawImage(HardBlock, indestructiblex, indestructibley, 50, 50, this);
 		}
 		
 		//draw enemies

@@ -16,6 +16,7 @@ import Model.Destructible;
 import Model.Door;
 import Model.Explosion;
 import Model.Indestructible;
+import Model.User;
 import Model.Enemies.Balloom;
 import Model.Enemies.Enemy;
 import View.DrawMap;
@@ -260,6 +261,8 @@ public class Map implements KeyListener, FocusListener{
 				}
 				for(int j = 0; j < enemies.size(); j++){
 					if(detect.collisionDetection(enemies.get(j), explosions[i])){
+						User.updateScore(enemies.get(j).getScore());
+						System.out.println(User.getTotalScore());
 						enemies.remove(j);
 					}
 				}
@@ -315,7 +318,7 @@ public class Map implements KeyListener, FocusListener{
 			}
 			
 			Balloom enemy = enemies.get(k).getBalloomInstance();
-			System.out.println("Balloom "+ k + " state " +enemy.getState());
+			//System.out.println("Balloom "+ k + " state " +enemy.getState());
 			if(enemy.getState() == 0) {
 				if(rightFree && rightFreeBrick) {
 					enemy.move(enemies.get(k));

@@ -14,6 +14,7 @@ public class Enemy extends Movable{
 	private int points;
 	private boolean wallPass;
 	private int state;
+	private int scoreValue;
 	private static Balloom balloom;
 	
 	public Enemy(){
@@ -21,6 +22,7 @@ public class Enemy extends Movable{
 		yval = 0;
 		height = 50;
 		width = 50;
+		scoreValue = 0;
 	}
 	
 	public Enemy(String enemy){
@@ -37,6 +39,7 @@ public class Enemy extends Movable{
 			points = balloom.getPoints();
 			wallPass = balloom.getWallPass();
 			state = balloom.getState();
+			scoreValue = balloom.getScore();
 		}
 	}
 	
@@ -73,6 +76,9 @@ public class Enemy extends Movable{
 	}
 	public int getWidth(){
 		return width;
+	}
+	public int getScore(){
+		return scoreValue;
 	}
 
 }

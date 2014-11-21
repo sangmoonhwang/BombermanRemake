@@ -6,7 +6,7 @@ public class User {
 	private String password;
 	private String realName;
 	private int numOfPlay;
-	private int totalScore;
+	private static int totalScore;
 	private int levelCompleted;
 	private String[] savedGame;
 	
@@ -63,8 +63,12 @@ public class User {
 		this.numOfPlay = numOfPlay;
 	}
 
-	public int getTotalScore() {
+	public static int getTotalScore() {
 		return totalScore;
+	}
+	
+	public static void updateScore(int i) {
+		totalScore += i;
 	}
 
 	public void setTotalScore(int totalScore) {
