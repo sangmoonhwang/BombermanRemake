@@ -104,7 +104,7 @@ public class DrawMap extends JFrame{
 				int leftView = xVisible + previousPosOfBomberman - bombman.getXval();
 				g.translate(leftView,0);
 			}
-		} else if(xVisible == -750) {
+		} else if(xVisible == -750 && bombman.getXval() > 1100) {
 			g.translate(-750, 0);
 		} else {
 			g.translate(0,0);
