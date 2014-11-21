@@ -89,14 +89,22 @@ public class Map implements KeyListener, FocusListener{
 		d.requestFocus();
 
 		long start = System.nanoTime();
+		long start2 = System.nanoTime();
 		final double amountOfTicks = 60.0;
 		double ns = 1000000000 / amountOfTicks;
 
 		while(running) {
 			long now = System.nanoTime();
+			long now2 = System.nanoTime();
 			if((now - start)/ns >= 1) {
 				tick();
 				start = now;
+				d.drawStuff();
+			}
+			
+			if((now2 - start2)/ns >=10){
+				tick2();
+				start2 = now2;
 				d.drawStuff();
 			}
 
@@ -206,11 +214,6 @@ public class Map implements KeyListener, FocusListener{
 			if(!detect.emptyRight(bombman, indestructibles.get(i)) && xVel >= 0){
 				bombermanXtemp = 0;
 			}
-		}
-		
-		bombman.incrementXval(bombermanXtemp);
-		
-		for(int i = 0; i < indestructibles.size(); i++){
 			if(!detect.emptyAbove(bombman, indestructibles.get(i)) && yVel <= 0){
 				bombermanYtemp = 0;
 			}
@@ -218,7 +221,6 @@ public class Map implements KeyListener, FocusListener{
 				bombermanYtemp = 0;
 			}
 		}
-		
 		
 		//bomberman collision detection with bricks
 		for(int i=0; i<bricks.size(); i++){
@@ -235,68 +237,8 @@ public class Map implements KeyListener, FocusListener{
 				bombermanYtemp = 0;
 			}
 		}
+		bombman.incrementXval(bombermanXtemp);
 		bombman.incrementYval(bombermanYtemp);
-		
-		//collision check for enemy with indestructibles and bricks
-		for(int i = 0; i < indestructibles.size(); i++) {
-			for(int j=0; j<bricks.size(); j++) {
-				
-				for(int k=0;k<enemies.size();k++) {
-					Balloom enemy = enemies.get(k).getBalloomInstance();
-					
-					switch(enemy.getState()) {
-						case 0:
-							if(detect.emptyRight(enemies.get(k), bricks.get(j)) && detect.emptyRight(enemies.get(k), indestructibles.get(i)) && enemy.getState() == 0){
-								enemy.move(enemies.get(k));
-							} else {
-								enemy.changeDirection();
-								if(detect.emptyLeft(enemies.get(k), bricks.get(j)) && detect.emptyLeft(enemies.get(k), indestructibles.get(i)) && enemy.getState() == 1) {
-									enemy.move(enemies.get(k));
-								} else {
-									enemies.get(k).incrementXval(0);
-								}
-							}
-							break;
-						case 1:
-							if(detect.emptyLeft(enemies.get(k), bricks.get(j)) && detect.emptyLeft(enemies.get(k), indestructibles.get(i)) && enemy.getState() == 1){
-								enemy.move(enemies.get(k));
-							} else {
-								enemy.changeDirection();
-								if(detect.emptyRight(enemies.get(k), bricks.get(j)) && detect.emptyRight(enemies.get(k), indestructibles.get(i)) && enemy.getState() == 0) {
-									enemy.move(enemies.get(k));
-								} else {
-									enemies.get(k).incrementXval(0);
-								}
-							}
-							break;
-						case 2:
-							if(detect.emptyBelow(enemies.get(k), bricks.get(j)) && detect.emptyBelow(enemies.get(k), indestructibles.get(i)) && enemy.getState() == 2){
-								enemy.move(enemies.get(k));
-							} else {
-								enemy.changeDirection();
-								if(detect.emptyAbove(enemies.get(k), bricks.get(j)) && detect.emptyAbove(enemies.get(k), indestructibles.get(i)) && enemy.getState() == 3) {
-									enemy.move(enemies.get(k));
-								} else {
-									enemies.get(k).incrementYval(0);
-								}
-							}
-							break;
-						case 3:
-							if(detect.emptyAbove(enemies.get(k), bricks.get(j)) && detect.emptyAbove(enemies.get(k), indestructibles.get(i)) && enemy.getState() == 3){
-								enemy.move(enemies.get(k));
-							} else {
-								enemy.changeDirection();
-								if(detect.emptyBelow(enemies.get(k), bricks.get(j)) && detect.emptyBelow(enemies.get(k), indestructibles.get(i)) && enemy.getState() == 2) {
-									enemy.move(enemies.get(k));
-								} else {
-									enemies.get(k).incrementYval(0);
-								}
-							}
-							break;		
-					}
-				}
-			}
-		}
 		
 		//Bomberman and Enemy Collisions
 		for (int i=0; i<enemies.size(); i++){
@@ -327,7 +269,73 @@ public class Map implements KeyListener, FocusListener{
 				}
 			}
 		}
+	}
+	
+	public void tick2() {
+		//collision check for enemy with indestructibles and bricks
+		for(int k=0;k<enemies.size();k++) {
+			for(int i = 0; i < indestructibles.size(); i++) {
+				for(int j=0; j<bricks.size(); j++) {
 
+					Balloom enemy = enemies.get(k).getBalloomInstance();
+
+					switch(enemy.getState()) {
+
+					case 0:
+						if(detect.emptyRight(enemies.get(k), bricks.get(j)) && detect.emptyRight(enemies.get(k), indestructibles.get(i))){
+							enemy.move(enemies.get(k));
+						} else {
+							enemy.changeDirection();
+							if(detect.emptyLeft(enemies.get(k), bricks.get(j)) && detect.emptyLeft(enemies.get(k), indestructibles.get(i))) {
+								enemy.move(enemies.get(k));
+							} else {
+								enemies.get(k).incrementXval(0);
+							}
+						}
+						break;
+
+					case 1:
+						if(detect.emptyLeft(enemies.get(k), bricks.get(j)) && detect.emptyLeft(enemies.get(k), indestructibles.get(i))){
+							enemy.move(enemies.get(k));
+						} else {
+							enemy.changeDirection();
+							if(detect.emptyRight(enemies.get(k), bricks.get(j)) && detect.emptyRight(enemies.get(k), indestructibles.get(i))) {
+								enemy.move(enemies.get(k));
+							} else {
+								enemies.get(k).incrementXval(0);
+							}
+						}
+						break;
+
+					case 2:
+						if(detect.emptyBelow(enemies.get(k), bricks.get(j)) && detect.emptyBelow(enemies.get(k), indestructibles.get(i))){
+							enemy.move(enemies.get(k));
+						} else {
+							enemy.changeDirection();
+							if(detect.emptyAbove(enemies.get(k), bricks.get(j)) && detect.emptyAbove(enemies.get(k), indestructibles.get(i))) {
+								enemy.move(enemies.get(k));
+							} else {
+								enemies.get(k).incrementYval(0);
+							}
+						}
+						break;
+
+					case 3:
+						if(detect.emptyAbove(enemies.get(k), bricks.get(j)) && detect.emptyAbove(enemies.get(k), indestructibles.get(i))){
+							enemy.move(enemies.get(k));
+						} else {
+							enemy.changeDirection();
+							if(detect.emptyBelow(enemies.get(k), bricks.get(j)) && detect.emptyBelow(enemies.get(k), indestructibles.get(i))) {
+								enemy.move(enemies.get(k));
+							} else {
+								enemies.get(k).incrementYval(0);
+							}
+						}
+						break;		
+					}
+				}
+			}
+		}
 
 	}
 

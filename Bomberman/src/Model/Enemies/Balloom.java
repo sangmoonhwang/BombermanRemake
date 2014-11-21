@@ -21,7 +21,7 @@ public class Balloom {
     intelligence = 1;
     points = 100;
     wallPass = false;
-    state = (int) (Math.random()*3);
+    state = (int) (Math.random()*3) + 1;
   }
   
   public void die() {
@@ -38,13 +38,13 @@ public class Balloom {
 	//otherwise move to opposite direction 0->1, 1->0, 2->3, 3->2
 	
 	if(state == 0){
-		enemy.incrementXval(0);	  
+		enemy.incrementXval(1);	  
 	} else if(state == 1) {
-		enemy.incrementXval(0);	 
+		enemy.incrementXval(-1);	 
 	} else if(state == 2) {
-		enemy.incrementYval(0);	 
+		enemy.incrementYval(1);	 
 	} else {
-		enemy.incrementYval(0);	 
+		enemy.incrementYval(-1);	 
 	}
   }
   
