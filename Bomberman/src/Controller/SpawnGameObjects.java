@@ -49,7 +49,7 @@ public class SpawnGameObjects {
 
 	public ArrayList<Enemy> spawnEnemies(){
 		for(int i = 0; i < 7; i++){
-			enemies.add(new Enemy());
+			enemies.add(new Enemy("Balloom"));              //just spawning Balloom for now
 			int x = (int)(Math.random()*29 +1);
 			int y = (int)(Math.random()*11 +1);
 			enemies.get(i).setXval(50*x);
