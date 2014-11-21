@@ -109,7 +109,6 @@ public class DrawMap extends JFrame{
 		} else {
 			g.translate(0,0);
 		}
-
 		
 		//draw destructible blocks
 		for (int i = 0; i < Map.getDestructible().size() - 1; i++){

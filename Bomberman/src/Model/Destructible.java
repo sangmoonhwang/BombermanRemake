@@ -3,18 +3,15 @@ package Model;
 public class Destructible extends Block{
 	private int xval, yval;
 	private int height, width;
-	private boolean exists;
 
 	public Destructible() {
 		xval = yval = 0;
 		height = width = 50;
-		exists = false;
 	}
 	public Destructible(int x, int y) {
 		xval = x;
 		yval = y;
 		height = width = 50;
-		exists = false;
 	}
 	
 	//setters
@@ -23,9 +20,6 @@ public class Destructible extends Block{
 	}
 	public void setYval(int i){
 		yval = i;
-	}
-	public void setExists(boolean b){
-		exists = b;
 	}
 	
 	//getters
@@ -40,8 +34,5 @@ public class Destructible extends Block{
 	}
 	public int getWidth(){
 		return width;
-	}
-	public boolean getExists(){
-		return exists;
 	}
 }
