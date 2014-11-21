@@ -1,5 +1,6 @@
 package Controller;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import Model.Destructible;
@@ -8,67 +9,46 @@ import Model.Enemies.Enemy;
 
 public class SpawnGameObjects {
 	
-	private static Indestructible[] indestructibles;
-	private static Destructible[] bricks;
-	private static Enemy[] enemies;
+	private static ArrayList<Indestructible> indestructibles;
+	private static ArrayList<Destructible> bricks;
+	private static ArrayList<Enemy> enemies;
 	
-	public Indestructible[] spawnIndestructibles(){
-		indestructibles = new Indestructible[101];
-		for (int i = 0; i < 100; i++){
-			indestructibles[i] = new Indestructible();
-		}
-
-		int a = 0;
-		for(int x=0; x<15; x++){
+	public SpawnGameObjects(){
+		indestructibles = new ArrayList<Indestructible>();
+		bricks = new ArrayList<Destructible>();
+		enemies = new ArrayList<Enemy>();
+	}
+	public ArrayList<Indestructible> spawnIndestructibles(){
+		for(int x=0; x<31; x++){
 			for(int y=0; y<13; y++){
-				if( (x == 0 || y == 0 || y == 12 || x == 14) || (x%2 == 0 && y%2 == 0)){
-					indestructibles[a].setYval(y);
-					indestructibles[a].setXval(x);
-					a++;
+				if( (x == 0 || y == 0 || x == 30 || y == 12) || (x%2 == 0 && y%2 == 0)){
+					indestructibles.add(new Indestructible(50*x, 50*y));
 				}
 			}
 		}
 		return indestructibles;
 	}
 
-	public Destructible[] spawnBricks(){
-		bricks = new Destructible[200];
-		for(int i =0; i < 200; i++){
-			bricks[i] = new Destructible();
-			Random r = new Random();
-			int ans = r.nextInt(100) + 1;
-			if(ans < 32){
-				bricks[i].setExists(true);
-			} else {
-				bricks[i].setExists(false);
-			}
-		}
-
-
-		int a = 0;
-		for(int x = 0; x<15; x++){
+	public ArrayList<Destructible> spawnBricks(){
+		for(int x = 0; x<31; x++){
 			for(int y = 0; y<13; y++){
-				if(bricks[a] != null){
-					bricks[a].setYval(y);
-					bricks[a].setXval(x);
+				double r = Math.random();
+				if(r<0.1){
+					bricks.add(new Destructible(50*x,50*y));
+					bricks.get(bricks.size() - 1).setExists(true);
 				}
-				a++;
 			}
 		}
 		return bricks;
 	}
 
-	public Enemy[] spawnEnemies(){
-		enemies = new Enemy[8];
+	public ArrayList<Enemy> spawnEnemies(){
 		for(int i = 0; i < 7; i++){
-			int x = 0;
-			int y = 0;
-			enemies[i] = new Enemy();
-			Random r = new Random();
-			x = 50 * (r.nextInt(11)+1);
-			y = 50 * (r.nextInt(11)+1);
-			enemies[i].setXval(x);
-			enemies[i].setYval(y);
+			enemies.add(new Enemy());
+			int x = (int)(Math.random()*29 +1);
+			int y = (int)(Math.random()*11 +1);
+			enemies.get(i).setXval(50*x);
+			enemies.get(i).setYval(50*y);
 		}
 		return enemies;
 	}

@@ -4,8 +4,8 @@ import Model.Movable;
 public class Enemy extends Movable{
 
 	//physical attributes
-	private float xval,yval;
-	private float height, width;
+	private int xval,yval;
+	private int height, width;
 
 	//enemy values
 	private String identity;
@@ -43,16 +43,16 @@ public class Enemy extends Movable{
 	}
 
 	//getters
-	public float getXval(){
+	public int getXval(){
 		return xval;
 	}
-	public float getYval(){
+	public int getYval(){
 		return yval;
 	}
-	public float getHeight(){
+	public int getHeight(){
 		return height;
 	}
-	public float getWidth(){
+	public int getWidth(){
 		return width;
 	}
 

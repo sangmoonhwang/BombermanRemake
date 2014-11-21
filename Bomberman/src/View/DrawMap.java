@@ -7,16 +7,13 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.Timer;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.WindowConstants;
 
 import Controller.Map;
 import Model.Bomberman;
-import Model.Indestructible;
 
 
 
@@ -25,7 +22,6 @@ public class DrawMap extends JComponent{
 	private DrawingArea canvas;
 	private Image bombermanSprite;
 	private Image HardBlock;
-	private Image Floor;
 	private Image Brick;
 	private Image Enemy;
 	private Image Bomb;
@@ -37,7 +33,6 @@ public class DrawMap extends JComponent{
 		menuFrame = DrawMenu.getInstance();
 		bombermanSprite = Toolkit.getDefaultToolkit().getImage("Bomberman.gif");
 		HardBlock = Toolkit.getDefaultToolkit().getImage("HardBlock.png");
-		Floor = Toolkit.getDefaultToolkit().getImage("Tile.jpg");
 		Brick = Toolkit.getDefaultToolkit().getImage("Brick.jpg");
 		Enemy = Toolkit.getDefaultToolkit().getImage("Enemy.png");
 		Bomb = Toolkit.getDefaultToolkit().getImage("Bomb.gif");
@@ -57,7 +52,7 @@ public class DrawMap extends JComponent{
 	}
 
 	public void makeFrame(){
-		gameFrame.setSize(751,673);
+		gameFrame.setSize(1251,673);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		gameFrame.setLocation(dim.width/2-gameFrame.getSize().width/2, dim.height/2-gameFrame.getSize().height/2);
 
@@ -81,43 +76,39 @@ public class DrawMap extends JComponent{
 			int height = Map.getHeight();
 			Bomberman bombman = Map.getBomberman();
 			
-			int k = 0;
-			for(int x = 0; x<15; x++){
-				for(int y = 0; y<13; y++){
-					g.setColor(Color.BLACK);
-					//g.drawRect(Map.getTile(i).getXval()*width,Map.getTile(i).getYval()*height,width,height);
-					if(Map.getDestructible(k) != null){
-						g.drawImage(Brick,Map.getDestructible(k).getXval()*width,Map.getDestructible(k).getYval()*height,width,height,this);
-					}
-					k++;
-				}
+			//draw destructible blocks
+			for (int i = 0; i < Map.getDestructible().size() - 1; i++){
+				int brickx = Map.getDestructible().get(i).getXval();
+				int bricky = Map.getDestructible().get(i).getYval();
+				g.drawImage(Brick, brickx, bricky, 50, 50, this);
 			}
 
-
-			//draw indestructible blocks on Map
-			int j = 0;
-			for(int x=0; x<15; x++){
-				for(int y=0; y<13; y++){
-					if( (x == 0 || y == 0 || y == 12 || x == 14) || (x%2 == 0 && y%2 == 0)){
-						g.setColor(Color.GRAY);
-						//g.fillRect(Map.getIndestructible(j).getXval()*width,Map.getIndestructible(j).getYval()*height,width,height);
-						g.drawImage(HardBlock, Map.getIndestructible(j).getXval()*width,Map.getIndestructible(j).getYval()*height,width,height,this);
-						j++;
-					}
-				}
+			//draw indestructible blocks
+			for (int i = 0; i < Map.getIndestructible().size() - 1; i++){
+				int indestructiblex = Map.getIndestructible().get(i).getXval();
+				int indestructibley = Map.getIndestructible().get(i).getYval();
+				g.setColor(Color.GRAY);
+				g.drawImage(HardBlock, indestructiblex, indestructibley, 50, 50, this);
 			}
 			
-			for(int q = 0; q < 7; q++){
+			//draw enemies
+			for(int i = 0; i < Map.getEnemy().size() - 1; i++){
+				int enemyx = Map.getEnemy().get(i).getXval();
+				int enemyy = Map.getEnemy().get(i).getYval();
 				g.setColor(Color.BLACK);
-				g.drawImage(Enemy,(int)Map.getEnemy(q).getXval(),(int)Map.getEnemy(q).getYval(),width,height,this);
+				g.drawImage(Enemy, enemyx, enemyy, 50, 50, this);
 			}
 
 
+			//draw Bomb
+			if(Map.getBomb().getActive()){
+				int bombx = Map.getBomb().getXval();
+				int bomby = Map.getBomb().getYval();
+				g.drawImage(Bomb, bombx, bomby, 50, 50, this);
+			}
+			
 			//draw Bomberman
-			if(Map.getBomb().isActive()){
-				g.drawImage(Bomb, Map.getBomb().getXval(), Map.getBomb().getYval(), 50,50,this);
-			}
-			g.drawImage(bombermanSprite,(int)bombman.getXval(),(int)bombman.getYval(),50,50,this);
+			g.drawImage(bombermanSprite, (int)bombman.getXval(), (int)bombman.getYval(), 50, 50, this);
 		}
 
 	}

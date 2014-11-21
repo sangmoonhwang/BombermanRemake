@@ -3,8 +3,8 @@ package Model;
 public class Bomberman extends Movable{
 
 	//physical attributes
-	private float xval, yval;
-	private float height, width;
+	private int xval, yval;
+	private int height, width;
 
 	//bomberman values
 	private int score;
@@ -25,32 +25,32 @@ public class Bomberman extends Movable{
 		width = 40;
 	}
 	//setters
-	public void setXval(float i){
+	public void setXval(int i){
 		xval = i;
 	}
-	public void setYval(float i){
+	public void setYval(int i){
 		yval = i;
 	}
 
 	//increment
-	public void incrementXval(float i){
+	public void incrementXval(int i){
 		xval += i;
 	}
-	public void incrementYval(float i){
+	public void incrementYval(int i){
 		yval += i;
 	}
 
 	//getters
-	public float getXval(){
+	public int getXval(){
 		return xval;
 	}
-	public float getYval(){
+	public int getYval(){
 		return yval;
 	}
-	public float getHeight(){
+	public int getHeight(){
 		return height;
 	}
-	public float getWidth(){
+	public int getWidth(){
 		return width;
 	}
 

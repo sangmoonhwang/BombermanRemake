@@ -4,7 +4,7 @@
 package Controller;
 
 import java.awt.event.*;
-import java.util.Random;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -21,12 +21,12 @@ public class Map implements KeyListener, FocusListener{
 	public JFrame main;
 	private static DrawMap d;
 	private static Bomberman bombman;
-	private static Indestructible[] indestructibles;
-	private static Destructible[] bricks;
-	private static Enemy[] enemies;
+	private static ArrayList<Indestructible> indestructibles;
+	private static ArrayList<Destructible> bricks;
+	private static ArrayList<Enemy> enemies;
 	private static Bomb bomb;
-	private float xVel = 0;
-	private float yVel = 0;
+	private int xVel = 0;
+	private int yVel = 0;
 	private static int width;
 	private static int height;
 	private Timer explodeTimer;
@@ -72,16 +72,12 @@ public class Map implements KeyListener, FocusListener{
 		long start = System.nanoTime();
 		final double amountOfTicks = 60.0;
 		double ns = 1000000000 / amountOfTicks;
-		double delta = 0;
 
 		while(running) {
 			long now = System.nanoTime();
-			delta += (now - start) / ns;
-			start = now;
-
-			if(delta >= 1) {
+			if((now - start)/ns >= 1) {
 				tick();
-				delta--;
+				start = now;
 			}
 			d.update();
 
@@ -149,24 +145,24 @@ public class Map implements KeyListener, FocusListener{
 
 
 	public void tick() {
-		float bombermanXtemp = xVel;
-		float bombermanYtemp = yVel;
+		int bombermanXtemp = xVel;
+		int bombermanYtemp = yVel;
 
-		//float enemyX = 2;
-		//float enemyY = 2;
+		//int enemyX = 2;
+		//int enemyY = 2;
 
 
-		for(int i = 0; i < 100; i++){
-			if(!detect.emptyLeft(bombman, indestructibles[i]) && xVel <= 0){
+		for(int i = 0; i < indestructibles.size(); i++){
+			if(!detect.emptyLeft(bombman, indestructibles.get(i)) && xVel <= 0){
 				bombermanXtemp = 0;
 			}
-			if(!detect.emptyRight(bombman, indestructibles[i]) && xVel >= 0){
+			if(!detect.emptyRight(bombman, indestructibles.get(i)) && xVel >= 0){
 				bombermanXtemp = 0;
 			}
-			if(!detect.emptyAbove(bombman, indestructibles[i]) && yVel <= 0){
+			if(!detect.emptyAbove(bombman, indestructibles.get(i)) && yVel <= 0){
 				bombermanYtemp = 0;
 			}
-			if(!detect.emptyBelow(bombman, indestructibles[i]) && yVel >= 0){
+			if(!detect.emptyBelow(bombman, indestructibles.get(i)) && yVel >= 0){
 				bombermanYtemp = 0;
 			}
 			/*for(int j=0;j<enemies.length -1;j++){
@@ -184,18 +180,18 @@ public class Map implements KeyListener, FocusListener{
 				}
 			}*/
 		}
-		for(int i=0; i<200; i++){
-			if(bricks[i].getExists()){
-				if(!detect.emptyLeft(bombman, bricks[i]) && xVel <= 0){
+		for(int i=0; i<bricks.size(); i++){
+			if(bricks.get(i).getExists()){
+				if(!detect.emptyLeft(bombman, bricks.get(i)) && xVel <= 0){
 					bombermanXtemp = 0;
 				}
-				if(!detect.emptyRight(bombman, bricks[i]) && xVel >= 0){
+				if(!detect.emptyRight(bombman, bricks.get(i)) && xVel >= 0){
 					bombermanXtemp = 0;
 				}
-				if(!detect.emptyAbove(bombman, bricks[i]) && yVel <= 0){
+				if(!detect.emptyAbove(bombman, bricks.get(i)) && yVel <= 0){
 					bombermanYtemp = 0;
 				}
-				if(!detect.emptyBelow(bombman, bricks[i]) && yVel >= 0){
+				if(!detect.emptyBelow(bombman, bricks.get(i)) && yVel >= 0){
 					bombermanYtemp = 0;
 				}
 			}
@@ -208,9 +204,9 @@ public class Map implements KeyListener, FocusListener{
 			enemies[j].incrementYval(2);
 		}*/
 
-		for (int i=0; i<enemies.length -1; i++){
-			if(detect.collisionDetection(bombman, enemies[i])){
-				if(detect.collisionDetection(bombman, enemies[i])){
+		for (int i=0; i<enemies.size(); i++){
+			if(detect.collisionDetection(bombman, enemies.get(i))){
+				if(detect.collisionDetection(bombman, enemies.get(i))){
 					bombman.incrementXval(-xVel);
 					bombman.incrementYval(-yVel);
 				}
@@ -221,10 +217,10 @@ public class Map implements KeyListener, FocusListener{
 	}
 
 	//setters
-	public void setVelX(float xVel) {
+	public void setVelX(int xVel) {
 		this.xVel = xVel;
 	}
-	public void setVelY(float yVel) {
+	public void setVelY(int yVel) {
 		this.yVel = yVel;
 	}
 
@@ -235,18 +231,14 @@ public class Map implements KeyListener, FocusListener{
 	public static int getHeight(){
 		return height;
 	}
-	public static Indestructible getIndestructible(int i){
-		return indestructibles[i];
+	public static ArrayList<Indestructible> getIndestructible(){
+		return indestructibles;
 	}
-	public static Destructible getDestructible(int i){
-		if(bricks[i].getExists()){
-			return bricks[i];
-		} else {
-			return null;
-		}
+	public static ArrayList<Destructible> getDestructible(){
+		return bricks;
 	}
-	public static Enemy getEnemy(int i){
-		return enemies[i];
+	public static ArrayList<Enemy> getEnemy(){
+		return enemies;
 	}
 	public static Bomberman getBomberman(){
 		return bombman;
