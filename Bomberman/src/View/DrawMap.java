@@ -85,19 +85,23 @@ public class DrawMap extends JComponent{
 //				}
 //			}
 			
-			/*
-			if(Map.getExplosion().isExploding()){
-				g.drawImage(Explode, Map.getExplosion().getXval(), Map.getExplosion().getYval(), Map.getExplosion().getWidth(),Map.getExplosion().getHeight(),this);
-			}
-			*/
 			
-			if(Map.getExplosion().isExploding()){
+			if(Map.getExplosion(0).isExploding()){
+				for(int i = 0; i < 5; i++){
+					int explosionX = Map.getExplosion(i).getXval();
+					int explosionY = Map.getExplosion(i).getYval();
+					g.drawImage(Explode, explosionX, explosionY, Map.getExplosion(i).getWidth(),Map.getExplosion(i).getHeight(),this);
+				}
+			}
+			
+			
+			/*if(Map.getExplosion().isExploding()){
 				g.drawImage(Explode, Map.getBomb().getXval(), Map.getBomb().getYval(), Map.getExplosion().getWidth(),Map.getExplosion().getHeight(),this);
 				g.drawImage(Explode, Map.getBomb().getXval()+50, Map.getBomb().getYval(), Map.getExplosion().getWidth(),Map.getExplosion().getHeight(),this);
 				g.drawImage(Explode, Map.getBomb().getXval()-50, Map.getBomb().getYval(), Map.getExplosion().getWidth(),Map.getExplosion().getHeight(),this);
 				g.drawImage(Explode, Map.getBomb().getXval(), Map.getBomb().getYval()+50, Map.getExplosion().getWidth(),Map.getExplosion().getHeight(),this);
 				g.drawImage(Explode, Map.getBomb().getXval(), Map.getBomb().getYval()-50, Map.getExplosion().getWidth(),Map.getExplosion().getHeight(),this);
-			}
+			}*/
 			
 
 			//draw destructible blocks

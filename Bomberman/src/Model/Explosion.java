@@ -1,6 +1,6 @@
 package Model;
 
-public class Explosion extends Block {
+public class Explosion extends Movable {
 	private int xval, yval;
 	private int height, width;
 	private boolean exploding;
@@ -28,12 +28,13 @@ public class Explosion extends Block {
 	public void setYval(int i){
 		yval = i;
 	}
-	public void getXval(int i){
-		xval = i;
+	public int getXval(){
+		return xval;
 	}
-	public void getYval(int i){
-		yval = i;
+	public int getYval(){
+		return yval;
 	}
+	
 	//for powerup
 	public void setWidth(int i){
 		width = i;

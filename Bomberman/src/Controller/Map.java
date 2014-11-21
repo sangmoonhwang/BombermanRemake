@@ -26,7 +26,7 @@ public class Map implements KeyListener, FocusListener{
 	private static ArrayList<Destructible> bricks;
 	private static ArrayList<Enemy> enemies;
 	private static Bomb bomb;
-	private static Explosion explosion;
+	private static Explosion[] explosions;
 	private int xVel = 0;
 	private int yVel = 0;
 	private static int width;
@@ -49,7 +49,10 @@ public class Map implements KeyListener, FocusListener{
 		bombman = new Bomberman();
 		bomb = new Bomb();
 		spawn = new SpawnGameObjects();
-		explosion = new Explosion();
+		explosions = new Explosion[9];
+		for(int i = 0; i<8; i++){
+			explosions[i] = new Explosion();
+		}
 
 		//spawn gameObjects
 		indestructibles = spawn.spawnIndestructibles();
@@ -120,6 +123,16 @@ public class Map implements KeyListener, FocusListener{
 			
 			bomb.setXval(tilex);
 			bomb.setYval(tiley);
+			explosions[0].setXval(tilex);
+			explosions[0].setYval(tiley);
+			explosions[1].setXval(tilex+50);
+			explosions[1].setYval(tiley);
+			explosions[2].setXval(tilex-50);
+			explosions[2].setYval(tiley);
+			explosions[3].setXval(tilex);
+			explosions[3].setYval(tiley+50);
+			explosions[4].setXval(tilex);
+			explosions[4].setYval(tiley-50);
 			bomb.setActive(true);
 			int delay = 2000;
 			explodeTimer = new Timer();
@@ -127,12 +140,14 @@ public class Map implements KeyListener, FocusListener{
 				public void run(){
 					bomb.setActive(false);
 					for(int i = 0; i<4;i++){
-						explosion.setExploding(true);
+						explosions[i].setExploding(true);
 					}
 					unexplodeTimer = new Timer();
 					unexplodeTimer.schedule(new TimerTask(){
 						public void run(){
-							explosion.setExploding(false);
+							for(int i = 0; i < 4; i++){
+								explosions[i].setExploding(false);
+							}
 						}
 					},500);
 				};
@@ -225,12 +240,39 @@ public class Map implements KeyListener, FocusListener{
 			enemies[j].incrementXval(2);
 			enemies[j].incrementYval(2);
 		}*/
-
+		
+		//Enemy Collisions
 		for (int i=0; i<enemies.size(); i++){
 			if(detect.collisionDetection(bombman, enemies.get(i))){
 				if(detect.collisionDetection(bombman, enemies.get(i))){
 					bombman.incrementXval(-xVel);
 					bombman.incrementYval(-yVel);
+				}
+			}
+			/*if(explosions[0].isExploding()){
+				for(int j = 0; j< 5; j++){
+					if(detect.collisionDetection(enemies.get(i), explosions[j])){
+						enemies.remove(i);
+					}
+				}
+			}*/
+		}
+		
+		
+		if(explosions[0].isExploding()){
+			for(int i = 0; i< 5; i++){
+				if(detect.collisionDetection(bombman, explosions[i])){
+					System.out.println("You died.");
+				}
+				for(int j = 0; j < enemies.size(); j++){
+					if(detect.collisionDetection(enemies.get(j), explosions[i])){
+						enemies.remove(j);
+					}
+				}
+				for(int k = 0; k < bricks.size();k++){
+					if(detect.collisionDetection(explosions[i], bricks.get(k))){
+						bricks.remove(k);
+					}
 				}
 			}
 		}
@@ -268,8 +310,8 @@ public class Map implements KeyListener, FocusListener{
 	public static Bomb getBomb(){
 		return bomb;
 	}
-	public static Explosion getExplosion(){
-		return explosion;
+	public static Explosion getExplosion(int i){
+		return explosions[i];
 	}
 
 	//empty methods
