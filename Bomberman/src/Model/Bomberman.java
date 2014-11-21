@@ -9,14 +9,17 @@ public class Bomberman extends Movable{
 	//bomberman values
 	private int score;
 	private int life;
-	private int speed;
-	private int availableBombs;
-	private int flames;
+	
+	public static int speed;
+	public static int availableBombs;
+	public static int flames;
+	public static long mystery_From;
+	
+	public static boolean detonate;
+	public static boolean wallPass;
+	public static boolean bombPass;
+	public static boolean flamePass;
 
-	private boolean detonate;
-	private boolean wallPass;
-	private boolean bombPass;
-	private boolean flamePass;
 
 	public Bomberman(){
 		xval = 50;

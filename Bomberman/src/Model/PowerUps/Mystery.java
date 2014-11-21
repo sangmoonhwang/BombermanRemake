@@ -1,5 +1,12 @@
 package Model.PowerUps;
 
-public class Mystery {
+import Model.Bomberman;
+
+public class Mystery extends Powerup{
+
+	@Override
+	public void activate() {
+		Bomberman.mystery_From = System.nanoTime();
+	}
 
 }
