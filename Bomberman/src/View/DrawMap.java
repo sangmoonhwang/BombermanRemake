@@ -74,18 +74,18 @@ public class DrawMap extends JFrame{
 	}
 
 	public void drawStuff(){
-		if(this.isShowing()){
-			BufferStrategy bf = getBufferStrategy();
-			Graphics g = null;
-			try{
-				g = bf.getDrawGraphics();
-				super.paint(g);
-				paintComponent(g);
-			}finally{
+		BufferStrategy bf = getBufferStrategy();
+		Graphics g = null;
+		try{
+			g = bf.getDrawGraphics();
+			super.paint(g);
+			paintComponent(g);
+		}finally{
+			if(g!=null){
 				g.dispose();
 			}
-			bf.show();
 		}
+		bf.show();
 		Toolkit.getDefaultToolkit().sync();
 	}
 
