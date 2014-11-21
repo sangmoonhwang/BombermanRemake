@@ -3,7 +3,7 @@ package Model.Enemies;
 import Model.Block;
 import Model.Movable;
 
-public class Balloom {
+public class Balloom extends Enemy{
   private int intelligence;
   private int speed;
   private int points;
@@ -22,6 +22,7 @@ public class Balloom {
     points = 100;
     wallPass = false;
     state = (int) (Math.random()*3) + 1;
+
   }
   
   public void die() {
@@ -38,13 +39,13 @@ public class Balloom {
 	//otherwise move to opposite direction 0->1, 1->0, 2->3, 3->2
 	
 	if(state == 0){
-		enemy.incrementXval(1);	  
+		incrementXval(1);	  
 	} else if(state == 1) {
-		enemy.incrementXval(-1);	 
+		incrementXval(-1);	 
 	} else if(state == 2) {
-		enemy.incrementYval(1);	 
+		incrementYval(1);	 
 	} else {
-		enemy.incrementYval(-1);	 
+		incrementYval(-1);	 
 	}
   }
   
@@ -63,5 +64,20 @@ public class Balloom {
   public int getState() {
 	  return state;
   }
+ 
+  public int getIntelligence() {
+	  return intelligence;
+  }
 
+  public int getSpeed() {
+	  return speed;
+  }
+  
+  public int getPoints() {
+	  return points;
+  }
+  
+  public boolean getWallPass() {
+	  return wallPass;
+  }
 }

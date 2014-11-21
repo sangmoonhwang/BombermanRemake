@@ -7,6 +7,8 @@ import Model.Destructible;
 import Model.Door;
 import Model.Explosion;
 import Model.Indestructible;
+import Model.Tile;
+import Model.Enemies.Balloom;
 import Model.Enemies.Enemy;
 
 public class SpawnGameObjects {
@@ -58,7 +60,12 @@ public class SpawnGameObjects {
 			enemies.get(i).setXval(50*x);
 			enemies.get(i).setYval(50*y);
 		}
-		System.out.println(enemies.size());
+
+		for(int i = 0; i < 7; i++){
+			Balloom ball = enemies.get(i).getBalloomInstance();
+		    System.out.println("ballom " +i +" direction " + ball.getState() );
+		}
+		
 		return enemies;
 	}
 	
