@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import Model.Destructible;
+import Model.Explosion;
 import Model.Indestructible;
 import Model.Enemies.Enemy;
 
 public class SpawnGameObjects {
 	
+	private static Explosion[] explosions;
 	private static ArrayList<Indestructible> indestructibles;
 	private static ArrayList<Destructible> bricks;
 	private static ArrayList<Enemy> enemies;
@@ -52,5 +54,7 @@ public class SpawnGameObjects {
 		}
 		return enemies;
 	}
+	
+
 
 }

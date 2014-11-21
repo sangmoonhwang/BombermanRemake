@@ -24,6 +24,7 @@ public class DrawMap extends JFrame{
 	private Image Brick;
 	private Image Enemy;
 	private Image Bomb;
+	private Image Explode;
 	private static DrawMap instance = new DrawMap();
 	private static DrawMenu menuFrame;
 
@@ -37,6 +38,7 @@ public class DrawMap extends JFrame{
 		Brick = Toolkit.getDefaultToolkit().getImage("Brick.jpg");
 		Enemy = Toolkit.getDefaultToolkit().getImage("Enemy.png");
 		Bomb = Toolkit.getDefaultToolkit().getImage("Bomb.gif");
+		Explode = Toolkit.getDefaultToolkit().getImage("Explosion.jpg");
 
 	}
 
@@ -111,6 +113,15 @@ public class DrawMap extends JFrame{
 			int enemyy = Map.getEnemy().get(i).getYval();
 			g.setColor(Color.BLACK);
 			g.drawImage(Enemy, enemyx, enemyy, 50, 50, this);
+		}
+		
+		//draw explosions
+		if(Map.getExplosion(0).isExploding()){
+			for(int i = 0; i < 5; i++){
+				int explosionX = Map.getExplosion(i).getXval();
+				int explosionY = Map.getExplosion(i).getYval();
+				g.drawImage(Explode, explosionX, explosionY, Map.getExplosion(i).getWidth(),Map.getExplosion(i).getHeight(),this);
+			}
 		}
 
 

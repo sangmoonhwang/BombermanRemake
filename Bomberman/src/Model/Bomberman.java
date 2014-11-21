@@ -26,6 +26,7 @@ public class Bomberman extends Movable{
 		yval = 50;//starting pos
 		height = 42;
 		width = 30;
+		availableBombs = 1;
 	}
 	//setters
 	public void setXval(int i){
@@ -33,6 +34,9 @@ public class Bomberman extends Movable{
 	}
 	public void setYval(int i){
 		yval = i;
+	}
+	public void giveBombs(int i){
+		availableBombs += i;
 	}
 
 	//increment
@@ -55,6 +59,9 @@ public class Bomberman extends Movable{
 	}
 	public int getWidth(){
 		return width;
+	}
+	public int getavailableBombs() {
+		return availableBombs;
 	}
 
 }
