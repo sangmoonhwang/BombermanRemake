@@ -208,6 +208,11 @@ public class Map implements KeyListener, FocusListener{
 			if(!detect.emptyRight(bombman, indestructibles.get(i)) && xVel >= 0){
 				bombermanXtemp = 0;
 			}
+		}
+		
+		bombman.incrementXval(bombermanXtemp);
+		
+		for(int i = 0; i < indestructibles.size(); i++){
 			if(!detect.emptyAbove(bombman, indestructibles.get(i)) && yVel <= 0){
 				bombermanYtemp = 0;
 			}
@@ -248,7 +253,6 @@ public class Map implements KeyListener, FocusListener{
 				bombermanYtemp = 0;
 			}
 		}
-		bombman.incrementXval(bombermanXtemp);
 		bombman.incrementYval(bombermanYtemp);
 
 		/*for(int j=0;j<enemies.length -1;j++){
