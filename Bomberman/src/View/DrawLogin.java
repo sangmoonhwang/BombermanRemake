@@ -61,7 +61,6 @@ public class DrawLogin extends JFrame{
 	public void prepareGui() {
 		mainFrame = new JFrame("Login");
 		mainFrame.setSize(800, 500);
-		mainFrame.setUndecorated(true);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		mainFrame.setLocation(dim.width/2-mainFrame.getSize().width/2, dim.height/2-mainFrame.getSize().height/2);
 
