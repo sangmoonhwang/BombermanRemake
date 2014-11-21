@@ -15,6 +15,7 @@ import Model.Bomberman;
 import Model.Destructible;
 import Model.Explosion;
 import Model.Indestructible;
+import Model.Enemies.Balloom;
 import Model.Enemies.Enemy;
 import View.DrawMap;
 import View.DrawMenu;
@@ -83,20 +84,28 @@ public class Map implements KeyListener, FocusListener{
 
 	public void run(){
 		d.run();
-		d.addFocusListener(this);
-		d.addKeyListener(this);
-		d.requestFocus();
+		d.getFrame().addFocusListener(this);
+		d.getFrame().addKeyListener(this);
+		d.getFrame().requestFocus();
 
 		long start = System.nanoTime();
+		long start2 = System.nanoTime();
 		final double amountOfTicks = 60.0;
 		double ns = 1000000000 / amountOfTicks;
 
 		while(running) {
 			long now = System.nanoTime();
+			long now2 = System.nanoTime();
 			if((now - start)/ns >= 1) {
 				tick();
 				start = now;
-				d.drawStuff();
+				d.draw();
+			}
+			
+			if((now2 - start2)/ns >=10){
+				tick2();
+				start2 = now2;
+				d.draw();
 			}
 
 		}
@@ -120,7 +129,7 @@ public class Map implements KeyListener, FocusListener{
 			setVelX(2);
 		}
 		if(value == KeyEvent.VK_ESCAPE){
-			d.dispose();
+			d.getFrame().dispose();
 			DrawMenu.getInstance().viewFrame(true);
 		}
 		if(value == KeyEvent.VK_SPACE){
@@ -197,10 +206,7 @@ public class Map implements KeyListener, FocusListener{
 		int bombermanXtemp = xVel;
 		int bombermanYtemp = yVel;
 
-		//int enemyX = 2;
-		//int enemyY = 2;
-
-
+		//bomberman and indestructible collision
 		for(int i = 0; i < indestructibles.size(); i++){
 			if(!detect.emptyLeft(bombman, indestructibles.get(i)) && xVel <= 0){
 				bombermanXtemp = 0;
@@ -219,26 +225,9 @@ public class Map implements KeyListener, FocusListener{
 			if(!detect.emptyBelow(bombman, indestructibles.get(i)) && yVel >= 0){
 				bombermanYtemp = 0;
 			}
-			for(int j=0; j<enemies.size(); j++){
-				if(detect.collisionDetection(enemies.get(j), indestructibles.get(i))){
-					enemies.get(j).incrementXval(1);
-				}
-			}
-			/*for(int j=0;j<enemies.length -1;j++){
-				if(tiles[0].emptyLeft(enemies[j], indestructibles[i]) && xVel <= 0){
-					enemyX = -enemyX;
-				}
-				if(tiles[0].emptyRight(enemies[j], indestructibles[i]) && xVel >= 0){
-					enemyX = -enemyX;
-				}
-				if(tiles[0].emptyAbove(enemies[j], indestructibles[i]) && yVel <= 0){
-					enemyY = -enemyY;
-				}
-				if(tiles[0].emptyBelow(enemies[j], indestructibles[i]) && yVel >= 0){
-					enemyY = -enemyY;
-				}
-			}*/
 		}
+		
+		//bomberman collision detection with bricks
 		for(int i=0; i<bricks.size(); i++){
 			if(!detect.emptyLeft(bombman, bricks.get(i)) && xVel <= 0){
 				bombermanXtemp = 0;
@@ -254,13 +243,8 @@ public class Map implements KeyListener, FocusListener{
 			}
 		}
 		bombman.incrementYval(bombermanYtemp);
-
-		/*for(int j=0;j<enemies.length -1;j++){
-			enemies[j].incrementXval(2);
-			enemies[j].incrementYval(2);
-		}*/
-
-		//Enemy Collisions
+		
+		//Bomberman and Enemy Collisions
 		for (int i=0; i<enemies.size(); i++){
 			if(detect.collisionDetection(bombman, enemies.get(i))){
 				if(detect.collisionDetection(bombman, enemies.get(i))){
@@ -269,13 +253,6 @@ public class Map implements KeyListener, FocusListener{
 					System.out.println("You died!!");
 				}
 			}
-			/*if(explosions[0].isExploding()){
-				for(int j = 0; j< 5; j++){
-					if(detect.collisionDetection(enemies.get(i), explosions[j])){
-						enemies.remove(i);
-					}
-				}
-			}*/
 		}
 
 
@@ -296,7 +273,73 @@ public class Map implements KeyListener, FocusListener{
 				}
 			}
 		}
+	}
+	
+	public void tick2() {
+		//collision check for enemy with indestructibles and bricks
+		for(int k=0;k<enemies.size();k++) {
+			for(int i = 0; i < indestructibles.size(); i++) {
+				for(int j=0; j<bricks.size(); j++) {
 
+					Balloom enemy = enemies.get(k).getBalloomInstance();
+
+					switch(enemy.getState()) {
+
+					case 0:
+						if(detect.emptyRight(enemies.get(k), bricks.get(j)) && detect.emptyRight(enemies.get(k), indestructibles.get(i))){
+							enemy.move(enemies.get(k));
+						} else {
+							enemy.changeDirection();
+							if(detect.emptyLeft(enemies.get(k), bricks.get(j)) && detect.emptyLeft(enemies.get(k), indestructibles.get(i))) {
+								enemy.move(enemies.get(k));
+							} else {
+								enemies.get(k).incrementXval(0);
+							}
+						}
+						break;
+
+					case 1:
+						if(detect.emptyLeft(enemies.get(k), bricks.get(j)) && detect.emptyLeft(enemies.get(k), indestructibles.get(i))){
+							enemy.move(enemies.get(k));
+						} else {
+							enemy.changeDirection();
+							if(detect.emptyRight(enemies.get(k), bricks.get(j)) && detect.emptyRight(enemies.get(k), indestructibles.get(i))) {
+								enemy.move(enemies.get(k));
+							} else {
+								enemies.get(k).incrementXval(0);
+							}
+						}
+						break;
+
+					case 2:
+						if(detect.emptyBelow(enemies.get(k), bricks.get(j)) && detect.emptyBelow(enemies.get(k), indestructibles.get(i))){
+							enemy.move(enemies.get(k));
+						} else {
+							enemy.changeDirection();
+							if(detect.emptyAbove(enemies.get(k), bricks.get(j)) && detect.emptyAbove(enemies.get(k), indestructibles.get(i))) {
+								enemy.move(enemies.get(k));
+							} else {
+								enemies.get(k).incrementYval(0);
+							}
+						}
+						break;
+
+					case 3:
+						if(detect.emptyAbove(enemies.get(k), bricks.get(j)) && detect.emptyAbove(enemies.get(k), indestructibles.get(i))){
+							enemy.move(enemies.get(k));
+						} else {
+							enemy.changeDirection();
+							if(detect.emptyBelow(enemies.get(k), bricks.get(j)) && detect.emptyBelow(enemies.get(k), indestructibles.get(i))) {
+								enemy.move(enemies.get(k));
+							} else {
+								enemies.get(k).incrementYval(0);
+							}
+						}
+						break;		
+					}
+				}
+			}
+		}
 
 	}
 

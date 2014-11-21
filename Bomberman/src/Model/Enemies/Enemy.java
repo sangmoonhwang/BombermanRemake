@@ -13,18 +13,31 @@ public class Enemy extends Movable{
 	private int speed;
 	private int points;
 	private boolean wallPass;
-
+	private static Balloom balloom;
+	
 	public Enemy(){
 		xval = 0;
 		yval = 0;
 		height = 50;
 		width = 50;
 	}
-
-
-	public void patrol(){
-
+	
+	public Enemy(String enemy){
+		xval = 0;
+		yval = 0;
+		height = 50;
+		width = 50;
+		identity = enemy;
+		
+		if(identity.equals("Balloom")){
+			balloom = new Balloom();
+		}
 	}
+	
+	public Balloom getBalloomInstance() {
+		return balloom;
+	}
+
 
 	//setters
 	public void setXval(int i){

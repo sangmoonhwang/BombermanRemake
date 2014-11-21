@@ -84,9 +84,6 @@ public class Login extends Database implements KeyListener, FocusListener {
 	}
 	
 	//call modifyAccount Class
-	public void modifyUser() {
-		modifyUser = new ModifyAccount();
-	}
 
 	@Override
 	public void focusGained(FocusEvent arg0) {

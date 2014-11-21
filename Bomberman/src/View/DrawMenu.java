@@ -14,6 +14,7 @@ import javax.swing.WindowConstants;
 
 import Controller.Login;
 import Controller.Map;
+import Controller.ModifyAccount;
 
 
 public class DrawMenu{
@@ -47,7 +48,7 @@ public class DrawMenu{
 	
 	public void makeFrame(){
 		menuFrame.setSize(800,500);
-		menuFrame.setUndecorated(true);
+		//menuFrame.setUndecorated(true);
 		menuFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		menuFrame.setLocation(dim.width/2-menuFrame.getSize().width/2, dim.height/2-menuFrame.getSize().height/2);
@@ -108,6 +109,8 @@ public class DrawMenu{
 		modifyButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				ModifyAccount md = new ModifyAccount();
+				viewFrame(false);
 				//Show modifyAccount GUI
 				System.out.println("Modify Account");
 			}
@@ -121,6 +124,7 @@ public class DrawMenu{
 			}
 		});
 	}
+	
 	
 	public void viewFrame(boolean b){
 		menuFrame.setVisible(b);
