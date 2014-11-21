@@ -1,7 +1,5 @@
 package Model;
 
-import Model.Enemies.Enemy;
-
 public class Block{
 
 	//physical attributes
@@ -10,6 +8,7 @@ public class Block{
 
 
 	public Block() {
+		//physical attributes
 		xval = yval = 0;
 		height = width = 50;
 	}

@@ -10,7 +10,13 @@ public class Destructible extends Block{
 		height = width = 50;
 		exists = false;
 	}
-
+	public Destructible(int x, int y) {
+		xval = x;
+		yval = y;
+		height = width = 50;
+		exists = false;
+	}
+	
 	//setters
 	public void setXval(int i){
 		xval = i;

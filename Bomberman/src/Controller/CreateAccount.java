@@ -298,26 +298,7 @@ public class CreateAccount extends Database {
 	public boolean usernameValidate(String username) {
 		return username.matches("((?=.+\\w).{6,20})");
 	}	
-	/*	
 	
-		try {
-			u = readUserCSVEntry(username);
-		} catch (IOException e) {
-			//display "Username not found"
-		}
-		try {
-			if(username.equals(u.getUsername())){
-				error = "An account with this username already exists.";
-				return false;
-			}
-		} 
-		catch (NullPointerException e){
-			return username.matches("((?=.+\\w).{6,20})");
-		}
-		
-		
-	*/
-
 	/**
 	 * Validate password 
 	 * @param password to validate

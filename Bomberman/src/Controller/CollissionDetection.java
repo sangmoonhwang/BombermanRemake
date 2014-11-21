@@ -1,39 +1,26 @@
 package Controller;
 
 import Model.Block;
-import Model.Destructible;
-import Model.Indestructible;
 import Model.Movable;
 
 public class CollissionDetection {
 	
 	public boolean collisionDetection(Movable test, Block i) {
 		boolean collision = false;
-		if ((test.getXval() + test.getWidth() > i.getXval()*50 &&
-				test.getYval() < i.getYval()*50 + test.getHeight() &&
-			     test.getXval() < i.getXval()*50 + test.getWidth() && 
-			     test.getYval() + test.getHeight() > i.getYval()*50)){
+		if ((test.getXval() + test.getWidth() > i.getXval() &&
+				test.getYval() < i.getYval() + i.getHeight() &&
+			     test.getXval() < i.getXval() + i.getWidth() && 
+			     test.getYval() + test.getHeight() > i.getYval())){
 			collision = true;
 		}
 		return collision;
 	}
 
-//	public boolean collisionDetection(Movable test, Destructible i) {
-//		boolean collision = false;
-//		if ((test.getXval() + test.getWidth() > i.getXval()*50 &&
-//				test.getYval() < i.getYval()*50+test.getHeight() &&
-//			     test.getXval() < i.getXval()*50+test.getWidth() && 
-//			     test.getYval() + test.getHeight() > i.getYval()*50)){
-//			collision = true;
-//		}
-//		return collision;
-//	}
-
 	public boolean collisionDetection(Movable test, Movable test1) {
 		boolean collision = false;
 		if ((test.getXval() + test.getWidth() > test1.getXval() &&
-				test.getYval() < test1.getYval() + test.getHeight() &&
-			     test.getXval() < test1.getXval() + test.getWidth() && 
+				test.getYval() < test1.getYval() + test1.getHeight() &&
+			     test.getXval() < test1.getXval() + test1.getWidth() && 
 			     test.getYval() + test.getHeight() > test1.getYval())){
 			collision = true;
 	}

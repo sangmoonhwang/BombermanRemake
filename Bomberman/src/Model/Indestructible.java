@@ -8,6 +8,11 @@ public class Indestructible extends Block{
 		xval = yval = 0;
 		height = width = 50;
 	}
+	public Indestructible(int x, int y) {
+		xval = x;
+		yval = y;
+		height = width = 50;
+	}
 
 	//setters
 	public void setXval(int i){

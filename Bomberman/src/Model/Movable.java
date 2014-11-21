@@ -3,42 +3,42 @@ package Model;
 public class Movable {
 	
 	//physical attributes
-	private float xval, yval;
-	private float height, width;
+	private int xval, yval;
+	private int height, width;
 	
 	//setters
-	public void setXval(float i){
+	public void setXval(int i){
 		xval = i;
 	}
-	public void setYval(float i){
+	public void setYval(int i){
 		yval = i;
 	}
-	public void setHeight(float i){
+	public void setHeight(int i){
 		height = i;
 	}
-	public void setWidth(float i){
+	public void setWidth(int i){
 		width = i;
 	}
 	
 	//increment
-	public void incrementXval(float i){
+	public void incrementXval(int i){
 		xval += i;
 	}
-	public void incrementYval(float i){
+	public void incrementYval(int i){
 		yval += i;
 	}
 
 	//getters
-	public float getXval(){
+	public int getXval(){
 		return xval;
 	}
-	public float getYval(){
+	public int getYval(){
 		return yval;
 	}
-	public float getHeight(){
+	public int getHeight(){
 		return height;
 	}
-	public float getWidth(){
+	public int getWidth(){
 		return width;
 	}
 }
