@@ -9,12 +9,12 @@ import Model.Indestructible;
 import Model.Enemies.Enemy;
 
 public class SpawnGameObjects {
-	
+
 	private static Explosion[] explosions;
 	private static ArrayList<Indestructible> indestructibles;
 	private static ArrayList<Destructible> bricks;
 	private static ArrayList<Enemy> enemies;
-	
+
 	public SpawnGameObjects(){
 		indestructibles = new ArrayList<Indestructible>();
 		bricks = new ArrayList<Destructible>();
@@ -32,12 +32,16 @@ public class SpawnGameObjects {
 	}
 
 	public ArrayList<Destructible> spawnBricks(){
-		for(int x = 0; x<31; x++){
-			for(int y = 0; y<13; y++){
-				double r = Math.random();
-				if(r<0.1){
-					bricks.add(new Destructible(50*x,50*y));
-					bricks.get(bricks.size() - 1).setExists(true);
+		for(int x = 1; x<30; x++){
+			for(int y = 1; y<12; y++){
+				if((x!=1 && y!=1) || (x!=1 && y!=2) || (x!=2 && y!=1) ){
+					//do{
+						double r = Math.random();
+						if(r<0.1){
+							bricks.add(new Destructible(50*x,50*y));
+							bricks.get(bricks.size() - 1).setExists(true);
+						}
+					//}while(bricks.get(bricks.size() - 1));
 				}
 			}
 		}
@@ -54,7 +58,7 @@ public class SpawnGameObjects {
 		}
 		return enemies;
 	}
-	
+
 
 
 }

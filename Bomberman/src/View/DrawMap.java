@@ -74,7 +74,7 @@ public class DrawMap extends JFrame{
 	public void drawStuff(){
 		BufferStrategy bf = getBufferStrategy();
 		Graphics g = null;
-		
+
 		try{
 			g = bf.getDrawGraphics();
 			super.paint(g);
