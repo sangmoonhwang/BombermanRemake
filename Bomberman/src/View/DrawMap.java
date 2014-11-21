@@ -55,7 +55,7 @@ public class DrawMap extends JFrame{
 	}
 
 	public void makeFrame(){
-		setSize(815,688);
+		setSize(800,648);
 		setUndecorated(true);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		setLocation(dim.width/2-getSize().width/2, dim.height/2-getSize().height/2);
