@@ -6,11 +6,12 @@ import java.awt.Image;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import Controller.Map;
 import Model.Bomberman;
 
-public class DrawGameObject extends JFrame{
+public class DrawGameObject extends JPanel{
 
 	private Image bombermanSprite;
 	private Image HardBlock;
@@ -37,11 +38,9 @@ public class DrawGameObject extends JFrame{
 	}
 	
 	public void paintComponent(Graphics g){
-		int width = Map.getWidth();
-		int height = Map.getHeight();
 		Bomberman bombman = Map.getBomberman();
 
-		super.paint(g);
+		super.paintComponent(g);
 		
 		
 		//scrolls the map

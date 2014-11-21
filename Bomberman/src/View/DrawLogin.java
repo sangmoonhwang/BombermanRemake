@@ -201,6 +201,7 @@ public class DrawLogin{
 	}
 	public void clearText(){
 		userText.setText("");
+		userText.requestFocus();
 		passwordText.setText("");
 	}
 }
