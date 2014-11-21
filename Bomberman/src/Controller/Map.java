@@ -17,6 +17,7 @@ import Model.Explosion;
 import Model.Indestructible;
 import Model.Enemies.Enemy;
 import View.DrawMap;
+import View.DrawMenu;
 
 public class Map implements KeyListener, FocusListener{
 	public JFrame main;
@@ -114,6 +115,10 @@ public class Map implements KeyListener, FocusListener{
 		}
 		else if(value == KeyEvent.VK_RIGHT && value !=KeyEvent.VK_LEFT){
 			setVelX(2);
+		}
+		if(value == KeyEvent.VK_ESCAPE){
+			d.dispose();
+			DrawMenu.getInstance().viewFrame(true);
 		}
 		if(value == KeyEvent.VK_SPACE){
 			if(bombman.getavailableBombs() != 0){
