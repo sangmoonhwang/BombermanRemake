@@ -13,6 +13,7 @@ public class Enemy extends Movable{
 	private int speed;
 	private int points;
 	private boolean wallPass;
+	private int state;
 	private static Balloom balloom;
 	
 	public Enemy(){
@@ -31,6 +32,11 @@ public class Enemy extends Movable{
 		
 		if(identity.equals("Balloom")){
 			balloom = new Balloom();
+			intelligence = balloom.getIntelligence();
+			speed = balloom.getSpeed();
+			points = balloom.getPoints();
+			wallPass = balloom.getWallPass();
+			state = balloom.getState();
 		}
 	}
 	
