@@ -74,18 +74,18 @@ public class DrawMap extends JFrame{
 	}
 
 	public void drawStuff(){
-		BufferStrategy bf = getBufferStrategy();
-		Graphics g = null;
-
-		try{
-			g = bf.getDrawGraphics();
-			super.paint(g);
-			paintComponent(g);
-		}finally{
-			g.dispose();
+		if(this.isShowing()){
+			BufferStrategy bf = getBufferStrategy();
+			Graphics g = null;
+			try{
+				g = bf.getDrawGraphics();
+				super.paint(g);
+				paintComponent(g);
+			}finally{
+				g.dispose();
+			}
+			bf.show();
 		}
-		bf.show();
-
 		Toolkit.getDefaultToolkit().sync();
 	}
 
@@ -109,7 +109,7 @@ public class DrawMap extends JFrame{
 		} else {
 			g.translate(0,0);
 		}
-		
+
 		//draw destructible blocks
 		for (int i = 0; i < Map.getDestructible().size() - 1; i++){
 			int brickx = Map.getDestructible().get(i).getXval();
@@ -132,7 +132,7 @@ public class DrawMap extends JFrame{
 			g.setColor(Color.BLACK);
 			g.drawImage(Enemy, enemyx, enemyy, 50, 50, this);
 		}
-		
+
 		//draw explosions
 		if(Map.getExplosion(0).isExploding()){
 			for(int i = 0; i < 5; i++){
