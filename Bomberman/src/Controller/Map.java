@@ -65,9 +65,9 @@ public class Map implements KeyListener, FocusListener{
 
 	public void run(){
 		d.run();
-		d.getCanvas().addFocusListener(this);
-		d.getCanvas().addKeyListener(this);
-		d.getCanvas().requestFocus();
+		d.addFocusListener(this);
+		d.addKeyListener(this);
+		d.requestFocus();
 
 		long start = System.nanoTime();
 		final double amountOfTicks = 60.0;
@@ -78,8 +78,8 @@ public class Map implements KeyListener, FocusListener{
 			if((now - start)/ns >= 1) {
 				tick();
 				start = now;
+				d.drawStuff();
 			}
-			d.update();
 
 		}
 	}

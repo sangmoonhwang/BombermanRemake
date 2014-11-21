@@ -47,6 +47,7 @@ public class DrawMenu extends JFrame{
 	
 	public void makeFrame(){
 		menuFrame.setSize(800,500);
+		menuFrame.setUndecorated(true);
 		menuFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		menuFrame.setLocation(dim.width/2-menuFrame.getSize().width/2, dim.height/2-menuFrame.getSize().height/2);

@@ -24,8 +24,8 @@ public class Bomberman extends Movable{
 	public Bomberman(){
 		xval = 50;
 		yval = 50;//starting pos
-		height = 45;
-		width = 40;
+		height = 42;
+		width = 30;
 	}
 	//setters
 	public void setXval(int i){
