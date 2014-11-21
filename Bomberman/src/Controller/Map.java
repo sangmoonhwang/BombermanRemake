@@ -19,6 +19,7 @@ import Model.Indestructible;
 import Model.User;
 import Model.Enemies.Balloom;
 import Model.Enemies.Enemy;
+import Model.PowerUps.UpBombs;
 import View.DrawMap;
 import View.DrawMenu;
 
@@ -43,6 +44,7 @@ public class Map implements KeyListener, FocusListener{
 	private CollissionDetection detect;
 	private SpawnGameObjects spawn;
 	private static int bombermanState;
+	private static UpBombs upbombs;
 
 	public Map(){
 
@@ -54,6 +56,7 @@ public class Map implements KeyListener, FocusListener{
 		detect = new CollissionDetection();
 		bombman = new Bomberman();
 		bomb = new Bomb();
+		upbombs = new UpBombs();
 		spawn = new SpawnGameObjects();
 		explosions = new Explosion[9];
 		for(int i = 0; i<8; i++){
@@ -277,6 +280,12 @@ public class Map implements KeyListener, FocusListener{
 		if(detect.collisionDetection(bombman, door) && enemies.size() == 0){
 			System.out.println("Level Complete!");
 		}
+		
+		if(detect.collisionDetection(bombman,upbombs)){
+			upbombs.activate();
+			upbombs.setXval(0);
+			upbombs.setYval(0);
+		}
 	}
 	
 	public void tick2() {
@@ -402,6 +411,10 @@ public class Map implements KeyListener, FocusListener{
 	public void focusGained(FocusEvent e) {
 	}
 	public void focusLost(FocusEvent e) {
+	}
+
+	public static UpBombs getUpBombs() {
+		return upbombs;
 	}
 
 }

@@ -20,6 +20,7 @@ public class DrawGameObject extends JPanel{
 	private Image Bomb;
 	private Image Explode;
 	private Image Exit;
+	private Image ExtraBombs;
 	private int previousPosOfBomberman;
 	private int xVisible;
 	
@@ -32,6 +33,7 @@ public class DrawGameObject extends JPanel{
 		Bomb = Toolkit.getDefaultToolkit().getImage("Bomb.gif");
 		Explode = Toolkit.getDefaultToolkit().getImage("Explosion.jpg");
 		Exit = Toolkit.getDefaultToolkit().getImage("Exit.jpg");
+		ExtraBombs = Toolkit.getDefaultToolkit().getImage("Bomberman_Bombs.png");
 		
 		previousPosOfBomberman = 0;
 		xVisible = 0;
@@ -69,6 +71,10 @@ public class DrawGameObject extends JPanel{
 			}
 		}
 		
+		//draw upBombs
+		int upBombX = Map.getUpBombs().getXval();
+		int upBombY = Map.getUpBombs().getYval();
+		g.drawImage(ExtraBombs,upBombX, upBombY,50,50,this);
 		
 		//draw Door
 		int doorx = Map.getDoor().getXval();
