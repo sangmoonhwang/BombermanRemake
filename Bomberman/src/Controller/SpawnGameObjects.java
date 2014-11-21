@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import Model.Destructible;
+import Model.Door;
 import Model.Explosion;
 import Model.Indestructible;
 import Model.Enemies.Enemy;
@@ -14,11 +15,13 @@ public class SpawnGameObjects {
 	private static ArrayList<Indestructible> indestructibles;
 	private static ArrayList<Destructible> bricks;
 	private static ArrayList<Enemy> enemies;
+	private static Door door;
 
 	public SpawnGameObjects(){
 		indestructibles = new ArrayList<Indestructible>();
 		bricks = new ArrayList<Destructible>();
 		enemies = new ArrayList<Enemy>();
+		door = new Door();
 	}
 	public ArrayList<Indestructible> spawnIndestructibles(){
 		for(int x=0; x<31; x++){
@@ -55,7 +58,16 @@ public class SpawnGameObjects {
 			enemies.get(i).setXval(50*x);
 			enemies.get(i).setYval(50*y);
 		}
+		System.out.println(enemies.size());
 		return enemies;
+	}
+	
+	public Door spawnDoor(){
+		int x = (int)(Math.random()*29 + 1);
+		int y = (int)(Math.random()*11 + 1);
+		door.setXval(50*x);
+		door.setYval(50*y);
+		return door;
 	}
 
 

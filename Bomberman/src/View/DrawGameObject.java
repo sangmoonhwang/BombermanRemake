@@ -18,6 +18,7 @@ public class DrawGameObject extends JFrame{
 	private Image Enemy;
 	private Image Bomb;
 	private Image Explode;
+	private Image Exit;
 	private int previousPosOfBomberman;
 	private int xVisible;
 	
@@ -29,6 +30,7 @@ public class DrawGameObject extends JFrame{
 		Enemy = Toolkit.getDefaultToolkit().getImage("Enemy.png");
 		Bomb = Toolkit.getDefaultToolkit().getImage("Bomb.gif");
 		Explode = Toolkit.getDefaultToolkit().getImage("Explosion.jpg");
+		Exit = Toolkit.getDefaultToolkit().getImage("Exit.jpg");
 		
 		previousPosOfBomberman = 0;
 		xVisible = 0;
@@ -40,6 +42,7 @@ public class DrawGameObject extends JFrame{
 		Bomberman bombman = Map.getBomberman();
 
 		super.paint(g);
+		
 		
 		//scrolls the map
 		if(bombman.getXval() > 350 && bombman.getXval() <= 1100) {
@@ -56,14 +59,17 @@ public class DrawGameObject extends JFrame{
 		} else {
 			g.translate(0,0);
 		}
-
-		//draw destructible blocks
-		for (int i = 0; i < Map.getDestructible().size() - 1; i++){
-			int brickx = Map.getDestructible().get(i).getXval();
-			int bricky = Map.getDestructible().get(i).getYval();
-			g.drawImage(Brick, brickx, bricky, 50, 50, this);
+		
+		
+		//draw explosions
+		if(Map.getExplosion(0).isExploding()){
+			for(int i = 0; i < 5; i++){
+				int explosionX = Map.getExplosion(i).getXval();
+				int explosionY = Map.getExplosion(i).getYval();
+				g.drawImage(Explode, explosionX, explosionY, 50,50,this);
+			}
 		}
-
+		
 		//draw indestructible blocks
 		for (int i = 0; i < Map.getIndestructible().size() - 1; i++){
 			int indestructiblex = Map.getIndestructible().get(i).getXval();
@@ -72,22 +78,27 @@ public class DrawGameObject extends JFrame{
 			g.drawImage(HardBlock, indestructiblex, indestructibley, 50, 50, this);
 		}
 
+		
+		//draw Door
+		int doorx = Map.getDoor().getXval();
+		int doory = Map.getDoor().getYval();
+		g.drawImage(Exit, doorx, doory, 50,50,this);
+		
+		//draw destructible blocks
+		for (int i = 0; i < Map.getDestructible().size() - 1; i++){
+			int brickx = Map.getDestructible().get(i).getXval();
+			int bricky = Map.getDestructible().get(i).getYval();
+			g.drawImage(Brick, brickx, bricky, 50, 50, this);
+		}
+		
 		//draw enemies
-		for(int i = 0; i < Map.getEnemy().size() - 1; i++){
+		for(int i = 0; i < Map.getEnemy().size(); i++){
 			int enemyx = Map.getEnemy().get(i).getXval();
 			int enemyy = Map.getEnemy().get(i).getYval();
 			g.setColor(Color.BLACK);
 			g.drawImage(Enemy, enemyx, enemyy, 50, 50, this);
 		}
 
-		//draw explosions
-		if(Map.getExplosion(0).isExploding()){
-			for(int i = 0; i < 5; i++){
-				int explosionX = Map.getExplosion(i).getXval();
-				int explosionY = Map.getExplosion(i).getYval();
-				g.drawImage(Explode, explosionX, explosionY, Map.getExplosion(i).getWidth(),Map.getExplosion(i).getHeight(),this);
-			}
-		}
 
 
 		//draw Bomb

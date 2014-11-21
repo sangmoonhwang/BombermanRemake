@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import Model.Bomb;
 import Model.Bomberman;
 import Model.Destructible;
+import Model.Door;
 import Model.Explosion;
 import Model.Indestructible;
 import Model.Enemies.Balloom;
@@ -29,6 +30,7 @@ public class Map implements KeyListener, FocusListener{
 	private static ArrayList<Enemy> enemies;
 	private static Bomb bomb;
 	private static Explosion[] explosions;
+	private static Door door;
 	private int xVel = 0;
 	private int yVel = 0;
 	private static int width;
@@ -61,6 +63,7 @@ public class Map implements KeyListener, FocusListener{
 		indestructibles = spawn.spawnIndestructibles();
 		bricks = spawn.spawnBricks();
 		enemies = spawn.spawnEnemies();
+		door = spawn.spawnDoor();
 
 
 		d = DrawMap.getInstance();
@@ -275,6 +278,10 @@ public class Map implements KeyListener, FocusListener{
 				}
 			}
 		}
+		
+		if(detect.collisionDetection(bombman, door) && enemies.size() == 0){
+			System.out.println("Level Complete!");
+		}
 	}
 	
 	public void tick2() {
@@ -374,6 +381,9 @@ public class Map implements KeyListener, FocusListener{
 	}
 	public static Bomb getBomb(){
 		return bomb;
+	}
+	public static Door getDoor(){
+		return door;
 	}
 	public static Explosion getExplosion(int i){
 		return explosions[i];

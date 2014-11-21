@@ -26,6 +26,7 @@ public class DrawMap{
 	private Image Enemy;
 	private Image Bomb;
 	private Image Explode;
+	private Image Exit;
 	private static DrawMap instance = new DrawMap();
 	private static DrawMenu menuFrame;
 	private int xVisible;
@@ -43,6 +44,7 @@ public class DrawMap{
 		Enemy = Toolkit.getDefaultToolkit().getImage("Enemy.png");
 		Bomb = Toolkit.getDefaultToolkit().getImage("Bomb.gif");
 		Explode = Toolkit.getDefaultToolkit().getImage("Explosion.jpg");
+		Exit = Toolkit.getDefaultToolkit().getImage("Exit.jpg");
 
 	}
 
