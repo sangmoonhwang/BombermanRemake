@@ -118,7 +118,6 @@ public class Map implements KeyListener, FocusListener{
 		if(value == KeyEvent.VK_SPACE){
 			if(bombman.getavailableBombs() != 0){
 				bombman.giveBombs(-1);
-				System.out.println(bombman.getavailableBombs());
 				int tilex = (int)bombman.getXval() + (int)(0.5*bombman.getWidth());
 				int tiley = (int)bombman.getYval() + (int)(0.5*bombman.getHeight());
 				tilex = (tilex/50) * 50;
@@ -207,6 +206,11 @@ public class Map implements KeyListener, FocusListener{
 			if(!detect.emptyBelow(bombman, indestructibles.get(i)) && yVel >= 0){
 				bombermanYtemp = 0;
 			}
+			for(int j=0; j<enemies.size(); j++){
+				if(detect.collisionDetection(enemies.get(j), indestructibles.get(i))){
+					enemies.get(j).incrementXval(1);
+				}
+			}
 			/*for(int j=0;j<enemies.length -1;j++){
 				if(tiles[0].emptyLeft(enemies[j], indestructibles[i]) && xVel <= 0){
 					enemyX = -enemyX;
@@ -252,6 +256,7 @@ public class Map implements KeyListener, FocusListener{
 				if(detect.collisionDetection(bombman, enemies.get(i))){
 					bombman.incrementXval(-xVel);
 					bombman.incrementYval(-yVel);
+					System.out.println("You died!!");
 				}
 			}
 			/*if(explosions[0].isExploding()){

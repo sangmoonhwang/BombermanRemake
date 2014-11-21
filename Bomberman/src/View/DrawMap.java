@@ -95,14 +95,6 @@ public class DrawMap extends JComponent{
 			}
 			
 			
-			/*if(Map.getExplosion().isExploding()){
-				g.drawImage(Explode, Map.getBomb().getXval(), Map.getBomb().getYval(), Map.getExplosion().getWidth(),Map.getExplosion().getHeight(),this);
-				g.drawImage(Explode, Map.getBomb().getXval()+50, Map.getBomb().getYval(), Map.getExplosion().getWidth(),Map.getExplosion().getHeight(),this);
-				g.drawImage(Explode, Map.getBomb().getXval()-50, Map.getBomb().getYval(), Map.getExplosion().getWidth(),Map.getExplosion().getHeight(),this);
-				g.drawImage(Explode, Map.getBomb().getXval(), Map.getBomb().getYval()+50, Map.getExplosion().getWidth(),Map.getExplosion().getHeight(),this);
-				g.drawImage(Explode, Map.getBomb().getXval(), Map.getBomb().getYval()-50, Map.getExplosion().getWidth(),Map.getExplosion().getHeight(),this);
-			}*/
-			
 
 			//draw destructible blocks
 			for (int i = 0; i < Map.getDestructible().size() - 1; i++){
