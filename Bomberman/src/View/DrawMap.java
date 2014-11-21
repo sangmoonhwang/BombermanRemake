@@ -29,7 +29,7 @@ public class DrawMap extends JComponent{
 	private Image Brick;
 	private Image Enemy;
 	private Image Bomb;
-	private Image Explosion;
+	private Image Explode;
 	private static DrawMap instance = new DrawMap();
 	private static DrawMenu menuFrame;
 	
@@ -42,7 +42,7 @@ public class DrawMap extends JComponent{
 		Brick = Toolkit.getDefaultToolkit().getImage("Brick.jpg");
 		Enemy = Toolkit.getDefaultToolkit().getImage("Enemy.png");
 		Bomb = Toolkit.getDefaultToolkit().getImage("Bomb.gif");
-		Explosion = Toolkit.getDefaultToolkit().getImage("Explosion.jpg");
+		Explode = Toolkit.getDefaultToolkit().getImage("Explosion.jpg");
 
 	}
 
@@ -83,10 +83,26 @@ public class DrawMap extends JComponent{
 			int height = Map.getHeight();
 			Bomberman bombman = Map.getBomberman();
 			
+//			if(Map.getExplosion(0).isExploding()){
+//				for(int i =0; i<4; i++){
+//					g.drawImage(Explosion, Map.getExplosion(i).getXval(), Map.getExplosion(i).getYval(), Map.getExplosion(i).getWidth(),Map.getExplosion(i).getHeight(),this);
+//				}
+//			}
+			
+			/*
+			if(Map.getExplosion().isExploding()){
+				g.drawImage(Explode, Map.getExplosion().getXval(), Map.getExplosion().getYval(), Map.getExplosion().getWidth(),Map.getExplosion().getHeight(),this);
+			}
+			*/
 			
 			if(Map.getExplosion().isExploding()){
-				g.drawImage(Explosion, Map.getBomb().getXval(), Map.getBomb().getYval(), Map.getExplosion().getWidth(),Map.getExplosion().getHeight(),this);
+				g.drawImage(Explode, Map.getBomb().getXval(), Map.getBomb().getYval(), Map.getExplosion().getWidth(),Map.getExplosion().getHeight(),this);
+				g.drawImage(Explode, Map.getBomb().getXval()+50, Map.getBomb().getYval(), Map.getExplosion().getWidth(),Map.getExplosion().getHeight(),this);
+				g.drawImage(Explode, Map.getBomb().getXval()-50, Map.getBomb().getYval(), Map.getExplosion().getWidth(),Map.getExplosion().getHeight(),this);
+				g.drawImage(Explode, Map.getBomb().getXval(), Map.getBomb().getYval()+50, Map.getExplosion().getWidth(),Map.getExplosion().getHeight(),this);
+				g.drawImage(Explode, Map.getBomb().getXval(), Map.getBomb().getYval()-50, Map.getExplosion().getWidth(),Map.getExplosion().getHeight(),this);
 			}
+			
 			
 			int k = 0;
 			for(int x = 0; x<15; x++){

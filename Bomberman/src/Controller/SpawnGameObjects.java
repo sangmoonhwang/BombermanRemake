@@ -3,6 +3,7 @@ package Controller;
 import java.util.Random;
 
 import Model.Destructible;
+import Model.Explosion;
 import Model.Indestructible;
 import Model.Enemies.Enemy;
 
@@ -11,6 +12,7 @@ public class SpawnGameObjects {
 	private static Indestructible[] indestructibles;
 	private static Destructible[] bricks;
 	private static Enemy[] enemies;
+	private static Explosion[] explosions;
 	
 	public Indestructible[] spawnIndestructibles(){
 		indestructibles = new Indestructible[101];
@@ -72,5 +74,7 @@ public class SpawnGameObjects {
 		}
 		return enemies;
 	}
+	
+
 
 }

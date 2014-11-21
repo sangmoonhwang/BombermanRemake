@@ -1,13 +1,14 @@
 package Model;
 
-public class Explosion {
+public class Explosion extends Block {
 	private int xval, yval;
 	private int height, width;
 	private boolean exploding;
 	
 	
 	public Explosion(){
-		int xval, yval;
+		xval = 0;
+		yval = 0;
 		height = 50;
 		width = 50;
 		exploding = false;
@@ -27,6 +28,12 @@ public class Explosion {
 	public void setYval(int i){
 		yval = i;
 	}
+	public void getXval(int i){
+		xval = i;
+	}
+	public void getYval(int i){
+		yval = i;
+	}
 	//for powerup
 	public void setWidth(int i){
 		width = i;
@@ -41,11 +48,4 @@ public class Explosion {
 		return height;
 	}
 
-	//increment
-	public void incrementXval(int i){
-		xval += i;
-	}
-	public void incrementYval(int i){
-		yval += i;
-	}
 }

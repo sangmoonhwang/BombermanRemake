@@ -43,18 +43,19 @@ public class Map implements KeyListener, FocusListener{
 		//attributes
 		width = 50;
 		height = 50;
-
+		
 		//new objects
 		detect = new CollissionDetection();
 		bombman = new Bomberman();
 		bomb = new Bomb();
-		explosion = new Explosion();
 		spawn = new SpawnGameObjects();
+		explosion = new Explosion();
 
 		//spawn gameObjects
 		indestructibles = spawn.spawnIndestructibles();
 		bricks = spawn.spawnBricks();
 		enemies = spawn.spawnEnemies();
+
 
 		d = DrawMap.getInstance();
 		running = true;
@@ -129,7 +130,9 @@ public class Map implements KeyListener, FocusListener{
 			explodeTimer.schedule(new TimerTask(){
 				public void run(){
 					bomb.setActive(false);
-					explosion.setExploding(true);
+					for(int i = 0; i<4;i++){
+						explosion.setExploding(true);
+					}
 					unexplodeTimer = new Timer();
 					unexplodeTimer.schedule(new TimerTask(){
 						public void run(){

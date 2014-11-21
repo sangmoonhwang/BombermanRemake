@@ -5,7 +5,8 @@ public class Bomb {
 	private boolean active;
 
 	public Bomb() {
-		int xval, yval;
+		xval = 0;
+		yval = 0;
 		active = false;
 	}
 	//getter
