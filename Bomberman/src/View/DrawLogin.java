@@ -27,7 +27,7 @@ import Controller.CreateAccount;
 import Controller.Login;
 
 
-public class DrawLogin extends JFrame{
+public class DrawLogin{
 
 	public static JFrame mainFrame;
 	

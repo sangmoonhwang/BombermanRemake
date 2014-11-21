@@ -16,7 +16,7 @@ import Controller.Login;
 import Controller.Map;
 
 
-public class DrawMenu extends JFrame{
+public class DrawMenu{
 	private JFrame menuFrame;
 	
 	private JButton playButton;
