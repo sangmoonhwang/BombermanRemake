@@ -27,6 +27,8 @@ public class DrawMap extends JFrame{
 	private Image Explode;
 	private static DrawMap instance = new DrawMap();
 	private static DrawMenu menuFrame;
+	private int xVisible;
+	private int previousPosOfBomberman;
 
 	private Image dbImage;
 	private Graphics dbg;
@@ -53,7 +55,7 @@ public class DrawMap extends JFrame{
 	}
 
 	public void makeFrame(){
-		setSize(1251,673);
+		setSize(815,688);
 		setUndecorated(true);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		setLocation(dim.width/2-getSize().width/2, dim.height/2-getSize().height/2);
@@ -92,6 +94,23 @@ public class DrawMap extends JFrame{
 		int height = Map.getHeight();
 		Bomberman bombman = Map.getBomberman();
 
+		//scrolls the map
+		if(bombman.getXval() > 350 && bombman.getXval() <= 1100) {
+			if(Map.getBombermanState() == 1) {
+				previousPosOfBomberman = bombman.getXval();
+				xVisible = 350 - previousPosOfBomberman;
+				g.translate(xVisible,0);
+			} else {
+				int leftView = xVisible + previousPosOfBomberman - bombman.getXval();
+				g.translate(leftView,0);
+			}
+		} else if(xVisible == -750) {
+			g.translate(-750, 0);
+		} else {
+			g.translate(0,0);
+		}
+
+		
 		//draw destructible blocks
 		for (int i = 0; i < Map.getDestructible().size() - 1; i++){
 			int brickx = Map.getDestructible().get(i).getXval();

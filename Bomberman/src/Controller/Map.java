@@ -38,7 +38,8 @@ public class Map implements KeyListener, FocusListener{
 	static boolean running = false;
 	private CollissionDetection detect;
 	private SpawnGameObjects spawn;
-
+	private static int bombermanState;
+	
 	public Map(){
 
 		//attributes
@@ -111,9 +112,11 @@ public class Map implements KeyListener, FocusListener{
 			setVelY(-2);
 		}
 		else if(value == KeyEvent.VK_LEFT && value !=KeyEvent.VK_RIGHT){
+			bombermanState = 2;
 			setVelX(-2);
 		}
 		else if(value == KeyEvent.VK_RIGHT && value !=KeyEvent.VK_LEFT){
+			bombermanState = 1;
 			setVelX(2);
 		}
 		if(value == KeyEvent.VK_ESCAPE){
@@ -328,7 +331,10 @@ public class Map implements KeyListener, FocusListener{
 	public static Explosion getExplosion(int i){
 		return explosions[i];
 	}
-
+	public static int getBombermanState() {
+		return bombermanState;
+	}
+	
 	//empty methods
 	public void keyTyped(KeyEvent e) {
 	}
