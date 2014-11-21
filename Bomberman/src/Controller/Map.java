@@ -215,6 +215,14 @@ public class Map implements KeyListener, FocusListener{
 				bombermanXtemp = 0;
 			}
 		}
+		for(int i=0; i<bricks.size(); i++){
+			if(!detect.emptyLeft(bombman, bricks.get(i)) && xVel <= 0){
+				bombermanXtemp = 0;
+			}
+			if(!detect.emptyRight(bombman, bricks.get(i)) && xVel >= 0){
+				bombermanXtemp = 0;
+			}
+		}
 
 		bombman.incrementXval(bombermanXtemp);
 
@@ -229,12 +237,6 @@ public class Map implements KeyListener, FocusListener{
 		
 		//bomberman collision detection with bricks
 		for(int i=0; i<bricks.size(); i++){
-			if(!detect.emptyLeft(bombman, bricks.get(i)) && xVel <= 0){
-				bombermanXtemp = 0;
-			}
-			if(!detect.emptyRight(bombman, bricks.get(i)) && xVel >= 0){
-				bombermanXtemp = 0;
-			}
 			if(!detect.emptyAbove(bombman, bricks.get(i)) && yVel <= 0){
 				bombermanYtemp = 0;
 			}
