@@ -39,7 +39,6 @@ public class SpawnGameObjects {
 						double r = Math.random();
 						if(r<0.1){
 							bricks.add(new Destructible(50*x,50*y));
-							bricks.get(bricks.size() - 1).setExists(true);
 						}
 					//}while(bricks.get(bricks.size() - 1));
 				}

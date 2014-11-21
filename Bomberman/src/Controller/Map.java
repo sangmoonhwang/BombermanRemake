@@ -39,13 +39,13 @@ public class Map implements KeyListener, FocusListener{
 	private CollissionDetection detect;
 	private SpawnGameObjects spawn;
 	private static int bombermanState;
-	
+
 	public Map(){
 
 		//attributes
 		width = 50;
 		height = 50;
-		
+
 		//new objects
 		detect = new CollissionDetection();
 		bombman = new Bomberman();
@@ -130,7 +130,7 @@ public class Map implements KeyListener, FocusListener{
 				int tiley = (int)bombman.getYval() + (int)(0.5*bombman.getHeight());
 				tilex = (tilex/50) * 50;
 				tiley = (tiley/50) * 50;
-				
+
 				bomb.setXval(tilex);
 				bomb.setYval(tiley);
 				explosions[0].setXval(tilex);
@@ -235,19 +235,17 @@ public class Map implements KeyListener, FocusListener{
 			}*/
 		}
 		for(int i=0; i<bricks.size(); i++){
-			if(bricks.get(i).getExists()){
-				if(!detect.emptyLeft(bombman, bricks.get(i)) && xVel <= 0){
-					bombermanXtemp = 0;
-				}
-				if(!detect.emptyRight(bombman, bricks.get(i)) && xVel >= 0){
-					bombermanXtemp = 0;
-				}
-				if(!detect.emptyAbove(bombman, bricks.get(i)) && yVel <= 0){
-					bombermanYtemp = 0;
-				}
-				if(!detect.emptyBelow(bombman, bricks.get(i)) && yVel >= 0){
-					bombermanYtemp = 0;
-				}
+			if(!detect.emptyLeft(bombman, bricks.get(i)) && xVel <= 0){
+				bombermanXtemp = 0;
+			}
+			if(!detect.emptyRight(bombman, bricks.get(i)) && xVel >= 0){
+				bombermanXtemp = 0;
+			}
+			if(!detect.emptyAbove(bombman, bricks.get(i)) && yVel <= 0){
+				bombermanYtemp = 0;
+			}
+			if(!detect.emptyBelow(bombman, bricks.get(i)) && yVel >= 0){
+				bombermanYtemp = 0;
 			}
 		}
 		bombman.incrementXval(bombermanXtemp);
@@ -257,7 +255,7 @@ public class Map implements KeyListener, FocusListener{
 			enemies[j].incrementXval(2);
 			enemies[j].incrementYval(2);
 		}*/
-		
+
 		//Enemy Collisions
 		for (int i=0; i<enemies.size(); i++){
 			if(detect.collisionDetection(bombman, enemies.get(i))){
@@ -275,8 +273,8 @@ public class Map implements KeyListener, FocusListener{
 				}
 			}*/
 		}
-		
-		
+
+
 		if(explosions[0].isExploding()){
 			for(int i = 0; i< 5; i++){
 				if(detect.collisionDetection(bombman, explosions[i])){
@@ -334,7 +332,7 @@ public class Map implements KeyListener, FocusListener{
 	public static int getBombermanState() {
 		return bombermanState;
 	}
-	
+
 	//empty methods
 	public void keyTyped(KeyEvent e) {
 	}
