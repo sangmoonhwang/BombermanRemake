@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import Model.Bomb;
 import Model.Bomberman;
 import Model.Destructible;
+import Model.Explosion;
 import Model.Indestructible;
 import Model.Enemies.Enemy;
 import View.DrawMap;
@@ -25,11 +26,14 @@ public class Map implements KeyListener, FocusListener{
 	private static Destructible[] bricks;
 	private static Enemy[] enemies;
 	private static Bomb bomb;
+	private static Explosion explosion;
 	private float xVel = 0;
 	private float yVel = 0;
 	private static int width;
 	private static int height;
 	private Timer explodeTimer;
+	private Timer unexplodeTimer;
+	private Timer gameTimer;
 	static boolean running = false;
 	private CollissionDetection detect;
 	private SpawnGameObjects spawn;
@@ -44,6 +48,7 @@ public class Map implements KeyListener, FocusListener{
 		detect = new CollissionDetection();
 		bombman = new Bomberman();
 		bomb = new Bomb();
+		explosion = new Explosion();
 		spawn = new SpawnGameObjects();
 
 		//spawn gameObjects
@@ -53,6 +58,13 @@ public class Map implements KeyListener, FocusListener{
 
 		d = DrawMap.getInstance();
 		running = true;
+		gameTimer = new Timer();
+		gameTimer.schedule(new TimerTask(){
+			public void run(){
+				//change
+				System.out.println("Times up!");
+			};
+		},200000);
 		this.run();
 	}
 
@@ -117,6 +129,13 @@ public class Map implements KeyListener, FocusListener{
 			explodeTimer.schedule(new TimerTask(){
 				public void run(){
 					bomb.setActive(false);
+					explosion.setExploding(true);
+					unexplodeTimer = new Timer();
+					unexplodeTimer.schedule(new TimerTask(){
+						public void run(){
+							explosion.setExploding(false);
+						}
+					},500);
 				};
 			},delay);
 		}
@@ -253,6 +272,9 @@ public class Map implements KeyListener, FocusListener{
 	}
 	public static Bomb getBomb(){
 		return bomb;
+	}
+	public static Explosion getExplosion(){
+		return explosion;
 	}
 
 	//empty methods

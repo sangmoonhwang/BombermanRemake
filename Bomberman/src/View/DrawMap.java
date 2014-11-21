@@ -29,6 +29,7 @@ public class DrawMap extends JComponent{
 	private Image Brick;
 	private Image Enemy;
 	private Image Bomb;
+	private Image Explosion;
 	private static DrawMap instance = new DrawMap();
 	private static DrawMenu menuFrame;
 	
@@ -41,6 +42,7 @@ public class DrawMap extends JComponent{
 		Brick = Toolkit.getDefaultToolkit().getImage("Brick.jpg");
 		Enemy = Toolkit.getDefaultToolkit().getImage("Enemy.png");
 		Bomb = Toolkit.getDefaultToolkit().getImage("Bomb.gif");
+		Explosion = Toolkit.getDefaultToolkit().getImage("Explosion.jpg");
 
 	}
 
@@ -80,6 +82,11 @@ public class DrawMap extends JComponent{
 			int width = Map.getWidth();
 			int height = Map.getHeight();
 			Bomberman bombman = Map.getBomberman();
+			
+			
+			if(Map.getExplosion().isExploding()){
+				g.drawImage(Explosion, Map.getBomb().getXval(), Map.getBomb().getYval(), Map.getExplosion().getWidth(),Map.getExplosion().getHeight(),this);
+			}
 			
 			int k = 0;
 			for(int x = 0; x<15; x++){
