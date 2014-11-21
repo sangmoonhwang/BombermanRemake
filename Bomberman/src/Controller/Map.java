@@ -116,42 +116,47 @@ public class Map implements KeyListener, FocusListener{
 			setVelX(2);
 		}
 		if(value == KeyEvent.VK_SPACE){
-			int tilex = (int)bombman.getXval() + (int)(0.5*bombman.getWidth());
-			int tiley = (int)bombman.getYval() + (int)(0.5*bombman.getHeight());
-			tilex = (tilex/50) * 50;
-			tiley = (tiley/50) * 50;
-			
-			bomb.setXval(tilex);
-			bomb.setYval(tiley);
-			explosions[0].setXval(tilex);
-			explosions[0].setYval(tiley);
-			explosions[1].setXval(tilex+50);
-			explosions[1].setYval(tiley);
-			explosions[2].setXval(tilex-50);
-			explosions[2].setYval(tiley);
-			explosions[3].setXval(tilex);
-			explosions[3].setYval(tiley+50);
-			explosions[4].setXval(tilex);
-			explosions[4].setYval(tiley-50);
-			bomb.setActive(true);
-			int delay = 2000;
-			explodeTimer = new Timer();
-			explodeTimer.schedule(new TimerTask(){
-				public void run(){
-					bomb.setActive(false);
-					for(int i = 0; i<4;i++){
-						explosions[i].setExploding(true);
-					}
-					unexplodeTimer = new Timer();
-					unexplodeTimer.schedule(new TimerTask(){
-						public void run(){
-							for(int i = 0; i < 4; i++){
-								explosions[i].setExploding(false);
-							}
+			if(bombman.getavailableBombs() != 0){
+				bombman.giveBombs(-1);
+				System.out.println(bombman.getavailableBombs());
+				int tilex = (int)bombman.getXval() + (int)(0.5*bombman.getWidth());
+				int tiley = (int)bombman.getYval() + (int)(0.5*bombman.getHeight());
+				tilex = (tilex/50) * 50;
+				tiley = (tiley/50) * 50;
+				
+				bomb.setXval(tilex);
+				bomb.setYval(tiley);
+				explosions[0].setXval(tilex);
+				explosions[0].setYval(tiley);
+				explosions[1].setXval(tilex+50);
+				explosions[1].setYval(tiley);
+				explosions[2].setXval(tilex-50);
+				explosions[2].setYval(tiley);
+				explosions[3].setXval(tilex);
+				explosions[3].setYval(tiley+50);
+				explosions[4].setXval(tilex);
+				explosions[4].setYval(tiley-50);
+				bomb.setActive(true);
+				int delay = 2000;
+				explodeTimer = new Timer();
+				explodeTimer.schedule(new TimerTask(){
+					public void run(){
+						bomb.setActive(false);
+						for(int i = 0; i<4;i++){
+							explosions[i].setExploding(true);
 						}
-					},500);
-				};
-			},delay);
+						unexplodeTimer = new Timer();
+						unexplodeTimer.schedule(new TimerTask(){
+							public void run(){
+								for(int i = 0; i < 4; i++){
+									explosions[i].setExploding(false);
+								}
+								bombman.giveBombs(1);
+							}
+						},500);
+					};
+				},delay);
+			}
 		}
 	}
 
