@@ -2,6 +2,8 @@ package Controller;
 
 import Model.Block;
 import Model.Bomb;
+import Model.Bomberman;
+import Model.Explosion;
 import Model.Movable;
 
 public class CollissionDetection {
@@ -27,6 +29,53 @@ public class CollissionDetection {
 		}
 		return collision;
 	}
+	
+	public boolean collisionDetection_new(Movable test1, Block test, int i) {
+		boolean collision = false;
+		switch(i){
+		case 0:
+			if ((test.getXval() + test.getWidth() > test1.getXval() &&
+					test.getYval() < test1.getYval() + test1.getHeight() &&
+					test.getXval() < test1.getXval() + test1.getWidth() && 
+					test.getYval() + test.getHeight() > test1.getYval())){
+				collision = true;
+			}
+			break;
+		case 1:
+			if ((test.getXval() + test.getWidth() > test1.getXval() &&
+					test.getYval() < test1.getYval() + test1.getHeight() &&
+					test.getXval() < test1.getXval() + test1.getWidth()*Bomberman.flames && 
+					test.getYval() + test.getHeight() > test1.getYval())){
+				collision = true;
+			}
+			break;
+		case 2:	
+			if ((test.getXval() + test.getWidth() > test1.getXval() - Bomberman.flames * test1.getWidth() &&
+					test.getYval() < test1.getYval() + test1.getHeight() &&
+					test.getXval() < test1.getXval() + test1.getWidth() && 
+					test.getYval() + test.getHeight() > test1.getYval())){
+				collision = true;
+			}
+			break;
+		case 3:	
+			if ((test.getXval() + test.getWidth() > test1.getXval() &&
+					test.getYval() < test1.getYval() + test1.getHeight() * Bomberman.flames &&
+					test.getXval() < test1.getXval() + test1.getWidth() && 
+					test.getYval() + test.getHeight() > test1.getYval())){
+				collision = true;
+			}
+			break;
+		case 4:	
+			if ((test.getXval() + test.getWidth() > test1.getXval() &&
+					test.getYval() < test1.getYval() + test1.getHeight() &&
+					test.getXval() < test1.getXval() + test1.getWidth() && 
+					test.getYval() + test.getHeight() > test1.getYval()- Bomberman.flames * test1.getWidth())){
+				collision = true;
+			}
+			break;
+		}
+		return collision;
+	}
 
 	public boolean collisionDetection(Movable test, Movable test1){
 		boolean collision = false;
@@ -35,6 +84,53 @@ public class CollissionDetection {
 				test.getXval() < test1.getXval() + test1.getWidth() && 
 				test.getYval() + test.getHeight() > test1.getYval())){
 			collision = true;
+		}
+		return collision;
+	}
+
+	public boolean collisionDetection(Movable test, Explosion test1, int i){
+		boolean collision = false;
+		switch(i){
+		case 0:
+			if ((test.getXval() + test.getWidth() > test1.getXval() &&
+					test.getYval() < test1.getYval() + test1.getHeight() &&
+					test.getXval() < test1.getXval() + test1.getWidth() && 
+					test.getYval() + test.getHeight() > test1.getYval())){
+				collision = true;
+			}
+			break;
+		case 1:	
+			if ((test.getXval() + test.getWidth() > test1.getXval() &&
+					test.getYval() < test1.getYval() + test1.getHeight() &&
+					test.getXval() < test1.getXval() + test1.getWidth()*Bomberman.flames && 
+					test.getYval() + test.getHeight() > test1.getYval())){
+				collision = true;
+			}
+			break;
+		case 2:	
+			if ((test.getXval() + test.getWidth() > test1.getXval() - Bomberman.flames * test1.getWidth() &&
+					test.getYval() < test1.getYval() + test1.getHeight() &&
+					test.getXval() < test1.getXval() + test1.getWidth() && 
+					test.getYval() + test.getHeight() > test1.getYval())){
+				collision = true;
+			}
+			break;
+		case 3:	
+			if ((test.getXval() + test.getWidth() > test1.getXval() &&
+					test.getYval() < test1.getYval() + test1.getHeight() * Bomberman.flames &&
+					test.getXval() < test1.getXval() + test1.getWidth() && 
+					test.getYval() + test.getHeight() > test1.getYval())){
+				collision = true;
+			}
+			break;
+		case 4:	
+			if ((test.getXval() + test.getWidth() > test1.getXval() &&
+					test.getYval() < test1.getYval() + test1.getHeight() &&
+					test.getXval() < test1.getXval() + test1.getWidth() && 
+					test.getYval() + test.getHeight() > test1.getYval()- Bomberman.flames * test1.getWidth())){
+				collision = true;
+			}
+			break;
 		}
 		return collision;
 	}
