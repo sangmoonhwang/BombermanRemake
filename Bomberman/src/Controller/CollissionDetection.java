@@ -30,7 +30,7 @@ public class CollissionDetection {
 		return collision;
 	}
 	
-	public boolean collisionDetection_new(Movable test1, Block test, int i, int max) {
+	/*public boolean collisionDetection_new(Movable test1, Block test, int i, int max) {
 		boolean collision = false;
 		switch(i){
 		case 0:
@@ -75,7 +75,7 @@ public class CollissionDetection {
 			break;
 		}
 		return collision;
-	}
+	}*/
 
 	public boolean collisionDetection(Movable test, Movable test1){
 		boolean collision = false;

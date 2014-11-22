@@ -160,25 +160,13 @@ public class Map implements KeyListener, FocusListener{
 
 				activeBombs.get(activeBombs.size()-1).setXval(tilex);
 				activeBombs.get(activeBombs.size()-1).setYval(tiley);
-				explosions[0].setXval(tilex);
-				explosions[0].setYval(tiley);
-				explosions[1].setXval(tilex+50);
-				explosions[1].setYval(tiley);
-				explosions[2].setXval(tilex); // -50
-				explosions[2].setYval(tiley);
-				explosions[3].setXval(tilex);
-				explosions[3].setYval(tiley+50);
-				explosions[4].setXval(tilex);
-				explosions[4].setYval(tiley); // -50
 				activeBombs.get(activeBombs.size()-1).setActive(true);
 				int delay = 2000;
 				explodeTimer = new Timer();
 				explodeTimer.schedule(new TimerTask(){
 					public void run(){
-						activeBombs.get(activeBombs.size()-1).setActive(false);
-						for(int i = 0; i<4;i++){
-							explosions[i].setExploding(true);
-						}
+						activeBombs.get(activeBombs.size()-1).explode();
+						explosions = activeBombs.get(activeBombs.size()-1).getPersonalExplosions();
 						unexplodeTimer = new Timer();
 						unexplodeTimer.schedule(new TimerTask(){
 							public void run(){
@@ -305,23 +293,26 @@ public class Map implements KeyListener, FocusListener{
 			for(int i = 0; i< 5; i++){
 				int max = get_MaxFlame(i);
 				
-				if(detect.collisionDetection(bombman, explosions[i],i,max)){
+				//if(detect.collisionDetection(bombman, explosions[i],i,max)){
+				if(detect.collisionDetection(bombman, explosions[i])){
 					if(!bombman.flamePass && !bombman.isMystery())
 						System.out.println("You died.");
 				}
 				for(int j = 0; j < enemies.size(); j++){
-					if(detect.collisionDetection(enemies.get(j), explosions[i],i,max)){
+					//if(detect.collisionDetection(enemies.get(j), explosions[i],i,max)){
+					if(detect.collisionDetection(enemies.get(j), explosions[i])){
 						User.updateScore(enemies.get(j).getPoints());
 						System.out.println(User.getTotalScore());
 						enemies.remove(j);
 					}
 				}
 				for(int k = 0; k < bricks.size();k++){
-					if(detect.collisionDetection_new(explosions[i], bricks.get(k),i,max)){
+					//if(detect.collisionDetection_new(explosions[i], bricks.get(k),i,max)){
+					if(detect.collisionDetection(explosions[i], bricks.get(k))){
 						bricks.remove(k);
 					}
 				}
-				switch(i){
+				/*switch(i){
 				case 1:
 					explosions[i].setWidth(max * 50);
 					break;
@@ -334,7 +325,7 @@ public class Map implements KeyListener, FocusListener{
 				case 4:
 					explosions[i].setHeight(-max * 50);
 					break;
-				}
+				}*/
 			}
 		}
 
