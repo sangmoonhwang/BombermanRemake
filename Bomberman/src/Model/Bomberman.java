@@ -27,7 +27,7 @@ public class Bomberman extends Movable{
 		height = 42;
 		width = 30;
 		availableBombs = 1;
-		flames = 1;
+		flames = 2;
 		mystery_From = -1000000000;
 		wallPass = false;
 		flamePass = false;
