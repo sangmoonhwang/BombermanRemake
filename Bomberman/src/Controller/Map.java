@@ -216,40 +216,44 @@ public class Map implements KeyListener, FocusListener{
 
 		//bomberman and indestructible collision
 		for(int i = 0; i < indestructibles.size(); i++){
-			if(!detect.emptyLeft(bombman, indestructibles.get(i)) && xVel <= 0){
-				bombermanXtemp = 0;
-			}
-			if(!detect.emptyRight(bombman, indestructibles.get(i)) && xVel >= 0){
-				bombermanXtemp = 0;
-			}
-		}
-		for(int i=0; i<bricks.size(); i++){
-			if(!detect.emptyLeft(bombman, bricks.get(i)) && xVel <= 0){
-				bombermanXtemp = 0;
-			}
-			if(!detect.emptyRight(bombman, bricks.get(i)) && xVel >= 0){
-				bombermanXtemp = 0;
+			if(bombman.wallPass == false){
+				if(!detect.emptyLeft(bombman, indestructibles.get(i)) && xVel <= 0){
+					bombermanXtemp = 0;
+				}
+				if(!detect.emptyRight(bombman, indestructibles.get(i)) && xVel >= 0){
+					bombermanXtemp = 0;
+				}
+				for(int j=0; j<bricks.size(); j++){
+					if(!detect.emptyLeft(bombman, bricks.get(j)) && xVel <= 0){
+						bombermanXtemp = 0;
+					}
+					if(!detect.emptyRight(bombman, bricks.get(j)) && xVel >= 0){
+						bombermanXtemp = 0;
+					}
+				}
 			}
 		}
 
 		bombman.incrementXval(bombermanXtemp);
-
-		for(int i = 0; i < indestructibles.size(); i++){
-			if(!detect.emptyAbove(bombman, indestructibles.get(i)) && yVel <= 0){
-				bombermanYtemp = 0;
-			}
-			if(!detect.emptyBelow(bombman, indestructibles.get(i)) && yVel >= 0){
-				bombermanYtemp = 0;
-			}
-		}
 		
-		//bomberman collision detection with bricks
-		for(int i=0; i<bricks.size(); i++){
-			if(!detect.emptyAbove(bombman, bricks.get(i)) && yVel <= 0){
-				bombermanYtemp = 0;
+		if(bombman.wallPass == false){
+			for(int i = 0; i < indestructibles.size(); i++){
+				if(!detect.emptyAbove(bombman, indestructibles.get(i)) && yVel <= 0){
+					bombermanYtemp = 0;
+				}
+				if(!detect.emptyBelow(bombman, indestructibles.get(i)) && yVel >= 0){
+					bombermanYtemp = 0;
+				}
 			}
-			if(!detect.emptyBelow(bombman, bricks.get(i)) && yVel >= 0){
-				bombermanYtemp = 0;
+			
+			//bomberman collision detection with bricks
+			for(int i=0; i<bricks.size(); i++){
+				if(!detect.emptyAbove(bombman, bricks.get(i)) && yVel <= 0){
+					bombermanYtemp = 0;
+				}
+				if(!detect.emptyBelow(bombman, bricks.get(i)) && yVel >= 0){
+					bombermanYtemp = 0;
+				}
 			}
 		}
 		bombman.incrementYval(bombermanYtemp);

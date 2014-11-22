@@ -27,6 +27,7 @@ public class Bomberman extends Movable{
 		height = 42;
 		width = 30;
 		availableBombs = 1;
+		wallPass = true;
 	}
 	//setters
 	public void setXval(int i){
