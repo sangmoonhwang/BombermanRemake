@@ -15,7 +15,7 @@ public class Enemy extends Movable{
 	private boolean wallPass;
 	private int state;
 	private int scoreValue;
-	private static Balloom balloom;
+	private Balloom balloom;
 	
 	public Enemy(){
 		xval = 0;
@@ -38,8 +38,8 @@ public class Enemy extends Movable{
 			speed = balloom.getSpeed();
 			points = balloom.getPoints();
 			wallPass = balloom.getWallPass();
-			state = balloom.getState();
 			scoreValue = balloom.getScore();
+			state = (int) (Math.random()*3) + 1;
 		}
 	}
 	
@@ -55,7 +55,9 @@ public class Enemy extends Movable{
 	public void setYval(int i){
 		yval = i;
 	}
-
+	public void setState(int state) {
+		this.state = state;
+	}
 	//increment
 	public void incrementXval(int i){
 		xval += i;
@@ -80,5 +82,9 @@ public class Enemy extends Movable{
 	public int getScore(){
 		return scoreValue;
 	}
+	public int getState() {
+		return state;
+	}
+	 
 
 }

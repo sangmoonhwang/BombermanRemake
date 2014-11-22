@@ -291,59 +291,67 @@ public class Map implements KeyListener, FocusListener{
 		boolean belowFreeBrick = true;
 
 		for(int k=0;k<enemies.size();k++) {
-			int tileNum = whichTileIsOn(enemies.get(k).getXval(),enemies.get(k).getYval());
-
+			Enemy enemy = enemies.get(k);
+			int tileNum = whichTileIsOn(enemy.getXval(), enemy.getYval());
+			//System.out.println("Balloom 0 current tile " + tileNum);
+			
 			for(int i = 0; i < indestructibles.size(); i++) {
-				if((whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval())) == (tileNum-1)) {
+				if((whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval())) == (tileNum-1) && (enemy.getState() == 1)) {
 					leftFree = false;
-				} else if((whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval())) == (tileNum+1)) {
+				} else if((whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval())) == (tileNum+1) && (enemy.getState() == 0)) {
 					rightFree = false;
-				} else if((whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval())) == (tileNum-31)) {
+				} else if((whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval())) == (tileNum-31) && (enemy.getState() == 3)) {
 					aboveFree = false;
-				} else if((whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval())) == (tileNum+31)) {
+				} else if((whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval())) == (tileNum+31) && (enemy.getState() == 2)) {
 					belowFree = false;
 				}
 			}
-			
+
 			for(int i=0; i<bricks.size(); i++) {
-				if((whichTileIsOn(bricks.get(i).getXval(), bricks.get(i).getYval())) == (tileNum-1)) {
+				if((whichTileIsOn(bricks.get(i).getXval(), bricks.get(i).getYval())) == (tileNum-1) && (enemy.getState() == 1)) {
 					leftFreeBrick = false;
-				} else if((whichTileIsOn(bricks.get(i).getXval(), bricks.get(i).getYval())) == (tileNum+1)) {
+				} else if((whichTileIsOn(bricks.get(i).getXval(), bricks.get(i).getYval())) == (tileNum+1) && (enemy.getState() == 0)) {
 					rightFreeBrick = false;
-				} else if((whichTileIsOn(bricks.get(i).getXval(), bricks.get(i).getYval())) == (tileNum-31)) {
+				} else if((whichTileIsOn(bricks.get(i).getXval(), bricks.get(i).getYval())) == (tileNum-31) && (enemy.getState() == 3)) {
 					aboveFreeBrick = false;
-				} else if((whichTileIsOn(bricks.get(i).getXval(), bricks.get(i).getYval())) == (tileNum+31)) {
+				} else if((whichTileIsOn(bricks.get(i).getXval(), bricks.get(i).getYval())) == (tileNum+31) && (enemy.getState() == 2)) {
 					belowFreeBrick = false;
 				}
 			}
+
 			
-			Balloom enemy = enemies.get(k).getBalloomInstance();
-			//System.out.println("Balloom "+ k + " state " +enemy.getState());
+			//System.out.println("Balloom "+ k + " state " +enemies.get(k).getState()+ " xVal " +enemies.get(k).getXval() + " yVal " +enemies.get(k).getYval());
+			//enemies.get(k).getBalloomInstance().move(enemies.get(k));
+			
+			//System.out.println("Balloom "+ k + " state " +enemies.get(k).getState());
+			
 			if(enemy.getState() == 0) {
 				if(rightFree && rightFreeBrick) {
-					enemy.move(enemies.get(k));
+					enemy.getBalloomInstance().move(enemy);
 				} else {
-					enemy.changeDirection();
+					enemy.getBalloomInstance().changeDirection(enemy);
 				}
 			} else if(enemy.getState() == 1) {
 				if(leftFree && leftFreeBrick) {
-					enemy.move(enemies.get(k));
+					enemy.getBalloomInstance().move(enemy);
 				}  else {
-					enemy.changeDirection();
+					enemy.getBalloomInstance().changeDirection(enemy);
 				}
 			} else if(enemy.getState() == 2) {
 				if(belowFree && belowFreeBrick) {
-					enemy.move(enemies.get(k));
+					enemy.getBalloomInstance().move(enemy);
 				}  else {
-					enemy.changeDirection();
+					enemy.getBalloomInstance().changeDirection(enemy);
 				}
 			} else {
 				if(aboveFree && aboveFreeBrick) {
-					enemy.move(enemies.get(k));
+					enemy.getBalloomInstance().move(enemy);
 				}  else {
-					enemy.changeDirection();
+					enemy.getBalloomInstance().changeDirection(enemy);
 				}
 			}
+			//System.out.println("Balloom "+ k + " state " +enemies.get(k).getState()+ " xVal " +enemies.get(k).getXval() + " yVal " +enemies.get(k).getYval());
+		
 		}
 	}
 
@@ -393,7 +401,8 @@ public class Map implements KeyListener, FocusListener{
 	 * @return The tile number it is on
 	 */
 	public int whichTileIsOn(int x, int y) {
-		return ((x/50)*31 + y/50);
+		int tmp = y/50;
+		return ((x/50) + tmp*31);
 	}
 
 	//empty methods

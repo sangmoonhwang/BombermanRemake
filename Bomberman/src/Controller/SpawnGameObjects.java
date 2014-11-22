@@ -62,8 +62,7 @@ public class SpawnGameObjects {
 		}
 
 		for(int i = 0; i < 7; i++){
-			Balloom ball = enemies.get(i).getBalloomInstance();
-		    System.out.println("ballom " +i +" direction " + ball.getState() );
+		    System.out.println("ballom " +i +" direction " + enemies.get(i).getState());
 		}
 		
 		return enemies;
