@@ -481,6 +481,7 @@ public class Map implements KeyListener, FocusListener{
 		return power;
 	}
 
+	//detects an obstacle within the range of flame
 	public int get_MaxFlame(int i){
 		if(Bomberman.flames == 1){
 			return 1;
@@ -490,10 +491,11 @@ public class Map implements KeyListener, FocusListener{
 			int tile = whichTileIsOn(explosions[i].getXval(), explosions[i].getYval());
 			for(int j = 0; j <= Bomberman.flames; j++){
 				if((whichTileIsOn(indestructibles.get(j).getXval(), indestructibles.get(j).getYval())) == tile) {
-					return max;
+					break;
 				}
 				if((whichTileIsOn(bricks.get(j).getXval(), bricks.get(j).getYval())) == tile){
-					return max+1;
+					max++;
+					break;
 				}
 				max++;
 				switch(i){
