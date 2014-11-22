@@ -28,7 +28,7 @@ public class DrawMenu{
 	private JButton saveButton;
 	private static DrawMenu instance = new DrawMenu();
 	
-	private DrawMenu(){
+	private DrawMenu() {
 		playButton = new JButton("New Game");
 		loadButton = new JButton("Load saved game");
 		leaderButton = new JButton("View Leaderboards");
@@ -38,15 +38,15 @@ public class DrawMenu{
 		menuFrame = new JFrame();
 	}
 	
-	public static DrawMenu getInstance(){
+	public static DrawMenu getInstance() {
 		return instance;
 	}
 	
-	public void run(){
+	public void run() {
 		makeFrame();
 	}
 	
-	public void makeFrame(){
+	public void makeFrame() {
 		menuFrame.setSize(800,500);
 		//menuFrame.setUndecorated(true);
 		menuFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -55,7 +55,7 @@ public class DrawMenu{
 		menuFrame.setLayout(new GridLayout(2,1));
 		menuFrame.addWindowListener(new WindowAdapter() {
 			@Override
-			public void windowClosing(WindowEvent windowEvent){
+			public void windowClosing(WindowEvent windowEvent) {
 				System.exit(0);
 			}
 		});
@@ -72,7 +72,7 @@ public class DrawMenu{
 			public void actionPerformed(ActionEvent e) {
 				Thread thread = new Thread(){
 					public void run(){
-						Map play = new Map();
+						Map play = new Map(1);                   //should take user input of levels or next level when current level clears
 					}
 				};
 				viewFrame(false);

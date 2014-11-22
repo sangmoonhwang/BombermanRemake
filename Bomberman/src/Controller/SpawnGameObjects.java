@@ -10,6 +10,7 @@ import Model.Indestructible;
 import Model.Tile;
 import Model.Enemies.Balloom;
 import Model.Enemies.Enemy;
+import Model.PowerUps.Powerup;
 
 public class SpawnGameObjects {
 
@@ -19,15 +20,17 @@ public class SpawnGameObjects {
 	private static ArrayList<Enemy> enemies;
 	private static ArrayList<String> enemy;
 	private static ArrayList<String> powerUp;
+	private static Powerup power;
 	private static Door door;
 
-	public SpawnGameObjects() {
+	public SpawnGameObjects(int level) {
 		indestructibles = new ArrayList<Indestructible>();
 		bricks = new ArrayList<Destructible>();
 		enemies = new ArrayList<Enemy>();
 		enemy = new ArrayList<String>(10);
 		powerUp = new ArrayList<String>(1);
 		door = new Door();
+		levels(level);
 	}
 	public ArrayList<Indestructible> spawnIndestructibles() {
 		for(int x=0; x<31; x++){
@@ -43,9 +46,9 @@ public class SpawnGameObjects {
 	public ArrayList<Destructible> spawnBricks() {
 		for(int x = 1; x<30; x++){
 			for(int y = 1; y<12; y++){
-				if((x!=1 && y!=1) || (x!=1 && y!=2) || (x!=2 && y!=1) ){
+				if((x!=1 && y!=1) && (x!=1 && y!=2) && (x!=2 && y!=1) ){
 					double r = Math.random();
-					if(r<0.1){
+					if(r<=0.1){
 						bricks.add(new Destructible(50*x,50*y));
 					}
 				}
@@ -55,8 +58,8 @@ public class SpawnGameObjects {
 	}
 
 	public ArrayList<Enemy> spawnEnemies() {
-		for(int i = 0; i < 7; i++){
-			enemies.add(new Enemy("Balloom"));              //just spawning Balloom for now
+		for(int i = 0; i < enemy.size(); i++){
+			enemies.add(new Enemy(enemy.get(i)));
 			int x, y, tile;
 
 			do {
@@ -70,13 +73,29 @@ public class SpawnGameObjects {
 
 		return enemies;
 	}
-
-	public Door spawnDoor() {
+	
+	/**
+	 * Initiates the powerup and place behind the random brick
+	 * @param None
+	 * @return Powerup
+	 */
+	public Powerup spawnPowerup() {
+		power = new Powerup(powerUp.get(0));
+		int x = (int)(Math.random()*bricks.size());   
+		int xVal = bricks.get(x).getXval();				
+		int yVal = bricks.get(x).getYval();
+		power.setXval(xVal);
+		power.setYval(yVal);
+		
+		return power;
+	}
+	
+	public Door spawnDoor() {							//DO NOT DELETE THIS IS THE CODE WE WANT AT THE END
 //		int x = (int)(Math.random()*bricks.size());   //code for hiding the door with brick 
 //		int xVal = bricks.get(x).getXval();				// currently door does not appear even though all the bricks are detonated
 //		int yVal = bricks.get(x).getYval();
 //		door.setXval(xVal);
-//		door.setYval(yVal);
+//		door.setYval(yVal);								//should check for the condition where powerUp is already placed in the given brick
 		
 		
 		int x = (int)(Math.random()*29 + 1);

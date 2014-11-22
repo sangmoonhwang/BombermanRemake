@@ -3,9 +3,10 @@ package Model.PowerUps;
 import Model.Bomberman;
 
 public class Flames extends Powerup{
-
-	public Flames(){
-		super();
+	String identity = "Flames";
+	
+	public Flames(String identity){
+		super(identity);
 	}
 	
 	@Override

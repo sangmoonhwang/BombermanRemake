@@ -18,6 +18,7 @@ import Model.Explosion;
 import Model.Indestructible;
 import Model.User;
 import Model.Enemies.Enemy;
+import Model.PowerUps.Powerup;
 import Model.PowerUps.UpBombs;
 import View.DrawMap;
 import View.DrawMenu;
@@ -32,6 +33,7 @@ public class Map implements KeyListener, FocusListener{
 	private static ArrayList<Bomb> bombs;
 	private static ArrayList<Bomb> activeBombs;
 	private static Explosion[] explosions;
+	private static Powerup power;
 	private static Door door;
 	private int xVel = 0;
 	private int yVel = 0;
@@ -44,7 +46,7 @@ public class Map implements KeyListener, FocusListener{
 	private CollissionDetection detect;
 	private SpawnGameObjects spawn;
 	private static int bombermanState;
-	private static UpBombs upbombs;
+//	private static UpBombs upbombs;
 	boolean leftFree = true;
 	boolean rightFree = true;
 	boolean aboveFree = true;
@@ -54,7 +56,7 @@ public class Map implements KeyListener, FocusListener{
 	boolean aboveFreeBrick = true;
 	boolean belowFreeBrick = true;
 	
-	public Map(){
+	public Map(int level){
 
 		//attributes
 		width = 50;
@@ -67,8 +69,7 @@ public class Map implements KeyListener, FocusListener{
 		activeBombs = new ArrayList<Bomb>();
 		bombs.add(new Bomb());
 		bombs.add(new Bomb());
-		upbombs = new UpBombs();
-		spawn = new SpawnGameObjects();
+		spawn = new SpawnGameObjects(level);
 		explosions = new Explosion[9];
 		for(int i = 0; i<8; i++){
 			explosions[i] = new Explosion();
@@ -78,7 +79,9 @@ public class Map implements KeyListener, FocusListener{
 		indestructibles = spawn.spawnIndestructibles();
 		bricks = spawn.spawnBricks();
 		enemies = spawn.spawnEnemies();
+		power = spawn.spawnPowerup();
 		door = spawn.spawnDoor();
+		
 
 
 		d = DrawMap.getInstance();
@@ -318,7 +321,7 @@ public class Map implements KeyListener, FocusListener{
 		if(detect.collisionDetection(bombman, door) && enemies.size() == 0){
 			System.out.println("Level Complete!");
 		}
-
+/*
 		if(detect.collisionDetection(bombman,upbombs)){
 			bombs.add(new Bomb());
 			upbombs.setXval(0);
@@ -326,6 +329,7 @@ public class Map implements KeyListener, FocusListener{
 			bombman.mystery_From = System.nanoTime(); //for testing
 			bombman.speed += 2; //for testing
 		}
+*/
 	}
 
 	public void tick2() {
@@ -453,6 +457,11 @@ public class Map implements KeyListener, FocusListener{
 		aboveFreeBrick = true;
 		belowFreeBrick = true;
 	}
+	
+	
+	public static Powerup getPowerup() {
+		return power;
+	}
 
 	//empty methods
 	public void keyTyped(KeyEvent e) {
@@ -462,10 +471,11 @@ public class Map implements KeyListener, FocusListener{
 	public void focusLost(FocusEvent e) {
 	}
 
+/*
 	public static UpBombs getUpBombs() {
 		return upbombs;
 	}
-
+*/
 	public static ArrayList<Bomb> getActiveBombs() {
 		return activeBombs;
 	}

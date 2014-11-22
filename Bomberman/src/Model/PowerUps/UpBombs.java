@@ -4,8 +4,8 @@ import Model.Bomberman;
 
 public class UpBombs extends Powerup{
 
-	public UpBombs(){
-		super();
+	public UpBombs(String identity){
+		super(identity);
 	}
 	
 	@Override
