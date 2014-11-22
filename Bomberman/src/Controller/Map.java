@@ -428,6 +428,11 @@ public class Map implements KeyListener, FocusListener{
 		return ((x/50) + tmp*31);
 	}
 	
+	/**
+	 * Resets all the variables to TRUE that is used for enemy collision detection 
+	 * @param None
+	 * @return None
+	 */
 	public void statusReset() {
 		leftFree = true;
 		rightFree = true;
@@ -438,33 +443,7 @@ public class Map implements KeyListener, FocusListener{
 		aboveFreeBrick = true;
 		belowFreeBrick = true;
 	}
-/*
-	public boolean collisionIndestructiblesLeft(Enemy enemy, int i) {
-		return detect.emptyLeft(enemy, indestructibles.get(i));
-	}
-	public boolean collisionIndestructiblesRight(Enemy enemy, int i) {
-		return detect.emptyRight(enemy, indestructibles.get(i));
-	}
-	public boolean collisionIndestructiblesAbove(Enemy enemy, int i) {
-		return detect.emptyAbove(enemy, indestructibles.get(i));
-	}
-	public boolean collisionIndestructiblesBelow(Enemy enemy, int i) {
-		return detect.emptyBelow(enemy, indestructibles.get(i));
-	}
-	
-	public boolean collisionBricksLeft(Enemy enemy, int i) {
-		return detect.emptyLeft(enemy, bricks.get(i));
-	}
-	public boolean collisionBricksRight(Enemy enemy, int i) {
-		return detect.emptyRight(enemy, bricks.get(i));
-	}
-	public boolean collisionBricksAbove(Enemy enemy, int i) {
-		return detect.emptyAbove(enemy, bricks.get(i));
-	}
-	public boolean collisionBricksBelow(Enemy enemy, int i) {
-		return detect.emptyBelow(enemy, bricks.get(i));
-	}
-*/
+
 	//empty methods
 	public void keyTyped(KeyEvent e) {
 	}

@@ -3,15 +3,23 @@ package Model.PowerUps;
 import Model.Block;
 
 public abstract class Powerup extends Block {
-	int xval;
+	
 		//physical attributes
+		private int xval;
 		private int yval;
-		int height;
+		private int height;
 		private int width;
+		private String identity;
 		
 		public Powerup() {
 			xval = yval = 150;
 			height = width = 50;
+		}
+		
+		public Powerup(String identity) {
+			xval = yval = 150;
+			height = width = 50;
+			this.identity = identity;
 		}
 		
 		//setters

@@ -71,7 +71,7 @@ public class Database {
 	}
 	
 	/**
-	 * Writes the save game data name and the username associated to
+	 * Writes the save game data name and the username associated
 	 * @param User and save data name
 	 * @return None
 	 */
