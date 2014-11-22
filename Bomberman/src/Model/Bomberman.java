@@ -58,6 +58,7 @@ public class Bomberman extends Movable{
 	public int getYval(){
 		return yval;
 	}
+	
 	public int getHeight(){
 		return height;
 	}
