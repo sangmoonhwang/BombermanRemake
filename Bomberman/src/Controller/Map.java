@@ -17,7 +17,6 @@ import Model.Door;
 import Model.Explosion;
 import Model.Indestructible;
 import Model.User;
-import Model.Enemies.Balloom;
 import Model.Enemies.Enemy;
 import Model.PowerUps.UpBombs;
 import View.DrawMap;
@@ -332,13 +331,11 @@ public class Map implements KeyListener, FocusListener{
 	public void tick2() {
 		//collision check for enemy with indestructibles and bricks
 
-
 		for(int k=0;k<enemies.size();k++) {
 			statusReset();
 			Enemy enemy = enemies.get(k);
 			int tileNum = whichTileIsOn(enemy.getXval(), enemy.getYval());
-			//System.out.println("Balloom " +k+ " current tile " + tileNum);
-			
+	
 			for(int i = 0; i < indestructibles.size(); i++) {
 				if((whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval())) == (tileNum) && (enemy.getState() == 1)) {
 					leftFree = false;
@@ -363,11 +360,6 @@ public class Map implements KeyListener, FocusListener{
 				}
 			}
 
-			//System.out.println("Balloom "+ k + " state " +enemies.get(k).getState()+ " xVal " +enemies.get(k).getXval() + " yVal " +enemies.get(k).getYval());
-			//System.out.println("aboveI " +aboveFree + " AboveB " +aboveFreeBrick);
-			//System.out.println("leftI " +leftFree + " leftB " +leftFreeBrick);
-
-			
 			if(enemy.getState() == 0) {
 				if(rightFree && rightFreeBrick) {
 					enemy.getBalloomInstance().move(enemy);
@@ -393,8 +385,6 @@ public class Map implements KeyListener, FocusListener{
 					enemy.getBalloomInstance().changeDirection(enemy);
 				}
 			}
-			//System.out.println("Balloom "+ k + " state " +enemies.get(k).getState()+ " xVal " +enemies.get(k).getXval() + " yVal " +enemies.get(k).getYval());
-		
 		}
 	}
 

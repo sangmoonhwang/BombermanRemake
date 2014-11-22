@@ -72,7 +72,13 @@ public class SpawnGameObjects {
 	}
 
 	public Door spawnDoor() {
-
+//		int x = (int)(Math.random()*bricks.size());   //code for hiding the door with brick 
+//		int xVal = bricks.get(x).getXval();				// currently door does not appear even though all the bricks are detonated
+//		int yVal = bricks.get(x).getYval();
+//		door.setXval(xVal);
+//		door.setYval(yVal);
+		
+		
 		int x = (int)(Math.random()*29 + 1);
 		int y = (int)(Math.random()*11 + 1);
 		door.setXval(50*x);
