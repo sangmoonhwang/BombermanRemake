@@ -17,7 +17,6 @@ import Model.Door;
 import Model.Explosion;
 import Model.Indestructible;
 import Model.User;
-import Model.Enemies.Balloom;
 import Model.Enemies.Enemy;
 import Model.PowerUps.UpBombs;
 import View.DrawMap;
@@ -46,6 +45,15 @@ public class Map implements KeyListener, FocusListener{
 	private SpawnGameObjects spawn;
 	private static int bombermanState;
 	private static UpBombs upbombs;
+	boolean leftFree = true;
+	boolean rightFree = true;
+	boolean aboveFree = true;
+	boolean belowFree = true;
+	boolean leftFreeBrick = true;
+	boolean rightFreeBrick = true;
+	boolean aboveFreeBrick = true;
+	boolean belowFreeBrick = true;
+	
 
 	public Map(){
 
@@ -303,26 +311,20 @@ public class Map implements KeyListener, FocusListener{
 	
 	public void tick2() {
 		//collision check for enemy with indestructibles and bricks
-		boolean leftFree = true;
-		boolean rightFree = true;
-		boolean aboveFree = true;
-		boolean belowFree = true;
-		boolean leftFreeBrick = true;
-		boolean rightFreeBrick = true;
-		boolean aboveFreeBrick = true;
-		boolean belowFreeBrick = true;
 
+		
 		for(int k=0;k<enemies.size();k++) {
+			statusReset();
 			Enemy enemy = enemies.get(k);
 			int tileNum = whichTileIsOn(enemy.getXval(), enemy.getYval());
-			//System.out.println("Balloom 0 current tile " + tileNum);
+			//System.out.println("Balloom " +k+ " current tile " + tileNum);
 			
 			for(int i = 0; i < indestructibles.size(); i++) {
-				if((whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval())) == (tileNum-1) && (enemy.getState() == 1)) {
+				if((whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval())) == (tileNum) && (enemy.getState() == 1)) {
 					leftFree = false;
 				} else if((whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval())) == (tileNum+1) && (enemy.getState() == 0)) {
 					rightFree = false;
-				} else if((whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval())) == (tileNum-31) && (enemy.getState() == 3)) {
+				} else if((whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval())) == (tileNum) && (enemy.getState() == 3)) {
 					aboveFree = false;
 				} else if((whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval())) == (tileNum+31) && (enemy.getState() == 2)) {
 					belowFree = false;
@@ -330,22 +332,21 @@ public class Map implements KeyListener, FocusListener{
 			}
 
 			for(int i=0; i<bricks.size(); i++) {
-				if((whichTileIsOn(bricks.get(i).getXval(), bricks.get(i).getYval())) == (tileNum-1) && (enemy.getState() == 1)) {
+				if((whichTileIsOn(bricks.get(i).getXval(), bricks.get(i).getYval())) == (tileNum) && (enemy.getState() == 1)) {
 					leftFreeBrick = false;
 				} else if((whichTileIsOn(bricks.get(i).getXval(), bricks.get(i).getYval())) == (tileNum+1) && (enemy.getState() == 0)) {
 					rightFreeBrick = false;
-				} else if((whichTileIsOn(bricks.get(i).getXval(), bricks.get(i).getYval())) == (tileNum-31) && (enemy.getState() == 3)) {
+				} else if((whichTileIsOn(bricks.get(i).getXval(), bricks.get(i).getYval())) == (tileNum) && (enemy.getState() == 3)) {
 					aboveFreeBrick = false;
 				} else if((whichTileIsOn(bricks.get(i).getXval(), bricks.get(i).getYval())) == (tileNum+31) && (enemy.getState() == 2)) {
 					belowFreeBrick = false;
 				}
 			}
 
-			
 			//System.out.println("Balloom "+ k + " state " +enemies.get(k).getState()+ " xVal " +enemies.get(k).getXval() + " yVal " +enemies.get(k).getYval());
-			//enemies.get(k).getBalloomInstance().move(enemies.get(k));
-			
-			//System.out.println("Balloom "+ k + " state " +enemies.get(k).getState());
+			//System.out.println("aboveI " +aboveFree + " AboveB " +aboveFreeBrick);
+			//System.out.println("leftI " +leftFree + " leftB " +leftFreeBrick);
+
 			
 			if(enemy.getState() == 0) {
 				if(rightFree && rightFreeBrick) {
@@ -354,7 +355,7 @@ public class Map implements KeyListener, FocusListener{
 					enemy.getBalloomInstance().changeDirection(enemy);
 				}
 			} else if(enemy.getState() == 1) {
-				if(leftFree && leftFreeBrick) {
+				if(leftFree && leftFreeBrick ) {
 					enemy.getBalloomInstance().move(enemy);
 				}  else {
 					enemy.getBalloomInstance().changeDirection(enemy);
@@ -426,7 +427,44 @@ public class Map implements KeyListener, FocusListener{
 		int tmp = y/50;
 		return ((x/50) + tmp*31);
 	}
-
+	
+	public void statusReset() {
+		leftFree = true;
+		rightFree = true;
+		aboveFree = true;
+		belowFree = true;
+		leftFreeBrick = true;
+		rightFreeBrick = true;
+		aboveFreeBrick = true;
+		belowFreeBrick = true;
+	}
+/*
+	public boolean collisionIndestructiblesLeft(Enemy enemy, int i) {
+		return detect.emptyLeft(enemy, indestructibles.get(i));
+	}
+	public boolean collisionIndestructiblesRight(Enemy enemy, int i) {
+		return detect.emptyRight(enemy, indestructibles.get(i));
+	}
+	public boolean collisionIndestructiblesAbove(Enemy enemy, int i) {
+		return detect.emptyAbove(enemy, indestructibles.get(i));
+	}
+	public boolean collisionIndestructiblesBelow(Enemy enemy, int i) {
+		return detect.emptyBelow(enemy, indestructibles.get(i));
+	}
+	
+	public boolean collisionBricksLeft(Enemy enemy, int i) {
+		return detect.emptyLeft(enemy, bricks.get(i));
+	}
+	public boolean collisionBricksRight(Enemy enemy, int i) {
+		return detect.emptyRight(enemy, bricks.get(i));
+	}
+	public boolean collisionBricksAbove(Enemy enemy, int i) {
+		return detect.emptyAbove(enemy, bricks.get(i));
+	}
+	public boolean collisionBricksBelow(Enemy enemy, int i) {
+		return detect.emptyBelow(enemy, bricks.get(i));
+	}
+*/
 	//empty methods
 	public void keyTyped(KeyEvent e) {
 	}
