@@ -1,40 +1,44 @@
 package Model.PowerUps;
 
-public abstract class Powerup {
-	//physical attributes
-		private float xval, yval;
-		private float height, width;
+import Model.Block;
+
+public abstract class Powerup extends Block {
+	int xval;
+		//physical attributes
+		private int yval;
+		int height;
+		private int width;
 		
 		public Powerup() {
-			xval = yval = 0;
+			xval = yval = 150;
 			height = width = 50;
 		}
 		
 		//setters
-		public void setXval(float i){
+		public void setXval(int i){
 			xval = i;
 		}
-		public void setYval(float i){
+		public void setYval(int i){
 			yval = i;
 		}
-		public void setHeight(float i){
+		public void setHeight(int i){
 			height = i;
 		}
-		public void setWidth(float i){
+		public void setWidth(int i){
 			width = i;
 		}
 
 		//getters
-		public float getXval(){
+		public int getXval(){
 			return xval;
 		}
-		public float getYval(){
+		public int getYval(){
 			return yval;
 		}
-		public float getHeight(){
+		public int getHeight(){
 			return height;
 		}
-		public float getWidth(){
+		public int getWidth(){
 			return width;
 		}
 		

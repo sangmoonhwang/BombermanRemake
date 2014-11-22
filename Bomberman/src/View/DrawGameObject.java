@@ -20,6 +20,7 @@ public class DrawGameObject extends JPanel{
 	private Image Bomb;
 	private Image Explode;
 	private Image Exit;
+	private Image ExtraBombs;
 	private int previousPosOfBomberman;
 	private int xVisible;
 	
@@ -32,6 +33,7 @@ public class DrawGameObject extends JPanel{
 		Bomb = Toolkit.getDefaultToolkit().getImage("Bomb.gif");
 		Explode = Toolkit.getDefaultToolkit().getImage("Explosion.jpg");
 		Exit = Toolkit.getDefaultToolkit().getImage("Exit.jpg");
+		ExtraBombs = Toolkit.getDefaultToolkit().getImage("Bomberman_Bombs.png");
 		
 		previousPosOfBomberman = 0;
 		xVisible = 0;
@@ -69,6 +71,10 @@ public class DrawGameObject extends JPanel{
 			}
 		}
 		
+		//draw upBombs
+		int upBombX = Map.getUpBombs().getXval();
+		int upBombY = Map.getUpBombs().getYval();
+		g.drawImage(ExtraBombs,upBombX, upBombY,50,50,this);
 		
 		//draw Door
 		int doorx = Map.getDoor().getXval();
@@ -99,14 +105,21 @@ public class DrawGameObject extends JPanel{
 			g.drawImage(Enemy, enemyx, enemyy, 50, 50, this);
 		}
 
-
+		for(int i = 0; i < Map.getActiveBombs().size(); i++){
+			if(Map.getActiveBombs().get(i).getActive()){
+				int bombx = Map.getActiveBombs().get(i).getXval();
+				int bomby = Map.getActiveBombs().get(i).getYval();
+				g.drawImage(Bomb, bombx, bomby, 50, 50, this);
+			}
+		}
 
 		//draw Bomb
-		if(Map.getBomb().getActive()){
-			int bombx = Map.getBomb().getXval();
-			int bomby = Map.getBomb().getYval();
+		/*if(Map.getBomb().getActive()){
+			int bombx = Map.getBombs()get.getXval();
+			int bomby = Map.getBombs().getYval();
 			g.drawImage(Bomb, bombx, bomby, 50, 50, this);
-		}
+		}*/
+		
 		//draw Bomberman
 		int bombermanX = bombman.getXval();
 		int bombermanY = bombman.getYval();
