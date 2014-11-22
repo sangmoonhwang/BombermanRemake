@@ -30,7 +30,7 @@ public class CollissionDetection {
 		return collision;
 	}
 	
-	public boolean collisionDetection_new(Movable test1, Block test, int i) {
+	public boolean collisionDetection_new(Movable test1, Block test, int i, int max) {
 		boolean collision = false;
 		switch(i){
 		case 0:
@@ -44,13 +44,13 @@ public class CollissionDetection {
 		case 1:
 			if ((test.getXval() + test.getWidth() > test1.getXval() &&
 					test.getYval() < test1.getYval() + test1.getHeight() &&
-					test.getXval() < test1.getXval() + test1.getWidth()*Bomberman.flames && 
+					test.getXval() < test1.getXval() + test1.getWidth()*max&& 
 					test.getYval() + test.getHeight() > test1.getYval())){
 				collision = true;
 			}
 			break;
 		case 2:	
-			if ((test.getXval() + test.getWidth() > test1.getXval() - Bomberman.flames * test1.getWidth() &&
+			if ((test.getXval() + test.getWidth() > test1.getXval() - max * test1.getWidth() &&
 					test.getYval() < test1.getYval() + test1.getHeight() &&
 					test.getXval() < test1.getXval() + test1.getWidth() && 
 					test.getYval() + test.getHeight() > test1.getYval())){
@@ -59,7 +59,7 @@ public class CollissionDetection {
 			break;
 		case 3:	
 			if ((test.getXval() + test.getWidth() > test1.getXval() &&
-					test.getYval() < test1.getYval() + test1.getHeight() * Bomberman.flames &&
+					test.getYval() < test1.getYval() + test1.getHeight() * max &&
 					test.getXval() < test1.getXval() + test1.getWidth() && 
 					test.getYval() + test.getHeight() > test1.getYval())){
 				collision = true;
@@ -69,7 +69,7 @@ public class CollissionDetection {
 			if ((test.getXval() + test.getWidth() > test1.getXval() &&
 					test.getYval() < test1.getYval() + test1.getHeight() &&
 					test.getXval() < test1.getXval() + test1.getWidth() && 
-					test.getYval() + test.getHeight() > test1.getYval()- Bomberman.flames * test1.getWidth())){
+					test.getYval() + test.getHeight() > test1.getYval()- max * test1.getWidth())){
 				collision = true;
 			}
 			break;
@@ -88,7 +88,7 @@ public class CollissionDetection {
 		return collision;
 	}
 
-	public boolean collisionDetection(Movable test, Explosion test1, int i){
+	public boolean collisionDetection(Movable test, Explosion test1, int i, int max){
 		boolean collision = false;
 		switch(i){
 		case 0:
@@ -102,13 +102,13 @@ public class CollissionDetection {
 		case 1:	
 			if ((test.getXval() + test.getWidth() > test1.getXval() &&
 					test.getYval() < test1.getYval() + test1.getHeight() &&
-					test.getXval() < test1.getXval() + test1.getWidth()*Bomberman.flames && 
+					test.getXval() < test1.getXval() + test1.getWidth()*max && 
 					test.getYval() + test.getHeight() > test1.getYval())){
 				collision = true;
 			}
 			break;
 		case 2:	
-			if ((test.getXval() + test.getWidth() > test1.getXval() - Bomberman.flames * test1.getWidth() &&
+			if ((test.getXval() + test.getWidth() > test1.getXval() - max * test1.getWidth() &&
 					test.getYval() < test1.getYval() + test1.getHeight() &&
 					test.getXval() < test1.getXval() + test1.getWidth() && 
 					test.getYval() + test.getHeight() > test1.getYval())){
@@ -117,7 +117,7 @@ public class CollissionDetection {
 			break;
 		case 3:	
 			if ((test.getXval() + test.getWidth() > test1.getXval() &&
-					test.getYval() < test1.getYval() + test1.getHeight() * Bomberman.flames &&
+					test.getYval() < test1.getYval() + test1.getHeight() * max &&
 					test.getXval() < test1.getXval() + test1.getWidth() && 
 					test.getYval() + test.getHeight() > test1.getYval())){
 				collision = true;
@@ -127,7 +127,7 @@ public class CollissionDetection {
 			if ((test.getXval() + test.getWidth() > test1.getXval() &&
 					test.getYval() < test1.getYval() + test1.getHeight() &&
 					test.getXval() < test1.getXval() + test1.getWidth() && 
-					test.getYval() + test.getHeight() > test1.getYval()- Bomberman.flames * test1.getWidth())){
+					test.getYval() + test.getHeight() > test1.getYval()- max * test1.getWidth())){
 				collision = true;
 			}
 			break;

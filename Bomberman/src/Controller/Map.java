@@ -4,6 +4,7 @@
 package Controller;
 
 import java.awt.event.*;
+import java.rmi.server.ExportException;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -295,23 +296,40 @@ public class Map implements KeyListener, FocusListener{
 			}
 		}
 		
+		//explosion check
 		if(explosions[0].isExploding()){
 			for(int i = 0; i< 5; i++){
-				if(detect.collisionDetection(bombman, explosions[i],i)){
+				int max = get_MaxFlame(i);
+				
+				if(detect.collisionDetection(bombman, explosions[i],i,max)){
 					if(!bombman.flamePass && !bombman.isMystery())
 						System.out.println("You died.");
 				}
 				for(int j = 0; j < enemies.size(); j++){
-					if(detect.collisionDetection(enemies.get(j), explosions[i],i)){
+					if(detect.collisionDetection(enemies.get(j), explosions[i],i,max)){
 						User.updateScore(enemies.get(j).getScore());
 						System.out.println(User.getTotalScore());
 						enemies.remove(j);
 					}
 				}
 				for(int k = 0; k < bricks.size();k++){
-					if(detect.collisionDetection_new(explosions[i], bricks.get(k),i)){
+					if(detect.collisionDetection_new(explosions[i], bricks.get(k),i,max)){
 						bricks.remove(k);
 					}
+				}
+				switch(i){
+				case 1:
+					explosions[i].setWidth(max * 50);
+					break;
+				case 2:
+					explosions[i].setWidth(-max * 50);
+					break;
+				case 3:
+					explosions[i].setHeight(max * 50);
+					break;
+				case 4:
+					explosions[i].setHeight(-max * 50);
+					break;
 				}
 			}
 		}
@@ -464,6 +482,40 @@ public class Map implements KeyListener, FocusListener{
 		belowFreeBrick = true;
 	}
 
+	public int get_MaxFlame(int i){
+		if(Bomberman.flames == 1){
+			return 1;
+		}
+		else{
+			int max = 0;
+			int tile = whichTileIsOn(explosions[i].getXval(), explosions[i].getYval());
+			for(int j = 0; j <= Bomberman.flames; j++){
+				if((whichTileIsOn(indestructibles.get(j).getXval(), indestructibles.get(j).getYval())) == tile) {
+					return max;
+				}
+				if((whichTileIsOn(bricks.get(j).getXval(), bricks.get(j).getYval())) == tile){
+					return max+1;
+				}
+				max++;
+				switch(i){
+				case 1:
+					tile = whichTileIsOn(explosions[i].getXval()+50*j, explosions[i].getYval());
+					break;
+				case 2:
+					tile = whichTileIsOn(explosions[i].getXval()-50*j, explosions[i].getYval());
+					break;
+				case 3:
+					tile = whichTileIsOn(explosions[i].getXval(), explosions[i].getYval()+50*j);
+					break;
+				case 4:
+					tile = whichTileIsOn(explosions[i].getXval(), explosions[i].getYval()-50*j);
+					break;
+				}
+			}
+			return max;
+		}
+	}
+	
 	//empty methods
 	public void keyTyped(KeyEvent e) {
 	}

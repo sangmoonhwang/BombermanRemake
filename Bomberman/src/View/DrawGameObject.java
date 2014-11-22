@@ -81,17 +81,18 @@ public class DrawGameObject extends JPanel{
 			for(int i = 0; i < 5; i++){
 				int explosionX = Map.getExplosion(i).getXval();
 				int explosionY = Map.getExplosion(i).getYval();
+				
 				if(i == 1){
-					g.drawImage(Explode, explosionX, explosionY, 50*Bomberman.flames,50,this);
+					g.drawImage(Explode, explosionX, explosionY, Map.getExplosion(i).getWidth(),50,this);
 				}
 				else if(i == 2){
-					g.drawImage(Explode, explosionX, explosionY, -50*Bomberman.flames,50,this);
+					g.drawImage(Explode, explosionX, explosionY, Map.getExplosion(i).getWidth(),50,this);
 				}
 				else if(i == 3){
-					g.drawImage(Explode, explosionX, explosionY, 50,50*bombman.flames,this);
+					g.drawImage(Explode, explosionX, explosionY, 50,Map.getExplosion(i).getHeight(),this);
 				}
-				else if(i == 3 || i ==4){
-					g.drawImage(Explode, explosionX, explosionY, 50,-50*bombman.flames,this);
+				else if(i == 4){
+					g.drawImage(Explode, explosionX, explosionY, 50,Map.getExplosion(i).getHeight(),this);
 				}
 				else{
 					g.drawImage(Explode, explosionX, explosionY, 50,50,this);
