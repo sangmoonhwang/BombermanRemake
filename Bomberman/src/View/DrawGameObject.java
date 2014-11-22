@@ -126,13 +126,6 @@ public class DrawGameObject extends JPanel{
 				g.drawImage(Bomb, bombx, bomby, 50, 50, this);
 			}
 		}
-
-		//draw Bomb
-		/*if(Map.getBomb().getActive()){
-			int bombx = Map.getBombs()get.getXval();
-			int bomby = Map.getBombs().getYval();
-			g.drawImage(Bomb, bombx, bomby, 50, 50, this);
-		}*/
 		
 		//draw Bomberman
 		int bombermanX = bombman.getXval();
