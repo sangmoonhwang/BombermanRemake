@@ -8,6 +8,11 @@ import java.rmi.server.ExportException;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JFrame;
 
@@ -17,12 +22,14 @@ import Model.Destructible;
 import Model.Door;
 import Model.Explosion;
 import Model.Indestructible;
+import static java.util.concurrent.TimeUnit.*;
 import Model.User;
 import Model.Enemies.Enemy;
 import Model.PowerUps.Powerup;
 import Model.PowerUps.UpBombs;
 import View.DrawMap;
 import View.DrawMenu;
+
 
 public class Map implements KeyListener, FocusListener{
 	public JFrame main;
@@ -38,6 +45,7 @@ public class Map implements KeyListener, FocusListener{
 	private static Door door;
 	private int xVel = 0;
 	private int yVel = 0;
+	private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(10);
 	private static int width;
 	private static int height;
 	private Timer explodeTimer;
@@ -148,22 +156,26 @@ public class Map implements KeyListener, FocusListener{
 			DrawMenu.getInstance().viewFrame(true);
 		}
 		if(value == KeyEvent.VK_V && Bomberman.detonate == true && activeBombs.size() >= 1){
-			//for(int i = 0; i < activeBombs.size(); i++){
-				//explodeTimer.cancel();
-				activeBombs.get(activeBombs.size()-1).explode();
-				explosions = activeBombs.get(activeBombs.size()-1).getPersonalExplosions();
-				unexplodeTimer = new Timer();
-				unexplodeTimer.schedule(new TimerTask(){
-					public void run(){
-						for(int i = 0; i < 4; i++){
-							explosions[i].setExploding(false);
+			bombs.add(new Bomb());
+			for(int i =0; i< activeBombs.size(); i++){
+				if(!activeBombs.get(i).getUsed()){
+					final Runnable unExplode = new Runnable() {
+
+						@Override
+						public void run() {
+							for(int i = 0; i < 4; i++){
+								activeBombs.get(i).getPersonalExplosions()[i].setExploding(false);
+							}
 						}
-						bombs.add(new Bomb());
-						activeBombs.remove(activeBombs.size()-1);
-					}
-				},500);
-				
-			//}
+					};
+					activeBombs.get(i).explode();
+					activeBombs.get(i).getSchedule().schedule(unExplode, 500, MILLISECONDS);
+					
+					break;
+				}
+			}
+				//activeBombs.get(0).explode();
+				//explosions = activeBombs.get(activeBombs.size()-1).getPersonalExplosions();
 		}
 		if(value == KeyEvent.VK_SPACE){
 			//if(bombman.getavailableBombs() != 0){
@@ -179,25 +191,8 @@ public class Map implements KeyListener, FocusListener{
 
 				activeBombs.get(activeBombs.size()-1).setXval(tilex);
 				activeBombs.get(activeBombs.size()-1).setYval(tiley);
-				activeBombs.get(activeBombs.size()-1).setActive(true);
-				int delay = 2000;
-				explodeTimer = new Timer();
-				explodeTimer.schedule(new TimerTask(){
-					public void run(){
-						activeBombs.get(activeBombs.size()-1).explode();
-						explosions = activeBombs.get(activeBombs.size()-1).getPersonalExplosions();
-						unexplodeTimer = new Timer();
-						unexplodeTimer.schedule(new TimerTask(){
-							public void run(){
-								for(int i = 0; i < 4; i++){
-									explosions[i].setExploding(false);
-								}
-								bombs.add(new Bomb());
-								activeBombs.remove(activeBombs.size()-1);
-							}
-						},500);
-					};
-				},delay);
+				activeBombs.get(activeBombs.size()-1).activate();
+				
 			}
 		}
 	}
@@ -307,17 +302,18 @@ public class Map implements KeyListener, FocusListener{
 
 
 		
-		//explosion check
-		if(explosions[0].isExploding()){
-			for(int i = 0; i< 5; i++){
+		//explosion check  CHANGE TO CHECK THROUGH EVERY BOMB IN ACTIVEBOMBS, NOT JUST ACTIVEBOMBS.GET(0)
+		if(activeBombs.size() != 0 && activeBombs.get(0).getPersonalExplosions()[0].isExploding()){
+			//for(int i = 0; i< activeBombs.size(); i++){
+			for(int i = 0; i < 5; i++){
 				//if(detect.collisionDetection(bombman, explosions[i],i,max)){
-				if(detect.collisionDetection(bombman, explosions[i])){
+				if(detect.collisionDetection(bombman, activeBombs.get(0).getPersonalExplosions()[i])){
 					if(!bombman.flamePass && !bombman.isMystery())
 						System.out.println("You died.");
 				}
 				for(int j = 0; j < enemies.size(); j++){
 					//if(detect.collisionDetection(enemies.get(j), explosions[i],i,max)){
-					if(detect.collisionDetection(enemies.get(j), explosions[i])){
+					if(detect.collisionDetection(enemies.get(j), activeBombs.get(0).getPersonalExplosions()[i])){
 						User.updateScore(enemies.get(j).getPoints());
 						System.out.println(User.getTotalScore());
 						enemies.remove(j);
@@ -325,7 +321,7 @@ public class Map implements KeyListener, FocusListener{
 				}
 				for(int k = 0; k < bricks.size();k++){
 					//if(detect.collisionDetection_new(explosions[i], bricks.get(k),i,max)){
-					if(detect.collisionDetection(explosions[i], bricks.get(k))){
+					if(detect.collisionDetection(activeBombs.get(0).getPersonalExplosions()[i], bricks.get(k))){
 						bricks.remove(k);
 					}
 				}

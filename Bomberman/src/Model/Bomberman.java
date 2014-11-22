@@ -32,8 +32,8 @@ public class Bomberman extends Movable{
 		wallPass = false;
 		flamePass = false;
 		bombPass = true;
-		detonate = false;
-		speed = 2;
+		detonate = true;
+		speed = 4;
 	}
 	//setters
 	public void setXval(int i){

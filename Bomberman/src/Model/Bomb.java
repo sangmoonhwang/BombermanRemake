@@ -1,11 +1,24 @@
 package Model;
 
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static java.util.concurrent.TimeUnit.SECONDS;
+
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+
+import Controller.Map;
+
 public class Bomb {
 	private int xval, yval;
 	private int height, width;
 	private boolean active;
 	private boolean escaped;
-	private Explosion[] personalExplosions;
+	private static Explosion[] personalExplosions;
+	private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(10);
+	private boolean used;
 
 	public Bomb() {
 		xval = yval = 0;
@@ -13,14 +26,16 @@ public class Bomb {
 		active = false;
 		escaped = false;
 		personalExplosions = new Explosion[5];
+		for(int i = 0; i < 5; i++){
+			personalExplosions[i] = new Explosion();
+		}
+		used = false;
 	}
 	
 	//explosion
 	public void explode(){
+		used = true;
 		active = false;
-		for(int i = 0; i < 5; i++){
-			personalExplosions[i] = new Explosion();
-		}
 		personalExplosions[0].setXval(this.xval);
 		personalExplosions[0].setYval(this.yval);
 		personalExplosions[1].setXval(xval+50);
@@ -38,6 +53,43 @@ public class Bomb {
 		for(int i = 0; i < 5; i++){
 			personalExplosions[i].setExploding(true);
 		}
+		
+	}
+	
+	public void activate() {
+		active = true;
+		
+		final Runnable unExplode = new Runnable() {
+
+			@Override
+			public void run() {
+				for(int i = 0; i < 4; i++){
+					personalExplosions[i].setExploding(false);
+				}
+				Map.getBombs().add(new Bomb());
+				Map.getActiveBombs().remove(Map.getActiveBombs().size()-1);
+			}
+		};
+		
+		final Runnable fuse = new Runnable() {
+
+			@Override
+			public void run() {
+				if(!used){
+					explode();
+					scheduler.schedule(unExplode, 500, MILLISECONDS);
+				}
+			}
+			
+		};
+		final ScheduledFuture<?> fuseHandle = scheduler.schedule(fuse, 2, SECONDS);
+			     scheduler.schedule(new Runnable() {
+			       public void run() { fuseHandle.cancel(true); }
+			     }, 2, SECONDS);
+			     
+
+		/*final ScheduledFuture<?> unExplodeHandle = *///scheduler.schedule(unExplode, 2500, MILLISECONDS);
+		
 	}
 	
 	//setters
@@ -79,5 +131,14 @@ public class Bomb {
 	public Explosion[] getPersonalExplosions(){
 		return personalExplosions;
 	}
+
+	public boolean getUsed() {
+		return used;
+	}
+	
+	public ScheduledExecutorService getSchedule(){
+		return scheduler;
+	}
+
 
 }

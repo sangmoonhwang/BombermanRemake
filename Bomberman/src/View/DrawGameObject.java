@@ -85,22 +85,23 @@ public class DrawGameObject extends JPanel{
 		
 		
 		//draw explosions
-		if(Map.getExplosion(0).isExploding()){
+		//if(Map.getExplosion(0).isExploding()){
+		if(Map.getActiveBombs().size() != 0 && Map.getActiveBombs().get(0).getPersonalExplosions()[0].isExploding()){
 			for(int i = 0; i < 5; i++){
-				int explosionX = Map.getExplosion(i).getXval();
-				int explosionY = Map.getExplosion(i).getYval();
+				int explosionX = Map.getActiveBombs().get(0).getPersonalExplosions()[i].getXval();
+				int explosionY = Map.getActiveBombs().get(0).getPersonalExplosions()[i].getYval();
 				
 				if(i == 1){
-					g.drawImage(Explode, explosionX, explosionY, Map.getExplosion(i).getWidth(),Map.getExplosion(i).getHeight(),this);
+					g.drawImage(Explode, explosionX, explosionY, Map.getActiveBombs().get(0).getPersonalExplosions()[i].getWidth(),Map.getActiveBombs().get(0).getPersonalExplosions()[i].getHeight(),this);
 				}
 				else if(i == 2){
-					g.drawImage(Explode, explosionX, explosionY, Map.getExplosion(i).getWidth(),Map.getExplosion(i).getHeight(),this);
+					g.drawImage(Explode, explosionX, explosionY, Map.getActiveBombs().get(0).getPersonalExplosions()[i].getWidth(),Map.getActiveBombs().get(0).getPersonalExplosions()[i].getHeight(),this);
 				}
 				else if(i == 3){
-					g.drawImage(Explode, explosionX, explosionY, Map.getExplosion(i).getWidth(),Map.getExplosion(i).getHeight(),this);
+					g.drawImage(Explode, explosionX, explosionY, Map.getActiveBombs().get(0).getPersonalExplosions()[i].getWidth(),Map.getActiveBombs().get(0).getPersonalExplosions()[i].getHeight(),this);
 				}
 				else if(i == 4){
-					g.drawImage(Explode, explosionX, explosionY, Map.getExplosion(i).getWidth(),Map.getExplosion(i).getHeight(),this);
+					g.drawImage(Explode, explosionX, explosionY, Map.getActiveBombs().get(0).getPersonalExplosions()[i].getWidth(),Map.getActiveBombs().get(0).getPersonalExplosions()[i].getHeight(),this);
 				}
 				else{
 					g.drawImage(Explode, explosionX, explosionY, 50,50,this);
