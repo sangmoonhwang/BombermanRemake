@@ -30,7 +30,8 @@ public class Map implements KeyListener, FocusListener{
 	private static ArrayList<Indestructible> indestructibles;
 	private static ArrayList<Destructible> bricks;
 	private static ArrayList<Enemy> enemies;
-	private static Bomb bomb;
+	private static ArrayList<Bomb> bombs;
+	private static ArrayList<Bomb> activeBombs;
 	private static Explosion[] explosions;
 	private static Door door;
 	private int xVel = 0;
@@ -55,7 +56,10 @@ public class Map implements KeyListener, FocusListener{
 		//new objects
 		detect = new CollissionDetection();
 		bombman = new Bomberman();
-		bomb = new Bomb();
+		bombs = new ArrayList<Bomb>();
+		activeBombs = new ArrayList<Bomb>();
+		bombs.add(new Bomb());
+		bombs.add(new Bomb());
 		upbombs = new UpBombs();
 		spawn = new SpawnGameObjects();
 		explosions = new Explosion[9];
@@ -132,15 +136,19 @@ public class Map implements KeyListener, FocusListener{
 			DrawMenu.getInstance().viewFrame(true);
 		}
 		if(value == KeyEvent.VK_SPACE){
-			if(bombman.getavailableBombs() != 0){
-				bombman.giveBombs(-1);
+			//if(bombman.getavailableBombs() != 0){
+			if(bombs.size() != 1){
+				System.out.println(bombs.size());
+				activeBombs.add(new Bomb());
+				bombs.remove(bombs.size()-1);
+				System.out.println(bombs.size());
 				int tilex = (int)bombman.getXval() + (int)(0.5*bombman.getWidth());
 				int tiley = (int)bombman.getYval() + (int)(0.5*bombman.getHeight());
 				tilex = (tilex/50) * 50;
 				tiley = (tiley/50) * 50;
 
-				bomb.setXval(tilex);
-				bomb.setYval(tiley);
+				activeBombs.get(activeBombs.size()-1).setXval(tilex);
+				activeBombs.get(activeBombs.size()-1).setYval(tiley);
 				explosions[0].setXval(tilex);
 				explosions[0].setYval(tiley);
 				explosions[1].setXval(tilex+50);
@@ -151,12 +159,12 @@ public class Map implements KeyListener, FocusListener{
 				explosions[3].setYval(tiley+50);
 				explosions[4].setXval(tilex);
 				explosions[4].setYval(tiley-50);
-				bomb.setActive(true);
+				activeBombs.get(activeBombs.size()-1).setActive(true);
 				int delay = 2000;
 				explodeTimer = new Timer();
 				explodeTimer.schedule(new TimerTask(){
 					public void run(){
-						bomb.setActive(false);
+						activeBombs.get(activeBombs.size()-1).setActive(false);
 						for(int i = 0; i<4;i++){
 							explosions[i].setExploding(true);
 						}
@@ -166,7 +174,8 @@ public class Map implements KeyListener, FocusListener{
 								for(int i = 0; i < 4; i++){
 									explosions[i].setExploding(false);
 								}
-								bombman.giveBombs(1);
+								bombs.add(new Bomb());
+								activeBombs.remove(activeBombs.size()-1);
 							}
 						},500);
 					};
@@ -282,7 +291,7 @@ public class Map implements KeyListener, FocusListener{
 		}
 		
 		if(detect.collisionDetection(bombman,upbombs)){
-			upbombs.activate();
+			bombs.add(new Bomb());
 			upbombs.setXval(0);
 			upbombs.setYval(0);
 		}
@@ -383,8 +392,8 @@ public class Map implements KeyListener, FocusListener{
 	public static Bomberman getBomberman(){
 		return bombman;
 	}
-	public static Bomb getBomb(){
-		return bomb;
+	public static ArrayList<Bomb> getBombs(){
+		return bombs;
 	}
 	public static Door getDoor(){
 		return door;
@@ -415,6 +424,10 @@ public class Map implements KeyListener, FocusListener{
 
 	public static UpBombs getUpBombs() {
 		return upbombs;
+	}
+
+	public static ArrayList<Bomb> getActiveBombs() {
+		return activeBombs;
 	}
 
 }

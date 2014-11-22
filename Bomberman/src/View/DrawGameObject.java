@@ -105,14 +105,21 @@ public class DrawGameObject extends JPanel{
 			g.drawImage(Enemy, enemyx, enemyy, 50, 50, this);
 		}
 
-
+		for(int i = 0; i < Map.getActiveBombs().size(); i++){
+			if(Map.getActiveBombs().get(i).getActive()){
+				int bombx = Map.getActiveBombs().get(i).getXval();
+				int bomby = Map.getActiveBombs().get(i).getYval();
+				g.drawImage(Bomb, bombx, bomby, 50, 50, this);
+			}
+		}
 
 		//draw Bomb
-		if(Map.getBomb().getActive()){
-			int bombx = Map.getBomb().getXval();
-			int bomby = Map.getBomb().getYval();
+		/*if(Map.getBomb().getActive()){
+			int bombx = Map.getBombs()get.getXval();
+			int bomby = Map.getBombs().getYval();
 			g.drawImage(Bomb, bombx, bomby, 50, 50, this);
-		}
+		}*/
+		
 		//draw Bomberman
 		int bombermanX = bombman.getXval();
 		int bombermanY = bombman.getYval();
