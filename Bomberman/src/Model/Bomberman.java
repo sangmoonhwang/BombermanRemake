@@ -27,7 +27,10 @@ public class Bomberman extends Movable{
 		height = 42;
 		width = 30;
 		availableBombs = 1;
-		wallPass = false;
+		wallPass = true;
+		flamePass = true;
+		bombPass = true;
+		speed = 2;
 	}
 	//setters
 	public void setXval(int i){
@@ -63,6 +66,10 @@ public class Bomberman extends Movable{
 	}
 	public int getavailableBombs() {
 		return availableBombs;
+	}
+	public boolean isMystery(){
+		System.out.println((System.nanoTime() - mystery_From)/1000000000);
+		return (System.nanoTime() - mystery_From)/1000000000 <= 10; //10seconds?
 	}
 
 }

@@ -1,11 +1,23 @@
 package Controller;
 
 import Model.Block;
+import Model.Bomb;
 import Model.Movable;
 
 public class CollissionDetection {
 
 	public boolean collisionDetection(Movable test, Block i) {
+		boolean collision = false;
+		if ((test.getXval() + test.getWidth() > i.getXval() &&
+				test.getYval() < i.getYval() + i.getHeight() &&
+				test.getXval() < i.getXval() + i.getWidth() && 
+				test.getYval() + test.getHeight() > i.getYval())){
+			collision = true;
+		}
+		return collision;
+	}
+	
+	public boolean collisionDetection(Movable test, Bomb i) {
 		boolean collision = false;
 		if ((test.getXval() + test.getWidth() > i.getXval() &&
 				test.getYval() < i.getYval() + i.getHeight() &&

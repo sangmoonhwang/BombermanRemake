@@ -54,7 +54,6 @@ public class Map implements KeyListener, FocusListener{
 	boolean aboveFreeBrick = true;
 	boolean belowFreeBrick = true;
 	
-
 	public Map(){
 
 		//attributes
@@ -126,18 +125,18 @@ public class Map implements KeyListener, FocusListener{
 	public void keyPressed ( KeyEvent e ){
 		int value = e.getKeyCode();
 		if (value == KeyEvent.VK_DOWN && value !=KeyEvent.VK_UP){
-			setVelY(2);
+			setVelY(bombman.speed);//2
 		}
 		else if(value != KeyEvent.VK_DOWN && value ==KeyEvent.VK_UP){
-			setVelY(-2);
+			setVelY(-bombman.speed);//-2
 		}
 		else if(value == KeyEvent.VK_LEFT && value !=KeyEvent.VK_RIGHT){
 			bombermanState = 2;
-			setVelX(-2);
+			setVelX(-bombman.speed);//-2
 		}
 		else if(value == KeyEvent.VK_RIGHT && value !=KeyEvent.VK_LEFT){
 			bombermanState = 1;
-			setVelX(2);
+			setVelX(bombman.speed);//2
 		}
 		if(value == KeyEvent.VK_ESCAPE){
 			d.getFrame().dispose();
@@ -196,19 +195,19 @@ public class Map implements KeyListener, FocusListener{
 	public void keyReleased(KeyEvent e) {
 		int value = e.getKeyCode();
 		if (value == KeyEvent.VK_DOWN){
-			if(yVel == 2)
+			if(yVel == bombman.speed)//2
 				setVelY(0);
 		}
 		else if(value ==KeyEvent.VK_UP){
-			if(yVel == -2)
+			if(yVel == -bombman.speed)//-2
 				setVelY(0);
 		}
 		else if(value == KeyEvent.VK_LEFT){
-			if(xVel == -2)
+			if(xVel == -bombman.speed)//-2
 				setVelX(0);
 		}
 		else if(value == KeyEvent.VK_RIGHT){
-			if(xVel == 2)
+			if(xVel == bombman.speed) //2
 				setVelX(0);
 		}
 		else{
@@ -224,37 +223,40 @@ public class Map implements KeyListener, FocusListener{
 
 		//bomberman and indestructible collision
 		for(int i = 0; i < indestructibles.size(); i++){
-			if(bombman.wallPass == false){
-				if(!detect.emptyLeft(bombman, indestructibles.get(i)) && xVel <= 0){
+
+			if(!detect.emptyLeft(bombman, indestructibles.get(i)) && xVel <= 0){
+				bombermanXtemp = 0;
+			}
+			if(!detect.emptyRight(bombman, indestructibles.get(i)) && xVel >= 0){
+				bombermanXtemp = 0;
+			}
+		}
+		if(bombman.wallPass == false){
+			for(int j=0; j<bricks.size(); j++){
+				if(!detect.emptyLeft(bombman, bricks.get(j)) && xVel <= 0){
 					bombermanXtemp = 0;
 				}
-				if(!detect.emptyRight(bombman, indestructibles.get(i)) && xVel >= 0){
+				if(!detect.emptyRight(bombman, bricks.get(j)) && xVel >= 0){
 					bombermanXtemp = 0;
-				}
-				for(int j=0; j<bricks.size(); j++){
-					if(!detect.emptyLeft(bombman, bricks.get(j)) && xVel <= 0){
-						bombermanXtemp = 0;
-					}
-					if(!detect.emptyRight(bombman, bricks.get(j)) && xVel >= 0){
-						bombermanXtemp = 0;
-					}
 				}
 			}
 		}
 
+
 		bombman.incrementXval(bombermanXtemp);
-		
-		if(bombman.wallPass == false){
-			for(int i = 0; i < indestructibles.size(); i++){
-				if(!detect.emptyAbove(bombman, indestructibles.get(i)) && yVel <= 0){
-					bombermanYtemp = 0;
-				}
-				if(!detect.emptyBelow(bombman, indestructibles.get(i)) && yVel >= 0){
-					bombermanYtemp = 0;
-				}
+
+
+		for(int i = 0; i < indestructibles.size(); i++){
+			if(!detect.emptyAbove(bombman, indestructibles.get(i)) && yVel <= 0){
+				bombermanYtemp = 0;
 			}
-			
-			//bomberman collision detection with bricks
+			if(!detect.emptyBelow(bombman, indestructibles.get(i)) && yVel >= 0){
+				bombermanYtemp = 0;
+			}
+		}
+
+		//bomberman collision detection with bricks
+		if(bombman.wallPass == false){
 			for(int i=0; i<bricks.size(); i++){
 				if(!detect.emptyAbove(bombman, bricks.get(i)) && yVel <= 0){
 					bombermanYtemp = 0;
@@ -265,23 +267,38 @@ public class Map implements KeyListener, FocusListener{
 			}
 		}
 		bombman.incrementYval(bombermanYtemp);
-		
+
 		//Bomberman and Enemy Collisions
 		for (int i=0; i<enemies.size(); i++){
 			if(detect.collisionDetection(bombman, enemies.get(i))){
-				if(detect.collisionDetection(bombman, enemies.get(i))){
-					bombman.incrementXval(-xVel);
-					bombman.incrementYval(-yVel);
+				bombman.incrementXval(-xVel);
+				bombman.incrementYval(-yVel);
+				if(!bombman.isMystery()){
 					System.out.println("You died!!");
+			}
+		}
+	}
+		
+		//Bomberman and Bombs Collisions
+		if(!Bomberman.bombPass){
+			for (int i=0; i<activeBombs.size(); i++){
+				if(detect.collisionDetection(bombman, activeBombs.get(i))){
+					if(activeBombs.get(i).getEscaped()){
+						bombman.incrementXval(-xVel);
+						bombman.incrementYval(-yVel);
+					}
+				}
+				else{
+					activeBombs.get(i).setEscaped(true);
 				}
 			}
 		}
 
-
 		if(explosions[0].isExploding()){
 			for(int i = 0; i< 5; i++){
 				if(detect.collisionDetection(bombman, explosions[i])){
-					System.out.println("You died.");
+					if(!bombman.flamePass && !bombman.isMystery())
+						System.out.println("You died.");
 				}
 				for(int j = 0; j < enemies.size(); j++){
 					if(detect.collisionDetection(enemies.get(j), explosions[i])){
@@ -297,85 +314,80 @@ public class Map implements KeyListener, FocusListener{
 				}
 			}
 		}
-		
+
 		if(detect.collisionDetection(bombman, door) && enemies.size() == 0){
 			System.out.println("Level Complete!");
 		}
-		
+
 		if(detect.collisionDetection(bombman,upbombs)){
 			bombs.add(new Bomb());
 			upbombs.setXval(0);
 			upbombs.setYval(0);
+			bombman.mystery_From = System.nanoTime(); //for testing
+			bombman.speed += 2; //for testing
 		}
 	}
-	
+
 	public void tick2() {
 		//collision check for enemy with indestructibles and bricks
 
-		
 		for(int k=0;k<enemies.size();k++) {
-			statusReset();
-			Enemy enemy = enemies.get(k);
-			int tileNum = whichTileIsOn(enemy.getXval(), enemy.getYval());
-			//System.out.println("Balloom " +k+ " current tile " + tileNum);
-			
+			int tileNum = whichTileIsOn(enemies.get(k).getXval(),enemies.get(k).getYval());
+
 			for(int i = 0; i < indestructibles.size(); i++) {
-				if((whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval())) == (tileNum) && (enemy.getState() == 1)) {
+				if((whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval())) == (tileNum-1)) {
 					leftFree = false;
-				} else if((whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval())) == (tileNum+1) && (enemy.getState() == 0)) {
+				} else if((whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval())) == (tileNum+1)) {
 					rightFree = false;
-				} else if((whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval())) == (tileNum) && (enemy.getState() == 3)) {
+				} else if((whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval())) == (tileNum-31)) {
 					aboveFree = false;
-				} else if((whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval())) == (tileNum+31) && (enemy.getState() == 2)) {
+				} else if((whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval())) == (tileNum+31)) {
 					belowFree = false;
 				}
 			}
 
 			for(int i=0; i<bricks.size(); i++) {
-				if((whichTileIsOn(bricks.get(i).getXval(), bricks.get(i).getYval())) == (tileNum) && (enemy.getState() == 1)) {
+				if((whichTileIsOn(bricks.get(i).getXval(), bricks.get(i).getYval())) == (tileNum-1)) {
 					leftFreeBrick = false;
-				} else if((whichTileIsOn(bricks.get(i).getXval(), bricks.get(i).getYval())) == (tileNum+1) && (enemy.getState() == 0)) {
+				} else if((whichTileIsOn(bricks.get(i).getXval(), bricks.get(i).getYval())) == (tileNum+1)) {
 					rightFreeBrick = false;
-				} else if((whichTileIsOn(bricks.get(i).getXval(), bricks.get(i).getYval())) == (tileNum) && (enemy.getState() == 3)) {
+				} else if((whichTileIsOn(bricks.get(i).getXval(), bricks.get(i).getYval())) == (tileNum-31)) {
 					aboveFreeBrick = false;
-				} else if((whichTileIsOn(bricks.get(i).getXval(), bricks.get(i).getYval())) == (tileNum+31) && (enemy.getState() == 2)) {
+				} else if((whichTileIsOn(bricks.get(i).getXval(), bricks.get(i).getYval())) == (tileNum+31)) {
 					belowFreeBrick = false;
 				}
 			}
-
-			//System.out.println("Balloom "+ k + " state " +enemies.get(k).getState()+ " xVal " +enemies.get(k).getXval() + " yVal " +enemies.get(k).getYval());
-			//System.out.println("aboveI " +aboveFree + " AboveB " +aboveFreeBrick);
-			//System.out.println("leftI " +leftFree + " leftB " +leftFreeBrick);
-
-			
-			if(enemy.getState() == 0) {
-				if(rightFree && rightFreeBrick) {
-					enemy.getBalloomInstance().move(enemy);
-				} else {
-					enemy.getBalloomInstance().changeDirection(enemy);
-				}
-			} else if(enemy.getState() == 1) {
-				if(leftFree && leftFreeBrick ) {
-					enemy.getBalloomInstance().move(enemy);
-				}  else {
-					enemy.getBalloomInstance().changeDirection(enemy);
-				}
-			} else if(enemy.getState() == 2) {
-				if(belowFree && belowFreeBrick) {
-					enemy.getBalloomInstance().move(enemy);
-				}  else {
-					enemy.getBalloomInstance().changeDirection(enemy);
-				}
-			} else {
-				if(aboveFree && aboveFreeBrick) {
-					enemy.getBalloomInstance().move(enemy);
-				}  else {
-					enemy.getBalloomInstance().changeDirection(enemy);
-				}
-			}
-			//System.out.println("Balloom "+ k + " state " +enemies.get(k).getState()+ " xVal " +enemies.get(k).getXval() + " yVal " +enemies.get(k).getYval());
-		
 		}
+		
+
+//			Balloom enemy = enemies.get(k).getBalloomInstance();
+			//System.out.println("Balloom "+ k + " state " +enemy.getState());
+//			if(enemy.getState() == 0) {
+//				if(rightFree && rightFreeBrick) {
+//					enemy.move(enemies.get(k));
+//				} else {
+//					enemy.changeDirection();
+//				}
+//			} else if(enemy.getState() == 1) {
+//				if(leftFree && leftFreeBrick) {
+//					enemy.move(enemies.get(k));
+//				}  else {
+//					enemy.changeDirection();
+//				}
+//			} else if(enemy.getState() == 2) {
+//				if(belowFree && belowFreeBrick) {
+//					enemy.move(enemies.get(k));
+//				}  else {
+//					enemy.changeDirection();
+//				}
+//			} else {
+//				if(aboveFree && aboveFreeBrick) {
+//					enemy.move(enemies.get(k));
+//				}  else {
+//					enemy.changeDirection();
+//				}
+//			}
+//		}
 	}
 
 	//setters
@@ -417,7 +429,7 @@ public class Map implements KeyListener, FocusListener{
 	public static int getBombermanState() {
 		return bombermanState;
 	}
-	
+
 	/**
 	 * returns the tile number
 	 * @param xPos and yPos
