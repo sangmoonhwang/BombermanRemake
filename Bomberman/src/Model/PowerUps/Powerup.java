@@ -12,13 +12,13 @@ public abstract class Powerup extends Block {
 		private String identity;
 		
 		public Powerup() {
-			xval = yval = 150;
-			height = width = 50;
+			//xval = yval = 150;
+			//height = width = 50;
 		}
 		
 		public Powerup(String identity) {
-			xval = yval = 150;
-			height = width = 50;
+			//xval = yval = 150;
+			//height = width = 50;
 			this.identity = identity;
 		}
 		

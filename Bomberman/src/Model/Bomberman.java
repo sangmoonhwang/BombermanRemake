@@ -27,7 +27,7 @@ public class Bomberman extends Movable{
 		height = 42;
 		width = 30;
 		availableBombs = 1;
-		wallPass = true;
+		wallPass = false;
 		flamePass = true;
 		bombPass = true;
 		speed = 2;

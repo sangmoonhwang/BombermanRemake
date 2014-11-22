@@ -17,6 +17,7 @@ import Model.Door;
 import Model.Explosion;
 import Model.Indestructible;
 import Model.User;
+import Model.Enemies.Balloom;
 import Model.Enemies.Enemy;
 import Model.PowerUps.UpBombs;
 import View.DrawMap;
@@ -293,7 +294,7 @@ public class Map implements KeyListener, FocusListener{
 				}
 			}
 		}
-
+		
 		if(explosions[0].isExploding()){
 			for(int i = 0; i< 5; i++){
 				if(detect.collisionDetection(bombman, explosions[i])){
@@ -331,63 +332,70 @@ public class Map implements KeyListener, FocusListener{
 	public void tick2() {
 		//collision check for enemy with indestructibles and bricks
 
-		for(int k=0;k<enemies.size();k++) {
-			int tileNum = whichTileIsOn(enemies.get(k).getXval(),enemies.get(k).getYval());
 
+		for(int k=0;k<enemies.size();k++) {
+			statusReset();
+			Enemy enemy = enemies.get(k);
+			int tileNum = whichTileIsOn(enemy.getXval(), enemy.getYval());
+			//System.out.println("Balloom " +k+ " current tile " + tileNum);
+			
 			for(int i = 0; i < indestructibles.size(); i++) {
-				if((whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval())) == (tileNum-1)) {
+				if((whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval())) == (tileNum) && (enemy.getState() == 1)) {
 					leftFree = false;
-				} else if((whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval())) == (tileNum+1)) {
+				} else if((whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval())) == (tileNum+1) && (enemy.getState() == 0)) {
 					rightFree = false;
-				} else if((whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval())) == (tileNum-31)) {
+				} else if((whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval())) == (tileNum) && (enemy.getState() == 3)) {
 					aboveFree = false;
-				} else if((whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval())) == (tileNum+31)) {
+				} else if((whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval())) == (tileNum+31) && (enemy.getState() == 2)) {
 					belowFree = false;
 				}
 			}
 
 			for(int i=0; i<bricks.size(); i++) {
-				if((whichTileIsOn(bricks.get(i).getXval(), bricks.get(i).getYval())) == (tileNum-1)) {
+				if((whichTileIsOn(bricks.get(i).getXval(), bricks.get(i).getYval())) == (tileNum) && (enemy.getState() == 1)) {
 					leftFreeBrick = false;
-				} else if((whichTileIsOn(bricks.get(i).getXval(), bricks.get(i).getYval())) == (tileNum+1)) {
+				} else if((whichTileIsOn(bricks.get(i).getXval(), bricks.get(i).getYval())) == (tileNum+1) && (enemy.getState() == 0)) {
 					rightFreeBrick = false;
-				} else if((whichTileIsOn(bricks.get(i).getXval(), bricks.get(i).getYval())) == (tileNum-31)) {
+				} else if((whichTileIsOn(bricks.get(i).getXval(), bricks.get(i).getYval())) == (tileNum) && (enemy.getState() == 3)) {
 					aboveFreeBrick = false;
-				} else if((whichTileIsOn(bricks.get(i).getXval(), bricks.get(i).getYval())) == (tileNum+31)) {
+				} else if((whichTileIsOn(bricks.get(i).getXval(), bricks.get(i).getYval())) == (tileNum+31) && (enemy.getState() == 2)) {
 					belowFreeBrick = false;
 				}
 			}
-		}
-		
 
-//			Balloom enemy = enemies.get(k).getBalloomInstance();
-			//System.out.println("Balloom "+ k + " state " +enemy.getState());
-//			if(enemy.getState() == 0) {
-//				if(rightFree && rightFreeBrick) {
-//					enemy.move(enemies.get(k));
-//				} else {
-//					enemy.changeDirection();
-//				}
-//			} else if(enemy.getState() == 1) {
-//				if(leftFree && leftFreeBrick) {
-//					enemy.move(enemies.get(k));
-//				}  else {
-//					enemy.changeDirection();
-//				}
-//			} else if(enemy.getState() == 2) {
-//				if(belowFree && belowFreeBrick) {
-//					enemy.move(enemies.get(k));
-//				}  else {
-//					enemy.changeDirection();
-//				}
-//			} else {
-//				if(aboveFree && aboveFreeBrick) {
-//					enemy.move(enemies.get(k));
-//				}  else {
-//					enemy.changeDirection();
-//				}
-//			}
-//		}
+			//System.out.println("Balloom "+ k + " state " +enemies.get(k).getState()+ " xVal " +enemies.get(k).getXval() + " yVal " +enemies.get(k).getYval());
+			//System.out.println("aboveI " +aboveFree + " AboveB " +aboveFreeBrick);
+			//System.out.println("leftI " +leftFree + " leftB " +leftFreeBrick);
+
+			
+			if(enemy.getState() == 0) {
+				if(rightFree && rightFreeBrick) {
+					enemy.getBalloomInstance().move(enemy);
+				} else {
+					enemy.getBalloomInstance().changeDirection(enemy);
+				}
+			} else if(enemy.getState() == 1) {
+				if(leftFree && leftFreeBrick ) {
+					enemy.getBalloomInstance().move(enemy);
+				}  else {
+					enemy.getBalloomInstance().changeDirection(enemy);
+				}
+			} else if(enemy.getState() == 2) {
+				if(belowFree && belowFreeBrick) {
+					enemy.getBalloomInstance().move(enemy);
+				}  else {
+					enemy.getBalloomInstance().changeDirection(enemy);
+				}
+			} else {
+				if(aboveFree && aboveFreeBrick) {
+					enemy.getBalloomInstance().move(enemy);
+				}  else {
+					enemy.getBalloomInstance().changeDirection(enemy);
+				}
+			}
+			//System.out.println("Balloom "+ k + " state " +enemies.get(k).getState()+ " xVal " +enemies.get(k).getXval() + " yVal " +enemies.get(k).getYval());
+		
+		}
 	}
 
 	//setters

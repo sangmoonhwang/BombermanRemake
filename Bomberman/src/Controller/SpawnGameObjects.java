@@ -60,12 +60,12 @@ public class SpawnGameObjects {
 			int x, y, tile;
 
 			do {
-				x = (int)(Math.random()*29 +1);
-				y = (int)(Math.random()*11 +1);
+				x = (int)(Math.random()*29 +1)*50;
+				y = (int)(Math.random()*11 +1)*50;
 				tile = whichTileIsOn(x,y);
-			}while(validSpawn(tile));
-			enemies.get(i).setXval(50*x);
-			enemies.get(i).setYval(50*y);
+			}while(!validSpawn(tile));
+			enemies.get(i).setXval(x);
+			enemies.get(i).setYval(y);
 		}
 
 		return enemies;
