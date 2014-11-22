@@ -4,8 +4,8 @@ import Model.Bomberman;
 
 public class Wallpass extends Powerup{
 
-	public Wallpass(){
-		super();
+	public Wallpass(String identity){
+		super(identity);
 	}
 	
 	@Override

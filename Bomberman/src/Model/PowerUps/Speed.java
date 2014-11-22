@@ -4,8 +4,8 @@ import Model.Bomberman;
 
 public class Speed extends Powerup{
 
-	public Speed(){
-		super();
+	public Speed(String identity){
+		super(identity);
 	}
 	
 	@Override

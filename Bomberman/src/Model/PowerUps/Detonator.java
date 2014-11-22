@@ -4,8 +4,8 @@ import Model.Bomberman;
 
 public class Detonator extends Powerup{
 
-	public Detonator(){
-		super();
+	public Detonator(String identity){
+		super(identity);
 	}
 	
 	@Override

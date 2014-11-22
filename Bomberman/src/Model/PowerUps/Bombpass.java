@@ -3,9 +3,10 @@ package Model.PowerUps;
 import Model.Bomberman;
 
 public class Bombpass extends Powerup{
-
-	public Bombpass(){
-		super();
+	String identity = "BombPass";
+	
+	public Bombpass(String identity){
+		super(identity);
 	}
 	@Override
 	public void activate() {

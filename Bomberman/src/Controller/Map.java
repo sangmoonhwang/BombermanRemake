@@ -18,8 +18,8 @@ import Model.Door;
 import Model.Explosion;
 import Model.Indestructible;
 import Model.User;
-import Model.Enemies.Balloom;
 import Model.Enemies.Enemy;
+import Model.PowerUps.Powerup;
 import Model.PowerUps.UpBombs;
 import View.DrawMap;
 import View.DrawMenu;
@@ -34,6 +34,7 @@ public class Map implements KeyListener, FocusListener{
 	private static ArrayList<Bomb> bombs;
 	private static ArrayList<Bomb> activeBombs;
 	private static Explosion[] explosions;
+	private static Powerup power;
 	private static Door door;
 	private int xVel = 0;
 	private int yVel = 0;
@@ -46,7 +47,7 @@ public class Map implements KeyListener, FocusListener{
 	private CollissionDetection detect;
 	private SpawnGameObjects spawn;
 	private static int bombermanState;
-	private static UpBombs upbombs;
+//	private static UpBombs upbombs;
 	boolean leftFree = true;
 	boolean rightFree = true;
 	boolean aboveFree = true;
@@ -56,7 +57,7 @@ public class Map implements KeyListener, FocusListener{
 	boolean aboveFreeBrick = true;
 	boolean belowFreeBrick = true;
 	
-	public Map(){
+	public Map(int level){
 
 		//attributes
 		width = 50;
@@ -69,8 +70,7 @@ public class Map implements KeyListener, FocusListener{
 		activeBombs = new ArrayList<Bomb>();
 		bombs.add(new Bomb());
 		bombs.add(new Bomb());
-		upbombs = new UpBombs();
-		spawn = new SpawnGameObjects();
+		spawn = new SpawnGameObjects(level);
 		explosions = new Explosion[9];
 		for(int i = 0; i<8; i++){
 			explosions[i] = new Explosion();
@@ -80,7 +80,9 @@ public class Map implements KeyListener, FocusListener{
 		indestructibles = spawn.spawnIndestructibles();
 		bricks = spawn.spawnBricks();
 		enemies = spawn.spawnEnemies();
+		power = spawn.spawnPowerup();
 		door = spawn.spawnDoor();
+		
 
 
 		d = DrawMap.getInstance();
@@ -337,7 +339,7 @@ public class Map implements KeyListener, FocusListener{
 		if(detect.collisionDetection(bombman, door) && enemies.size() == 0){
 			System.out.println("Level Complete!");
 		}
-
+/*
 		if(detect.collisionDetection(bombman,upbombs)){
 			bombs.add(new Bomb());
 			upbombs.setXval(0);
@@ -345,18 +347,17 @@ public class Map implements KeyListener, FocusListener{
 			bombman.mystery_From = System.nanoTime(); //for testing
 			bombman.speed += 2; //for testing
 		}
+*/
 	}
 
 	public void tick2() {
 		//collision check for enemy with indestructibles and bricks
 
-
 		for(int k=0;k<enemies.size();k++) {
 			statusReset();
 			Enemy enemy = enemies.get(k);
 			int tileNum = whichTileIsOn(enemy.getXval(), enemy.getYval());
-			//System.out.println("Balloom " +k+ " current tile " + tileNum);
-			
+	
 			for(int i = 0; i < indestructibles.size(); i++) {
 				if((whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval())) == (tileNum) && (enemy.getState() == 1)) {
 					leftFree = false;
@@ -381,11 +382,6 @@ public class Map implements KeyListener, FocusListener{
 				}
 			}
 
-			//System.out.println("Balloom "+ k + " state " +enemies.get(k).getState()+ " xVal " +enemies.get(k).getXval() + " yVal " +enemies.get(k).getYval());
-			//System.out.println("aboveI " +aboveFree + " AboveB " +aboveFreeBrick);
-			//System.out.println("leftI " +leftFree + " leftB " +leftFreeBrick);
-
-			
 			if(enemy.getState() == 0) {
 				if(rightFree && rightFreeBrick) {
 					enemy.getBalloomInstance().move(enemy);
@@ -411,8 +407,6 @@ public class Map implements KeyListener, FocusListener{
 					enemy.getBalloomInstance().changeDirection(enemy);
 				}
 			}
-			//System.out.println("Balloom "+ k + " state " +enemies.get(k).getState()+ " xVal " +enemies.get(k).getXval() + " yVal " +enemies.get(k).getYval());
-		
 		}
 	}
 
@@ -481,6 +475,11 @@ public class Map implements KeyListener, FocusListener{
 		aboveFreeBrick = true;
 		belowFreeBrick = true;
 	}
+	
+	
+	public static Powerup getPowerup() {
+		return power;
+	}
 
 	public int get_MaxFlame(int i){
 		if(Bomberman.flames == 1){
@@ -524,10 +523,11 @@ public class Map implements KeyListener, FocusListener{
 	public void focusLost(FocusEvent e) {
 	}
 
+/*
 	public static UpBombs getUpBombs() {
 		return upbombs;
 	}
-
+*/
 	public static ArrayList<Bomb> getActiveBombs() {
 		return activeBombs;
 	}

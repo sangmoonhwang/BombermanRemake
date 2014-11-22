@@ -30,7 +30,7 @@ public class DrawGameObject extends JPanel{
 	private Image wallPass;
 	private int previousPosOfBomberman;
 	private int xVisible;
-	
+		
 	public DrawGameObject(){
 
 		bombermanSprite = Toolkit.getDefaultToolkit().getImage("Bomberman.gif");
@@ -100,11 +100,18 @@ public class DrawGameObject extends JPanel{
 			}
 		}
 		
-		//draw upBombs
+		//draw powerUp
+		int xPowerup = Map.getPowerup().getXval();
+		int yPowerup = Map.getPowerup().getYval();
+		String powerUp = Map.getPowerup().getIdentity();
+		g.drawImage(getImage(powerUp),xPowerup, yPowerup,50,50,this);
+		
+		
+/*		//draw upBombs
 		int upBombX = Map.getUpBombs().getXval();
 		int upBombY = Map.getUpBombs().getYval();
 		g.drawImage(ExtraBombs,upBombX, upBombY,50,50,this);
-		
+*/		
 		//draw Door
 		int doorx = Map.getDoor().getXval();
 		int doory = Map.getDoor().getYval();
@@ -141,13 +148,6 @@ public class DrawGameObject extends JPanel{
 				g.drawImage(Bomb, bombx, bomby, 50, 50, this);
 			}
 		}
-
-		//draw Bomb
-		/*if(Map.getBomb().getActive()){
-			int bombx = Map.getBombs()get.getXval();
-			int bomby = Map.getBombs().getYval();
-			g.drawImage(Bomb, bombx, bomby, 50, 50, this);
-		}*/
 		
 		//draw Bomberman
 		int bombermanX = bombman.getXval();
@@ -156,5 +156,25 @@ public class DrawGameObject extends JPanel{
 		int bombermanHeight = bombman.getHeight();
 		g.drawImage(bombermanSprite, bombermanX, bombermanY, bombermanWidth, bombermanHeight, this);
 
+	}
+
+	public Image getImage(String name) {
+		if(name.equals("Bombpass")) {
+			return bombPass;
+		} else if(name.equals("Detonator")) {
+			return detonator;
+		} else if(name.equals("Flamepass")) {
+			return flamePass;
+		} else if(name.equals("Flames")) {
+			return flames;
+		} else if(name.equals("Mystery")) {
+			return mystery;
+		} else if(name.equals("Speed")) {
+			return speed;
+		} else if(name.equals("UpBombs")) {
+			return ExtraBombs;
+		} else {
+			return wallPass;
+		}
 	}
 }
