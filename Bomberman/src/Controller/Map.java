@@ -384,6 +384,7 @@ public class Map implements KeyListener, FocusListener{
 				}
 			}
 
+			//move to current moving direction or change the moving direction to opposite if path is not free
 			if(enemy.getState() == 0) {
 				if(rightFree && rightFreeBrick) {
 					enemy.move();
@@ -410,20 +411,30 @@ public class Map implements KeyListener, FocusListener{
 				}
 			}
 			
-			if(enemy.getIntelligence() == 2){
-				
-			} else if(enemy.getIntelligence() == 3) {
-				
-			}
+			//if intelligence is 2 or 3 then at intersection it can change direction with probability of 0.1(intelligence=2) or 0.5(intelligence=3)
+			if(enemy.getIntelligence() > 1 && isIntersection(enemy.getXval(), enemy.getYval())){
+				int state = enemy.getState();
+				if((state == 0 && aboveFree && aboveFreeBrick) || (state == 0 && belowFree && belowFreeBrick) 
+					|| (state == 1 && aboveFree && aboveFreeBrick) || (state == 1 && belowFree && belowFreeBrick)) {
+					enemy.intersectionDirectionChange(aboveFree, belowFree);
+				} else if((state == 2 && leftFree && leftFreeBrick) || (state == 2 && rightFree && rightFreeBrick) 
+					|| (state == 3 && leftFree && leftFreeBrick) || (state == 3 && rightFree && rightFreeBrick)) {
+					enemy.intersectionDirectionChange(leftFree, rightFree);
+				}
+			} 
 		}
 	}
 	
 	/**
 	 * returns if the enemy is at the intersection
-	 * @param xPos and yPos
+	 * @param xPos and yPos of enemy
 	 * @return True if enemy is at intersection, otherwise false
 	 */
 	public boolean isIntersection(int x, int y) {
+		int xMOD = x % 100;
+		int yMOD = y % 100;
+		if(xMOD == 50 && yMOD == 50)
+			return true;
 		
 		return false;
 	}

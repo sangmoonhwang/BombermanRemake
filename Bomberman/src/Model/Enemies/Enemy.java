@@ -124,15 +124,30 @@ public class Enemy extends Movable{
 	}
 
 	/**
-	 * changes the enemy to the free intersection
+	 * changes the enemy to the free intersection with probability of 0.1 for intelligence 1 and 0.5 for intelligence 3
 	 * @param None
 	 * @return None
 	 */
-	public void intersectionDirectionChange() {
+	public void intersectionDirectionChange(Boolean free1, Boolean free2) {
+		double prob = Math.random();
 		
+		if((intelligence == 2 && prob < 0.1) || (intelligence == 3 && prob < 0.5)) {
+			if(getState() == 0 || getState() == 1){
+				if(free1) {
+					setState(3);
+				} else {
+					setState(2);
+				}
+			} else if(getState() == 2 || getState() == 3) {
+				if(free1) {
+					setState(1);
+				} else {
+					setState(0);
+				}
+			}
+		}
 	}
 	
-
 	//setters
 	public void setXval(int i){
 		xval = i;
