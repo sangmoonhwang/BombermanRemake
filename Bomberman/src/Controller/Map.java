@@ -118,18 +118,18 @@ public class Map implements KeyListener, FocusListener{
 	public void keyPressed ( KeyEvent e ){
 		int value = e.getKeyCode();
 		if (value == KeyEvent.VK_DOWN && value !=KeyEvent.VK_UP){
-			setVelY(2);
+			setVelY(bombman.speed);//2
 		}
 		else if(value != KeyEvent.VK_DOWN && value ==KeyEvent.VK_UP){
-			setVelY(-2);
+			setVelY(-bombman.speed);//-2
 		}
 		else if(value == KeyEvent.VK_LEFT && value !=KeyEvent.VK_RIGHT){
 			bombermanState = 2;
-			setVelX(-2);
+			setVelX(-bombman.speed);//-2
 		}
 		else if(value == KeyEvent.VK_RIGHT && value !=KeyEvent.VK_LEFT){
 			bombermanState = 1;
-			setVelX(2);
+			setVelX(bombman.speed);//2
 		}
 		if(value == KeyEvent.VK_ESCAPE){
 			d.getFrame().dispose();
@@ -188,19 +188,19 @@ public class Map implements KeyListener, FocusListener{
 	public void keyReleased(KeyEvent e) {
 		int value = e.getKeyCode();
 		if (value == KeyEvent.VK_DOWN){
-			if(yVel == 2)
+			if(yVel == bombman.speed)//2
 				setVelY(0);
 		}
 		else if(value ==KeyEvent.VK_UP){
-			if(yVel == -2)
+			if(yVel == -bombman.speed)//-2
 				setVelY(0);
 		}
 		else if(value == KeyEvent.VK_LEFT){
-			if(xVel == -2)
+			if(xVel == -bombman.speed)//-2
 				setVelX(0);
 		}
 		else if(value == KeyEvent.VK_RIGHT){
-			if(xVel == 2)
+			if(xVel == bombman.speed) //2
 				setVelX(0);
 		}
 		else{
@@ -216,37 +216,40 @@ public class Map implements KeyListener, FocusListener{
 
 		//bomberman and indestructible collision
 		for(int i = 0; i < indestructibles.size(); i++){
-			if(bombman.wallPass == false){
-				if(!detect.emptyLeft(bombman, indestructibles.get(i)) && xVel <= 0){
+
+			if(!detect.emptyLeft(bombman, indestructibles.get(i)) && xVel <= 0){
+				bombermanXtemp = 0;
+			}
+			if(!detect.emptyRight(bombman, indestructibles.get(i)) && xVel >= 0){
+				bombermanXtemp = 0;
+			}
+		}
+		if(bombman.wallPass == false){
+			for(int j=0; j<bricks.size(); j++){
+				if(!detect.emptyLeft(bombman, bricks.get(j)) && xVel <= 0){
 					bombermanXtemp = 0;
 				}
-				if(!detect.emptyRight(bombman, indestructibles.get(i)) && xVel >= 0){
+				if(!detect.emptyRight(bombman, bricks.get(j)) && xVel >= 0){
 					bombermanXtemp = 0;
-				}
-				for(int j=0; j<bricks.size(); j++){
-					if(!detect.emptyLeft(bombman, bricks.get(j)) && xVel <= 0){
-						bombermanXtemp = 0;
-					}
-					if(!detect.emptyRight(bombman, bricks.get(j)) && xVel >= 0){
-						bombermanXtemp = 0;
-					}
 				}
 			}
 		}
 
+
 		bombman.incrementXval(bombermanXtemp);
-		
-		if(bombman.wallPass == false){
-			for(int i = 0; i < indestructibles.size(); i++){
-				if(!detect.emptyAbove(bombman, indestructibles.get(i)) && yVel <= 0){
-					bombermanYtemp = 0;
-				}
-				if(!detect.emptyBelow(bombman, indestructibles.get(i)) && yVel >= 0){
-					bombermanYtemp = 0;
-				}
+
+
+		for(int i = 0; i < indestructibles.size(); i++){
+			if(!detect.emptyAbove(bombman, indestructibles.get(i)) && yVel <= 0){
+				bombermanYtemp = 0;
 			}
-			
-			//bomberman collision detection with bricks
+			if(!detect.emptyBelow(bombman, indestructibles.get(i)) && yVel >= 0){
+				bombermanYtemp = 0;
+			}
+		}
+
+		//bomberman collision detection with bricks
+		if(bombman.wallPass == false){
 			for(int i=0; i<bricks.size(); i++){
 				if(!detect.emptyAbove(bombman, bricks.get(i)) && yVel <= 0){
 					bombermanYtemp = 0;
@@ -257,23 +260,38 @@ public class Map implements KeyListener, FocusListener{
 			}
 		}
 		bombman.incrementYval(bombermanYtemp);
-		
+
 		//Bomberman and Enemy Collisions
 		for (int i=0; i<enemies.size(); i++){
 			if(detect.collisionDetection(bombman, enemies.get(i))){
-				if(detect.collisionDetection(bombman, enemies.get(i))){
-					bombman.incrementXval(-xVel);
-					bombman.incrementYval(-yVel);
+				bombman.incrementXval(-xVel);
+				bombman.incrementYval(-yVel);
+				if(!bombman.isMystery()){
 					System.out.println("You died!!");
+			}
+		}
+	}
+		
+		//Bomberman and Bombs Collisions
+		if(!Bomberman.bombPass){
+			for (int i=0; i<activeBombs.size(); i++){
+				if(detect.collisionDetection(bombman, activeBombs.get(i))){
+					if(activeBombs.get(i).getEscaped()){
+						bombman.incrementXval(-xVel);
+						bombman.incrementYval(-yVel);
+					}
+				}
+				else{
+					activeBombs.get(i).setEscaped(true);
 				}
 			}
 		}
 
-
 		if(explosions[0].isExploding()){
 			for(int i = 0; i< 5; i++){
 				if(detect.collisionDetection(bombman, explosions[i])){
-					System.out.println("You died.");
+					if(!bombman.flamePass && !bombman.isMystery())
+						System.out.println("You died.");
 				}
 				for(int j = 0; j < enemies.size(); j++){
 					if(detect.collisionDetection(enemies.get(j), explosions[i])){
@@ -289,18 +307,20 @@ public class Map implements KeyListener, FocusListener{
 				}
 			}
 		}
-		
+
 		if(detect.collisionDetection(bombman, door) && enemies.size() == 0){
 			System.out.println("Level Complete!");
 		}
-		
+
 		if(detect.collisionDetection(bombman,upbombs)){
 			bombs.add(new Bomb());
 			upbombs.setXval(0);
 			upbombs.setYval(0);
+			bombman.mystery_From = System.nanoTime(); //for testing
+			bombman.speed += 2; //for testing
 		}
 	}
-	
+
 	public void tick2() {
 		//collision check for enemy with indestructibles and bricks
 		boolean leftFree = true;
@@ -326,7 +346,7 @@ public class Map implements KeyListener, FocusListener{
 					belowFree = false;
 				}
 			}
-			
+
 			for(int i=0; i<bricks.size(); i++) {
 				if((whichTileIsOn(bricks.get(i).getXval(), bricks.get(i).getYval())) == (tileNum-1)) {
 					leftFreeBrick = false;
@@ -338,7 +358,7 @@ public class Map implements KeyListener, FocusListener{
 					belowFreeBrick = false;
 				}
 			}
-			
+
 			Balloom enemy = enemies.get(k).getBalloomInstance();
 			//System.out.println("Balloom "+ k + " state " +enemy.getState());
 			if(enemy.getState() == 0) {
@@ -408,7 +428,7 @@ public class Map implements KeyListener, FocusListener{
 	public static int getBombermanState() {
 		return bombermanState;
 	}
-	
+
 	/**
 	 * returns the tile number
 	 * @param xPos and yPos

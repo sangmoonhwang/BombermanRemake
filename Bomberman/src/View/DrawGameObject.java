@@ -21,6 +21,13 @@ public class DrawGameObject extends JPanel{
 	private Image Explode;
 	private Image Exit;
 	private Image ExtraBombs;
+	private Image bombPass;
+	private Image detonator;
+	private Image flamePass;
+	private Image flames;
+	private Image mystery;
+	private Image speed;
+	private Image wallPass;
 	private int previousPosOfBomberman;
 	private int xVisible;
 	
@@ -34,6 +41,13 @@ public class DrawGameObject extends JPanel{
 		Explode = Toolkit.getDefaultToolkit().getImage("Explosion.jpg");
 		Exit = Toolkit.getDefaultToolkit().getImage("Exit.jpg");
 		ExtraBombs = Toolkit.getDefaultToolkit().getImage("Bomberman_Bombs.png");
+		bombPass = Toolkit.getDefaultToolkit().getImage("Bomberman_Bombpass.png");
+		detonator = Toolkit.getDefaultToolkit().getImage("Bomberman_Detonator.png");
+		flamePass = Toolkit.getDefaultToolkit().getImage("Bomberman_Flamepass.png");
+		flames = Toolkit.getDefaultToolkit().getImage("Bomberman_Flames.png");
+		mystery = Toolkit.getDefaultToolkit().getImage("Bomberman_Mystery.png");
+		speed = Toolkit.getDefaultToolkit().getImage("Bomberman_Speed.png");
+		wallPass = Toolkit.getDefaultToolkit().getImage("Bomberman_Wallpass.png");
 		
 		previousPosOfBomberman = 0;
 		xVisible = 0;
