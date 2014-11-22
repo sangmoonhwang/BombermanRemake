@@ -161,12 +161,12 @@ public class Map implements KeyListener, FocusListener{
 				explosions[0].setYval(tiley);
 				explosions[1].setXval(tilex+50);
 				explosions[1].setYval(tiley);
-				explosions[2].setXval(tilex-50);
+				explosions[2].setXval(tilex); // -50
 				explosions[2].setYval(tiley);
 				explosions[3].setXval(tilex);
 				explosions[3].setYval(tiley+50);
 				explosions[4].setXval(tilex);
-				explosions[4].setYval(tiley-50);
+				explosions[4].setYval(tiley); // -50
 				activeBombs.get(activeBombs.size()-1).setActive(true);
 				int delay = 2000;
 				explodeTimer = new Timer();
@@ -297,19 +297,19 @@ public class Map implements KeyListener, FocusListener{
 		
 		if(explosions[0].isExploding()){
 			for(int i = 0; i< 5; i++){
-				if(detect.collisionDetection(bombman, explosions[i])){
+				if(detect.collisionDetection(bombman, explosions[i],i)){
 					if(!bombman.flamePass && !bombman.isMystery())
 						System.out.println("You died.");
 				}
 				for(int j = 0; j < enemies.size(); j++){
-					if(detect.collisionDetection(enemies.get(j), explosions[i])){
+					if(detect.collisionDetection(enemies.get(j), explosions[i],i)){
 						User.updateScore(enemies.get(j).getScore());
 						System.out.println(User.getTotalScore());
 						enemies.remove(j);
 					}
 				}
 				for(int k = 0; k < bricks.size();k++){
-					if(detect.collisionDetection(explosions[i], bricks.get(k))){
+					if(detect.collisionDetection_new(explosions[i], bricks.get(k),i)){
 						bricks.remove(k);
 					}
 				}
