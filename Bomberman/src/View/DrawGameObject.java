@@ -26,6 +26,14 @@ public class DrawGameObject extends JPanel{
 	private Image flamePass;
 	private Image flames;
 	private Image mystery;
+	private Image Balloom;
+	private Image Kondoria;
+	private Image Minvo;
+	private Image Doll;
+	private Image Oneal;
+	private Image Ovapi;
+	private Image Pass;
+	private Image Pontan;
 	private Image speed;
 	private Image wallPass;
 	private int previousPosOfBomberman;
@@ -112,7 +120,7 @@ public class DrawGameObject extends JPanel{
 		g.drawImage(Exit, doorx, doory, 50,50,this);
 		
 		//draw destructible blocks
-		for (int i = 0; i < Map.getDestructible().size() - 1; i++){
+		for (int i = 0; i < Map.getDestructible().size(); i++){
 			int brickx = Map.getDestructible().get(i).getXval();
 			int bricky = Map.getDestructible().get(i).getYval();
 			g.drawImage(Brick, brickx, bricky, 50, 50, this);
@@ -120,7 +128,7 @@ public class DrawGameObject extends JPanel{
 		
 		
 		//draw indestructible blocks
-		for (int i = 0; i < Map.getIndestructible().size() - 1; i++){
+		for (int i = 0; i < Map.getIndestructible().size(); i++){
 			int indestructiblex = Map.getIndestructible().get(i).getXval();
 			int indestructibley = Map.getIndestructible().get(i).getYval();
 			g.setColor(Color.GRAY);
@@ -132,7 +140,7 @@ public class DrawGameObject extends JPanel{
 			int enemyx = Map.getEnemy().get(i).getXval();
 			int enemyy = Map.getEnemy().get(i).getYval();
 			g.setColor(Color.BLACK);
-			g.drawImage(Enemy, enemyx, enemyy, 50, 50, this);
+			g.drawImage(Map.getEnemy().get(i).getImage(), enemyx, enemyy, 50, 50, this);
 		}
 
 		for(int i = 0; i < Map.getActiveBombs().size(); i++){

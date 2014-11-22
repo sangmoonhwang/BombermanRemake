@@ -1,4 +1,7 @@
 package Model.Enemies;
+import java.awt.Image;
+import java.awt.Toolkit;
+
 import Model.Movable;
 
 public class Enemy extends Movable{
@@ -14,6 +17,7 @@ public class Enemy extends Movable{
 	private int points;
 	private boolean wallPass;
 	private int state;
+	private Image image;
 	private Balloom balloom;
 	private Oneal oneal;
 	private Doll doll;
@@ -22,6 +26,7 @@ public class Enemy extends Movable{
 	private Ovapi ovapi;
 	private Pass pass;
 	private Pontan pontan;
+	
 
 	public Enemy(String enemy){
 		xval = 0;
@@ -36,6 +41,7 @@ public class Enemy extends Movable{
 			speed = balloom.getSpeed();
 			points = balloom.getPoints();
 			wallPass = balloom.getWallPass();
+			image = Toolkit.getDefaultToolkit().getImage("Balloom.png");
 			state = (int) (Math.random()*3) + 1;
 		} else if(identity.equals("Oneal")) {
 			oneal = new Oneal();
@@ -43,6 +49,7 @@ public class Enemy extends Movable{
 			speed = oneal.getSpeed();
 			points = oneal.getPoints();
 			wallPass = oneal.getWallPass();
+			image = Toolkit.getDefaultToolkit().getImage("Oneal.png");
 			state = (int) (Math.random()*3) + 1;
 		} else if(identity.equals("Doll")) {
 			doll = new Doll();
@@ -50,6 +57,7 @@ public class Enemy extends Movable{
 			speed = doll.getSpeed();
 			points = doll.getPoints();
 			wallPass = doll.getWallPass();
+			image = Toolkit.getDefaultToolkit().getImage("Doll.png");
 			state = (int) (Math.random()*3) + 1;
 		} else if(identity.equals("Minvo")) {
 			minvo = new Minvo();
@@ -57,6 +65,7 @@ public class Enemy extends Movable{
 			speed = minvo.getSpeed();
 			points = minvo.getPoints();
 			wallPass = minvo.getWallPass();
+			image = Toolkit.getDefaultToolkit().getImage("Minvo.png");
 			state = (int) (Math.random()*3) + 1;
 		} else if(identity.equals("Kondoria")) {
 			kondoria = new Kondoria();
@@ -64,6 +73,7 @@ public class Enemy extends Movable{
 			speed = kondoria.getSpeed();
 			points = kondoria.getPoints();
 			wallPass = kondoria.getWallPass();
+			image = Toolkit.getDefaultToolkit().getImage("Kondoria.png");
 			state = (int) (Math.random()*3) + 1;
 		} else if(identity.equals("Ovapi")) {
 			ovapi = new Ovapi();
@@ -71,6 +81,7 @@ public class Enemy extends Movable{
 			speed = ovapi.getSpeed();
 			points = ovapi.getPoints();
 			wallPass = ovapi.getWallPass();
+			image = Toolkit.getDefaultToolkit().getImage("Ovapi.png");
 			state = (int) (Math.random()*3) + 1;
 		} else if(identity.equals("Pass")) {
 			pass = new Pass();
@@ -78,6 +89,7 @@ public class Enemy extends Movable{
 			speed = pass.getSpeed();
 			points = pass.getPoints();
 			wallPass = pass.getWallPass();
+			image = Toolkit.getDefaultToolkit().getImage("Pass.png");
 			state = (int) (Math.random()*3) + 1;
 		} else if(identity.equals("Pontan")) {
 			pontan = new Pontan();
@@ -85,6 +97,7 @@ public class Enemy extends Movable{
 			speed = pontan.getSpeed();
 			points = pontan.getPoints();
 			wallPass = pontan.getWallPass();
+			image = Toolkit.getDefaultToolkit().getImage("Pontan.png");
 			state = (int) (Math.random()*3) + 1;
 		}
 	}
@@ -211,6 +224,9 @@ public class Enemy extends Movable{
 	}
 	public Pontan getPontanInstance() {
 		return pontan;
+	}
+	public Image getImage(){
+		return image;
 	}
 
 
