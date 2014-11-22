@@ -70,6 +70,7 @@ public class Map implements KeyListener, FocusListener{
 		activeBombs = new ArrayList<Bomb>();
 		bombs.add(new Bomb());
 		bombs.add(new Bomb());
+		bombs.add(new Bomb());
 		spawn = new SpawnGameObjects(level);
 		explosions = new Explosion[9];
 		for(int i = 0; i<8; i++){
@@ -145,6 +146,24 @@ public class Map implements KeyListener, FocusListener{
 		if(value == KeyEvent.VK_ESCAPE){
 			d.getFrame().dispose();
 			DrawMenu.getInstance().viewFrame(true);
+		}
+		if(value == KeyEvent.VK_V && Bomberman.detonate == true && activeBombs.size() >= 1){
+			//for(int i = 0; i < activeBombs.size(); i++){
+				//explodeTimer.cancel();
+				activeBombs.get(activeBombs.size()-1).explode();
+				explosions = activeBombs.get(activeBombs.size()-1).getPersonalExplosions();
+				unexplodeTimer = new Timer();
+				unexplodeTimer.schedule(new TimerTask(){
+					public void run(){
+						for(int i = 0; i < 4; i++){
+							explosions[i].setExploding(false);
+						}
+						bombs.add(new Bomb());
+						activeBombs.remove(activeBombs.size()-1);
+					}
+				},500);
+				
+			//}
 		}
 		if(value == KeyEvent.VK_SPACE){
 			//if(bombman.getavailableBombs() != 0){
@@ -291,8 +310,6 @@ public class Map implements KeyListener, FocusListener{
 		//explosion check
 		if(explosions[0].isExploding()){
 			for(int i = 0; i< 5; i++){
-				int max = get_MaxFlame(i);
-				
 				//if(detect.collisionDetection(bombman, explosions[i],i,max)){
 				if(detect.collisionDetection(bombman, explosions[i])){
 					if(!bombman.flamePass && !bombman.isMystery())
