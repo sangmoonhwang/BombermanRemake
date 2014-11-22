@@ -3,12 +3,11 @@ package Model.Enemies;
 import Model.Block;
 import Model.Movable;
 
-public class Balloom extends Enemy{
+public class Balloom {
   private int intelligence;
   private int speed;
   private int points;
   private boolean wallPass;
-  private int state;
   private int scoreValue;
 
   /**
@@ -22,7 +21,6 @@ public class Balloom extends Enemy{
     intelligence = 1;
     points = 100;
     wallPass = false;
-    state = (int) (Math.random()*3) + 1;
     scoreValue = 1000;
 
   }
@@ -40,33 +38,30 @@ public class Balloom extends Enemy{
 	//if no collision then move to moving direction
 	//otherwise move to opposite direction 0->1, 1->0, 2->3, 3->2
 	
-	if(state == 0){
-		incrementXval(1);	  
-	} else if(state == 1) {
-		incrementXval(-1);	 
-	} else if(state == 2) {
-		incrementYval(1);	 
+	if(enemy.getState() == 0){
+		enemy.incrementXval(1);	  
+	} else if(enemy.getState() == 1) {
+		enemy.incrementXval(-1);	 
+	} else if(enemy.getState() == 2) {
+		enemy.incrementYval(1);	 
 	} else {
-		incrementYval(-1);	 
+		enemy.incrementYval(-1);	 
 	}
   }
   
-  public void changeDirection() {
-	  if(state == 0){
-		  state = 1;
-	  } else if(state == 1) {
-		  state = 0;
-	  } else if(state == 2) {
-		  state = 3;
+  public void changeDirection(Enemy enemy) {
+	  if(enemy.getState() == 0){
+		  enemy.setState(1);
+	  } else if(enemy.getState() == 1) {
+		  enemy.setState(0);
+	  } else if(enemy.getState() == 2) {
+		  enemy.setState(3);
 	  } else {
-		  state = 2;
+		  enemy.setState(2);
 	  }
   }
   
-  public int getState() {
-	  return state;
-  }
- 
+
   public int getIntelligence() {
 	  return intelligence;
   }

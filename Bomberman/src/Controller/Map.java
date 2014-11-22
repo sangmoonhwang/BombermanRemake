@@ -358,35 +358,37 @@ public class Map implements KeyListener, FocusListener{
 					belowFreeBrick = false;
 				}
 			}
-
-			Balloom enemy = enemies.get(k).getBalloomInstance();
-			//System.out.println("Balloom "+ k + " state " +enemy.getState());
-			if(enemy.getState() == 0) {
-				if(rightFree && rightFreeBrick) {
-					enemy.move(enemies.get(k));
-				} else {
-					enemy.changeDirection();
-				}
-			} else if(enemy.getState() == 1) {
-				if(leftFree && leftFreeBrick) {
-					enemy.move(enemies.get(k));
-				}  else {
-					enemy.changeDirection();
-				}
-			} else if(enemy.getState() == 2) {
-				if(belowFree && belowFreeBrick) {
-					enemy.move(enemies.get(k));
-				}  else {
-					enemy.changeDirection();
-				}
-			} else {
-				if(aboveFree && aboveFreeBrick) {
-					enemy.move(enemies.get(k));
-				}  else {
-					enemy.changeDirection();
-				}
-			}
 		}
+		
+
+//			Balloom enemy = enemies.get(k).getBalloomInstance();
+			//System.out.println("Balloom "+ k + " state " +enemy.getState());
+//			if(enemy.getState() == 0) {
+//				if(rightFree && rightFreeBrick) {
+//					enemy.move(enemies.get(k));
+//				} else {
+//					enemy.changeDirection();
+//				}
+//			} else if(enemy.getState() == 1) {
+//				if(leftFree && leftFreeBrick) {
+//					enemy.move(enemies.get(k));
+//				}  else {
+//					enemy.changeDirection();
+//				}
+//			} else if(enemy.getState() == 2) {
+//				if(belowFree && belowFreeBrick) {
+//					enemy.move(enemies.get(k));
+//				}  else {
+//					enemy.changeDirection();
+//				}
+//			} else {
+//				if(aboveFree && aboveFreeBrick) {
+//					enemy.move(enemies.get(k));
+//				}  else {
+//					enemy.changeDirection();
+//				}
+//			}
+//		}
 	}
 
 	//setters

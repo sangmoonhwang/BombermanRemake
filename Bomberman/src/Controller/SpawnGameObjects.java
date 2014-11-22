@@ -55,17 +55,17 @@ public class SpawnGameObjects {
 	public ArrayList<Enemy> spawnEnemies(){
 		for(int i = 0; i < 7; i++){
 			enemies.add(new Enemy("Balloom"));              //just spawning Balloom for now
-			int x = (int)(Math.random()*29 +1);
-			int y = (int)(Math.random()*11 +1);
+			int x, y, tile;
+			
+			do {
+				x = (int)(Math.random()*29 +1);
+				y = (int)(Math.random()*11 +1);
+				tile = whichTileIsOn(x,y);
+			}while(validSpawn(tile));
 			enemies.get(i).setXval(50*x);
 			enemies.get(i).setYval(50*y);
 		}
 
-		for(int i = 0; i < 7; i++){
-			Balloom ball = enemies.get(i).getBalloomInstance();
-		    System.out.println("ballom " +i +" direction " + ball.getState() );
-		}
-		
 		return enemies;
 	}
 	
@@ -75,6 +75,30 @@ public class SpawnGameObjects {
 		door.setXval(50*x);
 		door.setYval(50*y);
 		return door;
+	}
+	
+	/**
+	 * returns the tile number
+	 * @param xPos and yPos
+	 * @return The tile number it is on
+	 */
+	public int whichTileIsOn(int x, int y) {
+		int tmp = y/50;
+		return ((x/50) + tmp*31);
+	}
+	
+	public boolean validSpawn(int tile) {
+		for(int i = 0; i < indestructibles.size(); i++) {
+			if(whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval()) == tile)
+				return false;
+		}
+		
+		for(int i=0; i<bricks.size(); i++) {
+			if(whichTileIsOn(bricks.get(i).getXval(), bricks.get(i).getYval()) == tile)
+				return false;
+		}
+		
+		return true;
 	}
 
 
