@@ -46,7 +46,7 @@ public class Map implements KeyListener, FocusListener{
 	private CollissionDetection detect;
 	private SpawnGameObjects spawn;
 	private static int bombermanState;
-//	private static UpBombs upbombs;
+	//	private static UpBombs upbombs;
 	boolean leftFree = true;
 	boolean rightFree = true;
 	boolean aboveFree = true;
@@ -55,7 +55,7 @@ public class Map implements KeyListener, FocusListener{
 	boolean rightFreeBrick = true;
 	boolean aboveFreeBrick = true;
 	boolean belowFreeBrick = true;
-	
+
 	public Map(int level){
 
 		//attributes
@@ -81,7 +81,7 @@ public class Map implements KeyListener, FocusListener{
 		enemies = spawn.spawnEnemies();
 		power = spawn.spawnPowerup();
 		door = spawn.spawnDoor();
-		
+
 
 
 		d = DrawMap.getInstance();
@@ -278,10 +278,10 @@ public class Map implements KeyListener, FocusListener{
 				bombman.incrementYval(-yVel);
 				if(!bombman.isMystery()){
 					System.out.println("You died!!");
+				}
 			}
 		}
-	}
-		
+
 		//Bomberman and Bombs Collisions
 		if(!Bomberman.bombPass){
 			for (int i=0; i<activeBombs.size(); i++){
@@ -296,7 +296,7 @@ public class Map implements KeyListener, FocusListener{
 				}
 			}
 		}
-		
+
 		if(explosions[0].isExploding()){
 			for(int i = 0; i< 5; i++){
 				if(detect.collisionDetection(bombman, explosions[i],i)){
@@ -305,7 +305,7 @@ public class Map implements KeyListener, FocusListener{
 				}
 				for(int j = 0; j < enemies.size(); j++){
 					if(detect.collisionDetection(enemies.get(j), explosions[i],i)){
-						User.updateScore(enemies.get(j).getScore());
+						User.updateScore(enemies.get(j).getPoints());
 						System.out.println(User.getTotalScore());
 						enemies.remove(j);
 					}
@@ -321,7 +321,7 @@ public class Map implements KeyListener, FocusListener{
 		if(detect.collisionDetection(bombman, door) && enemies.size() == 0){
 			System.out.println("Level Complete!");
 		}
-/*
+		/*
 		if(detect.collisionDetection(bombman,upbombs)){
 			bombs.add(new Bomb());
 			upbombs.setXval(0);
@@ -329,7 +329,7 @@ public class Map implements KeyListener, FocusListener{
 			bombman.mystery_From = System.nanoTime(); //for testing
 			bombman.speed += 2; //for testing
 		}
-*/
+		 */
 	}
 
 	public void tick2() {
@@ -339,7 +339,7 @@ public class Map implements KeyListener, FocusListener{
 			statusReset();
 			Enemy enemy = enemies.get(k);
 			int tileNum = whichTileIsOn(enemy.getXval(), enemy.getYval());
-	
+
 			for(int i = 0; i < indestructibles.size(); i++) {
 				if((whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval())) == (tileNum) && (enemy.getState() == 1)) {
 					leftFree = false;
@@ -366,30 +366,72 @@ public class Map implements KeyListener, FocusListener{
 
 			if(enemy.getState() == 0) {
 				if(rightFree && rightFreeBrick) {
-					enemy.getBalloomInstance().move(enemy);
+					enemy.move();
 				} else {
-					enemy.getBalloomInstance().changeDirection(enemy);
+					enemy.changeDirection();
 				}
 			} else if(enemy.getState() == 1) {
 				if(leftFree && leftFreeBrick ) {
-					enemy.getBalloomInstance().move(enemy);
+					enemy.move();
 				}  else {
-					enemy.getBalloomInstance().changeDirection(enemy);
+					enemy.changeDirection();
 				}
 			} else if(enemy.getState() == 2) {
 				if(belowFree && belowFreeBrick) {
-					enemy.getBalloomInstance().move(enemy);
+					enemy.move();
 				}  else {
-					enemy.getBalloomInstance().changeDirection(enemy);
+					enemy.changeDirection();
 				}
 			} else {
 				if(aboveFree && aboveFreeBrick) {
-					enemy.getBalloomInstance().move(enemy);
+					enemy.move();
 				}  else {
-					enemy.getBalloomInstance().changeDirection(enemy);
+					enemy.changeDirection();
 				}
 			}
+			
+			if(enemy.getIntelligence() == 2){
+				
+			} else if(enemy.getIntelligence() == 3) {
+				
+			}
 		}
+	}
+	
+	/**
+	 * returns if the enemy is at the intersection
+	 * @param xPos and yPos
+	 * @return True if enemy is at intersection, otherwise false
+	 */
+	public boolean isIntersection(int x, int y) {
+		
+		return false;
+	}
+
+	/**
+	 * returns the tile number
+	 * @param xPos and yPos
+	 * @return The tile number it is on
+	 */
+	public int whichTileIsOn(int x, int y) {
+		int tmp = y/50;
+		return ((x/50) + tmp*31);
+	}
+
+	/**
+	 * Resets all the variables to TRUE that is used for enemy collision detection 
+	 * @param None
+	 * @return None
+	 */
+	public void statusReset() {
+		leftFree = true;
+		rightFree = true;
+		aboveFree = true;
+		belowFree = true;
+		leftFreeBrick = true;
+		rightFreeBrick = true;
+		aboveFreeBrick = true;
+		belowFreeBrick = true;
 	}
 
 	//setters
@@ -431,34 +473,6 @@ public class Map implements KeyListener, FocusListener{
 	public static int getBombermanState() {
 		return bombermanState;
 	}
-
-	/**
-	 * returns the tile number
-	 * @param xPos and yPos
-	 * @return The tile number it is on
-	 */
-	public int whichTileIsOn(int x, int y) {
-		int tmp = y/50;
-		return ((x/50) + tmp*31);
-	}
-	
-	/**
-	 * Resets all the variables to TRUE that is used for enemy collision detection 
-	 * @param None
-	 * @return None
-	 */
-	public void statusReset() {
-		leftFree = true;
-		rightFree = true;
-		aboveFree = true;
-		belowFree = true;
-		leftFreeBrick = true;
-		rightFreeBrick = true;
-		aboveFreeBrick = true;
-		belowFreeBrick = true;
-	}
-	
-	
 	public static Powerup getPowerup() {
 		return power;
 	}
@@ -471,11 +485,6 @@ public class Map implements KeyListener, FocusListener{
 	public void focusLost(FocusEvent e) {
 	}
 
-/*
-	public static UpBombs getUpBombs() {
-		return upbombs;
-	}
-*/
 	public static ArrayList<Bomb> getActiveBombs() {
 		return activeBombs;
 	}

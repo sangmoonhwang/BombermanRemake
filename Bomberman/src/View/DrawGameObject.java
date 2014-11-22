@@ -105,12 +105,6 @@ public class DrawGameObject extends JPanel{
 		String powerUp = Map.getPowerup().getIdentity();
 		g.drawImage(getImage(powerUp),xPowerup, yPowerup,50,50,this);
 		
-		
-/*		//draw upBombs
-		int upBombX = Map.getUpBombs().getXval();
-		int upBombY = Map.getUpBombs().getYval();
-		g.drawImage(ExtraBombs,upBombX, upBombY,50,50,this);
-*/		
 		//draw Door
 		int doorx = Map.getDoor().getXval();
 		int doory = Map.getDoor().getYval();

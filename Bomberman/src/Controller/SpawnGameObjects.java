@@ -57,6 +57,11 @@ public class SpawnGameObjects {
 		return bricks;
 	}
 
+	/**
+	 * Spawns the enemies depending on the level requirements
+	 * @param None
+	 * @return ArrayList<Enemy>
+	 */
 	public ArrayList<Enemy> spawnEnemies() {
 		for(int i = 0; i < enemy.size(); i++){
 			enemies.add(new Enemy(enemy.get(i)));
