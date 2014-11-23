@@ -398,23 +398,28 @@ public class Map implements KeyListener, FocusListener{
 			if(enemy.getIntelligence() > 1) {
 				int tileBombman = whichTileIsOn(bombman.getXval(), bombman.getYval());
 				int tileEnemy = whichTileIsOn(enemy.getXval(), enemy.getYval());
-
+				int bombermanDirection = findDirection(tileBombman, tileEnemy);
 				if(enemy.getIntelligence() == 2) {
 					if(isBombermanWithinOneSquare(tileBombman, tileEnemy)) {
-						enemy.setState(findDirection(tileBombman, tileEnemy));
-						enemy.move();
+						if(isIntersection(enemy.getXval(), enemy.getYval())) {
+							enemy.setState(bombermanDirection);
+							moveEnemy(enemy);
+						} else {
+							changeDirectionForChaseBomberman(enemy,bombermanDirection, enemy.getState());
+							moveEnemy(enemy);
+						}
 					} else {
 						moveEnemy(enemy);
 						changeDirectionAtIntersection(enemy);
 					}
 				} else if(enemy.getIntelligence() == 3) {
-					if(isBombermanWithinTwoSquare(tileBombman, tileEnemy)) {
-						enemy.setState(findDirection(tileBombman, tileEnemy));  //need Astar if path is not free
-						enemy.move();
-					} else {
+				//	if(isBombermanWithinTwoSquare(tileBombman, tileEnemy) && isIntersection(enemy.getXval(), enemy.getYval())) {
+				//		enemy.setState(findDirection(tileBombman, tileEnemy));  // TODO need Astar if path is not free
+				//		moveEnemy(enemy);
+				//	} else {
 						moveEnemy(enemy);
 						changeDirectionAtIntersection(enemy);
-					}
+				//	}
 				}
 			} else {
 				moveEnemy(enemy);
@@ -490,7 +495,7 @@ public class Map implements KeyListener, FocusListener{
 	/**
 	 * returns the correct direction to chase the Bomberman 
 	 * @param Tile number of Bomberman and Enemy
-	 * @return Direction state 0-right 1-left 2-Below 4-Above
+	 * @return Direction state 0-right 1-left 2-Below 3-Above
 	 */
 	public int findDirection(int tileBombman, int tileEnemy) {
 		if(tileBombman == (tileEnemy + 1)) {
@@ -503,6 +508,18 @@ public class Map implements KeyListener, FocusListener{
 			return 3;
 		}
 		return tileEnemy;
+	}
+	
+	/**
+	 * if the bomberman is at the opposite direction of the enemy movement then change the movement state to opposite
+	 * @param Enemy instance, Direction of the bomberman is located respect to the enemy position and enemy direction state
+	 * @return None
+	 */
+	public void changeDirectionForChaseBomberman(Enemy enemy, int bombermanDirection, int enemyDirection) {
+		if((bombermanDirection == 3 && enemyDirection == 2) && (bombermanDirection == 2 && enemyDirection == 3)
+				&& (bombermanDirection == 1 && enemyDirection == 0) && (bombermanDirection == 0 && enemyDirection == 1)) {
+			enemy.changeDirection();
+		}
 	}
 
 	/**
