@@ -3,12 +3,12 @@ package Model;
 public class Bomberman extends Movable{
 
 	//physical attributes
-	private int xval, yval;
-	private int height, width;
+	private static int xval, yval;
+	private static int height, width;
 
 	//bomberman values
-	private int score;
-	private int life;
+	private static int score;
+	private static int life;
 	
 	public static int speed;
 	public static int availableBombs;
@@ -42,6 +42,9 @@ public class Bomberman extends Movable{
 	public void setYval(int i){
 		yval = i;
 	}
+	public void setSpeed(int i){
+		speed = i;
+	}
 	public void giveBombs(int i){
 		availableBombs += i;
 	}
@@ -67,6 +70,9 @@ public class Bomberman extends Movable{
 	}
 	public int getWidth(){
 		return width;
+	}
+	public int getSpeed(){
+		return speed;
 	}
 	public int getavailableBombs() {
 		return availableBombs;

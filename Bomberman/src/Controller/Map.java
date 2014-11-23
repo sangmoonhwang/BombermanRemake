@@ -40,8 +40,9 @@ public class Map implements KeyListener, FocusListener{
 	private static Explosion[] explosions;
 	private static Powerup power;
 	private static Door door;
-	private int xVel = 0;
-	private int yVel = 0;
+	private int xVel;
+	private int yVel;
+	private final ScheduledExecutorService scheduler;
 	private static int width;
 	private static int height;
 	private Timer gameTimer;
@@ -64,6 +65,8 @@ public class Map implements KeyListener, FocusListener{
 		//attributes
 		width = 50;
 		height = 50;
+		xVel = 0;
+		yVel = 0;
 
 		//new objects
 		detect = new CollissionDetection();
@@ -87,7 +90,8 @@ public class Map implements KeyListener, FocusListener{
 		door = spawn.spawnDoor();
 
 
-
+		scheduler = Executors.newScheduledThreadPool(10);
+		
 		d = DrawMap.getInstance();
 		running = true;
 		gameTimer = new Timer();
@@ -101,6 +105,7 @@ public class Map implements KeyListener, FocusListener{
 	}
 
 	public Map(JFrame mainFrame) {
+		scheduler = Executors.newScheduledThreadPool(10);
 		main = mainFrame;
 		d = DrawMap.getInstance();
 		running = true;
@@ -108,6 +113,7 @@ public class Map implements KeyListener, FocusListener{
 	}
 
 	public void run(){
+		running = true;
 		d.run();
 		d.getFrame().addFocusListener(this);
 		d.getFrame().addKeyListener(this);
@@ -118,6 +124,7 @@ public class Map implements KeyListener, FocusListener{
 		double ns = 1000000000 / amountOfTicks;
 
 		while(running) {
+			System.out.println("hi");
 			long now = System.nanoTime();
 			if((now - start)/ns >= 1) {
 				tick();
@@ -132,20 +139,21 @@ public class Map implements KeyListener, FocusListener{
 	public void keyPressed ( KeyEvent e ){
 		int value = e.getKeyCode();
 		if (value == KeyEvent.VK_DOWN && value !=KeyEvent.VK_UP){
-			setVelY(bombman.speed);//2
+			setVelY(bombman.getSpeed());//2
 		}
 		else if(value != KeyEvent.VK_DOWN && value ==KeyEvent.VK_UP){
-			setVelY(-bombman.speed);//-2
+			setVelY(-bombman.getSpeed());//-2
 		}
 		else if(value == KeyEvent.VK_LEFT && value !=KeyEvent.VK_RIGHT){
 			bombermanState = 2;
-			setVelX(-bombman.speed);//-2
+			setVelX(-bombman.getSpeed());//-2
 		}
 		else if(value == KeyEvent.VK_RIGHT && value !=KeyEvent.VK_LEFT){
 			bombermanState = 1;
-			setVelX(bombman.speed);//2
+			setVelX(bombman.getSpeed());//2
 		}
 		if(value == KeyEvent.VK_ESCAPE){
+			running = false;
 			d.getFrame().dispose();
 			DrawMenu.getInstance().viewFrame(true);
 		}
@@ -196,19 +204,19 @@ public class Map implements KeyListener, FocusListener{
 	public void keyReleased(KeyEvent e) {
 		int value = e.getKeyCode();
 		if (value == KeyEvent.VK_DOWN){
-			if(yVel == bombman.speed)//2
+			if(yVel == bombman.getSpeed())//2
 				setVelY(0);
 		}
 		else if(value ==KeyEvent.VK_UP){
-			if(yVel == -bombman.speed)//-2
+			if(yVel == -bombman.getSpeed())//-2
 				setVelY(0);
 		}
 		else if(value == KeyEvent.VK_LEFT){
-			if(xVel == -bombman.speed)//-2
+			if(xVel == -bombman.getSpeed())//-2
 				setVelX(0);
 		}
 		else if(value == KeyEvent.VK_RIGHT){
-			if(xVel == bombman.speed) //2
+			if(xVel == bombman.getSpeed()) //2
 				setVelX(0);
 		}
 		else{
