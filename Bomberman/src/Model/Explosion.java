@@ -42,6 +42,18 @@ public class Explosion extends Movable {
 	public void setHeight(int i){
 		height = i;
 	}
+	public void adjustWidth(int i){
+		width += i;
+	}
+	public void adjustHeight(int i){
+		height += i;
+	}
+	public void adjustXval(int i){
+		xval += i;
+	}
+	public void adjustYval(int i){
+		yval += i;
+	}
 	public int getWidth(){
 		return width;
 	}
