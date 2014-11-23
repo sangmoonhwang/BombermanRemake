@@ -129,6 +129,7 @@ public class Map implements KeyListener, FocusListener{
 		double ns = 1000000000 / amountOfTicks;
 
 		while(running) {
+			System.out.println("hi");
 			long now = System.nanoTime();
 			if((now - start)/ns >= 1) {
 				tick();
@@ -157,6 +158,7 @@ public class Map implements KeyListener, FocusListener{
 			setVelX(bombman.getSpeed());//2
 		}
 		if(value == KeyEvent.VK_ESCAPE){
+			running = false;
 			d.getFrame().dispose();
 			DrawMenu.getInstance().viewFrame(true);
 		}
