@@ -68,7 +68,6 @@ public class DrawGameObject extends JPanel{
 
 
 		//scrolls the map
-		System.out.println (bombman.getXval());
 		if(bombman.getXval() > 350 && bombman.getXval() <= 1100) {
 			if(Map.getBombermanState() == 1) {
 				previousPosOfBomberman = bombman.getXval();

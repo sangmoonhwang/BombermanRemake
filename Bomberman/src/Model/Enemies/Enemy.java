@@ -138,10 +138,10 @@ public class Enemy extends Movable{
 
 	/**
 	 * changes the enemy to the free intersection with probability of 0.1 for intelligence 1 and 0.5 for intelligence 3
-	 * @param Two boolean that has either left and right free or Above and below free
+	 * @param Two boolean that has either left and Above free
 	 * @return None
 	 */
-	public void intersectionDirectionChange(Boolean free1, Boolean free2) {
+	public void intersectionDirectionChange(Boolean free1) {
 		double prob = Math.random();
 		
 		if((intelligence == 2 && prob < 0.1) || (intelligence == 3 && prob < 0.5)) {

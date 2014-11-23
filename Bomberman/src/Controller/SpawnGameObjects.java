@@ -89,6 +89,7 @@ public class SpawnGameObjects {
 			}while(!validEnemySpawn(tile));
 			enemies.get(i).setXval(x);
 			enemies.get(i).setYval(y);
+			isStuck(enemies.get(i), x, y);
 		}
 
 		return enemies;
@@ -177,6 +178,25 @@ public class SpawnGameObjects {
 		}
 
 		return true;
+	}
+	
+	/**
+	 * check if the enemy will get stuck in the concrete when they are spwaned, if it is then change the moving direction
+	 * @param Enemy object
+	 * @return None
+	 */
+	public void isStuck(Enemy enemy, int xVal, int yVal) {
+		if(enemy.getState() == 0 || enemy.getState() == 1) {
+			int xMOD = xVal % 50;
+			int yMOD = yVal % 100;
+			if(xMOD == 0 && yMOD == 0) 
+				enemy.setState(2);
+		} else {
+			int xMOD = xVal % 100;
+			int yMOD = yVal % 50;
+			if(xMOD == 0 && yMOD == 0)
+				enemy.setState(0);;
+		}
 	}
 
 	/**
