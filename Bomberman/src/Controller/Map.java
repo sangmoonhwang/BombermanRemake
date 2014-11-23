@@ -304,13 +304,16 @@ public class Map implements KeyListener, FocusListener{
 		}
 
 
-		//create test object at max length, check collision, if true set flame length to that, but repeat process at max length-1 and if true, set length to that, iterate
-		//until the explosion is at min. length
 		//explosion check  
 		if(activeBombs.size() != 0 && activeBombs.get(0).getPersonalExplosions()[0].isExploding()){
-			//for(int i = 0; i< activeBombs.size(); i++){
 			for(int i = 0; i < 5; i++){
 				
+				
+				/* This massive ugly switch creates a test explosion to find the right
+				 * width/height/xval/yval depending on the explosion, then sets the real
+				 * explosion's values to the closest collision before making the important
+				 * collision detection that has an outcome in the game
+				 */
 				switch(i) {
 				
 				case 1:
@@ -328,14 +331,12 @@ public class Map implements KeyListener, FocusListener{
 						}
 					}
 					for(int k = 0; k < bricks.size();k++){
-						//if(detect.collisionDetection_new(explosions[i], bricks.get(k),i,max)){
 						while(detect.collisionDetection(testR, bricks.get(k))){
 							testR.adjustWidth(-50);
 							rightAdjust = true;
 						}
 					}
 					for(int k = 0; k < indestructibles.size();k++){
-						//if(detect.collisionDetection_new(explosions[i], bricks.get(k),i,max)){
 						while(detect.collisionDetection(testR, indestructibles.get(k))){
 							testR.adjustWidth(-50);
 							rightAdjust = true;
@@ -360,14 +361,12 @@ public class Map implements KeyListener, FocusListener{
 						}
 					}
 					for(int k = 0; k < bricks.size();k++){
-						//if(detect.collisionDetection_new(explosions[i], bricks.get(k),i,max)){
 						while(detect.collisionDetection(testL, bricks.get(k))){
 							testL.adjustXval(50);
 							leftAdjust = true;
 						}
 					}
 					for(int k = 0; k < indestructibles.size();k++){
-						//if(detect.collisionDetection_new(explosions[i], bricks.get(k),i,max)){
 						while(detect.collisionDetection(testL, indestructibles.get(k))){
 							testL.adjustXval(50);
 							leftAdjust = true;
@@ -392,14 +391,12 @@ public class Map implements KeyListener, FocusListener{
 						}
 					}
 					for(int k = 0; k < bricks.size();k++){
-						//if(detect.collisionDetection_new(explosions[i], bricks.get(k),i,max)){
 						while(detect.collisionDetection(testT, bricks.get(k))){
 							testT.adjustHeight(-50);
 							topAdjust = true;
 						}
 					}
 					for(int k = 0; k < indestructibles.size();k++){
-						//if(detect.collisionDetection_new(explosions[i], bricks.get(k),i,max)){
 						while(detect.collisionDetection(testT, indestructibles.get(k))){
 							testT.adjustHeight(-50);
 							topAdjust = true;
@@ -424,14 +421,12 @@ public class Map implements KeyListener, FocusListener{
 						}
 					}
 					for(int k = 0; k < bricks.size();k++){
-						//if(detect.collisionDetection_new(explosions[i], bricks.get(k),i,max)){
 						while(detect.collisionDetection(testB, bricks.get(k))){
 							testB.adjustYval(50);
 							botAdjust = true;
 						}
 					}
 					for(int k = 0; k < indestructibles.size();k++){
-						//if(detect.collisionDetection_new(explosions[i], bricks.get(k),i,max)){
 						while(detect.collisionDetection(testB, indestructibles.get(k))){
 							testB.adjustYval(50);
 							botAdjust = true;
@@ -444,6 +439,9 @@ public class Map implements KeyListener, FocusListener{
 					
 				}
 				
+				
+				
+				//Collision Detection
 				if(detect.collisionDetection(bombman, activeBombs.get(0).getPersonalExplosions()[i])){
 					if(!bombman.flamePass && !bombman.isMystery())
 						System.out.println("You died.");
@@ -456,7 +454,6 @@ public class Map implements KeyListener, FocusListener{
 					}
 				}
 				for(int k = 0; k < bricks.size();k++){
-					//if(detect.collisionDetection_new(explosions[i], bricks.get(k),i,max)){
 					if(detect.collisionDetection(activeBombs.get(0).getPersonalExplosions()[i], bricks.get(k))){
 						bricks.remove(k);
 					}
