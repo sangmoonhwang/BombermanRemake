@@ -146,7 +146,9 @@ public class SpawnGameObjects {
 	 */
 	public boolean validBrickSpawn(int tile) {
 		for(int i=0; i<indestructibles.size(); i++) {
-			if(whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval()) == tile)
+			Indestructible temp = indestructibles.get(i);
+			if(whichTileIsOn(temp.getXval(), 
+					temp.getYval()) == tile)
 				return false;
 		}
 		return true;
