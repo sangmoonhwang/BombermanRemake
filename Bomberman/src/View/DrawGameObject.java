@@ -79,7 +79,11 @@ public class DrawGameObject extends JPanel{
 			}
 		} else if(xVisible == -750 && bombman.getXval() > 1100) {
 			g.translate(-750, 0);
-		} else {
+		} else if(bombman.getXval () >1100){
+			g.translate(-750, 0);
+		}
+		else{
+			
 			g.translate(0,0);
 		}
 

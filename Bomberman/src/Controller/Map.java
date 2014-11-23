@@ -50,15 +50,14 @@ public class Map implements KeyListener, FocusListener{
 	private CollissionDetection detect;
 	private SpawnGameObjects spawn;
 	private static int bombermanState;
-	//	private static UpBombs upbombs;
-	boolean leftFree = true;
-	boolean rightFree = true;
-	boolean aboveFree = true;
-	boolean belowFree = true;
-	boolean leftFreeBrick = true;
-	boolean rightFreeBrick = true;
-	boolean aboveFreeBrick = true;
-	boolean belowFreeBrick = true;
+	private boolean leftFree = true;
+	private boolean rightFree = true;
+	private boolean aboveFree = true;
+	private boolean belowFree = true;
+	private boolean leftFreeBrick = true;
+	private boolean rightFreeBrick = true;
+	private boolean aboveFreeBrick = true;
+	private boolean belowFreeBrick = true;
 
 	public Map(int level){
 
@@ -91,7 +90,7 @@ public class Map implements KeyListener, FocusListener{
 
 
 		scheduler = Executors.newScheduledThreadPool(10);
-		
+
 		d = DrawMap.getInstance();
 		running = true;
 		gameTimer = new Timer();
@@ -104,13 +103,13 @@ public class Map implements KeyListener, FocusListener{
 		this.run();
 	}
 
-	public Map(JFrame mainFrame) {
-		scheduler = Executors.newScheduledThreadPool(10);
-		main = mainFrame;
-		d = DrawMap.getInstance();
-		running = true;
-		this.run();
-	}
+	//public Map(JFrame mainFrame) {
+	//	scheduler = Executors.newScheduledThreadPool(10);
+	//	main = mainFrame;
+	//	d = DrawMap.getInstance();
+	//	running = true;
+	//	this.run();
+	//}
 
 	public void run(){
 		running = true;
@@ -124,7 +123,6 @@ public class Map implements KeyListener, FocusListener{
 		double ns = 1000000000 / amountOfTicks;
 
 		while(running) {
-			System.out.println("hi");
 			long now = System.nanoTime();
 			if((now - start)/ns >= 1) {
 				tick();
@@ -173,12 +171,12 @@ public class Map implements KeyListener, FocusListener{
 					};
 					activeBombs.get(i).explode();
 					activeBombs.get(i).getSchedule().schedule(unExplode, 500, MILLISECONDS);
-					
+
 					break;
 				}
 			}
-				//activeBombs.get(0).explode();
-				//explosions = activeBombs.get(activeBombs.size()-1).getPersonalExplosions();
+			//activeBombs.get(0).explode();
+			//explosions = activeBombs.get(activeBombs.size()-1).getPersonalExplosions();
 		}
 		if(value == KeyEvent.VK_SPACE){
 			//if(bombman.getavailableBombs() != 0){
@@ -195,7 +193,7 @@ public class Map implements KeyListener, FocusListener{
 				activeBombs.get(activeBombs.size()-1).setXval(tilex);
 				activeBombs.get(activeBombs.size()-1).setYval(tiley);
 				activeBombs.get(activeBombs.size()-1).activate();
-				
+
 			}
 		}
 	}
@@ -307,6 +305,7 @@ public class Map implements KeyListener, FocusListener{
 		//explosion check  
 		if(activeBombs.size() != 0 && activeBombs.get(0).getPersonalExplosions()[0].isExploding()){
 			for(int i = 0; i < 5; i++){
+<<<<<<< HEAD
 				
 				
 				/* This massive ugly switch creates a test explosion to find the right
@@ -314,8 +313,11 @@ public class Map implements KeyListener, FocusListener{
 				 * explosion's values to the closest collision before making the important
 				 * collision detection that has an outcome in the game
 				 */
+=======
+
+>>>>>>> fc7e34670fb2ef33f5e09adb0c2e6078278c4652
 				switch(i) {
-				
+
 				case 1:
 					boolean rightAdjust = false;
 					Explosion testR = new Explosion();
@@ -345,7 +347,7 @@ public class Map implements KeyListener, FocusListener{
 					if(rightAdjust){
 						activeBombs.get(0).getPersonalExplosions()[1].setWidth(testR.getWidth()+50);
 					}
-					
+
 				case 2:
 					boolean leftAdjust = false;
 					Explosion testL = new Explosion();
@@ -375,7 +377,7 @@ public class Map implements KeyListener, FocusListener{
 					if(leftAdjust){
 						activeBombs.get(0).getPersonalExplosions()[2].setXval(testL.getXval()-50);
 					}
-					
+
 				case 3:
 					boolean topAdjust = false;
 					Explosion testT = new Explosion();
@@ -405,7 +407,7 @@ public class Map implements KeyListener, FocusListener{
 					if(topAdjust){
 						activeBombs.get(0).getPersonalExplosions()[3].setHeight(testT.getHeight()+50);
 					}
-					
+
 				case 4:
 					boolean botAdjust = false;
 					Explosion testB = new Explosion();
@@ -435,13 +437,16 @@ public class Map implements KeyListener, FocusListener{
 					if(botAdjust){
 						activeBombs.get(0).getPersonalExplosions()[4].setYval(testB.getYval()-50);
 					}
-					
-					
+
+
 				}
+
 				
 				
 				
 				//Collision Detection
+
+
 				if(detect.collisionDetection(bombman, activeBombs.get(0).getPersonalExplosions()[i])){
 					if(!bombman.flamePass && !bombman.isMystery())
 						System.out.println("You died.");
@@ -477,7 +482,6 @@ public class Map implements KeyListener, FocusListener{
 
 	public void tick2() {
 		//collision check for enemy with indestructibles and bricks
-
 		for(int k=0;k<enemies.size();k++) {
 			statusReset();
 			Enemy enemy = enemies.get(k);
@@ -507,49 +511,97 @@ public class Map implements KeyListener, FocusListener{
 				}
 			}
 
-			//move to current moving direction or change the moving direction to opposite if path is not free
-			if(enemy.getState() == 0) {
-				if(rightFree && rightFreeBrick) {
-					enemy.move();
-				} else {
-					enemy.changeDirection();
-				}
-			} else if(enemy.getState() == 1) {
-				if(leftFree && leftFreeBrick ) {
-					enemy.move();
-				}  else {
-					enemy.changeDirection();
-				}
-			} else if(enemy.getState() == 2) {
-				if(belowFree && belowFreeBrick) {
-					enemy.move();
-				}  else {
-					enemy.changeDirection();
+			//if intelligence is either 2 or 3 it will check if the bomberman is within a range and will try to chase the bomberman
+			if(enemy.getIntelligence() > 1) {
+				int tileBombman = whichTileIsOn(bombman.getXval(), bombman.getYval());
+				int tileEnemy = whichTileIsOn(enemy.getXval(), enemy.getYval());
+				int bombermanDirection = chaseDirection(tileBombman, tileEnemy);
+				if(enemy.getIntelligence() == 2) {
+					if(isBombermanWithinOneSquare(tileBombman, tileEnemy)) {
+						if(isIntersection(enemy.getXval(), enemy.getYval())) {
+							enemy.setState(bombermanDirection);
+							moveEnemy(enemy);
+						} else {
+							changeDirectionToChaseBomberman(enemy, bombermanDirection, enemy.getState());
+							moveEnemy(enemy);
+						}
+					} else {
+						moveEnemy(enemy);
+						changeDirectionAtIntersection(enemy);
+					}
+				} else if(enemy.getIntelligence() == 3) {
+					if(isBombermanWithinTwoSquare(tileBombman, tileEnemy) || isBombermanWithinOneSquare(tileBombman, tileEnemy)) {
+						if(isIntersection(enemy.getXval(), enemy.getYval())) {
+							enemy.setState(bombermanDirection);
+							moveEnemy(enemy);
+						} else {
+							changeDirectionToChaseBomberman(enemy, bombermanDirection, enemy.getState());
+							moveEnemy(enemy);
+						}
+					} else {
+						moveEnemy(enemy);
+						changeDirectionAtIntersection(enemy);
+					}
 				}
 			} else {
-				if(aboveFree && aboveFreeBrick) {
-					enemy.move();
-				}  else {
-					enemy.changeDirection();
-				}
+				moveEnemy(enemy);
 			}
-			
-			//if intelligence is 2 or 3 then at intersection it can change direction with probability of 0.1(intelligence=2) or 0.5(intelligence=3)
-			if(enemy.getIntelligence() > 1 && isIntersection(enemy.getXval(), enemy.getYval())){
-				int state = enemy.getState();
-				if((state == 0 && aboveFree && aboveFreeBrick) || (state == 0 && belowFree && belowFreeBrick) 
-					|| (state == 1 && aboveFree && aboveFreeBrick) || (state == 1 && belowFree && belowFreeBrick)) {
-					enemy.intersectionDirectionChange(aboveFree, belowFree);
-				} else if((state == 2 && leftFree && leftFreeBrick) || (state == 2 && rightFree && rightFreeBrick) 
-					|| (state == 3 && leftFree && leftFreeBrick) || (state == 3 && rightFree && rightFreeBrick)) {
-					enemy.intersectionDirectionChange(leftFree, rightFree);
-				}
-			} 
 		}
 	}
-	
+
 	/**
-	 * returns if the enemy is at the intersection
+	 * move the enemy to current moving direction or change the moving direction to opposite if path is not free
+	 * @param Enemy instance
+	 * @return None
+	 */
+	public void moveEnemy(Enemy enemy) {
+		if(enemy.getState() == 0) {
+			if(rightFree && rightFreeBrick) {
+				enemy.move();
+			} else {
+				enemy.changeDirection();
+			}
+		} else if(enemy.getState() == 1) {
+			if(leftFree && leftFreeBrick ) {
+				enemy.move();
+			}  else {
+				enemy.changeDirection();
+			}
+		} else if(enemy.getState() == 2) {
+			if(belowFree && belowFreeBrick) {
+				enemy.move();
+			}  else {
+				enemy.changeDirection();
+			}
+		} else {
+			if(aboveFree && aboveFreeBrick) {
+				enemy.move();
+			}  else {
+				enemy.changeDirection();
+			}
+		}
+	}
+
+	/**
+	 * if intelligence is 2 or 3 and also at the intersection it can change direction with probability of 0.1(intelligence=2) or 0.5(intelligence=3)
+	 * @param Enemy instance
+	 * @return None
+	 */
+	public void changeDirectionAtIntersection(Enemy enemy) {
+		if(isIntersection(enemy.getXval(), enemy.getYval())){
+			int state = enemy.getState();
+			if((state == 0 && aboveFree && aboveFreeBrick) || (state == 0 && belowFree && belowFreeBrick) 
+					|| (state == 1 && aboveFree && aboveFreeBrick) || (state == 1 && belowFree && belowFreeBrick)) {
+				enemy.intersectionDirectionChange(aboveFree);
+			} else if((state == 2 && leftFree && leftFreeBrick) || (state == 2 && rightFree && rightFreeBrick) 
+					|| (state == 3 && leftFree && leftFreeBrick) || (state == 3 && rightFree && rightFreeBrick)) {
+				enemy.intersectionDirectionChange(leftFree);
+			}
+		} 
+	}
+
+	/**
+	 * Whether the enemy is at the intersection
 	 * @param xPos and yPos of enemy
 	 * @return True if enemy is at intersection, otherwise false
 	 */
@@ -558,7 +610,92 @@ public class Map implements KeyListener, FocusListener{
 		int yMOD = y % 100;
 		if(xMOD == 50 && yMOD == 50)
 			return true;
-		
+
+		return false;
+	}
+
+	/**
+	 * returns the correct direction to chase the Bomberman 
+	 * @param Tile number of Bomberman and Enemy
+	 * @return Direction state 0-right 1-left 2-Below 3-Above
+	 */
+	public int chaseDirection(int tileBombman, int tileEnemy) {
+		if(tileBombman == (tileEnemy + 1) || tileBombman == (tileEnemy + 2)) {
+			return 0;
+		} else if(tileBombman == (tileEnemy - 1) || tileBombman == (tileEnemy - 2)) {
+			return 1;
+		} else if(tileBombman == (tileEnemy + 31) || tileBombman == (tileEnemy + 62)) {
+			return 2;
+		} else if(tileBombman == (tileEnemy - 31) || tileBombman == (tileEnemy - 62)) {
+			return 3;
+		} else if(tileBombman == (tileEnemy + 32) && belowFree && belowFreeBrick || tileBombman == (tileEnemy + 30) && belowFree && belowFreeBrick) {
+			return 2;
+		} else if(tileBombman == (tileEnemy - 32) && aboveFree && aboveFreeBrick || tileBombman == (tileEnemy - 30) && aboveFree && aboveFreeBrick) {
+			return 3;
+		} else if(tileBombman == (tileEnemy + 32) && rightFree && rightFreeBrick || tileBombman == (tileEnemy - 30) && rightFree && rightFreeBrick) {
+			return 0;
+		} else if(tileBombman == (tileEnemy - 32) && leftFree && leftFreeBrick || tileBombman == (tileEnemy + 30) && leftFree && leftFreeBrick) {
+			return 1;
+		}
+
+		return tileEnemy;
+	}
+
+	/**
+	 * if the bomberman is at the opposite direction of the enemy movement then change the movement state to opposite
+	 * @param Enemy instance, Direction of the bomberman is located respect to the enemy position and enemy direction state
+	 * @return None
+	 */
+	public void changeDirectionToChaseBomberman(Enemy enemy, int bombermanDirection, int enemyDirection) {
+		if((bombermanDirection == 3 && enemyDirection == 2) && (bombermanDirection == 2 && enemyDirection == 3)
+				&& (bombermanDirection == 1 && enemyDirection == 0) && (bombermanDirection == 0 && enemyDirection == 1)) {
+			enemy.changeDirection();
+		}
+	}
+
+	/**
+	 * Checks if the bomberman is within one square of the enemy
+	 * @param Tile number of Bomberman and Enemy
+	 * @return True if bomberman is within one square, otherwise false
+	 */
+	public boolean isBombermanWithinOneSquare(int tileBombman, int tileEnemy) {
+		if(tileBombman == (tileEnemy + 1)) {
+			return true;
+		} else if(tileBombman == (tileEnemy - 1)) {
+			return true;
+		} else if(tileBombman == (tileEnemy + 31)) {
+			return true;
+		} else if(tileBombman == (tileEnemy - 31)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Checks if the bomberman is within two square of the enemy
+	 * @param Tile number of Bomberman and Enemy
+	 * @return True if bomberman is within two square, otherwise false
+	 */
+	public boolean isBombermanWithinTwoSquare(int tileBombman, int tileEnemy) {
+		if(tileBombman == (tileEnemy + 2)) {
+			return true;
+		} else if(tileBombman == (tileEnemy - 2)) {
+			return true;
+		} else if(tileBombman == (tileEnemy + 62)) {
+			return true;
+		} else if(tileBombman == (tileEnemy - 62)) {
+			return true;
+		} else if(tileBombman == (tileEnemy + 32)) {
+			return true;
+		} else if(tileBombman == (tileEnemy + 30)) {
+			return true;
+		} else if(tileBombman == (tileEnemy - 32)) {
+			return true;
+		} else if(tileBombman == (tileEnemy - 30)) {
+			return true;
+		}
+
 		return false;
 	}
 
@@ -666,7 +803,7 @@ public class Map implements KeyListener, FocusListener{
 			return max;
 		}
 	}
-	
+
 	//empty methods
 	public void keyTyped(KeyEvent e) {
 	}

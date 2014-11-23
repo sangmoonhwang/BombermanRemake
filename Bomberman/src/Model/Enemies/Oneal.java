@@ -14,10 +14,6 @@ public class Oneal {
 
 	}
 
-	public void chase() {
-
-	}
-
 	public int getIntelligence() {
 		return intelligence;
 	}
