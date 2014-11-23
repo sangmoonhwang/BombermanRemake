@@ -12,7 +12,7 @@ public class DrawMap{
 	private JFrame gameFrame;
 	private static DrawMap instance = new DrawMap();
 	
-	private DrawMap(){
+	public DrawMap(){
 		gamePanel = new DrawGameObject();
 		gameFrame = new JFrame();
 
