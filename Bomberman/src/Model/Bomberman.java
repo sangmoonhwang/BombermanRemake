@@ -31,7 +31,7 @@ public class Bomberman extends Movable{
 		mystery_From = -1000000000;
 		wallPass = false;
 		flamePass = false;
-		bombPass = true;
+		bombPass = false;
 		detonate = true;
 		speed = 4;
 	}

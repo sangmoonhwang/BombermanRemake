@@ -164,8 +164,9 @@ public class Map implements KeyListener, FocusListener{
 						@Override
 						public void run() {
 							for(int i = 0; i < 4; i++){
-								activeBombs.get(i).getPersonalExplosions()[i].setExploding(false);
+								activeBombs.get(0).getPersonalExplosions()[i].setExploding(false);
 							}
+							activeBombs.remove(0);
 						}
 					};
 					activeBombs.get(i).explode();
