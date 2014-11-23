@@ -14,23 +14,6 @@ public class Ovapi {
 
 	}
 
-	public void die() {
-
-	}
-
-	public void patrol() {
-
-	}
-
-	public void chase() {
-
-	}
-
-	public void move() {
-		//check if it is at intersection(probability of 10% of changing direction)
-		//check bomberman position if it is within 1 block then call chase    
-	}
-
 	public int getIntelligence() {
 		return intelligence;
 	}

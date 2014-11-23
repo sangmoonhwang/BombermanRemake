@@ -14,23 +14,6 @@ public class Pontan {
 
 	}
 
-	public void die() {
-
-	}
-
-	public void patrol() {
-
-	}
-
-	public void chase() {
-
-	}
-
-	public void move() {
-		//check if it is at intersection(probability of 50% of changing direction)
-		//check bomberman position if it is within 2 block then call chase method(if obstacle exist then use Astar search)
-	}
-
 	public void Astar() {
 
 	}
