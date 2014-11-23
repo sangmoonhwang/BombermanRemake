@@ -14,10 +14,6 @@ public class Pass {
 
 	}
 
-	public void Astar() {
-
-	}
-
 	public int getIntelligence() {
 		return intelligence;
 	}

@@ -1,8 +1,12 @@
 package Model.Enemies;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
+import Model.Bomberman;
 import Model.Movable;
+import Utils.GNode;
 
 public class Enemy extends Movable{
 
@@ -26,7 +30,8 @@ public class Enemy extends Movable{
 	private Ovapi ovapi;
 	private Pass pass;
 	private Pontan pontan;
-	
+
+	ArrayList<Integer> path = new ArrayList<Integer>();
 
 	public Enemy(String enemy){
 		xval = 0;
@@ -118,7 +123,7 @@ public class Enemy extends Movable{
 			incrementYval(-1);	 
 		}
 	}
-	
+
 	/**
 	 * change the direction of the enemy to the opposite of current direction(Enemy has collided with either concrete or brick
 	 * @param None
@@ -143,7 +148,7 @@ public class Enemy extends Movable{
 	 */
 	public void intersectionDirectionChange(Boolean free1) {
 		double prob = Math.random();
-		
+
 		if((intelligence == 2 && prob < 0.1) || (intelligence == 3 && prob < 0.5)) {
 			if(getState() == 0 || getState() == 1){
 				if(free1) {
@@ -160,7 +165,159 @@ public class Enemy extends Movable{
 			}
 		}
 	}
-	
+
+	/**
+	 * calculates the Euclidian Distance
+	 * @param current position and end point
+	 * @return None
+	 */
+	public float EuclidianDistance(int current, int end){
+		return (float) Math.sqrt(Math.pow(current,2) + Math.pow(end,2));
+	}
+
+	/**
+	 * search for the path to chase bomberman
+	 * @param Bobmerman Tile number and Enemy Tile number
+	 * @return None
+	 */
+	public void SearchForPath(int bombermanTile, int enemyTile) {
+
+		GNode goalNode = AStar(bombermanTile, enemyTile);
+
+		if(goalNode == null)
+			return;
+
+		while(goalNode.eParent != null){
+			path.add(goalNode.eCurrent);
+			goalNode = goalNode.eParent;
+		}
+
+	}
+
+	/**
+	 * Applies the Astar method to find the path from the enemy to Bomberman
+	 * @param Bobmerman Tile number and Enemy Tile number
+	 * @return None
+	 */
+	public GNode AStar(int bombermanTile, int enemyTile){
+
+		//list of all nodes we are going to search ie. the frontier
+		LinkedList<GNode> openList = new LinkedList<GNode>();
+		//list of all nodes we've already searched
+		LinkedList<Integer> closedList = new LinkedList<Integer>();
+
+		//init the  openlist
+		GNode startNode = new GNode(enemyTile, null, 0, EuclidianDistance(enemyTile, bombermanTile));
+		openList.add(startNode);
+
+		while(!openList.isEmpty()){
+			//first node in open list
+			GNode current = openList.removeFirst();
+			//add it to closed  list
+			closedList.add(current.eCurrent);
+
+			//check if its the goal
+			if(current.eCurrent == bombermanTile){
+				return current;
+			}
+
+			int index = current.eCurrent;
+
+			//for all 3 Top adjacent nodes
+			for(int i = index - 32; i < (index - 29); i++) {
+
+				//skip if out of bounds and notFree
+				if(i<0){
+					continue;
+				}
+
+				//skip if already searched before
+				if(closedList.contains(i)){
+					continue;
+				}
+
+				//Create next node
+				GNode next = new GNode(i,current,current.gCost+10,EuclidianDistance(i,bombermanTile));
+
+				//add node to open list
+				openList.add(next);
+
+				//sort open list
+				for(int k = 0;k<openList.size()-1;k++){
+					if(openList.get(k).fCost>openList.get(k+1).fCost){
+						//swap
+						GNode temp = openList.get(k);
+						openList.set(k, openList.get(k+1));
+						openList.set(k+1, temp);							
+					}
+				}
+			}
+			
+			//for all 2 adjacent nodes
+			for(int i = index - 1; i < (index + 2); i++) {
+
+				//skip if out of bounds and current enemy location and notFree
+				if(i<0 || i == index){
+					continue;
+				}
+
+				//skip if already searched before
+				if(closedList.contains(i)){
+					continue;
+				}
+
+				//Create next node
+				GNode next = new GNode(i,current,current.gCost+10,EuclidianDistance(i,bombermanTile));
+
+				//add node to open list
+				openList.add(next);
+
+				//sort open list
+				for(int k = 0;k<openList.size()-1;k++){
+					if(openList.get(k).fCost>openList.get(k+1).fCost){
+						//swap
+						GNode temp = openList.get(k);
+						openList.set(k, openList.get(k+1));
+						openList.set(k+1, temp);							
+					}
+				}
+			}
+			
+			//for all 3 bottom adjacent nodes
+			for(int i = enemyTile + 30; i < (enemyTile - 33); i++) {
+
+				//skip if out of bounds or notFree
+				if(i<0){
+					continue;
+				}
+
+				//skip if already searched before
+				if(closedList.contains(i)){
+					continue;
+				}
+
+				//Create next node
+				GNode next = new GNode(i,current,current.gCost+10,EuclidianDistance(i,bombermanTile));
+
+				//add node to open list
+				openList.add(next);
+
+				//sort open list
+				for(int k = 0;k<openList.size()-1;k++){
+					if(openList.get(k).fCost>openList.get(k+1).fCost){
+						//swap
+						GNode temp = openList.get(k);
+						openList.set(k, openList.get(k+1));
+						openList.set(k+1, temp);							
+					}
+				}
+			}
+		}
+
+		return null;
+	}
+
+
 	//setters
 	public void setXval(int i){
 		xval = i;

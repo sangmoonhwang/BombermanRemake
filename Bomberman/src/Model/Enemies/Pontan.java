@@ -14,10 +14,6 @@ public class Pontan {
 
 	}
 
-	public void Astar() {
-
-	}
-
 	public int getIntelligence() {
 		return intelligence;
 	}
