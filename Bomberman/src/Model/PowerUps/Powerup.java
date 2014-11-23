@@ -39,7 +39,7 @@ public class Powerup extends Block {
 		} else if(identity.equals("Speed")) {
 			image = Toolkit.getDefaultToolkit().getImage("Speed.png");
 		} else if(identity.equals("UpBombs")) {
-			image = Toolkit.getDefaultToolkit().getImage("Upbombs.png");
+			image = Toolkit.getDefaultToolkit().getImage("UpBombs.png");
 		} else if(identity.equals("Wallpass")) {
 			image = Toolkit.getDefaultToolkit().getImage("Wallpass.png");
 		}

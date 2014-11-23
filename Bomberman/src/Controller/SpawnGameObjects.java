@@ -32,6 +32,12 @@ public class SpawnGameObjects {
 		door = new Door();
 		levels(level);
 	}
+
+	/**
+	 * Spawns the concrete on the map
+	 * @param None
+	 * @return ArrayList<Indestructible>
+	 */
 	public ArrayList<Indestructible> spawnIndestructibles() {
 		for(int x=0; x<31; x++){
 			for(int y=0; y<13; y++){
@@ -43,13 +49,22 @@ public class SpawnGameObjects {
 		return indestructibles;
 	}
 
+	/**
+	 * Spawns the bricks on the tile where it is valid
+	 * @param None
+	 * @return ArrayList<Destructible>
+	 */
 	public ArrayList<Destructible> spawnBricks() {
 		for(int x = 1; x<30; x++){
 			for(int y = 1; y<12; y++){
 				if((x!=1 && y!=1) && (x!=1 && y!=2) && (x!=2 && y!=1) ){
-					double r = Math.random();
-					if(r<=0.1){
-						bricks.add(new Destructible(50*x,50*y));
+					double random = Math.random();
+					if(random<=0.1){
+						int xVal = x*50;
+						int yVal = y*50;
+						int tile = whichTileIsOn(xVal,yVal);
+						if(validBrickSpawn(tile))
+							bricks.add(new Destructible(xVal,yVal));
 					}
 				}
 			}
@@ -71,14 +86,14 @@ public class SpawnGameObjects {
 				x = (int)(Math.random()*29 +1)*50;
 				y = (int)(Math.random()*11 +1)*50;
 				tile = whichTileIsOn(x,y);
-			}while(!validSpawn(tile));
+			}while(!validEnemySpawn(tile));
 			enemies.get(i).setXval(x);
 			enemies.get(i).setYval(y);
 		}
 
 		return enemies;
 	}
-	
+
 	/**
 	 * Initiates the powerup and place behind the random brick
 	 * @param None
@@ -86,27 +101,31 @@ public class SpawnGameObjects {
 	 */
 	public Powerup spawnPowerup() {
 		power = new Powerup(powerUp.get(0));
-		int x = (int)(Math.random()*bricks.size());   
-		int xVal = bricks.get(x).getXval();				
-		int yVal = bricks.get(x).getYval();
+		int random = (int)(Math.random()*bricks.size());   
+		int xVal = bricks.get(random).getXval();				
+		int yVal = bricks.get(random).getYval();
 		power.setXval(xVal);
 		power.setYval(yVal);
-		
+
 		return power;
 	}
-	
-	public Door spawnDoor() {							//DO NOT DELETE THIS IS THE CODE WE WANT AT THE END
-//		int x = (int)(Math.random()*bricks.size());   //code for hiding the door with brick 
-//		int xVal = bricks.get(x).getXval();				// currently door does not appear even though all the bricks are detonated
-//		int yVal = bricks.get(x).getYval();
-//		door.setXval(xVal);
-//		door.setYval(yVal);								//should check for the condition where powerUp is already placed in the given brick
-		
-		
-		int x = (int)(Math.random()*29 + 1);
-		int y = (int)(Math.random()*11 + 1);
-		door.setXval(50*x);
-		door.setYval(50*y);
+
+	/**
+	 * Initiates the door and place behind the random brick that does not have the powerup already
+	 * @param None
+	 * @return Door
+	 */
+	public Door spawnDoor() {							
+		int random, xVal, yVal, tile;
+		do {
+			random = (int)(Math.random()*bricks.size());
+			xVal = bricks.get(random).getXval();				
+			yVal = bricks.get(random).getYval();
+			tile = whichTileIsOn(xVal,yVal);
+		}while(!validDoorSpawn(tile));
+		door.setXval(xVal);
+		door.setYval(yVal);
+
 		return door;
 	}
 
@@ -121,11 +140,25 @@ public class SpawnGameObjects {
 	}
 
 	/**
-	 * returns the if the enemy position spwaned is free from indestructible and brick
-	 * @param enemy tile position
-	 * @return whether the current enemy position is valid for true, otherwise false
+	 * returns if the brick is spawned on the concrete
+	 * @param brick position on the tile
+	 * @return the current brick position is valid for true, otherwise false
 	 */
-	public boolean validSpawn(int tile) {
+	public boolean validBrickSpawn(int tile) {
+		for(int i=0; i<indestructibles.size(); i++) {
+			if(whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval()) == tile)
+				return false;
+		}
+		return true;
+	}
+
+	/**
+	 * returns the if the enemy position spwaned is free from indestructible and brick 
+	 * Also looks at if the enemy is spawned in same location
+	 * @param enemy tile position
+	 * @return the current enemy position is valid for true, otherwise false
+	 */
+	public boolean validEnemySpawn(int tile) {
 		for(int i = 0; i < indestructibles.size(); i++) {
 			if(whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval()) == tile)
 				return false;
@@ -136,8 +169,26 @@ public class SpawnGameObjects {
 				return false;
 		}
 
+		for(int i=0; i<enemies.size(); i++) {
+			if(whichTileIsOn(enemies.get(i).getXval(), enemies.get(i).getYval()) == tile)
+				return false;
+		}
+
 		return true;
 	}
+
+	/**
+	 * returns if the door is spanwed on the same block as the powerup
+	 * @param door position on the tile
+	 * @return the current door position is valid for true, otherwise false
+	 */
+	public boolean validDoorSpawn(int tile) {
+		if(whichTileIsOn(power.getXval(), power.getYval()) == tile) {
+			return false;
+		}
+		return true;
+	}
+
 
 	/**
 	 * sets the correct #of enemy, types and powerups for the given level
@@ -318,7 +369,7 @@ public class SpawnGameObjects {
 				enemy.add("Kondoria");
 			}
 			enemy.add("Pass");
-			powerUp.add("Bombs");
+			powerUp.add("UpBombs");
 			break;
 		case 18:
 			for(int i = 0; i < 3; i++) {
@@ -342,7 +393,7 @@ public class SpawnGameObjects {
 			for(int i = 0; i < 2; i++) {
 				enemy.add("Pass");
 			}
-			powerUp.add("Bombs");
+			powerUp.add("UpBombs");
 			break;
 		case 20:
 			enemy.add("Oneal");
@@ -394,7 +445,7 @@ public class SpawnGameObjects {
 				enemy.add("Ovapi");
 			}
 			enemy.add("Pass");
-			powerUp.add("Bombs");
+			powerUp.add("UpBombs");
 			break;
 		case 24:
 			enemy.add("Doll");
@@ -455,7 +506,7 @@ public class SpawnGameObjects {
 			}
 			enemy.add("Kondoria");
 			enemy.add("Pass");
-			powerUp.add("Bombs");
+			powerUp.add("UpBombs");
 			break;
 		case 29:
 			for(int i = 0; i < 2; i++) {
@@ -511,7 +562,7 @@ public class SpawnGameObjects {
 				enemy.add("Kondoria");
 			}
 			enemy.add("Pass");
-			powerUp.add("Bombs");
+			powerUp.add("UpBombs");
 			break;
 		case 33:
 			for(int i = 0; i < 2; i++) {
