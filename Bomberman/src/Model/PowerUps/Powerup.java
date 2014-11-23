@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 
 import Model.Block;
+import Model.Bomberman;
 
 public class Powerup extends Block {
 
@@ -79,5 +80,7 @@ public class Powerup extends Block {
 		return image;
 	}
 
-	//abstract public void activate();
+	public void activate() {
+		
+	}
 }

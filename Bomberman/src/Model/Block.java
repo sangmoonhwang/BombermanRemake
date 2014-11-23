@@ -35,9 +35,4 @@ public class Block{
 		return width;
 	}
 
-	public void activate() {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

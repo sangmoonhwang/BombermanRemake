@@ -138,7 +138,7 @@ public class CollissionDetection {
 
 	public boolean emptyAbove(Movable b, Block i) {
 		Movable copy = new Movable();
-		copy.setYval(b.getYval()-1);
+		copy.setYval(b.getYval() - Bomberman.speed);
 		copy.setXval(b.getXval());
 		copy.setHeight(b.getHeight());
 		copy.setWidth(b.getWidth());
@@ -151,7 +151,7 @@ public class CollissionDetection {
 
 	public boolean emptyBelow(Movable b, Block i) {
 		Movable copy = new Movable();
-		copy.setYval(b.getYval()+1);
+		copy.setYval(b.getYval() + Bomberman.speed);
 		copy.setXval(b.getXval());
 		copy.setHeight(b.getHeight());
 		copy.setWidth(b.getWidth());
@@ -165,7 +165,7 @@ public class CollissionDetection {
 	public boolean emptyLeft(Movable b, Block i) {
 		Movable copy = new Movable();
 		copy.setYval(b.getYval());
-		copy.setXval(b.getXval()-1);
+		copy.setXval(b.getXval() - Bomberman.speed);
 		copy.setHeight(b.getHeight());
 		copy.setWidth(b.getWidth());
 
@@ -178,7 +178,7 @@ public class CollissionDetection {
 	public boolean emptyRight(Movable b, Block i) {
 		Movable copy = new Movable();
 		copy.setYval(b.getYval());
-		copy.setXval(b.getXval()+1);
+		copy.setXval(b.getXval() + Bomberman.speed);
 		copy.setHeight(b.getHeight());
 		copy.setWidth(b.getWidth());
 

@@ -5,6 +5,7 @@ public class Movable {
 	//physical attributes
 	private int xval, yval;
 	private int height, width;
+	private int speed;
 	
 	//setters
 	public void setXval(int i){
@@ -18,6 +19,9 @@ public class Movable {
 	}
 	public void setWidth(int i){
 		width = i;
+	}
+	public void setSpeed(int i){
+		speed = i;
 	}
 	
 	//increment
@@ -40,5 +44,8 @@ public class Movable {
 	}
 	public int getWidth(){
 		return width;
+	}
+	public int getSpeed(){
+		return speed;
 	}
 }
