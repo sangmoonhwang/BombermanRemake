@@ -25,6 +25,8 @@ import javax.swing.SwingConstants;
 
 import Model.Database;
 import Model.User;
+import View.DrawMap;
+import View.DrawMenu;
 
 public class Leaderboard extends Database {
 	public String newUsername;
@@ -104,11 +106,15 @@ public class Leaderboard extends Database {
 
 
 		JButton back = new JButton("Back to menu");
-
+		controlPanel.add(back);
 		back.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//back to menu
+				DrawMenu menu = DrawMenu.getInstance();
+				
+				menu.viewFrame(true);
+				main.setVisible(false);
 			}
 		});
 

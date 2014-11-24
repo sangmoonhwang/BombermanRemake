@@ -498,6 +498,7 @@ public class Map implements KeyListener, FocusListener{
 		}
 
 		if(detect.collisionDetection(bombman, door) && enemies.size() == 0) {
+			new Map(level+1);
 			System.out.println("Level Complete!");
 		}
 
