@@ -150,12 +150,12 @@ public class Map implements KeyListener, FocusListener{
 			bombermanState = 1;
 			setVelX(bombman.getSpeed());//2
 		}
-		if(value == KeyEvent.VK_ESCAPE){
+		if(value == KeyEvent.VK_ESCAPE || value == KeyEvent.VK_SPACE){
 			running = false;
 			d.getFrame().dispose();
 			DrawMenu.getInstance().viewFrame(true);
 		}
-		if(value == KeyEvent.VK_V && Bomberman.detonate == true && activeBombs.size() >= 1){
+		if(value == KeyEvent.VK_X && Bomberman.detonate == true && activeBombs.size() >= 1){
 			for(int i =0; i< activeBombs.size(); i++){
 				if(!activeBombs.get(i).getUsed()){
 					final Runnable unExplode = new Runnable() {
@@ -178,7 +178,7 @@ public class Map implements KeyListener, FocusListener{
 			//activeBombs.get(0).explode();
 			//explosions = activeBombs.get(activeBombs.size()-1).getPersonalExplosions();
 		}
-		if(value == KeyEvent.VK_SPACE){
+		if(value == KeyEvent.VK_Z){
 			//if(bombman.getavailableBombs() != 0){
 			if(bombs.size() != 1){
 				System.out.println(bombs.size());
