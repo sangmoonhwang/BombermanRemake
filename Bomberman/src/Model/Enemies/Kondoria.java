@@ -2,7 +2,7 @@ package Model.Enemies;
 
 import java.util.LinkedList;
 
-import Model.Box;
+//import Model.Box;
 
 
 public class Kondoria {

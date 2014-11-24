@@ -469,15 +469,16 @@ public class Map implements KeyListener, FocusListener{
 		if(detect.collisionDetection(bombman, door) && enemies.size() == 0) {
 			System.out.println("Level Complete!");
 		}
-		/*
-		if(detect.collisionDetection(bombman,upbombs)){
-			bombs.add(new Bomb());
-			upbombs.setXval(0);
-			upbombs.setYval(0);
-			bombman.mystery_From = System.nanoTime(); //for testing
-			bombman.speed += 2; //for testing
+
+
+
+		//Powerup obtaining
+		System.out.println(power.getXval()+", "+power.getYval());
+		if(detect.collisionDetection(bombman, power)){
+			power.setXval(0);
+			power.setYval(0);
+			power.activate();
 		}
-		 */
 	}
 
 	public void tick2() {

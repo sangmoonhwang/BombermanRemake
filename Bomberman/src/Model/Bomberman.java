@@ -27,13 +27,13 @@ public class Bomberman extends Movable{
 		height = 42;
 		width = 30;
 		availableBombs = 1;
-		flames = 2;
+		flames = 1;
 		mystery_From = -1000000000;
 		wallPass = false;
 		flamePass = false;
 		bombPass = false;
-		detonate = true;
-		speed = 4;
+		detonate = false;
+		speed = 2;
 	}
 	//setters
 	public void setXval(int i){
