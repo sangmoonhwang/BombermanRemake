@@ -6,7 +6,7 @@ public class User {
 	private String password;
 	private String realName;
 	private int numOfPlay;
-	private static int totalScore;
+	private int totalScore;
 	private int levelCompleted;
 	private String[] savedGame;
 	
@@ -27,6 +27,7 @@ public class User {
 		this.setRealName(data[2]);
 		setNumOfPlay(Integer.parseInt(data[3]));
 		setTotalScore(Integer.parseInt(data[4]));
+		System.out.println("Setting total score for "+ this.username + " to " + totalScore);
 		setLevelCompleted(Integer.parseInt(data[5]));
 	}
 	
@@ -63,16 +64,16 @@ public class User {
 		this.numOfPlay = numOfPlay;
 	}
 
-	public static int getTotalScore() {
+	public int getTotalScore() {
 		return totalScore;
 	}
 	
-	public static void updateScore(int i) {
+	public void updateScore(int i) {
 		totalScore += i;
 	}
 
-	public void setTotalScore(int totalScore) {
-		this.totalScore = totalScore;
+	public void setTotalScore(int t) {
+		totalScore = t;
 	}
 
 	public int getLevelCompleted() {

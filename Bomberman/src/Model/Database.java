@@ -45,6 +45,8 @@ public class Database {
 		    	   break;
 		}
 		
+		reader.close();
+		
 		if(nextLine == null)
 			return null;
 		
@@ -119,7 +121,7 @@ public class Database {
 		       if(user.getUsername().equals(nextLine[0]))
 		    	   list.add(nextLine[1]);
 		}
-		
+		reader.close();
 	    return list;
 	    	
 	}
@@ -137,7 +139,24 @@ public class Database {
 		String [] nextLine;
 	    
 		nextLine = reader.readNext();
+		reader.close();
 		
 		//add the correct load game sequence on the bottom
+	}
+	
+	public ArrayList<User> returnUsers() throws IOException {
+		FileReader fileReader = new FileReader("user.csv");
+		CSVReader reader = new CSVReader(fileReader);
+		ArrayList<User> users = new ArrayList<User>();
+		String [] nextLine;
+	    
+		while ((nextLine = reader.readNext()) != null) {
+		       User u = new User(nextLine);
+		       users.add(u);
+		}
+		reader.close();
+		
+	    return users;
+		
 	}
 }
