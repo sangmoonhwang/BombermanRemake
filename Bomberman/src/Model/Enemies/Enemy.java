@@ -9,6 +9,8 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import Controller.Map;
+import Model.Bomberman;
+import Model.Box;
 import Model.Destructible;
 import Model.Indestructible;
 import Model.Movable;
@@ -52,8 +54,18 @@ public class Enemy extends Movable{
 	private boolean aboveRightFreeBrick = true;
 	private boolean belowLeftFreeBrick = true;
 	private boolean belowRightFreeBrick = true;
+	private boolean twoLeftFree = true;
+	private boolean twoRightFree = true;
+	private boolean twoAboveFree = true;
+	private boolean twoBelowFree = true;
+	private boolean twoLeftFreeBrick = true;
+	private boolean twoRightFreeBrick = true;
+	private boolean twoAboveFreeBrick = true;
+	private boolean twoBelowFreeBrick = true;
 
-	ArrayList<Integer> path = new ArrayList<Integer>();
+	private int rows = 31;
+	private int cols = 13;
+	ArrayList<Box> path = new ArrayList<Box>();
 
 	public Enemy(String enemy){
 		xval = 0;
@@ -211,7 +223,7 @@ public class Enemy extends Movable{
 		belowLeftFreeBrick = true;
 		belowRightFreeBrick = true;
 	}
-	
+
 	/**
 	 * returns the tile number
 	 * @param xPos and yPos
@@ -223,8 +235,31 @@ public class Enemy extends Movable{
 	}
 
 	/**
-	 * 
-	 * @param 
+	 * Returns boolean whether current tile is free or not
+	 * @param X and Y position
+	 * @return True if not free, otherwise false
+	 */
+	public boolean isNotFree(int x, int y) {
+		int tileNum = whichTileIsOn(x,y);
+		ArrayList<Indestructible> indestructibles = Map.getIndestructible();
+		ArrayList<Destructible> bricks = Map.getDestructible();
+
+		for(int i = 0; i < indestructibles.size(); i++) {
+			int indestructiblesTileNum = whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval());
+			if(indestructiblesTileNum == tileNum)
+				return true;
+		}
+		for(int i=0; i<bricks.size(); i++) {
+			int bricksTileNum = whichTileIsOn(bricks.get(i).getXval(), bricks.get(i).getYval());
+			if(bricksTileNum == tileNum)
+				return true;
+		}
+		return false;	
+	}
+
+	/**
+	 * search the Free path
+	 * @param ArrayList<Indestructible>  ArrayList<Destructible>
 	 * @return None
 	 */
 	public void searchFreePath(ArrayList<Indestructible> indestructibles, ArrayList<Destructible> bricks) {
@@ -249,7 +284,16 @@ public class Enemy extends Movable{
 				belowLeftFree = false;
 			} else if(indestructiblesTileNum == (tileNum+32)) {
 				belowRightFree = false;
-			}
+			} else if(indestructiblesTileNum == (tileNum-2)) {
+				twoLeftFree = false;
+			} else if(indestructiblesTileNum == (tileNum+2)) {
+				twoRightFree = false;
+			} else if(indestructiblesTileNum == (tileNum-62)) {
+				twoAboveFree = false;
+			} else if(indestructiblesTileNum == (tileNum+62)) {
+				twoBelowFree = false;
+			} 
+
 		}
 
 		for(int i=0; i<bricks.size(); i++) {
@@ -270,32 +314,40 @@ public class Enemy extends Movable{
 				belowLeftFreeBrick = false;
 			} else if(bricksTileNum == (tileNum+32)) {
 				belowRightFreeBrick = false;
-			}
+			} else if(bricksTileNum == (tileNum-2)) {
+				twoLeftFreeBrick = false;
+			} else if(bricksTileNum == (tileNum+2)) {
+				twoRightFreeBrick = false;
+			} else if(bricksTileNum == (tileNum-62)) {
+				twoAboveFreeBrick = false;
+			} else if(bricksTileNum == (tileNum+62)) {
+				twoBelowFreeBrick = false;
+			} 
 		}
 	}
-	
+
 	/**
-	 * calculates the Euclidian Distance
+	 * Calculates the Euclidian distance
 	 * @param current position and end point
 	 * @return None
 	 */
-	public float EuclidianDistance(int current, int end) {
-		return (float) Math.sqrt(Math.pow(current,2) + Math.pow(end,2));
+	public float EuclidianDistance(Box b1, Box b2) {
+		return (float) Math.sqrt(Math.pow((b1.x - b2.x),2) + Math.pow((b1.y - b2.y),2));
 	}
 
 	/**
 	 * search for the path to chase bomberman
-	 * @param Bobmerman Tile number and Enemy Tile number
+	 * @param 
 	 * @return None
 	 */
-	public void searchForPath(int bombermanTile, int enemyTile) {
+	public void searchForPath(int xBomberman, int yBomberman) {
 
-		GNode goalNode = AStar(bombermanTile, enemyTile);
+		GNode goalNode = AStar(xBomberman, yBomberman);
 
 		if(goalNode == null)
 			return;
 
-		while(goalNode.eParent != null){
+		while(goalNode.eParent != null) {
 			path.add(goalNode.eCurrent);
 			goalNode = goalNode.eParent;
 		}
@@ -304,133 +356,66 @@ public class Enemy extends Movable{
 
 	/**
 	 * Applies the Astar method to find the path from the enemy to Bomberman
-	 * @param Bobmerman Tile number and Enemy Tile number
+	 * @param 
 	 * @return None
 	 */
-	public GNode AStar(int bombermanTile, int enemyTile) {
-		int cur = 1;
+	public GNode AStar(int xBomberman, int yBomberman) {
 		//list of all nodes we are going to search ie. the frontier
-		LinkedList<GNode> openList = new LinkedList<GNode>();
-		
+		TreeMap<Float, GNode> openList = new TreeMap<Float, GNode>();
 		//list of all nodes we've already searched
-		LinkedList<Integer> closedList = new LinkedList<Integer>();
+		TreeMap<Integer, GNode> closedList = new TreeMap<Integer, GNode>();
+		Box bStart = new Box(getXval(), getYval());
+		Box bEnd = new Box(xBomberman, yBomberman);
 
 		//init the openlist
-		GNode startNode = new GNode(enemyTile, null, 0, EuclidianDistance(enemyTile, bombermanTile));
-		//openList.add(startNode);
-		openList.add(startNode);
-		   
-		while(!openList.isEmpty()) {
-			cur++;
-			//first node in open list
-			GNode current = openList.removeFirst();
+		GNode startNode = new GNode(bStart, null, 0, EuclidianDistance(bStart, bEnd));
+		openList.put(startNode.fCost, startNode);
 
-			//add it to closed  list
-			closedList.add(current.eCurrent);
+		while(!openList.isEmpty()){
+			//first node in open list
+			Float key = openList.firstKey();
+			GNode current = openList.get(key);
+			openList.remove(key);
+			//add it to closed list
+			closedList.put(whichTileIsOn(current.eCurrent.x, current.eCurrent.y), current);
 
 			//check if its the goal
-			if(current.eCurrent == bombermanTile) {
+			if(whichTileIsOn(current.eCurrent.x,current.eCurrent.y) == whichTileIsOn(xBomberman, yBomberman)){
 				return current;
 			}
+			
+			int xIndex = current.eCurrent.x/50;
+			int yIndex = current.eCurrent.y/50;
+			
+			//for all 8 adjacent nodes
+			for(int i=xIndex-1;i<=xIndex+1;i++){
+				for(int j=yIndex-1;j<=yIndex+1;j++){
 
-			int index = current.eCurrent;
-
-			//for 3 Top adjacent nodes
-			for(int i = index - 32; i < (index - 29); i++) {
-
-				//skip if out of bounds and notFree
-				if(i<0 || (!aboveFree && i == index - 31)|| (!aboveFreeBrick && i == index - 31) 
-						|| (!aboveLeftFree && i == index - 32) || (!aboveLeftFreeBrick && i == index - 32)
-						|| (!aboveRightFree && i == index - 30) || (!aboveRightFreeBrick && i == index - 30)) {
-					continue;
-				}
-
-				//skip if already searched before
-				if(closedList.contains(i)) {
-					continue;
-				}
-
-				//Create next node
-				GNode next = new GNode(i,current,current.gCost+10,EuclidianDistance(i,bombermanTile));
-
-				//add node to open list
-				openList.add(next);
-
-				//sort open list
-				for(int k = 0;k<openList.size()-1;k++){
-					if(openList.get(k).fCost>openList.get(k+1).fCost){
-						//swap
-						GNode temp = openList.get(k);
-						openList.set(k, openList.get(k+1));
-						openList.set(k+1, temp);							
+					//skip if out of bounds
+					if(i<0 || i> rows || j<0 || j>cols) {
+						continue;
 					}
-				}
 
-			}
-
-			//for 2 adjacent nodes
-			for(int i = index - 1; i < (index + 2); i++) {
-
-				//skip if out of bounds and current enemy location and notFree
-				if(i<0 || i == index || (!leftFree && i == index - 1)|| (!leftFreeBrick && i == index - 1) 
-						|| (!rightFree && i == index + 1) || (!rightFreeBrick && i == index + 1)) {
-					continue;
-				}
-
-				//skip if already searched before
-				if(closedList.contains(i)) {
-					continue;
-				}
-
-				//Create next node
-				GNode next = new GNode(i,current,current.gCost+10,EuclidianDistance(i,bombermanTile));
-
-				//add node to open list
-				openList.add(next);
-
-				//sort open list
-				for(int k = 0;k<openList.size()-1;k++){
-					if(openList.get(k).fCost>openList.get(k+1).fCost){
-						//swap
-						GNode temp = openList.get(k);
-						openList.set(k, openList.get(k+1));
-						openList.set(k+1, temp);							
+					//skip if the block is not free
+					if(isNotFree(i*50,j*50)) {
+						continue;
 					}
-				}
-			}
-			//for 3 bottom adjacent nodes
-			for(int i = enemyTile + 30; i < (enemyTile - 33); i++) {
 
-				//skip if out of bounds or notFree
-				if(i<0 || (!belowFree && i == index + 31)|| (!belowFreeBrick && i == index + 31) 
-						|| (!belowLeftFree && i == index + 30) || (!belowLeftFreeBrick && i == index + 30)
-						|| (!belowRightFree && i == index + 32) || (!belowRightFreeBrick && i == index + 32)){
-					continue;
-				}
+					//skip if already searched before
+					if(closedList.containsKey(whichTileIsOn(i*50,j*50))) {
+						continue;
+					}
 
-				//skip if already searched before
-				if(closedList.contains(i)) {
-					continue;
-				}
-
-				//Create next node
-				GNode next = new GNode(i,current,current.gCost+10,EuclidianDistance(i,bombermanTile));
-
-				//add node to open list
-				openList.add(next);
-
-				//sort open list
-				for(int k = 0;k<openList.size()-1;k++){
-					if(openList.get(k).fCost>openList.get(k+1).fCost){
-						//swap
-						GNode temp = openList.get(k);
-						openList.set(k, openList.get(k+1));
-						openList.set(k+1, temp);							
+					//Create next node
+					GNode next = new GNode(new Box(i*50,j*50),current,current.gCost+50,EuclidianDistance(new Box(i*50,j*50),bEnd));
+					
+					//add node to open list
+					if(!openList.containsKey(next.fCost)) {
+						openList.put(next.fCost, next);
 					}
 				}
 			}
 		}
-
 		return null;
 	}
 
@@ -498,7 +483,7 @@ public class Enemy extends Movable{
 	public Pontan getPontanInstance() {
 		return pontan;
 	}
-	public ArrayList<Integer> getPath() {
+	public ArrayList<Box> getPath() {
 		return path;
 	}
 	public Image getImage() {
@@ -551,5 +536,29 @@ public class Enemy extends Movable{
 	}
 	public boolean getBelowRightFreeBrick() {
 		return belowRightFreeBrick;
+	}
+	public boolean get2LeftFree() {
+		return twoLeftFree;
+	}
+	public boolean get2RightFree() {
+		return twoRightFree;
+	}
+	public boolean get2BelowFree() {
+		return twoBelowFree;
+	}
+	public boolean get2AboveFree() {
+		return twoAboveFree;
+	}
+	public boolean get2LeftFreeBrick() {
+		return twoLeftFreeBrick;
+	}
+	public boolean get2RightFreeBrick() {
+		return twoRightFreeBrick;
+	}
+	public boolean get2BelowFreeBrick() {
+		return twoBelowFreeBrick;
+	}
+	public boolean get2AboveFreeBrick() {
+		return twoAboveFreeBrick;
 	}
 }
