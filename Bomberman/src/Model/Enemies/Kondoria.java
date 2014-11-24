@@ -2,8 +2,6 @@ package Model.Enemies;
 
 import java.util.LinkedList;
 
-import Model.Box;
-
 
 public class Kondoria {
 	private int intelligence;

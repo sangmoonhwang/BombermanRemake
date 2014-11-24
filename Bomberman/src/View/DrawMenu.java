@@ -17,7 +17,7 @@ import Controller.Map;
 import Controller.ModifyAccount;
 
 
-public class DrawMenu{
+public class DrawMenu {
 	private JFrame menuFrame;
 	
 	private JButton playButton;
