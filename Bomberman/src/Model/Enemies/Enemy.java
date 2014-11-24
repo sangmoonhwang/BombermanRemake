@@ -2,7 +2,11 @@ package Model.Enemies;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import Controller.Map;
 import Model.Destructible;
@@ -304,19 +308,23 @@ public class Enemy extends Movable{
 	 * @return None
 	 */
 	public GNode AStar(int bombermanTile, int enemyTile) {
-
+		int cur = 1;
 		//list of all nodes we are going to search ie. the frontier
 		LinkedList<GNode> openList = new LinkedList<GNode>();
+		
 		//list of all nodes we've already searched
 		LinkedList<Integer> closedList = new LinkedList<Integer>();
 
-		//init the  openlist
+		//init the openlist
 		GNode startNode = new GNode(enemyTile, null, 0, EuclidianDistance(enemyTile, bombermanTile));
+		//openList.add(startNode);
 		openList.add(startNode);
-
+		   
 		while(!openList.isEmpty()) {
+			cur++;
 			//first node in open list
 			GNode current = openList.removeFirst();
+
 			//add it to closed  list
 			closedList.add(current.eCurrent);
 
@@ -349,14 +357,15 @@ public class Enemy extends Movable{
 				openList.add(next);
 
 				//sort open list
-				for(int k = 0;k<openList.size()-1;k++) {
-					if(openList.get(k).fCost>openList.get(k+1).fCost) {
+				for(int k = 0;k<openList.size()-1;k++){
+					if(openList.get(k).fCost>openList.get(k+1).fCost){
 						//swap
 						GNode temp = openList.get(k);
 						openList.set(k, openList.get(k+1));
 						openList.set(k+1, temp);							
 					}
 				}
+
 			}
 
 			//for 2 adjacent nodes
@@ -380,8 +389,8 @@ public class Enemy extends Movable{
 				openList.add(next);
 
 				//sort open list
-				for(int k = 0;k<openList.size()-1;k++) {
-					if(openList.get(k).fCost>openList.get(k+1).fCost) {
+				for(int k = 0;k<openList.size()-1;k++){
+					if(openList.get(k).fCost>openList.get(k+1).fCost){
 						//swap
 						GNode temp = openList.get(k);
 						openList.set(k, openList.get(k+1));
@@ -389,7 +398,6 @@ public class Enemy extends Movable{
 					}
 				}
 			}
-
 			//for 3 bottom adjacent nodes
 			for(int i = enemyTile + 30; i < (enemyTile - 33); i++) {
 
@@ -412,8 +420,8 @@ public class Enemy extends Movable{
 				openList.add(next);
 
 				//sort open list
-				for(int k = 0;k<openList.size()-1;k++) {
-					if(openList.get(k).fCost>openList.get(k+1).fCost) {
+				for(int k = 0;k<openList.size()-1;k++){
+					if(openList.get(k).fCost>openList.get(k+1).fCost){
 						//swap
 						GNode temp = openList.get(k);
 						openList.set(k, openList.get(k+1));

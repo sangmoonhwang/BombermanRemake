@@ -48,7 +48,8 @@ public class Map implements KeyListener, FocusListener{
 	private CollissionDetection detect;
 	private SpawnGameObjects spawn;
 	private static int bombermanState;
-
+	ArrayList<Integer> path;
+	
 	public Map(int level){
 
 		//attributes
@@ -480,7 +481,7 @@ public class Map implements KeyListener, FocusListener{
 					}
 				} else if(enemy.getIntelligence() == 3) {
 					if(isBombermanWithinTwoSquare(tileBombman, tileEnemy)) {
-						if(isChaseBombermanPathFree(enemy, tileBombman, tileEnemy)) {
+						if(!isChaseBombermanPathFree(enemy, tileBombman, tileEnemy)) {
 							findPathToBomberman(enemy, tileBombman, tileEnemy);
 							moveEnemy(enemy);
 						} else {
@@ -588,8 +589,9 @@ public class Map implements KeyListener, FocusListener{
 	 */
 	public void findPathToBomberman(Enemy enemy, int tileBombman, int tileEnemy) {
 		enemy.searchForPath(tileBombman, tileEnemy);
-		ArrayList<Integer> path = enemy.getPath();
+		path = enemy.getPath();
 		int moveToTile = path.get(0);
+		System.out.println("Astar move to Tile " + moveToTile +" from " + tileEnemy);
 		if(moveToTile == (tileEnemy + 1)) {
 			enemy.setState(0);
 		} else if(moveToTile == (tileEnemy - 1) ) {
