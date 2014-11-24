@@ -77,7 +77,11 @@ public class DrawMenu{
 		menuFrame.add(leaderButton);
 		menuFrame.add(loadButton);
 		menuFrame.add(saveButton);
+		
+		addButtons();
+	}
 	
+	public void addButtons(){
 		//play button
 		playButton.addActionListener(new ActionListener() {
 			@Override

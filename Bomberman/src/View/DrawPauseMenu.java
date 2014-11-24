@@ -62,7 +62,11 @@ public class DrawPauseMenu{
 		pauseFrame.add(quitButton);
 		pauseFrame.add(saveButton);
 		pauseFrame.setVisible(true);
+		
+		addButtons();
+	}
 	
+	public void addButtons(){
 		//resume button
 		resumeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -72,7 +76,7 @@ public class DrawPauseMenu{
 				game.getFrame().setVisible(true);
 				viewFrame(false);
 			}
-		});
+		});		
 		
 		//quit button
 		quitButton.addActionListener(new ActionListener() {
