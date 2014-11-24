@@ -59,7 +59,7 @@ public class Map implements KeyListener, FocusListener{
 	private boolean rightFreeBrick = true;
 	private boolean aboveFreeBrick = true;
 	private boolean belowFreeBrick = true;
-	private static boolean isPaused = false;
+	static boolean paused;
 
 	public Map(int level){
 
@@ -92,6 +92,7 @@ public class Map implements KeyListener, FocusListener{
 
 		d = DrawMap.getInstance();
 		running = true;
+		paused = false;
 		gameTimer = new Timer();
 		gameTimer.schedule(new TimerTask(){
 			public void run(){
@@ -112,12 +113,6 @@ public class Map implements KeyListener, FocusListener{
 
 	public void run(){
 		d.run();
-		
-		play();
-		
-	}
-	
-	public void play(){
 		d.getFrame().addFocusListener(this);
 		d.getFrame().addKeyListener(this);
 		d.getFrame().requestFocus();
@@ -128,13 +123,13 @@ public class Map implements KeyListener, FocusListener{
 		double ns = 1000000000 / amountOfTicks;
 		
 		while(running) {
-			long now = System.nanoTime();
-			if((now - start)/ns >= 1) {
-				if(!isPaused){
-				tick();
-				tick2();
-				start = now;
-				d.draw();
+			if(!paused){
+				long now = System.nanoTime();
+				if((now - start)/ns >= 1) {
+					tick();
+					tick2();
+					start = now;
+					d.draw();
 				}
 			}
 		}
@@ -158,13 +153,13 @@ public class Map implements KeyListener, FocusListener{
 			setVelX(bombman.getSpeed());//2
 		}
 		if(value == KeyEvent.VK_ESCAPE || value == KeyEvent.VK_SPACE){
-			//running = false;
+			paused = true;
 			d.getFrame().setVisible(false);
 			if(!DrawPauseMenu.getInstance().isRunning()){
 				DrawPauseMenu.getInstance().makeFrame();
 			}
 			DrawPauseMenu.getInstance().viewFrame(true);
-			set_IsPaused(true);
+			DrawPauseMenu.getInstance().run();
 		}
 		if(value == KeyEvent.VK_X && Bomberman.detonate == true && activeBombs.size() >= 1){
 			for(int i =0; i< activeBombs.size(); i++){
@@ -775,12 +770,6 @@ public class Map implements KeyListener, FocusListener{
 	public static Powerup getPowerup() {
 		return power;
 	}
-	public static boolean isPaused(){
-		return isPaused;
-	}
-	public static void set_IsPaused(boolean b){
-		isPaused = b;
-	}
 
 	//detects an obstacle within the range of flame
 	public int get_MaxFlame(int i){
@@ -820,6 +809,9 @@ public class Map implements KeyListener, FocusListener{
 
 	public static void setRunning(boolean b){
 		running = b;
+	}
+	public static void setPaused(boolean b){
+		paused = b;
 	}
 	//empty methods
 	public void keyTyped(KeyEvent e) {

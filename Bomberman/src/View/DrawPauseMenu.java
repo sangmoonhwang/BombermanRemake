@@ -47,6 +47,14 @@ public class DrawPauseMenu{
 		return instance;
 	}
 	
+	public void run(){
+		//only make once
+		if(!running){
+			makeFrame();
+		}
+		viewFrame(true);
+	}
+	
 	public void makeFrame() {
 		running = true;
 		
@@ -72,7 +80,7 @@ public class DrawPauseMenu{
 			public void actionPerformed(ActionEvent e) {
 				//temporary variables
 				DrawMap game = DrawMap.getInstance();
-				Map.set_IsPaused(false);
+				Map.setPaused(false);
 				game.getFrame().setVisible(true);
 				viewFrame(false);
 			}
