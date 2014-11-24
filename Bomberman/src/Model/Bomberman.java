@@ -91,5 +91,11 @@ public class Bomberman extends Movable{
 	public ArrayList<Bomb> getBombs() {
 		return bombs;
 	}
+	public static int getScore() {
+		return score;
+	}
+	public static void setScore(int score) {
+		Bomberman.score = score;
+	}
 
 }

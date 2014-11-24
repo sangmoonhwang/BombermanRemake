@@ -144,7 +144,7 @@ public class Map implements KeyListener, FocusListener{
 					tick2();
 					start = now;
 					d.draw();
-					d.getStatusBar().setText("Level: "+ level +" Time: " + gameTime + " Life: " + life);
+					d.getStatusBar().setText("Level: "+ level +" Time: " + gameTime + " Life: " + life + " Score: " + Bomberman.getScore());
 					if(gameTime < 0){
 						System.out.println("Times up!");
 						d.getStatusBar().setText("Times Up!");
@@ -476,7 +476,7 @@ public class Map implements KeyListener, FocusListener{
 				if(detect.collisionDetection(bombman, activeBombs.get(0).getPersonalExplosions()[i])){
 					if(!bombman.flamePass && !bombman.isMystery()){
 						dieBombman();
-						System.out.println("You died.");
+//						System.out.println("You died.");
 					}
 					
 				}
