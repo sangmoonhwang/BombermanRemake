@@ -5,6 +5,8 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -76,11 +78,39 @@ public class DrawPauseMenu{
 	
 	public void addButtons(){
 		//resume button
+		resumeButton.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				int value = e.getKeyCode();
+				if (value == KeyEvent.VK_DOWN || value ==KeyEvent.VK_RIGHT){
+					quitButton.requestFocus();
+				}
+				else if(value == KeyEvent.VK_LEFT || value ==KeyEvent.VK_UP){
+					saveButton.requestFocus();
+				}
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				int value = e.getKeyCode();
+				if (value == KeyEvent.VK_DOWN || value ==KeyEvent.VK_RIGHT){
+					quitButton.requestFocus();
+				}
+				else if(value == KeyEvent.VK_LEFT || value ==KeyEvent.VK_UP){
+					saveButton.requestFocus();
+				}
+			}
+		});
 		resumeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//temporary variables
 				DrawMap game = DrawMap.getInstance();
-				
 				Map.setPaused(false);
 				game.getFrame().setVisible(true);
 				viewFrame(false);
@@ -88,6 +118,35 @@ public class DrawPauseMenu{
 		});		
 		
 		//quit button
+		quitButton.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				int value = e.getKeyCode();
+				if (value == KeyEvent.VK_DOWN || value ==KeyEvent.VK_RIGHT){
+					saveButton.requestFocus();
+				}
+				else if(value == KeyEvent.VK_LEFT || value ==KeyEvent.VK_UP){
+					resumeButton.requestFocus();
+				}
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				int value = e.getKeyCode();
+				if (value == KeyEvent.VK_DOWN || value ==KeyEvent.VK_RIGHT){
+					saveButton.requestFocus();
+				}
+				else if(value == KeyEvent.VK_LEFT || value ==KeyEvent.VK_UP){
+					resumeButton.requestFocus();
+				}
+			}
+		});
 		quitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//temporary variables
@@ -102,6 +161,35 @@ public class DrawPauseMenu{
 		});
 		
 		//save button
+		saveButton.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				int value = e.getKeyCode();
+				if (value == KeyEvent.VK_DOWN || value == KeyEvent.VK_RIGHT){
+					resumeButton.requestFocus();
+				}
+				else if(value == KeyEvent.VK_LEFT || value ==KeyEvent.VK_UP){
+					quitButton.requestFocus();
+				}
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				int value = e.getKeyCode();
+				if (value == KeyEvent.VK_DOWN || value == KeyEvent.VK_RIGHT){
+					resumeButton.requestFocus();
+				}
+				else if(value == KeyEvent.VK_LEFT || value ==KeyEvent.VK_UP){
+					quitButton.requestFocus();
+				}
+			}
+		});
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("save stuff");
