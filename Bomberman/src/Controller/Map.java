@@ -311,7 +311,6 @@ public class Map implements KeyListener, FocusListener{
 		//explosion check  
 		if(activeBombs.size() != 0 && activeBombs.get(0).getPersonalExplosions()[0].isExploding()){
 			for(int i = 0; i < 5; i++){
-<<<<<<< HEAD
 				
 				
 				/* This massive ugly switch creates a test explosion to find the right
@@ -319,9 +318,7 @@ public class Map implements KeyListener, FocusListener{
 				 * explosion's values to the closest collision before making the important
 				 * collision detection that has an outcome in the game
 				 */
-=======
 
->>>>>>> fc7e34670fb2ef33f5e09adb0c2e6078278c4652
 				switch(i) {
 
 				case 1:
@@ -459,8 +456,8 @@ public class Map implements KeyListener, FocusListener{
 				}
 				for(int j = 0; j < enemies.size(); j++){
 					if(detect.collisionDetection(enemies.get(j), activeBombs.get(0).getPersonalExplosions()[i])){
-						User.updateScore(enemies.get(j).getPoints());
-						System.out.println(User.getTotalScore());
+						//User.updateScore(enemies.get(j).getPoints());
+						//System.out.println(User.getTotalScore());
 						enemies.remove(j);
 					}
 				}
