@@ -48,6 +48,8 @@ public class Map implements KeyListener, FocusListener{
 	private final ScheduledExecutorService scheduler;
 	private static int width;
 	private static int height;
+	private long startTime = System.nanoTime()/1000000000;
+	private long gameTime;
 	private Timer gameTimer;
 	static boolean running = false;
 	private CollissionDetection detect;
@@ -61,6 +63,8 @@ public class Map implements KeyListener, FocusListener{
 	private boolean rightFreeBrick = true;
 	private boolean aboveFreeBrick = true;
 	private boolean belowFreeBrick = true;
+	private long pausedAt = 0;
+	private long duration = 200;
 	static boolean paused;
 	
 
@@ -96,13 +100,14 @@ public class Map implements KeyListener, FocusListener{
 		d = DrawMap.getInstance();
 		running = true;
 		paused = false;
-		gameTimer = new Timer();
-		gameTimer.schedule(new TimerTask(){
-			public void run(){
-				//change
-				System.out.println("Times up!");
-			};
-		},200000);
+//		gameTimer = new Timer();
+//		gameTimer.schedule(new TimerTask(){
+//			public void run(){
+//				//change
+//				System.out.println("Times up!");
+//				d.getStatusBar().setText("Times Up!");
+//			};
+//		},200000);
 		this.run();
 	}
 
@@ -126,16 +131,30 @@ public class Map implements KeyListener, FocusListener{
 		double ns = 1000000000 / amountOfTicks;
 		
 		while(running) {
-			System.out.println("life= " + life);
 			if(!paused){
 				long now = System.nanoTime();
 				if((now - start)/ns >= 1) {
+					if (pausedAt == 0)
+						gameTime = duration  + startTime - System.nanoTime()/1000000000;
+					else{
+						startTime += (System.nanoTime()/1000000000 - pausedAt);
+						pausedAt = 0;
+					}
 					tick();
 					tick2();
 					start = now;
 					d.draw();
-					System.out.println(whichTileIsOn(bombman.getXval(), bombman.getYval()));
+					d.getStatusBar().setText("Level: "+ level +" Time: " + gameTime + " Life: " + life);
+					if(gameTime < 0){
+						System.out.println("Times up!");
+						d.getStatusBar().setText("Times Up!");
+						dieBombman();
+					}
 				}
+			}
+			else {
+				if(pausedAt == 0)
+					pausedAt = System.nanoTime()/1000000000;
 			}
 		}
 	}
@@ -484,7 +503,7 @@ public class Map implements KeyListener, FocusListener{
 
 
 		//Powerup obtaining
-		System.out.println(whichTileIsOn(power.getXval(), power.getYval()));
+//		System.out.println(whichTileIsOn(power.getXval(), power.getYval()));
 		if(detect.collisionDetection(bombman, power)){
 			power.setXval(0);
 			power.setYval(0);
