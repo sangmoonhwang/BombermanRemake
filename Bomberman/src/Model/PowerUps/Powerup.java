@@ -19,6 +19,8 @@ public class Powerup extends Block {
 	public Powerup(String identity) {
 		this.identity = identity;
 		setImage();
+		height = 50;
+		width = 50;
 	}
 
 	/**
@@ -81,6 +83,23 @@ public class Powerup extends Block {
 	}
 
 	public void activate() {
-		
+		if(identity.equals("Bombpass")){
+			Bomberman.bombPass = true;
+		} else if(identity.equals("Detonator")) {
+			Bomberman.detonate = true;
+		} else if(identity.equals("Flamepass")) {
+			Bomberman.flamePass = true;
+		} else if(identity.equals("Flames")) {
+			Bomberman.flames++;
+		} else if(identity.equals("Mystery")) {
+			Bomberman.mystery_From = System.nanoTime();
+		} else if(identity.equals("Speed")) {
+			Bomberman.speed++;
+		} else if(identity.equals("UpBombs")) {
+			if(Bomberman.availableBombs <= 10)
+				Bomberman.availableBombs++;
+		} else if(identity.equals("Wallpass")) {
+			Bomberman.wallPass = true;
+		}
 	}
 }

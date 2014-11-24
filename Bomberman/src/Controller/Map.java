@@ -132,12 +132,12 @@ public class Map implements KeyListener, FocusListener{
 			bombermanState = 1;
 			setVelX(bombman.getSpeed());//2
 		}
-		if(value == KeyEvent.VK_ESCAPE){
+		if(value == KeyEvent.VK_ESCAPE || value == KeyEvent.VK_SPACE){
 			running = false;
 			d.getFrame().dispose();
 			DrawMenu.getInstance().viewFrame(true);
 		}
-		if(value == KeyEvent.VK_V && Bomberman.detonate == true && activeBombs.size() >= 1){
+		if(value == KeyEvent.VK_X && Bomberman.detonate == true && activeBombs.size() >= 1){
 			for(int i =0; i< activeBombs.size(); i++){
 				if(!activeBombs.get(i).getUsed()){
 					final Runnable unExplode = new Runnable() {
@@ -160,7 +160,7 @@ public class Map implements KeyListener, FocusListener{
 			//activeBombs.get(0).explode();
 			//explosions = activeBombs.get(activeBombs.size()-1).getPersonalExplosions();
 		}
-		if(value == KeyEvent.VK_SPACE){
+		if(value == KeyEvent.VK_Z){
 			//if(bombman.getavailableBombs() != 0){
 			if(bombs.size() != 1){
 				System.out.println(bombs.size());
@@ -447,15 +447,16 @@ public class Map implements KeyListener, FocusListener{
 		if(detect.collisionDetection(bombman, door) && enemies.size() == 0) {
 			System.out.println("Level Complete!");
 		}
-		/*
-		if(detect.collisionDetection(bombman,upbombs)){
-			bombs.add(new Bomb());
-			upbombs.setXval(0);
-			upbombs.setYval(0);
-			bombman.mystery_From = System.nanoTime(); //for testing
-			bombman.speed += 2; //for testing
+
+
+
+		//Powerup obtaining
+		System.out.println(power.getXval()+", "+power.getYval());
+		if(detect.collisionDetection(bombman, power)){
+			power.setXval(0);
+			power.setYval(0);
+			power.activate();
 		}
-		 */
 	}
 
 	public void tick2() {
@@ -472,13 +473,7 @@ public class Map implements KeyListener, FocusListener{
 				int bombermanDirection = chaseDirection(enemy, tileBombman, tileEnemy);
 				if(enemy.getIntelligence() == 2) {
 					if(isBombermanWithinOneSquare(tileBombman, tileEnemy)) {
-						if(isIntersection(enemy.getXval(), enemy.getYval())) {
-							enemy.setState(bombermanDirection);
-							moveEnemy(enemy);
-						} else {
-							changeDirectionToChaseBomberman(enemy, bombermanDirection, enemy.getState());
-							moveEnemy(enemy);
-						}
+						moveEnemyWhenBombermanWithInRange(enemy, bombermanDirection);
 					} else {
 						moveEnemy(enemy);
 						changeDirectionAtIntersection(enemy);
@@ -489,22 +484,10 @@ public class Map implements KeyListener, FocusListener{
 							findPathToBomberman(enemy, tileBombman, tileEnemy);
 							moveEnemy(enemy);
 						} else {
-							if(isIntersection(enemy.getXval(), enemy.getYval())) {
-								enemy.setState(bombermanDirection);
-								moveEnemy(enemy);
-							} else {
-								changeDirectionToChaseBomberman(enemy, bombermanDirection, enemy.getState());
-								moveEnemy(enemy);
-							}
+							moveEnemyWhenBombermanWithInRange(enemy, bombermanDirection);
 						}
 					} else if(isBombermanWithinOneSquare(tileBombman, tileEnemy)) {
-						if(isIntersection(enemy.getXval(), enemy.getYval())) {
-							enemy.setState(bombermanDirection);
-							moveEnemy(enemy);
-						} else {
-							changeDirectionToChaseBomberman(enemy, bombermanDirection, enemy.getState());
-							moveEnemy(enemy);
-						}
+						moveEnemyWhenBombermanWithInRange(enemy, bombermanDirection);
 					} else {
 						moveEnemy(enemy);
 						changeDirectionAtIntersection(enemy);
@@ -546,6 +529,21 @@ public class Map implements KeyListener, FocusListener{
 			}  else {
 				enemy.changeDirection();
 			}
+		}
+	}
+
+	/**
+	 * move the enemy when bomberman is within range.
+	 * @param Enemy instance and bomberman direction of chase from enemy perspective
+	 * @return None
+	 */
+	public void moveEnemyWhenBombermanWithInRange(Enemy enemy, int bombermanDirection) {
+		if(isIntersection(enemy.getXval(), enemy.getYval())) {
+			enemy.setState(bombermanDirection);
+			moveEnemy(enemy);
+		} else {
+			changeDirectionToChaseBomberman(enemy, bombermanDirection, enemy.getState());
+			moveEnemy(enemy);
 		}
 	}
 

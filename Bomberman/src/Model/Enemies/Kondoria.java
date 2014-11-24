@@ -1,8 +1,5 @@
 package Model.Enemies;
 
-import java.util.LinkedList;
-
-
 public class Kondoria {
 	private int intelligence;
 	private int speed;
