@@ -2,14 +2,9 @@ package Model.Enemies;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import Controller.Map;
-import Model.Bomberman;
 import Model.Box;
 import Model.Destructible;
 import Model.Indestructible;
@@ -19,13 +14,13 @@ import Utils.GNode;
 public class Enemy extends Movable{
 
 	//physical attributes
-	private int xval,yval;
+	private float xval,yval;
 	private int height, width;
 
 	//enemy values
 	private String identity;
 	private int intelligence;
-	private int speed;
+	private float speed;
 	private int points;
 	private boolean wallPass;
 	private int state;
@@ -68,8 +63,8 @@ public class Enemy extends Movable{
 	ArrayList<Box> path = new ArrayList<Box>();
 
 	public Enemy(String enemy){
-		xval = 0;
-		yval = 0;
+		xval = (float)0;
+		yval = (float)0;
 		height = 50;
 		width = 50;
 		identity = enemy;
@@ -148,13 +143,13 @@ public class Enemy extends Movable{
 	 */
 	public void move() {
 		if(getState() == 0){
-			incrementXval(1);	  
+			incrementXval(speed);	  
 		} else if(getState() == 1) {
-			incrementXval(-1);	 
+			incrementXval(-speed);	 
 		} else if(getState() == 2) {
-			incrementYval(1);	 
+			incrementYval(speed);	 
 		} else {
-			incrementYval(-1);	 
+			incrementYval(-speed);	 
 		}
 	}
 
@@ -229,9 +224,9 @@ public class Enemy extends Movable{
 	 * @param xPos and yPos
 	 * @return The tile number it is on
 	 */
-	public int whichTileIsOn(int x, int y) {
-		int tmp = y/50;
-		return ((x/50) + tmp*31);
+	public int whichTileIsOn(float x, float y) {
+		int tmp = (int) (y/50);
+		return (int) ((x/50) + tmp*31);
 	}
 
 	/**
@@ -295,34 +290,35 @@ public class Enemy extends Movable{
 			} 
 
 		}
-
-		for(int i=0; i<bricks.size(); i++) {
-			int bricksTileNum = whichTileIsOn(bricks.get(i).getXval(), bricks.get(i).getYval());
-			if(bricksTileNum == (tileNum) && (enemyState == 1)) {
-				leftFreeBrick = false;
-			} else if(bricksTileNum == (tileNum+1) && (enemyState == 0)) {
-				rightFreeBrick = false;
-			} else if(bricksTileNum == (tileNum) && (enemyState == 3)) {
-				aboveFreeBrick = false;
-			} else if(bricksTileNum == (tileNum+31) && (enemyState == 2)) {
-				belowFreeBrick = false;
-			} else if(bricksTileNum == (tileNum-32)) {
-				aboveLeftFreeBrick = false;
-			} else if(bricksTileNum == (tileNum-30)) {
-				aboveRightFreeBrick = false;
-			} else if(bricksTileNum == (tileNum+30)) {
-				belowLeftFreeBrick = false;
-			} else if(bricksTileNum == (tileNum+32)) {
-				belowRightFreeBrick = false;
-			} else if(bricksTileNum == (tileNum-2)) {
-				twoLeftFreeBrick = false;
-			} else if(bricksTileNum == (tileNum+2)) {
-				twoRightFreeBrick = false;
-			} else if(bricksTileNum == (tileNum-62)) {
-				twoAboveFreeBrick = false;
-			} else if(bricksTileNum == (tileNum+62)) {
-				twoBelowFreeBrick = false;
-			} 
+		if(!wallPass) {
+			for(int i=0; i<bricks.size(); i++) {
+				int bricksTileNum = whichTileIsOn(bricks.get(i).getXval(), bricks.get(i).getYval());
+				if(bricksTileNum == (tileNum) && (enemyState == 1)) {
+					leftFreeBrick = false;
+				} else if(bricksTileNum == (tileNum+1) && (enemyState == 0)) {
+					rightFreeBrick = false;
+				} else if(bricksTileNum == (tileNum) && (enemyState == 3)) {
+					aboveFreeBrick = false;
+				} else if(bricksTileNum == (tileNum+31) && (enemyState == 2)) {
+					belowFreeBrick = false;
+				} else if(bricksTileNum == (tileNum-32)) {
+					aboveLeftFreeBrick = false;
+				} else if(bricksTileNum == (tileNum-30)) {
+					aboveRightFreeBrick = false;
+				} else if(bricksTileNum == (tileNum+30)) {
+					belowLeftFreeBrick = false;
+				} else if(bricksTileNum == (tileNum+32)) {
+					belowRightFreeBrick = false;
+				} else if(bricksTileNum == (tileNum-2)) {
+					twoLeftFreeBrick = false;
+				} else if(bricksTileNum == (tileNum+2)) {
+					twoRightFreeBrick = false;
+				} else if(bricksTileNum == (tileNum-62)) {
+					twoAboveFreeBrick = false;
+				} else if(bricksTileNum == (tileNum+62)) {
+					twoBelowFreeBrick = false;
+				} 
+			}
 		}
 	}
 
@@ -364,7 +360,7 @@ public class Enemy extends Movable{
 		TreeMap<Float, GNode> openList = new TreeMap<Float, GNode>();
 		//list of all nodes we've already searched
 		TreeMap<Integer, GNode> closedList = new TreeMap<Integer, GNode>();
-		Box bStart = new Box(getXval(), getYval());
+		Box bStart = new Box((int)getXval(), (int)getYval());
 		Box bEnd = new Box(xBomberman, yBomberman);
 
 		//init the openlist
@@ -383,10 +379,10 @@ public class Enemy extends Movable{
 			if(whichTileIsOn(current.eCurrent.x,current.eCurrent.y) == whichTileIsOn(xBomberman, yBomberman)){
 				return current;
 			}
-			
+
 			int xIndex = current.eCurrent.x/50;
 			int yIndex = current.eCurrent.y/50;
-			
+
 			//for all 8 adjacent nodes
 			for(int i=xIndex-1;i<=xIndex+1;i++){
 				for(int j=yIndex-1;j<=yIndex+1;j++){
@@ -408,7 +404,7 @@ public class Enemy extends Movable{
 
 					//Create next node
 					GNode next = new GNode(new Box(i*50,j*50),current,current.gCost+50,EuclidianDistance(new Box(i*50,j*50),bEnd));
-					
+
 					//add node to open list
 					if(!openList.containsKey(next.fCost)) {
 						openList.put(next.fCost, next);
@@ -420,29 +416,29 @@ public class Enemy extends Movable{
 	}
 
 	//setters
-	public void setXval(int i) {
+	public void setXval(float i) {
 		xval = i;
 	}
-	public void setYval(int i) {
+	public void setYval(float i) {
 		yval = i;
 	}
 	public void setState(int state) {
 		this.state = state;
 	}
 	//increment
-	public void incrementXval(int i) {
+	public void incrementXval(float i) {
 		xval += i;
 	}
-	public void incrementYval(int i) {
+	public void incrementYval(float i) {
 		yval += i;
 	}
 
 	//getters
 	public int getXval() {
-		return xval;
+		return (int)xval;
 	}
 	public int getYval() {
-		return yval;
+		return (int)yval;
 	}
 	public int getHeight() {
 		return height;

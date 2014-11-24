@@ -2,12 +2,12 @@ package Model.Enemies;
 
 public class Kondoria {
 	private int intelligence;
-	private int speed;
+	private float speed;
 	private int points;
 	private boolean wallPass;
 
 	public Kondoria() {
-		speed = 1;
+		speed = (float) 0.625;
 		intelligence = 3;
 		points = 1000;
 		wallPass = true;
@@ -18,7 +18,7 @@ public class Kondoria {
 		return intelligence;
 	}
 
-	public int getSpeed() {
+	public float getSpeed() {
 		return speed;
 	}
 

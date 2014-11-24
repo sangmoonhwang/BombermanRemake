@@ -2,12 +2,12 @@ package Model.Enemies;
 
 public class Minvo {
 	private int intelligence;
-	private int speed;
+	private float speed;
 	private int points;
 	private boolean wallPass;
 
 	public Minvo() {
-		speed = 4;
+		speed = (float) 3.125;
 		intelligence = 2;
 		points = 800;
 		wallPass = false;
@@ -18,7 +18,7 @@ public class Minvo {
 		return intelligence;
 	}
 
-	public int getSpeed() {
+	public float getSpeed() {
 		return speed;
 	}
 

@@ -2,12 +2,12 @@ package Model.Enemies;
 
 public class Pass {
 	private int intelligence;
-	private int speed;
+	private float speed;
 	private int points;
 	private boolean wallPass;
 
 	public Pass( ){
-		speed = 4;
+		speed = (float) 3.125;
 		intelligence = 3;
 		points = 4000;
 		wallPass = false;
@@ -18,7 +18,7 @@ public class Pass {
 		return intelligence;
 	}
 
-	public int getSpeed() {
+	public float getSpeed() {
 		return speed;
 	}
 

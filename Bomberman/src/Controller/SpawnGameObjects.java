@@ -176,6 +176,10 @@ public class SpawnGameObjects {
 			if(whichTileIsOn(enemies.get(i).getXval(), enemies.get(i).getYval()) == tile)
 				return false;
 		}
+		
+		if(tile == 32 || tile == 33 || tile == 34 || tile == 35 || tile == 63 || tile == 65
+				|| tile == 94 || tile == 95 || tile == 96 || tile == 97 || tile == 125 || tile == 127)
+			return false;
 
 		return true;
 	}

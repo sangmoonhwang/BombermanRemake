@@ -2,13 +2,13 @@ package Model.Enemies;
 
 public class Doll {
 	private int intelligence;
-	private int speed;
+	private float speed;
 	private int points;
 	private boolean wallPass;
 	private int scoreValue;
 
 	public Doll() {
-		speed = 3;
+		speed = (float) 2;
 		intelligence = 1;
 		points = 400;
 		wallPass = false;
@@ -19,7 +19,7 @@ public class Doll {
 		return intelligence;
 	}
 
-	public int getSpeed() {
+	public float getSpeed() {
 		return speed;
 	}
 

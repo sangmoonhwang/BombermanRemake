@@ -2,12 +2,12 @@ package Model.Enemies;
 
 public class Ovapi {
 	private int intelligence;
-	private int speed;
+	private float speed;
 	private int points;
 	private boolean wallPass;
 
 	public Ovapi() {
-		speed = 2;
+		speed = (float) 1;
 		intelligence = 2;
 		points = 2000;
 		wallPass = true;
@@ -18,7 +18,7 @@ public class Ovapi {
 		return intelligence;
 	}
 
-	public int getSpeed() {
+	public float getSpeed() {
 		return speed;
 	}
 

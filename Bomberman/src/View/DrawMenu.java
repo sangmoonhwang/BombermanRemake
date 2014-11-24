@@ -134,7 +134,7 @@ public class DrawMenu{
 				Thread thread = new Thread(){
 					public void run(){
 						Map.setLife(5);
-						Map play = new Map(2);//should take user input of levels or next level when current level clears
+						Map play = new Map(2);//TODO should take user input of levels or next level when current level clears
 						Map.setPaused(false);
 						//play.run();
 					}

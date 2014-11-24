@@ -5,7 +5,7 @@ import Model.Movable;
 
 public class Balloom {
 	private int intelligence;
-	private int speed;
+	private float speed;
 	private int points;
 	private boolean wallPass;
 	private int scoreValue;
@@ -17,7 +17,7 @@ public class Balloom {
 	 */
 
 	public Balloom() {
-		speed = 2;
+		speed = (float) 1;
 		intelligence = 1;
 		points = 100;
 		wallPass = false;
@@ -29,7 +29,7 @@ public class Balloom {
 		return intelligence;
 	}
 
-	public int getSpeed() {
+	public float getSpeed() {
 		return speed;
 	}
 

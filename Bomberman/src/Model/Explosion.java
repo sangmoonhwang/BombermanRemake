@@ -1,7 +1,7 @@
 package Model;
 
 public class Explosion extends Movable {
-	private int xval, yval;
+	private float xval, yval;
 	private int height, width;
 	private boolean exploding;
 	
@@ -29,10 +29,10 @@ public class Explosion extends Movable {
 		yval = i;
 	}
 	public int getXval(){
-		return xval;
+		return (int)xval;
 	}
 	public int getYval(){
-		return yval;
+		return (int)yval;
 	}
 	
 	//for powerup

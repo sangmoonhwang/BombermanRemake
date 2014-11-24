@@ -2,10 +2,10 @@ package Model;
 
 import java.util.ArrayList;
 
-public class Bomberman extends Movable{
+public class Bomberman extends Movable {
 
 	//physical attributes
-	private static int xval, yval;
+	private static float xval, yval;
 	private static int height, width;
 
 	//bomberman values
@@ -25,7 +25,7 @@ public class Bomberman extends Movable{
 	public static ArrayList<Bomb> bombs;
 
 
-	public Bomberman(){
+	public Bomberman() {
 		xval = 50;
 		yval = 50;//starting pos
 		height = 42;
@@ -43,42 +43,42 @@ public class Bomberman extends Movable{
 		bombs.add(new Bomb());
 	}
 	//setters
-	public void setXval(int i){
+	public void setXval(int i) {
 		xval = i;
 	}
-	public void setYval(int i){
+	public void setYval(int i) {
 		yval = i;
 	}
-	public void setSpeed(int i){
+	public void setSpeed(int i) {
 		speed = i;
 	}
-	public void giveBombs(int i){
+	public void giveBombs(int i) {
 		availableBombs += i;
 	}
 
 	//increment
-	public void incrementXval(int i){
+	public void incrementXval(int i) {
 		xval += i;
 	}
-	public void incrementYval(int i){
+	public void incrementYval(int i) {
 		yval += i;
 	}
 
 	//getters
-	public int getXval(){
-		return xval;
+	public int getXval() {
+		return (int) xval;
 	}
-	public int getYval(){
-		return yval;
+	public int getYval() {
+		return (int) yval;
 	}
 	
-	public int getHeight(){
+	public int getHeight() {
 		return height;
 	}
-	public int getWidth(){
+	public int getWidth() {
 		return width;
 	}
-	public int getSpeed(){
+	public int getSpeed() {
 		return speed;
 	}
 	public int getavailableBombs() {

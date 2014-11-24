@@ -453,9 +453,7 @@ public class Map implements KeyListener, FocusListener{
 
 				}
 
-				
-				
-				
+
 				//Collision Detection
 
 
@@ -585,36 +583,30 @@ public class Map implements KeyListener, FocusListener{
 
 	/**
 	 * returns boolean whether the chase bomberman path is free(for intelligence = 3 only)
-	 * @param Enemy instance, Tile number of bomberman and enemy
+	 * @param Enemy enemy
+	 * @param Int tileBomberman
+	 * @param Int tileEnemy
 	 * @return True if bombermanPath is Free otherwise false
 	 */
 	public boolean isChaseBombermanPathFree(Enemy enemy, int tileBombman, int tileEnemy) {
 		if(tileBombman == tileEnemy) {
 			return true;
-		} else if(tileBombman == (tileEnemy + 1)) {
-			if(enemy.getRightFree() && enemy.getRightFreeBrick())
-				return true;
-		} else if(tileBombman == (tileEnemy - 1)) {
-			if(enemy.getLeftFree() && enemy.getLeftFreeBrick())
-				return true;
-		} else if(tileBombman == (tileEnemy + 31)) {
-			if(enemy.getBelowFree() && enemy.getBelowFreeBrick()) 			
-				return true;
-		} else if(tileBombman == (tileEnemy - 31)) {
-			if(enemy.getAboveFree() && enemy.getAboveFreeBrick())
-				return true;
-		} else if(tileBombman == (tileEnemy - 2)) {
-			if(enemy.get2LeftFree() && enemy.get2LeftFreeBrick() && enemy.getLeftFree() && enemy.getLeftFreeBrick())
-				return true;
-		} else if(tileBombman == (tileEnemy + 2)) {
-			if(enemy.get2RightFree() && enemy.get2RightFreeBrick() && enemy.getRightFree() && enemy.getRightFreeBrick())
-				return true;
-		} else if(tileBombman == (tileEnemy + 62)) {
-			if(enemy.get2BelowFree() && enemy.get2BelowFreeBrick() && enemy.getBelowFree() && enemy.getBelowFreeBrick())
-				return true;
-		} else if(tileBombman == (tileEnemy - 62)) {
-			if(enemy.get2AboveFree() && enemy.get2AboveFreeBrick() && enemy.getAboveFree() && enemy.getAboveFreeBrick())
-				return true;
+		} else if(tileBombman == (tileEnemy + 1) && enemy.getRightFree() && enemy.getRightFreeBrick()) {
+			return true;
+		} else if(tileBombman == (tileEnemy - 1) && enemy.getLeftFree() && enemy.getLeftFreeBrick()) {
+			return true;
+		} else if(tileBombman == (tileEnemy + 31) && enemy.getBelowFree() && enemy.getBelowFreeBrick()) {
+			return true;
+		} else if(tileBombman == (tileEnemy - 31) && enemy.getAboveFree() && enemy.getAboveFreeBrick()) {
+			return true;
+		} else if(tileBombman == (tileEnemy - 2) && enemy.get2LeftFree() && enemy.get2LeftFreeBrick() && enemy.getLeftFree() && enemy.getLeftFreeBrick()) {
+			return true;
+		} else if(tileBombman == (tileEnemy + 2) && enemy.get2RightFree() && enemy.get2RightFreeBrick() && enemy.getRightFree() && enemy.getRightFreeBrick()) {
+			return true;
+		} else if(tileBombman == (tileEnemy + 62) && enemy.get2BelowFree() && enemy.get2BelowFreeBrick() && enemy.getBelowFree() && enemy.getBelowFreeBrick()) {
+			return true;
+		} else if(tileBombman == (tileEnemy - 62) && enemy.get2AboveFree() && enemy.get2AboveFreeBrick() && enemy.getAboveFree() && enemy.getAboveFreeBrick()) {
+			return true;
 		} 
 		return false;
 	}
@@ -668,8 +660,8 @@ public class Map implements KeyListener, FocusListener{
 	 * @return True if enemy is at intersection, otherwise false
 	 */
 	public boolean isIntersection(int x, int y) {
-		int xMOD = x % 100;
-		int yMOD = y % 100;
+		int xMOD =  (x % 100);
+		int yMOD = (y % 100);
 		if(xMOD == 50 && yMOD == 50)
 			return true;
 
@@ -770,8 +762,8 @@ public class Map implements KeyListener, FocusListener{
 	 * @return The tile number it is on
 	 */
 	public int whichTileIsOn(int x, int y) {
-		int tmp = y/50;
-		return ((x/50) + tmp*31);
+		int tmp = (y/50);
+		return  ((x/50) + tmp*31);
 	}
 
 	public void dieBombman(){
