@@ -26,6 +26,7 @@ import Model.PowerUps.Powerup;
 import Model.PowerUps.UpBombs;
 import View.DrawMap;
 import View.DrawMenu;
+import View.DrawPauseMenu;
 
 
 public class Map implements KeyListener, FocusListener{
@@ -112,16 +113,22 @@ public class Map implements KeyListener, FocusListener{
 	//}
 
 	public void run(){
-		running = true;
 		d.run();
+		
+		play();
+		
+	}
+	
+	public void play(){
 		d.getFrame().addFocusListener(this);
 		d.getFrame().addKeyListener(this);
 		d.getFrame().requestFocus();
+		running = true;
 
 		long start = System.nanoTime();
 		final double amountOfTicks = 60.0;
 		double ns = 1000000000 / amountOfTicks;
-
+		
 		while(running) {
 			long now = System.nanoTime();
 			if((now - start)/ns >= 1) {
@@ -151,9 +158,12 @@ public class Map implements KeyListener, FocusListener{
 			setVelX(bombman.getSpeed());//2
 		}
 		if(value == KeyEvent.VK_ESCAPE || value == KeyEvent.VK_SPACE){
-			running = false;
-			d.getFrame().dispose();
-			DrawMenu.getInstance().viewFrame(true);
+			//running = false;
+			d.getFrame().setVisible(false);
+			if(!DrawPauseMenu.getInstance().isRunning()){
+				DrawPauseMenu.getInstance().makeFrame();
+			}
+			DrawPauseMenu.getInstance().viewFrame(true);
 		}
 		if(value == KeyEvent.VK_X && Bomberman.detonate == true && activeBombs.size() >= 1){
 			for(int i =0; i< activeBombs.size(); i++){
@@ -801,6 +811,9 @@ public class Map implements KeyListener, FocusListener{
 		}
 	}
 
+	public static void setRunning(boolean b){
+		running = b;
+	}
 	//empty methods
 	public void keyTyped(KeyEvent e) {
 	}
