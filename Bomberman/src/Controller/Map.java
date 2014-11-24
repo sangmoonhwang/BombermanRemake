@@ -59,6 +59,7 @@ public class Map implements KeyListener, FocusListener{
 	private boolean rightFreeBrick = true;
 	private boolean aboveFreeBrick = true;
 	private boolean belowFreeBrick = true;
+	private static boolean isPaused = false;
 
 	public Map(int level){
 
@@ -71,11 +72,8 @@ public class Map implements KeyListener, FocusListener{
 		//new objects
 		detect = new CollissionDetection();
 		bombman = new Bomberman();
-		bombs = new ArrayList<Bomb>();
+		bombs = bombman.getBombs();
 		activeBombs = new ArrayList<Bomb>();
-		bombs.add(new Bomb());
-		bombs.add(new Bomb());
-		bombs.add(new Bomb());
 		spawn = new SpawnGameObjects(level);
 		explosions = new Explosion[9];
 		for(int i = 0; i<8; i++){
@@ -132,10 +130,12 @@ public class Map implements KeyListener, FocusListener{
 		while(running) {
 			long now = System.nanoTime();
 			if((now - start)/ns >= 1) {
+				if(!isPaused){
 				tick();
 				tick2();
 				start = now;
 				d.draw();
+				}
 			}
 		}
 	}
@@ -164,6 +164,7 @@ public class Map implements KeyListener, FocusListener{
 				DrawPauseMenu.getInstance().makeFrame();
 			}
 			DrawPauseMenu.getInstance().viewFrame(true);
+			set_IsPaused(true);
 		}
 		if(value == KeyEvent.VK_X && Bomberman.detonate == true && activeBombs.size() >= 1){
 			for(int i =0; i< activeBombs.size(); i++){
@@ -773,6 +774,12 @@ public class Map implements KeyListener, FocusListener{
 	}
 	public static Powerup getPowerup() {
 		return power;
+	}
+	public static boolean isPaused(){
+		return isPaused;
+	}
+	public static void set_IsPaused(boolean b){
+		isPaused = b;
 	}
 
 	//detects an obstacle within the range of flame

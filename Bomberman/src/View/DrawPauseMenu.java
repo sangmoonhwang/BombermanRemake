@@ -72,7 +72,7 @@ public class DrawPauseMenu{
 			public void actionPerformed(ActionEvent e) {
 				//temporary variables
 				DrawMap game = DrawMap.getInstance();
-				
+				Map.set_IsPaused(false);
 				game.getFrame().setVisible(true);
 				viewFrame(false);
 			}
