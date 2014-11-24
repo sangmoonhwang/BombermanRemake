@@ -5,6 +5,8 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -83,6 +85,47 @@ public class DrawMenu{
 	
 	public void addButtons(){
 		//play button
+		playButton.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				int value = e.getKeyCode();
+				if (value == KeyEvent.VK_DOWN){
+					leaderButton.requestFocus();
+				}
+				else if(value == KeyEvent.VK_LEFT ){
+					saveButton.requestFocus();
+				}
+				else if(value ==KeyEvent.VK_UP){
+					leaderButton.requestFocus();
+				}
+				else if( value == KeyEvent.VK_RIGHT){
+					modifyButton.requestFocus();
+				}
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				int value = e.getKeyCode();
+				if (value == KeyEvent.VK_DOWN){
+					leaderButton.requestFocus();
+				}
+				else if(value == KeyEvent.VK_LEFT ){
+					saveButton.requestFocus();
+				}
+				else if(value ==KeyEvent.VK_UP){
+					leaderButton.requestFocus();
+				}
+				else if( value == KeyEvent.VK_RIGHT){
+					modifyButton.requestFocus();
+				}
+			}
+		});
 		playButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -99,6 +142,47 @@ public class DrawMenu{
 		});
 		
 		//logout button
+		logoutButton.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				int value = e.getKeyCode();
+				if (value == KeyEvent.VK_DOWN){
+					saveButton.requestFocus();
+				}
+				else if(value == KeyEvent.VK_LEFT ){
+					modifyButton.requestFocus();
+				}
+				else if(value ==KeyEvent.VK_UP){
+					saveButton.requestFocus();
+				}
+				else if( value == KeyEvent.VK_RIGHT){
+					leaderButton.requestFocus();
+				}
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				int value = e.getKeyCode();
+				if (value == KeyEvent.VK_DOWN){
+					saveButton.requestFocus();
+				}
+				else if(value == KeyEvent.VK_LEFT ){
+					modifyButton.requestFocus();
+				}
+				else if(value ==KeyEvent.VK_UP){
+					saveButton.requestFocus();
+				}
+				else if( value == KeyEvent.VK_RIGHT){
+					leaderButton.requestFocus();
+				}
+			}
+		});
 		logoutButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -109,6 +193,47 @@ public class DrawMenu{
 		});
 		
 		//load button
+		loadButton.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				int value = e.getKeyCode();
+				if (value == KeyEvent.VK_DOWN){
+					modifyButton.requestFocus();
+				}
+				else if(value == KeyEvent.VK_LEFT ){
+					leaderButton.requestFocus();
+				}
+				else if(value ==KeyEvent.VK_UP){
+					modifyButton.requestFocus();
+				}
+				else if( value == KeyEvent.VK_RIGHT){
+					saveButton.requestFocus();
+				}
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				int value = e.getKeyCode();
+				if (value == KeyEvent.VK_DOWN){
+					modifyButton.requestFocus();
+				}
+				else if(value == KeyEvent.VK_LEFT ){
+					leaderButton.requestFocus();
+				}
+				else if(value ==KeyEvent.VK_UP){
+					modifyButton.requestFocus();
+				}
+				else if( value == KeyEvent.VK_RIGHT){
+					saveButton.requestFocus();
+				}
+			}
+		});
 		loadButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -118,6 +243,47 @@ public class DrawMenu{
 		});
 		
 		//save button
+		saveButton.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				int value = e.getKeyCode();
+				if (value == KeyEvent.VK_DOWN){
+					logoutButton.requestFocus();
+				}
+				else if(value == KeyEvent.VK_LEFT ){
+					loadButton.requestFocus();
+				}
+				else if(value ==KeyEvent.VK_UP){
+					logoutButton.requestFocus();
+				}
+				else if( value == KeyEvent.VK_RIGHT){
+					playButton.requestFocus();
+				}
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				int value = e.getKeyCode();
+				if (value == KeyEvent.VK_DOWN){
+					logoutButton.requestFocus();
+				}
+				else if(value == KeyEvent.VK_LEFT ){
+					loadButton.requestFocus();
+				}
+				else if(value ==KeyEvent.VK_UP){
+					logoutButton.requestFocus();
+				}
+				else if( value == KeyEvent.VK_RIGHT){
+					playButton.requestFocus();
+				}
+			}
+		});
 		saveButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -127,6 +293,47 @@ public class DrawMenu{
 		});
 		
 		//modify button
+		modifyButton.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				int value = e.getKeyCode();
+				if (value == KeyEvent.VK_DOWN){
+					loadButton.requestFocus();
+				}
+				else if(value == KeyEvent.VK_LEFT ){
+					playButton.requestFocus();
+				}
+				else if(value ==KeyEvent.VK_UP){
+					loadButton.requestFocus();
+				}
+				else if( value == KeyEvent.VK_RIGHT){
+					logoutButton.requestFocus();
+				}
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				int value = e.getKeyCode();
+				if (value == KeyEvent.VK_DOWN){
+					loadButton.requestFocus();
+				}
+				else if(value == KeyEvent.VK_LEFT ){
+					playButton.requestFocus();
+				}
+				else if(value ==KeyEvent.VK_UP){
+					loadButton.requestFocus();
+				}
+				else if( value == KeyEvent.VK_RIGHT){
+					logoutButton.requestFocus();
+				}
+			}
+		});
 		modifyButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -138,6 +345,47 @@ public class DrawMenu{
 		});
 		
 		//leaderboard button
+		leaderButton.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				int value = e.getKeyCode();
+				if (value == KeyEvent.VK_DOWN){
+					playButton.requestFocus();
+				}
+				else if(value == KeyEvent.VK_LEFT ){
+					logoutButton.requestFocus();
+				}
+				else if(value ==KeyEvent.VK_UP){
+					playButton.requestFocus();
+				}
+				else if( value == KeyEvent.VK_RIGHT){
+					loadButton.requestFocus();
+				}
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				int value = e.getKeyCode();
+				if (value == KeyEvent.VK_DOWN){
+					playButton.requestFocus();
+				}
+				else if(value == KeyEvent.VK_LEFT ){
+					logoutButton.requestFocus();
+				}
+				else if(value ==KeyEvent.VK_UP){
+					playButton.requestFocus();
+				}
+				else if( value == KeyEvent.VK_RIGHT){
+					loadButton.requestFocus();
+				}
+			}
+		});
 		leaderButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
