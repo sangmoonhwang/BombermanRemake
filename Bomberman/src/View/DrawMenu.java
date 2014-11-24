@@ -9,11 +9,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
+import Controller.Leaderboard;
 import Controller.Map;
 import Controller.ModifyAccount;
 
@@ -131,7 +133,8 @@ public class DrawMenu{
 			public void actionPerformed(ActionEvent e) {
 				Thread thread = new Thread(){
 					public void run(){
-						Map play = new Map(30);//should take user input of levels or next level when current level clears
+						Map.setLife(5);
+						Map play = new Map(2);//should take user input of levels or next level when current level clears
 						Map.setPaused(false);
 						//play.run();
 					}
@@ -390,6 +393,11 @@ public class DrawMenu{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//Display leaderboard
+				try {
+					Leaderboard lb = new Leaderboard();
+				} catch (IOException e1) {
+				}
+				viewFrame(false);
 				System.out.println("View Leaderboards");
 			}
 		});
