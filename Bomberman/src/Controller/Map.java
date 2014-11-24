@@ -43,6 +43,8 @@ public class Map implements KeyListener, FocusListener{
 	private static Door door;
 	private int xVel;
 	private int yVel;
+	private static int life = 5;
+	private int level;
 	private final ScheduledExecutorService scheduler;
 	private static int width;
 	private static int height;
@@ -60,9 +62,10 @@ public class Map implements KeyListener, FocusListener{
 	private boolean aboveFreeBrick = true;
 	private boolean belowFreeBrick = true;
 	static boolean paused;
+	
 
 	public Map(int level){
-
+		this.level = level;
 		//attributes
 		width = 50;
 		height = 50;
@@ -123,6 +126,7 @@ public class Map implements KeyListener, FocusListener{
 		double ns = 1000000000 / amountOfTicks;
 		
 		while(running) {
+			System.out.println("life= " + life);
 			if(!paused){
 				long now = System.nanoTime();
 				if((now - start)/ns >= 1) {
@@ -130,6 +134,7 @@ public class Map implements KeyListener, FocusListener{
 					tick2();
 					start = now;
 					d.draw();
+					System.out.println(whichTileIsOn(bombman.getXval(), bombman.getYval()));
 				}
 			}
 		}
@@ -287,6 +292,7 @@ public class Map implements KeyListener, FocusListener{
 				bombman.incrementXval(-xVel);
 				bombman.incrementYval(-yVel);
 				if(!bombman.isMystery()){
+					dieBombman();
 					System.out.println("You died!!");
 				}
 			}
@@ -449,8 +455,11 @@ public class Map implements KeyListener, FocusListener{
 				}
 
 				if(detect.collisionDetection(bombman, activeBombs.get(0).getPersonalExplosions()[i])){
-					if(!bombman.flamePass && !bombman.isMystery())
+					if(!bombman.flamePass && !bombman.isMystery()){
+						dieBombman();
 						System.out.println("You died.");
+					}
+					
 				}
 				for(int j = 0; j < enemies.size(); j++){
 					if(detect.collisionDetection(enemies.get(j), activeBombs.get(0).getPersonalExplosions()[i])){
@@ -475,7 +484,7 @@ public class Map implements KeyListener, FocusListener{
 
 
 		//Powerup obtaining
-		System.out.println(power.getXval()+", "+power.getYval());
+		System.out.println(whichTileIsOn(power.getXval(), power.getYval()));
 		if(detect.collisionDetection(bombman, power)){
 			power.setXval(0);
 			power.setYval(0);
@@ -727,6 +736,53 @@ public class Map implements KeyListener, FocusListener{
 		aboveFreeBrick = true;
 		belowFreeBrick = true;
 	}
+	
+	public void dieBombman(){
+		if(life>0){
+			life --;
+			softResetBombman();
+			new Map(level);//should take user input of levels or next level when current level clears
+			Map.setPaused(false);
+		}
+		else{
+			System.out.println("Game over");
+			//saveScore_to_Leaderboard();
+			DrawMap game = DrawMap.getInstance();
+			DrawMenu menu = DrawMenu.getInstance();
+			
+			menu.viewFrame(true);
+			Map.setRunning(false);
+			game.getFrame().dispose();
+		}
+	}
+	
+	/**
+	 * soft reset bombman in case of death: only preserves speed, bombs, flames
+	 */
+	public void softResetBombman(){
+		Bomberman.bombPass = false;
+		Bomberman.flamePass = false;
+		Bomberman.detonate = false;
+		Bomberman.wallPass = false;
+		Bomberman.mystery_From = -1000000000;
+	}
+	
+	/**
+	 * hard reset bombman
+	 */
+	public static void hardResetBombman(){
+		Bomberman.bombPass = false;
+		Bomberman.flamePass = false;
+		Bomberman.detonate = false;
+		Bomberman.wallPass = false;
+		Bomberman.mystery_From = -1000000000;
+		Bomberman.speed = 2;
+		Bomberman.flames = 1;
+		Bomberman.availableBombs = 1;
+		bombman.getBombs().clear();
+		bombman.getBombs().add(new Bomb());
+		bombman.getBombs().add(new Bomb());
+	}
 
 	//setters
 	public void setVelX(int xVel) {
@@ -769,6 +825,9 @@ public class Map implements KeyListener, FocusListener{
 	}
 	public static Powerup getPowerup() {
 		return power;
+	}
+	public static void setLife(int a){
+		life = a;
 	}
 
 	//detects an obstacle within the range of flame
