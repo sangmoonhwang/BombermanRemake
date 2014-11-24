@@ -46,24 +46,42 @@ public class DrawLogin{
 	private static String username;
 	private static String password;
 	private static DrawLogin instance = new DrawLogin();
+	
+	private static boolean running;
 
 	private DrawLogin(){
+		//variables
+		running = false;
+		
+		//objects
+		mainFrame = new JFrame("Login");
 		userText = new JTextField(13);
 		passwordText = new JPasswordField(13);
-		//prepareGui();
-		mainFrame = new JFrame("Login");
+		controlPanel = new JPanel();
+		headerLabel = new JLabel("",SwingConstants.CENTER);
+		statusLabel = new JLabel("",SwingConstants.CENTER);
 	}
 	
+	//singleton
 	public static DrawLogin getInstance() {
 		return instance;
 	}
+	
+	public void run(){
+		//only make once
+		if(!running){
+			makeFrame();
+		}
+		mainFrame.setVisible(true);
+	}
 
-	public void prepareGui() {
-		mainFrame = new JFrame("Login");
+	public void makeFrame() {
+		running = true;
+		
+		//setup frame
 		mainFrame.setSize(800, 500);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		mainFrame.setLocation(dim.width/2-mainFrame.getSize().width/2, dim.height/2-mainFrame.getSize().height/2);
-
 		mainFrame.setLayout(new GridLayout(3,1));
 		mainFrame.addWindowListener(new WindowAdapter() {
 			@Override
@@ -71,22 +89,17 @@ public class DrawLogin{
 				System.exit(0);
 			}
 		});
-		headerLabel = new JLabel("",SwingConstants.CENTER);
-		statusLabel = new JLabel("",SwingConstants.CENTER);
+		
+		//add labels and buttons
 		statusLabel.setSize(350,100);
-		controlPanel = new JPanel();
 		controlPanel.setLayout (new GridBagLayout());//(new FlowLayout());
 		mainFrame.add(headerLabel);
 		mainFrame.add(controlPanel);
 		mainFrame.add(statusLabel);
-		mainFrame.setVisible(true);
-
-	}
-
-	public void run(){
-		prepareGui();
 		showLogin();
+
 	}
+
 	public void showLogin(){
 		headerLabel.setText("Login to play BomberMan!");
 		headerLabel.setFont(new Font("Serif", Font.BOLD, 55));
@@ -140,7 +153,6 @@ public class DrawLogin{
 				Login.loginUser(username,password);
 				String data = "Username: " + userText.getText();
 				data += ", Password: " + new String(passwordText.getPassword());
-				//statusLabel.setText(data);
 			}
 		});
 
@@ -186,22 +198,25 @@ public class DrawLogin{
 		userText.requestFocus();
 	}
 
+	//setters
+		public static void setStatus(String s){
+			statusLabel.setText(s);
+		}
+		public void viewFrame(boolean b){
+			clearText();
+			mainFrame.setVisible(b);
+		}
+		public void clearText(){
+			userText.setText("");
+			userText.requestFocus();
+			passwordText.setText("");
+		}
+	
+	//getters
 	public static String getUsername(){
 		return username;
 	}
 	public static String getPassword(){
 		return password;
-	}
-	public static void setStatus(String s){
-		statusLabel.setText(s);
-	}
-	public void viewFrame(boolean b){
-		clearText();
-		mainFrame.setVisible(b);
-	}
-	public void clearText(){
-		userText.setText("");
-		userText.requestFocus();
-		passwordText.setText("");
 	}
 }

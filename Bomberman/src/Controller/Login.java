@@ -66,10 +66,8 @@ public class Login extends Database implements KeyListener, FocusListener {
 				//Thread thread = new Thread() {
 			        //public void run() {
 			        	DrawMenu menuFrame = DrawMenu.getInstance();
-			        	if(!menuFrame.isRunning()){
-			        		menuFrame.run();
-			        	}
-			        	menuFrame.viewFrame(true);
+			        	
+			        	menuFrame.run();
 			        	loginFrame.viewFrame(false);
 			        //}
 			    //};

@@ -12,64 +12,77 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
-import Controller.Login;
 import Controller.Map;
 import Controller.ModifyAccount;
 
 
 public class DrawMenu{
-	private JFrame menuFrame;
+	//variables
+	private boolean running;
 	
+	//objects
+	private JFrame menuFrame;
 	private JButton playButton;
 	private JButton logoutButton;
 	private JButton modifyButton;
 	private JButton leaderButton;
 	private JButton loadButton;
 	private JButton saveButton;
+	
+	//singleton
 	private static DrawMenu instance = new DrawMenu();
-	private boolean running;
 	
 	private DrawMenu() {
+		//variables
 		running = false;
+		
+		//objects
+		menuFrame = new JFrame();
 		playButton = new JButton("New Game");
 		loadButton = new JButton("Load saved game");
 		leaderButton = new JButton("View Leaderboards");
 		modifyButton = new JButton("Modify Account");
 		logoutButton = new JButton("Logout");
 		saveButton = new JButton("Save Game");
-		menuFrame = new JFrame();
 	}
 	
+	//singleton
 	public static DrawMenu getInstance() {
 		return instance;
 	}
 	
 	public void run() {
-		makeFrame();
-		running = true;
+		//only makeFrame once
+		if(!running){
+			makeFrame();
+		}
+		menuFrame.setVisible(true);
 	}
 	
 	public void makeFrame() {
+		running = true;
+		
+		//setup frame
 		menuFrame.setSize(800,500);
-		//menuFrame.setUndecorated(true);
+		menuFrame.setUndecorated(true);
 		menuFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		menuFrame.setLocation(dim.width/2-menuFrame.getSize().width/2, dim.height/2-menuFrame.getSize().height/2);
-		menuFrame.setLayout(new GridLayout(2,1));
-		menuFrame.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent windowEvent) {
-				System.exit(0);
-			}
-		});
+		menuFrame.setLayout(new GridLayout(2,3));
+		
+		//add buttons
 		menuFrame.add(playButton);
 		menuFrame.add(modifyButton);
 		menuFrame.add(logoutButton);
 		menuFrame.add(leaderButton);
 		menuFrame.add(loadButton);
 		menuFrame.add(saveButton);
-		menuFrame.setVisible(true);
+		
+		addButtons();
+	}
 	
+	public void addButtons(){
+		//play button
 		playButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -84,7 +97,7 @@ public class DrawMenu{
 			}
 		});
 		
-		
+		//logout button
 		logoutButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -94,6 +107,7 @@ public class DrawMenu{
 			}
 		});
 		
+		//load button
 		loadButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -102,6 +116,7 @@ public class DrawMenu{
 			}
 		});
 		
+		//save button
 		saveButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -110,6 +125,7 @@ public class DrawMenu{
 			}
 		});
 		
+		//modify button
 		modifyButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -120,6 +136,7 @@ public class DrawMenu{
 			}
 		});
 		
+		//leaderboard button
 		leaderButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -129,12 +146,8 @@ public class DrawMenu{
 		});
 	}
 	
-	
+	//setters
 	public void viewFrame(boolean b){
 		menuFrame.setVisible(b);
-	}
-	
-	public boolean isRunning(){
-		return running;
 	}
 }
