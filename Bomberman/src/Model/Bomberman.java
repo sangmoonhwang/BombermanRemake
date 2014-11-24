@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.ArrayList;
+
 public class Bomberman extends Movable{
 
 	//physical attributes
@@ -19,6 +21,8 @@ public class Bomberman extends Movable{
 	public static boolean wallPass;
 	public static boolean bombPass;
 	public static boolean flamePass;
+	
+	public static ArrayList<Bomb> bombs;
 
 
 	public Bomberman(){
@@ -34,6 +38,9 @@ public class Bomberman extends Movable{
 		bombPass = false;
 		detonate = false;
 		speed = 2;
+		bombs = new ArrayList<Bomb>();
+		bombs.add(new Bomb());
+		bombs.add(new Bomb());
 	}
 	//setters
 	public void setXval(int i){
@@ -80,6 +87,9 @@ public class Bomberman extends Movable{
 	public boolean isMystery(){
 		System.out.println((System.nanoTime() - mystery_From)/1000000000);
 		return (System.nanoTime() - mystery_From)/1000000000 <= 10; //10seconds?
+	}
+	public ArrayList<Bomb> getBombs() {
+		return bombs;
 	}
 
 }

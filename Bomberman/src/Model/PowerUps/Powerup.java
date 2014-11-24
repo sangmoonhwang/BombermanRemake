@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 
 import Model.Block;
+import Model.Bomb;
 import Model.Bomberman;
 
 public class Powerup extends Block {
@@ -98,6 +99,7 @@ public class Powerup extends Block {
 		} else if(identity.equals("UpBombs")) {
 			if(Bomberman.availableBombs <= 10)
 				Bomberman.availableBombs++;
+			Bomberman.bombs.add(new Bomb());
 		} else if(identity.equals("Wallpass")) {
 			Bomberman.wallPass = true;
 		}
