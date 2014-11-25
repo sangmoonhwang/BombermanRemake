@@ -69,7 +69,7 @@ public class SpawnGameObjects implements Serializable{
 	public ArrayList<Destructible> spawnBricks() {
 		for(int x = 1; x<30; x++){
 			for(int y = 1; y<12; y++){
-				if(x!=1 && y!=1){
+				if((x + y > 3)){
 					double random = Math.random();
 					if(random<=0.15){
 						int xVal = x*50;
