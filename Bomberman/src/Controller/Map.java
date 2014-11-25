@@ -52,7 +52,7 @@ public class Map implements KeyListener, FocusListener{
 	private long gameTime;
 	private Timer gameTimer;
 	static boolean running = false;
-	private CollissionDetection detect;
+	private CollisionDetection detect;
 	private SpawnGameObjects spawn;
 	private static int bombermanState;
 	private long pausedAt = 0;
@@ -71,7 +71,7 @@ public class Map implements KeyListener, FocusListener{
 
 		//new objects
 		user = Login.getUser();
-		detect = new CollissionDetection();
+		detect = new CollisionDetection();
 		bombman = new Bomberman();
 		bombs = bombman.getBombs();
 		activeBombs = new ArrayList<Bomb>();
