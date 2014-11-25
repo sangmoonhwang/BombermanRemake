@@ -94,10 +94,7 @@ public class DrawGameObject extends JPanel{
 			for(int i = 0; i < 5; i++){
 				int explosionX = Map.getActiveBombs().get(0).getPersonalExplosions()[i].getXval();
 				int explosionY = Map.getActiveBombs().get(0).getPersonalExplosions()[i].getYval();
-				
-
-
-
+	
 				if(i == 1){
 					g.drawImage(Explode, explosionX, explosionY, Map.getActiveBombs().get(0).getPersonalExplosions()[i].getWidth(),Map.getActiveBombs().get(0).getPersonalExplosions()[i].getHeight(),this);
 				}
