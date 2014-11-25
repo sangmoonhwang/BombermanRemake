@@ -210,7 +210,7 @@ public class DrawPauseMenu{
 					e1.printStackTrace();
 				}
 				
-				Map.setRunning(false);
+				//Map.setRunning(false);
 				viewFrame(false);
 			}
 		});
