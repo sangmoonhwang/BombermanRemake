@@ -324,35 +324,38 @@ public class Enemy extends Movable implements Serializable{
 				} 
 			}
 		}
-		
+
 		if(!activeBombs.isEmpty()) {
 			for(int i=0; i<activeBombs.size(); i++) {
-				int bombsTileNum = whichTileIsOn(activeBombs.get(i).getXval(), activeBombs.get(i).getYval());
-				if(bombsTileNum == (tileNum) && (enemyState == 1)) {
-					leftFree = false;
-				} else if(bombsTileNum == (tileNum + 1) && (enemyState == 0)) {
-					rightFree = false;
-				} else if(bombsTileNum == (tileNum) && (enemyState == 3)) {
-					aboveFree = false;
-				} else if(bombsTileNum == (tileNum + 31) && (enemyState == 2)) {
-					belowFree = false;
-				} else if(bombsTileNum == (tileNum - 32)) {
-					aboveLeftFree = false;
-				} else if(bombsTileNum == (tileNum - 30)) {
-					aboveRightFree = false;
-				} else if(bombsTileNum == (tileNum + 30)) {
-					belowLeftFree = false;
-				} else if(bombsTileNum == (tileNum + 32)) {
-					belowRightFree = false;
-				} else if(bombsTileNum == (tileNum - 2)) {
-					twoLeftFree = false;
-				} else if(bombsTileNum == (tileNum + 2)) {
-					twoRightFree = false;
-				} else if(bombsTileNum == (tileNum - 62)) {
-					twoAboveFree = false;
-				} else if(bombsTileNum == (tileNum + 62)) {
-					twoBelowFree = false;
-				} 
+				
+				if(activeBombs.get(i).getActive()) {
+					int bombsTileNum = whichTileIsOn(activeBombs.get(i).getXval(), activeBombs.get(i).getYval());
+					if(bombsTileNum == (tileNum) && (enemyState == 1)) {
+						leftFree = false;
+					} else if(bombsTileNum == (tileNum + 1) && (enemyState == 0)) {
+						rightFree = false;
+					} else if(bombsTileNum == (tileNum) && (enemyState == 3)) {
+						aboveFree = false;
+					} else if(bombsTileNum == (tileNum + 31) && (enemyState == 2)) {
+						belowFree = false;
+					} else if(bombsTileNum == (tileNum - 32)) {
+						aboveLeftFree = false;
+					} else if(bombsTileNum == (tileNum - 30)) {
+						aboveRightFree = false;
+					} else if(bombsTileNum == (tileNum + 30)) {
+						belowLeftFree = false;
+					} else if(bombsTileNum == (tileNum + 32)) {
+						belowRightFree = false;
+					} else if(bombsTileNum == (tileNum - 2)) {
+						twoLeftFree = false;
+					} else if(bombsTileNum == (tileNum + 2)) {
+						twoRightFree = false;
+					} else if(bombsTileNum == (tileNum - 62)) {
+						twoAboveFree = false;
+					} else if(bombsTileNum == (tileNum + 62)) {
+						twoBelowFree = false;
+					} 
+				}
 			}
 		}
 	}

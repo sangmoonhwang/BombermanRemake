@@ -21,10 +21,10 @@ public class Bomb implements Serializable{
 	private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(10);
 	private boolean used;
 
-	public Bomb() {
+	public Bomb(boolean active) {
 		xval = yval = 0;
 		height = width = 50;
-		active = false;
+		this.active = active;
 		escaped = false;
 		personalExplosions = new Explosion[5];
 		for(int i = 0; i < 5; i++){
@@ -58,7 +58,7 @@ public class Bomb implements Serializable{
 	}
 	
 	public void activate() {
-		active = true;
+		//active = true;
 		
 		final Runnable unExplode = new Runnable() {
 
@@ -67,7 +67,7 @@ public class Bomb implements Serializable{
 				for(int i = 0; i < 4; i++){
 					personalExplosions[i].setExploding(false);
 				}
-				Map.getBombs().add(new Bomb());
+				Bomberman.getBombs().add(new Bomb(false));
 				Map.getActiveBombs().remove(Map.getActiveBombs().size()-1);
 			}
 		};

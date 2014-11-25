@@ -38,7 +38,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 	private static ArrayList<Indestructible> indestructibles;
 	private static ArrayList<Destructible> bricks;
 	private static ArrayList<Enemy> enemies;
-	private static ArrayList<Bomb> bombs;
+//	private static ArrayList<Bomb> bombs;
 	private static ArrayList<Bomb> activeBombs;
 	private static Explosion[] explosions;
 	private static Powerup power;
@@ -75,7 +75,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 		user = Login.getUser();
 		detect = new CollisionDetection();
 		bombman = new Bomberman();
-		bombs = bombman.getBombs();
+//		bombs = bombman.getBombs();
 		activeBombs = new ArrayList<Bomb>();
 		spawn = new SpawnGameObjects(level);
 		explosions = new Explosion[9];
@@ -183,7 +183,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 							for(int i = 0; i < 4; i++){
 								activeBombs.get(0).getPersonalExplosions()[i].setExploding(false);
 							}
-							bombs.add(new Bomb());
+							bombman.getBombs().add(new Bomb(false));
 							activeBombs.remove(0);
 						}
 					};
@@ -195,13 +195,11 @@ public class Map implements KeyListener, FocusListener, Serializable{
 			}
 			//activeBombs.get(0).explode();
 			//explosions = activeBombs.get(activeBombs.size()-1).getPersonalExplosions();
-		} else if(value == KeyEvent.VK_Z && !bombs.isEmpty()){
-			//if(bombman.getavailableBombs() != 0){
-			//			if(bombs.size() >= 1){
-			System.out.println("bombs Size " + bombs.size());
-			activeBombs.add(new Bomb());
-			bombs.remove(bombs.size()-1);
-			System.out.println("After removing bombs" + bombs.size());
+		} else if(value == KeyEvent.VK_Z && !bombman.getBombs().isEmpty()){
+			System.out.println("bombs Size " + bombman.getBombs().size());
+			activeBombs.add(new Bomb(true));
+			bombman.getBombs().remove(bombman.getBombs().size()-1);
+			System.out.println("After removing bombs" + bombman.getBombs().size());
 			int tilex = (int)bombman.getXval() + (int)(0.5*bombman.getWidth());
 			int tiley = (int)bombman.getYval() + (int)(0.5*bombman.getHeight());
 			tilex = (tilex/50) * 50;
@@ -210,7 +208,6 @@ public class Map implements KeyListener, FocusListener, Serializable{
 			activeBombs.get(activeBombs.size()-1).setXval(tilex);
 			activeBombs.get(activeBombs.size()-1).setYval(tiley);
 			activeBombs.get(activeBombs.size()-1).activate();
-			//			}
 		}
 	}
 
@@ -229,7 +226,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 		} else if(value == KeyEvent.VK_RIGHT) {
 			if(xVel == bombman.getSpeed()) //2
 				setVelX(0);
-		} 
+		}
 	}    
 
 
@@ -497,7 +494,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 
 		for(int k=0;k<enemies.size();k++) {
 			Enemy enemy = enemies.get(k);
-			enemy.searchFreePath(indestructibles, bricks, bombs);
+			enemy.searchFreePath(indestructibles, bricks, activeBombs);
 
 			//if intelligence is either 2 or 3 it will check if the bomberman is within a range and will try to chase the bomberman
 			if(enemy.getIntelligence() > 1) {
@@ -834,8 +831,8 @@ public class Map implements KeyListener, FocusListener, Serializable{
 		Bomberman.flames = 1;
 		Bomberman.availableBombs = 1;
 		bombman.getBombs().clear();
-		bombman.getBombs().add(new Bomb());
-		bombman.getBombs().add(new Bomb());
+		bombman.getBombs().add(new Bomb(false));
+		//bombman.getBombs().add(new Bomb());
 	}
 
 	//setters
@@ -865,9 +862,9 @@ public class Map implements KeyListener, FocusListener, Serializable{
 	public static Bomberman getBomberman(){
 		return bombman;
 	}
-	public static ArrayList<Bomb> getBombs(){
-		return bombs;
-	}
+//	public static ArrayList<Bomb> getBombs(){
+//		return bombs;
+//	}
 	public static Door getDoor(){
 		return door;
 	}
