@@ -69,16 +69,17 @@ public class SpawnGameObjects implements Serializable{
 	public ArrayList<Destructible> spawnBricks() {
 		for(int x = 1; x<30; x++){
 			for(int y = 1; y<12; y++){
-				double random = Math.random();
-				if(random<=0.15){
-					int xVal = x*50;
-					int yVal = y*50;
-					int tile = whichTileIsOn(xVal,yVal);
-					if(validBrickSpawn(tile) && (x!=50 && y!=50) && (x!=50 && y!=100) && (x!=100 && y!=50)){
-						bricks.add(new Destructible(xVal,yVal));
+				if(x!=1 && y!=1){
+					double random = Math.random();
+					if(random<=0.15){
+						int xVal = x*50;
+						int yVal = y*50;
+						int tile = whichTileIsOn(xVal,yVal);
+						if(validBrickSpawn(tile)){
+							bricks.add(new Destructible(xVal,yVal));
+						}
 					}
 				}
-
 			}
 		}
 		return bricks;
