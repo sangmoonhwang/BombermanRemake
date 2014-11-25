@@ -46,7 +46,7 @@ public class DrawMenu{
 	private JButton modifyButton;
 	private JButton leaderButton;
 	private JButton loadButton;
-	private JButton saveButton;
+//	private JButton saveButton;
 	private JButton selectButton;
 	
 	//singleton
@@ -63,7 +63,7 @@ public class DrawMenu{
 		leaderButton = new JButton("View Leaderboards");
 		modifyButton = new JButton("Modify Account");
 		logoutButton = new JButton("Logout");
-		saveButton = new JButton("Save Game");
+//		saveButton = new JButton("Save Game");
 		selectButton = new JButton("Level Select");
 	}
 	
@@ -97,7 +97,7 @@ public class DrawMenu{
 		menuFrame.add(logoutButton);
 		menuFrame.add(leaderButton);
 		menuFrame.add(loadButton);
-		menuFrame.add(saveButton);
+//		menuFrame.add(saveButton);
 		menuFrame.add(selectButton);
 		
 		addButtons();
@@ -114,7 +114,7 @@ public class DrawMenu{
 					leaderButton.requestFocus();
 				}
 				else if(value == KeyEvent.VK_LEFT ){
-					saveButton.requestFocus();
+					selectButton.requestFocus();
 				}
 				else if(value ==KeyEvent.VK_UP){
 					leaderButton.requestFocus();
@@ -136,7 +136,7 @@ public class DrawMenu{
 					leaderButton.requestFocus();
 				}
 				else if(value == KeyEvent.VK_LEFT ){
-					saveButton.requestFocus();
+					selectButton.requestFocus();
 				}
 				else if(value ==KeyEvent.VK_UP){
 					leaderButton.requestFocus();
@@ -169,13 +169,13 @@ public class DrawMenu{
 			public void keyTyped(KeyEvent e) {
 				int value = e.getKeyCode();
 				if (value == KeyEvent.VK_DOWN){
-					saveButton.requestFocus();
+					selectButton.requestFocus();
 				}
 				else if(value == KeyEvent.VK_LEFT ){
 					modifyButton.requestFocus();
 				}
 				else if(value ==KeyEvent.VK_UP){
-					saveButton.requestFocus();
+					selectButton.requestFocus();
 				}
 				else if( value == KeyEvent.VK_RIGHT){
 					leaderButton.requestFocus();
@@ -191,13 +191,13 @@ public class DrawMenu{
 			public void keyPressed(KeyEvent e) {
 				int value = e.getKeyCode();
 				if (value == KeyEvent.VK_DOWN){
-					saveButton.requestFocus();
+					selectButton.requestFocus();
 				}
 				else if(value == KeyEvent.VK_LEFT ){
 					modifyButton.requestFocus();
 				}
 				else if(value ==KeyEvent.VK_UP){
-					saveButton.requestFocus();
+					selectButton.requestFocus();
 				}
 				else if( value == KeyEvent.VK_RIGHT){
 					leaderButton.requestFocus();
@@ -229,7 +229,7 @@ public class DrawMenu{
 					modifyButton.requestFocus();
 				}
 				else if( value == KeyEvent.VK_RIGHT){
-					saveButton.requestFocus();
+					selectButton.requestFocus();
 				}
 			}
 			
@@ -251,7 +251,7 @@ public class DrawMenu{
 					modifyButton.requestFocus();
 				}
 				else if( value == KeyEvent.VK_RIGHT){
-					saveButton.requestFocus();
+					selectButton.requestFocus();
 				}
 			}
 		});
@@ -323,55 +323,55 @@ public class DrawMenu{
 			}
 		});
 		
-		//save button
-		saveButton.addKeyListener(new KeyListener() {
-			
-			@Override
-			public void keyTyped(KeyEvent e) {
-				int value = e.getKeyCode();
-				if (value == KeyEvent.VK_DOWN){
-					logoutButton.requestFocus();
-				}
-				else if(value == KeyEvent.VK_LEFT ){
-					loadButton.requestFocus();
-				}
-				else if(value ==KeyEvent.VK_UP){
-					logoutButton.requestFocus();
-				}
-				else if( value == KeyEvent.VK_RIGHT){
-					playButton.requestFocus();
-				}
-			}
-			
-			@Override
-			public void keyReleased(KeyEvent e) {
-				
-			}
-			
-			@Override
-			public void keyPressed(KeyEvent e) {
-				int value = e.getKeyCode();
-				if (value == KeyEvent.VK_DOWN){
-					logoutButton.requestFocus();
-				}
-				else if(value == KeyEvent.VK_LEFT ){
-					loadButton.requestFocus();
-				}
-				else if(value ==KeyEvent.VK_UP){
-					logoutButton.requestFocus();
-				}
-				else if( value == KeyEvent.VK_RIGHT){
-					playButton.requestFocus();
-				}
-			}
-		});
-		saveButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//Save the user's current game, shouldn't be clickable if user is not in game
-				System.out.println("Save Game");
-			}
-		});
+//		//save button
+//		saveButton.addKeyListener(new KeyListener() {
+//			
+//			@Override
+//			public void keyTyped(KeyEvent e) {
+//				int value = e.getKeyCode();
+//				if (value == KeyEvent.VK_DOWN){
+//					logoutButton.requestFocus();
+//				}
+//				else if(value == KeyEvent.VK_LEFT ){
+//					loadButton.requestFocus();
+//				}
+//				else if(value ==KeyEvent.VK_UP){
+//					logoutButton.requestFocus();
+//				}
+//				else if( value == KeyEvent.VK_RIGHT){
+//					playButton.requestFocus();
+//				}
+//			}
+//			
+//			@Override
+//			public void keyReleased(KeyEvent e) {
+//				
+//			}
+//			
+//			@Override
+//			public void keyPressed(KeyEvent e) {
+//				int value = e.getKeyCode();
+//				if (value == KeyEvent.VK_DOWN){
+//					logoutButton.requestFocus();
+//				}
+//				else if(value == KeyEvent.VK_LEFT ){
+//					loadButton.requestFocus();
+//				}
+//				else if(value ==KeyEvent.VK_UP){
+//					logoutButton.requestFocus();
+//				}
+//				else if( value == KeyEvent.VK_RIGHT){
+//					playButton.requestFocus();
+//				}
+//			}
+//		});
+//		saveButton.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				//Save the user's current game, shouldn't be clickable if user is not in game
+//				System.out.println("Save Game");
+//			}
+//		});
 		
 		//modify button
 		modifyButton.addKeyListener(new KeyListener() {
@@ -486,16 +486,16 @@ public class DrawMenu{
 			public void keyTyped(KeyEvent e) {
 				int value = e.getKeyCode();
 				if (value == KeyEvent.VK_DOWN){
-					leaderButton.requestFocus();
+					logoutButton.requestFocus();
 				}
 				else if(value == KeyEvent.VK_LEFT ){
-					saveButton.requestFocus();
+					loadButton.requestFocus();
 				}
 				else if(value ==KeyEvent.VK_UP){
-					leaderButton.requestFocus();
+					logoutButton.requestFocus();
 				}
 				else if( value == KeyEvent.VK_RIGHT){
-					modifyButton.requestFocus();
+					playButton.requestFocus();
 				}
 			}
 			
@@ -508,16 +508,16 @@ public class DrawMenu{
 			public void keyPressed(KeyEvent e) {
 				int value = e.getKeyCode();
 				if (value == KeyEvent.VK_DOWN){
-					leaderButton.requestFocus();
+					logoutButton.requestFocus();
 				}
 				else if(value == KeyEvent.VK_LEFT ){
-					saveButton.requestFocus();
+					loadButton.requestFocus();
 				}
 				else if(value ==KeyEvent.VK_UP){
-					leaderButton.requestFocus();
+					logoutButton.requestFocus();
 				}
 				else if( value == KeyEvent.VK_RIGHT){
-					modifyButton.requestFocus();
+					playButton.requestFocus();
 				}
 			}
 		});
