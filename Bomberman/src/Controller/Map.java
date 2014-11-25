@@ -4,11 +4,15 @@
 package Controller;
 
 import java.awt.event.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.TreeMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+
+import static java.util.concurrent.TimeUnit.*;
 
 import javax.swing.JFrame;
 
@@ -19,10 +23,11 @@ import Model.Destructible;
 import Model.Door;
 import Model.Explosion;
 import Model.Indestructible;
-import static java.util.concurrent.TimeUnit.*;
+import Model.Database;
 import Model.User;
 import Model.Enemies.Enemy;
 import Model.PowerUps.Powerup;
+import Utils.GNode;
 import View.DrawMap;
 import View.DrawMenu;
 import View.DrawPauseMenu;
@@ -30,6 +35,7 @@ import View.DrawPauseMenu;
 
 public class Map implements KeyListener, FocusListener{
 	public JFrame main;
+	private User user;
 	private static DrawMap d;
 	private static Bomberman bombman;
 	private static ArrayList<Indestructible> indestructibles;
@@ -69,6 +75,7 @@ public class Map implements KeyListener, FocusListener{
 		yVel = 0;
 
 		//new objects
+		user = Login.getUser();
 		detect = new CollissionDetection();
 		bombman = new Bomberman();
 		bombs = bombman.getBombs();
@@ -85,7 +92,7 @@ public class Map implements KeyListener, FocusListener{
 		enemies = spawn.spawnEnemies();
 		power = spawn.spawnPowerup();
 		door = spawn.spawnDoor();
-
+		
 
 		scheduler = Executors.newScheduledThreadPool(10);
 
@@ -128,7 +135,7 @@ public class Map implements KeyListener, FocusListener{
 					tick2();
 					start = now;
 					d.draw();
-					d.getStatusBar().setText("Level: "+ level +" Time: " + gameTime + " Life: " + life + " Score: " + Bomberman.getScore());
+					d.getStatusBar().setText("Level: "+ level +" Time: " + gameTime + " Life: " + life + " Score: " + user.getTotalScore());
 					if(gameTime < 0){
 						System.out.println("Times up!");
 						d.getStatusBar().setText("Times Up!");
@@ -455,22 +462,27 @@ public class Map implements KeyListener, FocusListener{
 
 
 				//Collision Detection
-
-
 				if(detect.collisionDetection(bombman, activeBombs.get(0).getPersonalExplosions()[i])){
 					if(!bombman.flamePass && !bombman.isMystery()){
 						dieBombman();
-//						System.out.println("You died.");
 					}
 					
 				}
+				
+				TreeMap<Integer, String> killedEnemies = new TreeMap<Integer, String>();
 				for(int j = 0; j < enemies.size(); j++){
 					if(detect.collisionDetection(enemies.get(j), activeBombs.get(0).getPersonalExplosions()[i])){
 						//User.updateScore(enemies.get(j).getPoints());
 						//System.out.println(User.getTotalScore());
+						killedEnemies.put(enemies.get(j).getPoints(), enemies.get(j).getIdentity());
 						enemies.remove(j);
 					}
 				}
+				
+				//point Calculation
+				if(!killedEnemies.isEmpty())
+					pointCalculation(killedEnemies);
+				
 				for(int k = 0; k < bricks.size();k++){
 					if(detect.collisionDetection(activeBombs.get(0).getPersonalExplosions()[i], bricks.get(k))){
 						bricks.remove(k);
@@ -758,12 +770,35 @@ public class Map implements KeyListener, FocusListener{
 
 	/**
 	 * returns the tile number
-	 * @param xPos and yPos
+	 * @param int x
+	 * @param int y
 	 * @return The tile number it is on
 	 */
 	public int whichTileIsOn(int x, int y) {
 		int tmp = (y/50);
 		return  ((x/50) + tmp*31);
+	}
+	
+	/**
+	 * Calculates the killed enemy points and updates the User total points
+	 * @param TreeMap<Integer, String>
+	 * @return None
+	 */
+	public void pointCalculation(TreeMap<Integer, String> killedEnemies) {
+		int totalPoints = 0, key, numberOfKills = 2;
+		
+		key = killedEnemies.lastKey();
+		killedEnemies.remove(key);
+		totalPoints = key;
+		
+		while(!killedEnemies.isEmpty()){
+			key = killedEnemies.lastKey();
+			killedEnemies.remove(key);
+			
+			totalPoints += key * numberOfKills;
+			numberOfKills *= 2;
+		}
+		user.updateScore(totalPoints);
 	}
 
 	public void dieBombman(){
@@ -778,7 +813,13 @@ public class Map implements KeyListener, FocusListener{
 			//saveScore_to_Leaderboard();
 			DrawMap game = DrawMap.getInstance();
 			DrawMenu menu = DrawMenu.getInstance();
-			
+			Database data = new Database();
+			try {
+				Database.modifyUserCSVEntry(user.getUsername(), null, null, user.getNumOfPlay() + 1, user.getTotalScore(), user.getLevelCompleted());
+			} catch (IOException e) {
+				System.out.println("error saving data");
+				e.printStackTrace();
+			}
 			menu.viewFrame(true);
 			Map.setRunning(false);
 			game.getFrame().dispose();

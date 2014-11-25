@@ -13,6 +13,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -41,8 +42,8 @@ public class Leaderboard extends Database {
 	
 	//draw modifyAccount view
 	public Leaderboard() throws IOException{
-		users = returnUsers();
-		System.out.println(users.get(0).getTotalScore());
+		users = returnAllUsers();
+		//System.out.println(users.get(0).getTotalScore());
 		topTen = new User[10];
 		sort();
 		main = new JFrame("Leaderboards");
@@ -70,17 +71,18 @@ public class Leaderboard extends Database {
 		header_login.setText("Leaderboards");
 		header_login.setFont(new Font("Serif", Font.BOLD, 40));
 		//controlPanel.removeAll();
-		JLabel first = new JLabel("1. " + topTen[0].getUsername() + ", " + topTen[0].getTotalScore());
-		JLabel second = new JLabel("2. " + topTen[1].getUsername() + ", " + topTen[1].getTotalScore());
-		JLabel third = new JLabel("3. " + topTen[2].getUsername() + ", " + topTen[2].getTotalScore());
-		JLabel fourth = new JLabel("4. " + topTen[3].getUsername() + ", " + topTen[3].getTotalScore());
-		JLabel fifth = new JLabel("5. " + topTen[4].getUsername() + ", " + topTen[4].getTotalScore());
-		JLabel sixth = new JLabel("6. " + topTen[5].getUsername() + ", " + topTen[5].getTotalScore());
-		JLabel seventh = new JLabel("7. " + topTen[6].getUsername() + ", " + topTen[6].getTotalScore());
-		JLabel eighth = new JLabel("8. " + topTen[7].getUsername() + ", " + topTen[7].getTotalScore());
-		JLabel ninth = new JLabel("9. " + topTen[8].getUsername() + ", " + topTen[8].getTotalScore());
-		JLabel tenth = new JLabel("10. " + topTen[9].getUsername() + ", " + topTen[9].getTotalScore());
-		JLabel viewer = new JLabel("You: " + Login.getUser().getUsername() + ", " + Login.getUser().getTotalScore());
+		
+		JLabel first = new JLabel("1. " + topTen[0].getUsername() + ", " + topTen[0].getTotalScore() + " Number of Plays " + topTen[0].getNumOfPlay());
+		JLabel second = new JLabel("2. " + topTen[1].getUsername() + ", " + topTen[1].getTotalScore() + " Number of Plays " + topTen[1].getNumOfPlay());
+		JLabel third = new JLabel("3. " + topTen[2].getUsername() + ", " + topTen[2].getTotalScore() + " Number of Plays " + topTen[2].getNumOfPlay());
+		JLabel fourth = new JLabel("4. " + topTen[3].getUsername() + ", " + topTen[3].getTotalScore() + " Number of Plays " + topTen[3].getNumOfPlay());
+		JLabel fifth = new JLabel("5. " + topTen[4].getUsername() + ", " + topTen[4].getTotalScore() + " Number of Plays " + topTen[4].getNumOfPlay());
+		JLabel sixth = new JLabel("6. " + topTen[5].getUsername() + ", " + topTen[5].getTotalScore() + " Number of Plays " + topTen[5].getNumOfPlay());
+		JLabel seventh = new JLabel("7. " + topTen[6].getUsername() + ", " + topTen[6].getTotalScore() + " Number of Plays " + topTen[6].getNumOfPlay());
+		JLabel eighth = new JLabel("8. " + topTen[7].getUsername() + ", " + topTen[7].getTotalScore() + " Number of Plays " + topTen[7].getNumOfPlay());
+		JLabel ninth = new JLabel("9. " + topTen[8].getUsername() + ", " + topTen[8].getTotalScore() + " Number of Plays " + topTen[8].getNumOfPlay());
+		JLabel tenth = new JLabel("10. " + topTen[9].getUsername() + ", " + topTen[9].getTotalScore() + " Number of Plays " + topTen[9].getNumOfPlay());
+		JLabel viewer = new JLabel("You: " + Login.getUser().getUsername() + ", " + Login.getUser().getTotalScore() + " Number of Plays " + Login.getUser().getNumOfPlay());
 		first.setFont(new Font("Serif", Font.BOLD, 20));
 		second.setFont(new Font("Serif", Font.BOLD, 20));
 		third.setFont(new Font("Serif", Font.BOLD, 20));
@@ -139,7 +141,12 @@ public class Leaderboard extends Database {
 		//userText_newName.requestFocus();
 
 	}
-	
+
+	/**
+	 * sorts the User data with total Points
+	 * @param None
+	 * @return None
+	 */
 	private void sort(){
 		for(int i = 0; i < 10; i++){
 			int highest = 0;
@@ -159,5 +166,4 @@ public class Leaderboard extends Database {
 			}
 		}
 	}
-	
 }

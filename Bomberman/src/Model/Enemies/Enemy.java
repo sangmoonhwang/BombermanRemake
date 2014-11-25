@@ -434,6 +434,9 @@ public class Enemy extends Movable{
 	}
 
 	//getters
+	public String getIdentity() {
+		return identity;
+	}
 	public int getXval() {
 		return (int)xval;
 	}

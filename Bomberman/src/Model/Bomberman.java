@@ -55,6 +55,9 @@ public class Bomberman extends Movable {
 	public void giveBombs(int i) {
 		availableBombs += i;
 	}
+	public static void setScore(int score) {
+		Bomberman.score = score;
+	}
 
 	//increment
 	public void incrementXval(int i) {
@@ -94,8 +97,4 @@ public class Bomberman extends Movable {
 	public static int getScore() {
 		return score;
 	}
-	public static void setScore(int score) {
-		Bomberman.score = score;
-	}
-
 }
