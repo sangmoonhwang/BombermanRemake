@@ -6,7 +6,7 @@ import Model.Bomberman;
 import Model.Explosion;
 import Model.Movable;
 
-public class CollissionDetection {
+public class CollisionDetection {
 
 	public boolean collisionDetection(Movable test, Block i) {
 		boolean collision = false;
