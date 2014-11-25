@@ -167,7 +167,7 @@ public class Map implements KeyListener, FocusListener{
 			setVelX(0);
 			d.getFrame().setVisible(false);
 			DrawPauseMenu.getInstance().run();
-		} else if(value == KeyEvent.VK_X && Bomberman.detonate == true && activeBombs.size() >= 1){
+		} else if(value == KeyEvent.VK_X && Bomberman.detonate == true && !activeBombs.isEmpty()){
 			for(int i =0; i< activeBombs.size(); i++){
 				if(!activeBombs.get(i).getUsed()){
 					final Runnable unExplode = new Runnable() {
