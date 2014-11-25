@@ -7,10 +7,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
+import Controller.Leaderboard;
 import Controller.Map;
 
 
@@ -23,6 +25,7 @@ public class DrawPauseMenu{
 	private JButton resumeButton;
 	private JButton quitButton;
 	private JButton saveButton;
+	private JButton leaderboardButton;
 	
 	//variables
 	private boolean running;
@@ -39,6 +42,7 @@ public class DrawPauseMenu{
 		resumeButton = new JButton("Resume Game");
 		quitButton = new JButton("Exit to Menu");
 		saveButton = new JButton("Save Game");
+		leaderboardButton = new JButton("View Leaderboards");
 		
 		//variables
 		running = false;
@@ -71,6 +75,7 @@ public class DrawPauseMenu{
 		pauseFrame.add(resumeButton);
 		pauseFrame.add(quitButton);
 		pauseFrame.add(saveButton);
+		pauseFrame.add(leaderboardButton);
 		pauseFrame.setVisible(true);
 		
 		addButtons();
@@ -131,6 +136,8 @@ public class DrawPauseMenu{
 				}
 			}
 			
+			
+			
 			@Override
 			public void keyReleased(KeyEvent e) {
 				
@@ -147,6 +154,7 @@ public class DrawPauseMenu{
 				}
 			}
 		});
+		
 		quitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//temporary variables
@@ -156,6 +164,53 @@ public class DrawPauseMenu{
 				menu.viewFrame(true);
 				Map.setRunning(false);
 				game.getFrame().dispose();
+				viewFrame(false);
+			}
+		});
+		
+		leaderboardButton.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				int value = e.getKeyCode();
+				if (value == KeyEvent.VK_DOWN || value ==KeyEvent.VK_RIGHT){
+					saveButton.requestFocus();
+				}
+				else if(value == KeyEvent.VK_LEFT || value ==KeyEvent.VK_UP){
+					resumeButton.requestFocus();
+				}
+			}
+			
+			
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				int value = e.getKeyCode();
+				if (value == KeyEvent.VK_DOWN || value ==KeyEvent.VK_RIGHT){
+					saveButton.requestFocus();
+				}
+				else if(value == KeyEvent.VK_LEFT || value ==KeyEvent.VK_UP){
+					resumeButton.requestFocus();
+				}
+			}
+		});
+		
+		leaderboardButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//temporary variables
+				try {
+					Leaderboard ld = new Leaderboard();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				Map.setRunning(false);
 				viewFrame(false);
 			}
 		});
@@ -170,7 +225,7 @@ public class DrawPauseMenu{
 					resumeButton.requestFocus();
 				}
 				else if(value == KeyEvent.VK_LEFT || value ==KeyEvent.VK_UP){
-					quitButton.requestFocus();
+					leaderboardButton.requestFocus();
 				}
 			}
 			
@@ -186,7 +241,7 @@ public class DrawPauseMenu{
 					resumeButton.requestFocus();
 				}
 				else if(value == KeyEvent.VK_LEFT || value ==KeyEvent.VK_UP){
-					quitButton.requestFocus();
+					leaderboardButton.requestFocus();
 				}
 			}
 		});

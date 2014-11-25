@@ -115,4 +115,8 @@ public class Login extends Database implements KeyListener, FocusListener {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public static User getUser(){
+		return u;
+	}
 }

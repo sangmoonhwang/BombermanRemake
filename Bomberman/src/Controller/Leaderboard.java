@@ -79,7 +79,7 @@ public class Leaderboard extends Database {
 		JLabel eighth = new JLabel("8. " + topTen[7].getUsername() + ", " + topTen[7].getTotalScore());
 		JLabel ninth = new JLabel("9. " + topTen[8].getUsername() + ", " + topTen[8].getTotalScore());
 		JLabel tenth = new JLabel("10. " + topTen[9].getUsername() + ", " + topTen[9].getTotalScore());
-		JLabel viewer = new JLabel("You: ");
+		JLabel viewer = new JLabel("You: " + Login.getUser().getUsername() + ", " + Login.getUser().getTotalScore());
 		first.setFont(new Font("Serif", Font.BOLD, 20));
 		second.setFont(new Font("Serif", Font.BOLD, 20));
 		third.setFont(new Font("Serif", Font.BOLD, 20));
