@@ -62,6 +62,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 	private long pausedAt = 0;
 	private long duration = 200;
 	private static boolean paused;
+	private boolean bombKeyPressed;
 	ArrayList<Box> path;
 
 
@@ -72,7 +73,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 		height = 50;
 		xVel = 0;
 		yVel = 0;
-
+		bombKeyPressed = false;
 		//new objects
 		user = Login.getUser();
 		detect = new CollisionDetection();
@@ -117,10 +118,12 @@ public class Map implements KeyListener, FocusListener, Serializable{
 		height = 50;
 		xVel = 0;
 		yVel = 0;
-
+		bombKeyPressed = false;
 		//new objects
 		user = Login.getUser();
 		detect = new CollisionDetection();
+		bombman.setXval(50);
+		bombman.setYval(50);
 //		bombman = new Bomberman();
 //		bombs = bombman.getBombs();
 		activeBombs = new ArrayList<Bomb>();
@@ -243,7 +246,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 			}
 			//activeBombs.get(0).explode();
 			//explosions = activeBombs.get(activeBombs.size()-1).getPersonalExplosions();
-		} else if(value == KeyEvent.VK_Z && !bombman.getBombs().isEmpty()){
+		} else if(value == KeyEvent.VK_Z && !bombman.getBombs().isEmpty() && !bombKeyPressed){
 			System.out.println("bombs Size " + bombman.getBombs().size());
 			activeBombs.add(new Bomb(true));
 			bombman.getBombs().remove(bombman.getBombs().size()-1);
@@ -256,6 +259,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 			activeBombs.get(activeBombs.size()-1).setXval(tilex);
 			activeBombs.get(activeBombs.size()-1).setYval(tiley);
 			activeBombs.get(activeBombs.size()-1).activate();
+			bombKeyPressed = true;
 		}
 	}
 
@@ -274,6 +278,8 @@ public class Map implements KeyListener, FocusListener, Serializable{
 		} else if(value == KeyEvent.VK_RIGHT) {
 			if(xVel == bombman.getSpeed()) //2
 				setVelX(0);
+		}else if(value == KeyEvent.VK_Z) {
+			bombKeyPressed = false;
 		}
 	}    
 
