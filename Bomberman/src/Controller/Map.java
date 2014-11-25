@@ -494,6 +494,7 @@ public class Map implements KeyListener, FocusListener{
 		if(detect.collisionDetection(bombman, door) && enemies.size() == 0) {
 			new Map(level+1);
 			System.out.println("Level Complete!");
+			user.setLevelCompleted(level);
 		}
 
 
@@ -815,7 +816,7 @@ public class Map implements KeyListener, FocusListener{
 			DrawMenu menu = DrawMenu.getInstance();
 			Database data = new Database();
 			try {
-				Database.modifyUserCSVEntry(user.getUsername(), null, null, user.getNumOfPlay() + 1, user.getTotalScore(), user.getLevelCompleted());
+				Database.modifyUserCSVEntry(user.getUsername(), null, null, user.getNumOfPlay() + 1, user.getTotalScore(), level);
 			} catch (IOException e) {
 				System.out.println("error saving data");
 				e.printStackTrace();
