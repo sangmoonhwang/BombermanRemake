@@ -35,7 +35,7 @@ public class LevelSelect extends Database {
 	
 	//draw modifyAccount view
 	public LevelSelect() throws IOException{
-		users = returnUsers();
+		users = returnAllUsers();
 		topTen = new User[10];
 		sort();
 		main = new JFrame("Leaderboards");
