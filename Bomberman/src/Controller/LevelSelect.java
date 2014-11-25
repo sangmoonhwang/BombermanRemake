@@ -23,7 +23,7 @@ import Model.User;
 import View.DrawMenu;
 import View.DrawPauseMenu;
 
-public class Leaderboard extends Database {
+public class LevelSelect extends Database {
 	public String newUsername;
 	public String oldPassword;
 	public String newPassword;
@@ -34,9 +34,8 @@ public class Leaderboard extends Database {
 	private User[] topTen;
 	
 	//draw modifyAccount view
-	public Leaderboard() throws IOException{
+	public LevelSelect() throws IOException{
 		users = returnUsers();
-		System.out.println(users.get(0).getTotalScore());
 		topTen = new User[10];
 		sort();
 		main = new JFrame("Leaderboards");
@@ -61,42 +60,33 @@ public class Leaderboard extends Database {
 	}
 	
 	private void drawpanel() {
-		header_login.setText("Leaderboards");
+		header_login.setText("Level Select");
 		header_login.setFont(new Font("Serif", Font.BOLD, 40));
 		//controlPanel.removeAll();
-		JLabel first = new JLabel("1. " + topTen[0].getUsername() + ", " + topTen[0].getTotalScore());
-		JLabel second = new JLabel("2. " + topTen[1].getUsername() + ", " + topTen[1].getTotalScore());
-		JLabel third = new JLabel("3. " + topTen[2].getUsername() + ", " + topTen[2].getTotalScore());
-		JLabel fourth = new JLabel("4. " + topTen[3].getUsername() + ", " + topTen[3].getTotalScore());
-		JLabel fifth = new JLabel("5. " + topTen[4].getUsername() + ", " + topTen[4].getTotalScore());
-		JLabel sixth = new JLabel("6. " + topTen[5].getUsername() + ", " + topTen[5].getTotalScore());
-		JLabel seventh = new JLabel("7. " + topTen[6].getUsername() + ", " + topTen[6].getTotalScore());
-		JLabel eighth = new JLabel("8. " + topTen[7].getUsername() + ", " + topTen[7].getTotalScore());
-		JLabel ninth = new JLabel("9. " + topTen[8].getUsername() + ", " + topTen[8].getTotalScore());
-		JLabel tenth = new JLabel("10. " + topTen[9].getUsername() + ", " + topTen[9].getTotalScore());
-		JLabel viewer = new JLabel("You: " + Login.getUser().getUsername() + ", " + Login.getUser().getTotalScore());
-		first.setFont(new Font("Serif", Font.BOLD, 20));
-		second.setFont(new Font("Serif", Font.BOLD, 20));
-		third.setFont(new Font("Serif", Font.BOLD, 20));
-		fourth.setFont(new Font("Serif", Font.BOLD, 20));
-		fifth.setFont(new Font("Serif", Font.BOLD, 20));
-		sixth.setFont(new Font("Serif", Font.BOLD, 20));
-		seventh.setFont(new Font("Serif", Font.BOLD, 20));
-		eighth.setFont(new Font("Serif", Font.BOLD, 20));
-		ninth.setFont(new Font("Serif", Font.BOLD, 20));
-		tenth.setFont(new Font("Serif", Font.BOLD, 20));
-		viewer.setFont(new Font("Serif", Font.BOLD, 20));
-		controlPanel.add(first);
-		controlPanel.add(second);
-		controlPanel.add(third);
-		controlPanel.add(fourth);
-		controlPanel.add(fifth);
-		controlPanel.add(sixth);
-		controlPanel.add(seventh);
-		controlPanel.add(eighth);
-		controlPanel.add(ninth);
-		controlPanel.add(tenth);
-		controlPanel.add(viewer);
+		
+		JButton selectButtons[] = new JButton[Login.getUser().getLevelCompleted()];
+		
+		for(int i =1; i < Login.getUser().getLevelCompleted(); i++){
+			selectButtons[i] = new JButton();
+			selectButtons[i].setText(Integer.toString(i));
+			controlPanel.add(selectButtons[i]);
+			final int lvl = i;
+			selectButtons[i].addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					Thread thread = new Thread(){
+						public void run(){
+							Map.setLife(5);
+							Map play = new Map(lvl);//TODO should take user input of levels or next level when current level clears
+							Map.setPaused(false);
+							//play.run();
+						}
+					};
+					main.setVisible(false);
+					thread.start();
+				}
+			});
+		}
 		
 
 
