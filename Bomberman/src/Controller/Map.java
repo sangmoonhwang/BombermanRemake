@@ -22,6 +22,7 @@ import Model.Door;
 import Model.Explosion;
 import Model.Indestructible;
 import Model.Database;
+import Model.Tile;
 import Model.User;
 import Model.Enemies.Enemy;
 import Model.PowerUps.Powerup;
@@ -40,6 +41,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 	private static ArrayList<Enemy> enemies;
 	private static ArrayList<Bomb> bombs;
 	private static ArrayList<Bomb> activeBombs;
+	private static ArrayList<Tile> tiles;
 	private static Explosion[] explosions;
 	private static Powerup power;
 	private static Door door;
@@ -89,6 +91,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 		enemies = spawn.spawnEnemies();
 		power = spawn.spawnPowerup();
 		door = spawn.spawnDoor();
+		tiles = spawn.spawnTiles();
 
 
 		//		scheduler = Executors.newScheduledThreadPool(10);
@@ -133,7 +136,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 					tick2();
 					start = now;
 					d.draw();
-					d.getStatusBar().setText("Level: "+ level +" Time: " + gameTime + " Life: " + life + " Score: " + user.getTotalScore());
+					d.getStatusBar().setText("Level: "+ level +"        Time: " + gameTime + "        Life: " + life + "       Score: " + user.getTotalScore());
 					if(gameTime < 0){
 						System.out.println("Times up!");
 						d.getStatusBar().setText("Times Up!");
@@ -867,6 +870,9 @@ public class Map implements KeyListener, FocusListener, Serializable{
 	}
 	public static ArrayList<Bomb> getBombs(){
 		return bombs;
+	}
+	public static ArrayList<Tile> getTiles(){
+		return tiles;
 	}
 	public static Door getDoor(){
 		return door;
