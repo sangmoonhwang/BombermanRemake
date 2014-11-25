@@ -27,6 +27,7 @@ import Model.Database;
 import Model.User;
 import View.DrawMap;
 import View.DrawMenu;
+import View.DrawPauseMenu;
 
 public class Leaderboard extends Database {
 	public String newUsername;
@@ -105,7 +106,7 @@ public class Leaderboard extends Database {
 		
 
 
-		JButton back = new JButton("Back to menu");
+		JButton back = new JButton("Main Menu");
 		controlPanel.add(back);
 		back.addActionListener(new ActionListener() {
 			@Override
@@ -114,6 +115,19 @@ public class Leaderboard extends Database {
 				DrawMenu menu = DrawMenu.getInstance();
 				
 				menu.viewFrame(true);
+				main.setVisible(false);
+			}
+		});
+		
+		JButton back2 = new JButton("Pause Menu");
+		controlPanel.add(back2);
+		back2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//back to menu
+				DrawPauseMenu pauseMenu = DrawPauseMenu.getInstance();
+				
+				pauseMenu.viewFrame(true);
 				main.setVisible(false);
 			}
 		});
