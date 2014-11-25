@@ -5,6 +5,7 @@ package Controller;
 
 import java.awt.event.*;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -33,7 +34,7 @@ import View.DrawMenu;
 import View.DrawPauseMenu;
 
 
-public class Map implements KeyListener, FocusListener{
+public class Map implements KeyListener, FocusListener, Serializable{
 	public JFrame main;
 	private User user;
 	private static DrawMap d;
@@ -50,12 +51,12 @@ public class Map implements KeyListener, FocusListener{
 	private int yVel;
 	private static int life = 5;
 	private int level;
-	private final ScheduledExecutorService scheduler;
+//	private final ScheduledExecutorService scheduler;
 	private static int width;
 	private static int height;
 	private long startTime = System.nanoTime()/1000000000;
 	private long gameTime;
-	private Timer gameTimer;
+//	private Timer gameTimer;
 	static boolean running = false;
 	private CollissionDetection detect;
 	private SpawnGameObjects spawn;
@@ -94,7 +95,7 @@ public class Map implements KeyListener, FocusListener{
 		door = spawn.spawnDoor();
 		
 
-		scheduler = Executors.newScheduledThreadPool(10);
+//		scheduler = Executors.newScheduledThreadPool(10);
 
 		d = DrawMap.getInstance();
 		running = true;
@@ -116,6 +117,7 @@ public class Map implements KeyListener, FocusListener{
 		d.getFrame().addKeyListener(this);
 		d.getFrame().requestFocus();
 		running = true;
+		paused = false;
 
 		long start = System.nanoTime();
 		final double amountOfTicks = 60.0;
@@ -173,6 +175,7 @@ public class Map implements KeyListener, FocusListener{
 			if(!DrawPauseMenu.getInstance().isRunning()){
 				DrawPauseMenu.getInstance().makeFrame();
 			}
+			DrawPauseMenu.getInstance().setMap(this);
 			DrawPauseMenu.getInstance().viewFrame(true);
 			DrawPauseMenu.getInstance().run();
 		}
@@ -942,6 +945,9 @@ public class Map implements KeyListener, FocusListener{
 	}
 	public static void setPaused(boolean b){
 		paused = b;
+	}
+	public Map getMap(){
+		return this;
 	}
 	//empty methods
 	public void keyTyped(KeyEvent e) {

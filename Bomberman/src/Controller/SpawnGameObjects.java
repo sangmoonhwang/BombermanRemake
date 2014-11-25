@@ -1,5 +1,6 @@
 package Controller;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -11,7 +12,7 @@ import Model.Enemies.Balloom;
 import Model.Enemies.Enemy;
 import Model.PowerUps.Powerup;
 
-public class SpawnGameObjects {
+public class SpawnGameObjects implements Serializable{
 
 	private static Explosion[] explosions;
 	private static ArrayList<Indestructible> indestructibles;

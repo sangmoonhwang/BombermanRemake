@@ -4,11 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
+import java.io.Serializable;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class DrawMap{
+public class DrawMap implements Serializable{
 	
 	//variables
 	private boolean running;

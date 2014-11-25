@@ -1,12 +1,14 @@
 package Controller;
 
+import java.io.Serializable;
+
 import Model.Block;
 import Model.Bomb;
 import Model.Bomberman;
 import Model.Explosion;
 import Model.Movable;
 
-public class CollissionDetection {
+public class CollissionDetection implements Serializable{
 
 	public boolean collisionDetection(Movable test, Block i) {
 		boolean collision = false;

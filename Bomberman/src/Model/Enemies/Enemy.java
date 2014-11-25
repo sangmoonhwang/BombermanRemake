@@ -1,6 +1,7 @@
 package Model.Enemies;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
@@ -11,7 +12,7 @@ import Model.Indestructible;
 import Model.Movable;
 import Utils.GNode;
 
-public class Enemy extends Movable{
+public class Enemy extends Movable implements Serializable{
 
 	//physical attributes
 	private float xval,yval;

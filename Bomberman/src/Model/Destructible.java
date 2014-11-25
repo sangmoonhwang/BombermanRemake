@@ -1,6 +1,8 @@
 package Model;
 
-public class Destructible extends Block{
+import java.io.Serializable;
+
+public class Destructible extends Block implements Serializable{
 	private int xval, yval;
 	private int height, width;
 
