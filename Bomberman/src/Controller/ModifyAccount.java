@@ -22,7 +22,7 @@ import javax.swing.SwingConstants;
 
 import View.DrawLogin;
 
-public class ModifyAccount {
+public class ModifyAccount extends CreateAccount{
 	public String newUsername;
 	public String oldPassword;
 	public String newPassword;
@@ -65,7 +65,6 @@ public class ModifyAccount {
 	
 	private void drawpanel() {
 		header_login.setText("Modify your account information");
-		//controlPanel.removeAll();
 
 		JLabel newNameLabel = new JLabel("New Real Name: ", SwingConstants.RIGHT);
 		JLabel oldPassLabel = new JLabel("Old Password:  ", SwingConstants.RIGHT);
