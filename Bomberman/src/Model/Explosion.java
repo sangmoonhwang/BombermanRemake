@@ -1,6 +1,8 @@
 package Model;
 
-public class Explosion extends Movable {
+import java.io.Serializable;
+
+public class Explosion extends Movable implements Serializable {
 	private float xval, yval;
 	private int height, width;
 	private boolean exploding;

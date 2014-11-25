@@ -1,6 +1,8 @@
 package Model;
 
-public class Door extends Block{
+import java.io.Serializable;
+
+public class Door extends Block implements Serializable{
 	
 	private int xval, yval;
 	private int height, width;

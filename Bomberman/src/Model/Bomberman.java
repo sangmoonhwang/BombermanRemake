@@ -1,8 +1,9 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Bomberman extends Movable {
+public class Bomberman extends Movable implements Serializable{
 
 	//physical attributes
 	private static float xval, yval;

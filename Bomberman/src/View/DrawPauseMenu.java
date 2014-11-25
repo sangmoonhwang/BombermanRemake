@@ -7,10 +7,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import Controller.Leaderboard;
 import Controller.Leaderboard_p;
@@ -30,6 +34,7 @@ public class DrawPauseMenu{
 	
 	//variables
 	private boolean running;
+	private Map game;
 	
 	//singleton
 	private static DrawPauseMenu instance = new DrawPauseMenu();
@@ -249,6 +254,29 @@ public class DrawPauseMenu{
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("save stuff");
+				try
+				{
+					JFrame parent = new JFrame();
+					Map file = game;
+					FileOutputStream fileOut;
+					String name = JOptionPane.showInputDialog(pauseFrame, "Name of the save file? ", null);
+					if(name.equalsIgnoreCase(null) || name.equals("")){
+						Date date = new Date();
+						fileOut = new FileOutputStream("save/" + date.getYear() + date.getMonth() + date.getDate()
+								+ date.getHours() + date.getMinutes() + ".ser");
+					}
+					else{
+						fileOut = new FileOutputStream("save/" + name + ".ser");
+					}
+					ObjectOutputStream out = new ObjectOutputStream(fileOut);
+					out.writeObject(file);
+					out.close();
+					fileOut.close();
+					System.out.printf("Serialized data is saved /save/" + name);
+				}catch(IOException i)
+				{
+					i.printStackTrace();
+				}
 			}
 		});
 	}
@@ -256,6 +284,10 @@ public class DrawPauseMenu{
 	//setters
 	public void viewFrame(boolean b){
 		pauseFrame.setVisible(b);
+	}
+	
+	public void setMap(Map g){
+		this.game = g;
 	}
 	
 	//getters

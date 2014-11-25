@@ -3,6 +3,7 @@ package Model;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
+import java.io.Serializable;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Executors;
@@ -11,7 +12,7 @@ import java.util.concurrent.ScheduledFuture;
 
 import Controller.Map;
 
-public class Bomb {
+public class Bomb implements Serializable{
 	private int xval, yval;
 	private int height, width;
 	private boolean active;

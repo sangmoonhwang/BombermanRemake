@@ -2,12 +2,13 @@ package Model.PowerUps;
 
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.Serializable;
 
 import Model.Block;
 import Model.Bomb;
 import Model.Bomberman;
 
-public class Powerup extends Block {
+public class Powerup extends Block implements Serializable{
 
 	//physical attributes
 	private int xval;
