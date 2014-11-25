@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.TreeMap;
 
 import Controller.Map;
+import Model.Bomb;
 import Model.Box;
 import Model.Destructible;
 import Model.Indestructible;
@@ -254,10 +255,12 @@ public class Enemy extends Movable{
 
 	/**
 	 * search the Free path
-	 * @param ArrayList<Indestructible>  ArrayList<Destructible>
+	 * @param ArrayList<Indestructible>
+	 * @param ArrayList<Destructible>
+	 * @param ArrayList<Bomb>
 	 * @return None
 	 */
-	public void searchFreePath(ArrayList<Indestructible> indestructibles, ArrayList<Destructible> bricks) {
+	public void searchFreePath(ArrayList<Indestructible> indestructibles, ArrayList<Destructible> bricks, ArrayList<Bomb> activeBombs) {
 		statusReset();
 		int tileNum = whichTileIsOn(getXval(), getYval());
 		int enemyState = getState();
@@ -265,27 +268,27 @@ public class Enemy extends Movable{
 			int indestructiblesTileNum = whichTileIsOn(indestructibles.get(i).getXval(), indestructibles.get(i).getYval());
 			if(indestructiblesTileNum == (tileNum) && (enemyState == 1)) {
 				leftFree = false;
-			} else if(indestructiblesTileNum == (tileNum+1) && (enemyState == 0)) {
+			} else if(indestructiblesTileNum == (tileNum + 1) && (enemyState == 0)) {
 				rightFree = false;
 			} else if(indestructiblesTileNum == (tileNum) && (enemyState == 3)) {
 				aboveFree = false;
-			} else if(indestructiblesTileNum == (tileNum+31) && (enemyState == 2)) {
+			} else if(indestructiblesTileNum == (tileNum + 31) && (enemyState == 2)) {
 				belowFree = false;
-			} else if(indestructiblesTileNum == (tileNum-32)) {
+			} else if(indestructiblesTileNum == (tileNum - 32)) {
 				aboveLeftFree = false;
-			} else if(indestructiblesTileNum == (tileNum-30)) {
+			} else if(indestructiblesTileNum == (tileNum - 30)) {
 				aboveRightFree = false;
-			} else if(indestructiblesTileNum == (tileNum+30)) {
+			} else if(indestructiblesTileNum == (tileNum + 30)) {
 				belowLeftFree = false;
-			} else if(indestructiblesTileNum == (tileNum+32)) {
+			} else if(indestructiblesTileNum == (tileNum + 32)) {
 				belowRightFree = false;
-			} else if(indestructiblesTileNum == (tileNum-2)) {
+			} else if(indestructiblesTileNum == (tileNum - 2)) {
 				twoLeftFree = false;
-			} else if(indestructiblesTileNum == (tileNum+2)) {
+			} else if(indestructiblesTileNum == (tileNum + 2)) {
 				twoRightFree = false;
-			} else if(indestructiblesTileNum == (tileNum-62)) {
+			} else if(indestructiblesTileNum == (tileNum - 62)) {
 				twoAboveFree = false;
-			} else if(indestructiblesTileNum == (tileNum+62)) {
+			} else if(indestructiblesTileNum == (tileNum + 62)) {
 				twoBelowFree = false;
 			} 
 
@@ -299,24 +302,55 @@ public class Enemy extends Movable{
 					rightFreeBrick = false;
 				} else if(bricksTileNum == (tileNum) && (enemyState == 3)) {
 					aboveFreeBrick = false;
-				} else if(bricksTileNum == (tileNum+31) && (enemyState == 2)) {
+				} else if(bricksTileNum == (tileNum + 31) && (enemyState == 2)) {
 					belowFreeBrick = false;
-				} else if(bricksTileNum == (tileNum-32)) {
+				} else if(bricksTileNum == (tileNum - 32)) {
 					aboveLeftFreeBrick = false;
-				} else if(bricksTileNum == (tileNum-30)) {
+				} else if(bricksTileNum == (tileNum - 30)) {
 					aboveRightFreeBrick = false;
-				} else if(bricksTileNum == (tileNum+30)) {
+				} else if(bricksTileNum == (tileNum + 30)) {
 					belowLeftFreeBrick = false;
-				} else if(bricksTileNum == (tileNum+32)) {
+				} else if(bricksTileNum == (tileNum + 32)) {
 					belowRightFreeBrick = false;
-				} else if(bricksTileNum == (tileNum-2)) {
+				} else if(bricksTileNum == (tileNum - 2)) {
 					twoLeftFreeBrick = false;
-				} else if(bricksTileNum == (tileNum+2)) {
+				} else if(bricksTileNum == (tileNum + 2)) {
 					twoRightFreeBrick = false;
-				} else if(bricksTileNum == (tileNum-62)) {
+				} else if(bricksTileNum == (tileNum - 62)) {
 					twoAboveFreeBrick = false;
-				} else if(bricksTileNum == (tileNum+62)) {
+				} else if(bricksTileNum == (tileNum + 62)) {
 					twoBelowFreeBrick = false;
+				} 
+			}
+		}
+		
+		if(!activeBombs.isEmpty()) {
+			for(int i=0; i<activeBombs.size(); i++) {
+				int bombsTileNum = whichTileIsOn(activeBombs.get(i).getXval(), activeBombs.get(i).getYval());
+				if(bombsTileNum == (tileNum) && (enemyState == 1)) {
+					leftFree = false;
+				} else if(bombsTileNum == (tileNum + 1) && (enemyState == 0)) {
+					rightFree = false;
+				} else if(bombsTileNum == (tileNum) && (enemyState == 3)) {
+					aboveFree = false;
+				} else if(bombsTileNum == (tileNum + 31) && (enemyState == 2)) {
+					belowFree = false;
+				} else if(bombsTileNum == (tileNum - 32)) {
+					aboveLeftFree = false;
+				} else if(bombsTileNum == (tileNum - 30)) {
+					aboveRightFree = false;
+				} else if(bombsTileNum == (tileNum + 30)) {
+					belowLeftFree = false;
+				} else if(bombsTileNum == (tileNum + 32)) {
+					belowRightFree = false;
+				} else if(bombsTileNum == (tileNum - 2)) {
+					twoLeftFree = false;
+				} else if(bombsTileNum == (tileNum + 2)) {
+					twoRightFree = false;
+				} else if(bombsTileNum == (tileNum - 62)) {
+					twoAboveFree = false;
+				} else if(bombsTileNum == (tileNum + 62)) {
+					twoBelowFree = false;
 				} 
 			}
 		}

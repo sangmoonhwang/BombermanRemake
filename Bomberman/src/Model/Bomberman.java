@@ -40,8 +40,8 @@ public class Bomberman extends Movable {
 		speed = 2;
 		bombs = new ArrayList<Bomb>();
 		bombs.add(new Bomb());
-		bombs.add(new Bomb());
 	}
+	
 	//setters
 	public void setXval(int i) {
 		xval = i;
@@ -88,7 +88,7 @@ public class Bomberman extends Movable {
 		return availableBombs;
 	}
 	public boolean isMystery(){
-		System.out.println((System.nanoTime() - mystery_From)/1000000000);
+		//System.out.println((System.nanoTime() - mystery_From)/1000000000);
 		return (System.nanoTime() - mystery_From)/1000000000 <= 10; //10seconds?
 	}
 	public ArrayList<Bomb> getBombs() {
