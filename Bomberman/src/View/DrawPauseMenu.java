@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import Controller.Leaderboard;
+import Controller.Leaderboard_p;
 import Controller.Map;
 
 
@@ -92,7 +93,7 @@ public class DrawPauseMenu{
 					quitButton.requestFocus();
 				}
 				else if(value == KeyEvent.VK_LEFT || value ==KeyEvent.VK_UP){
-					saveButton.requestFocus();
+					leaderboardButton.requestFocus();
 				}
 			}
 			
@@ -108,7 +109,7 @@ public class DrawPauseMenu{
 					quitButton.requestFocus();
 				}
 				else if(value == KeyEvent.VK_LEFT || value ==KeyEvent.VK_UP){
-					saveButton.requestFocus();
+					leaderboardButton.requestFocus();
 				}
 			}
 		});
@@ -174,10 +175,10 @@ public class DrawPauseMenu{
 			public void keyTyped(KeyEvent e) {
 				int value = e.getKeyCode();
 				if (value == KeyEvent.VK_DOWN || value ==KeyEvent.VK_RIGHT){
-					saveButton.requestFocus();
+					resumeButton.requestFocus();
 				}
 				else if(value == KeyEvent.VK_LEFT || value ==KeyEvent.VK_UP){
-					resumeButton.requestFocus();
+					saveButton.requestFocus();
 				}
 			}
 			
@@ -192,10 +193,10 @@ public class DrawPauseMenu{
 			public void keyPressed(KeyEvent e) {
 				int value = e.getKeyCode();
 				if (value == KeyEvent.VK_DOWN || value ==KeyEvent.VK_RIGHT){
-					saveButton.requestFocus();
+					resumeButton.requestFocus();
 				}
 				else if(value == KeyEvent.VK_LEFT || value ==KeyEvent.VK_UP){
-					resumeButton.requestFocus();
+					saveButton.requestFocus();
 				}
 			}
 		});
@@ -204,7 +205,7 @@ public class DrawPauseMenu{
 			public void actionPerformed(ActionEvent e) {
 				//temporary variables
 				try {
-					Leaderboard ld = new Leaderboard();
+					Leaderboard_p ld = new Leaderboard_p();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -222,10 +223,10 @@ public class DrawPauseMenu{
 			public void keyTyped(KeyEvent e) {
 				int value = e.getKeyCode();
 				if (value == KeyEvent.VK_DOWN || value == KeyEvent.VK_RIGHT){
-					resumeButton.requestFocus();
+					leaderboardButton.requestFocus();
 				}
 				else if(value == KeyEvent.VK_LEFT || value ==KeyEvent.VK_UP){
-					leaderboardButton.requestFocus();
+					quitButton.requestFocus();
 				}
 			}
 			
@@ -238,10 +239,10 @@ public class DrawPauseMenu{
 			public void keyPressed(KeyEvent e) {
 				int value = e.getKeyCode();
 				if (value == KeyEvent.VK_DOWN || value == KeyEvent.VK_RIGHT){
-					resumeButton.requestFocus();
+					leaderboardButton.requestFocus();
 				}
 				else if(value == KeyEvent.VK_LEFT || value ==KeyEvent.VK_UP){
-					leaderboardButton.requestFocus();
+					quitButton.requestFocus();
 				}
 			}
 		});

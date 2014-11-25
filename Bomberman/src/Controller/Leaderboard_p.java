@@ -24,7 +24,7 @@ import Model.User;
 import View.DrawMenu;
 import View.DrawPauseMenu;
 
-public class Leaderboard extends Database {
+public class Leaderboard_p extends Database {
 	public String newUsername;
 	public String oldPassword;
 	public String newPassword;
@@ -35,7 +35,7 @@ public class Leaderboard extends Database {
 	private User[] topTen;
 	
 	//draw modifyAccount view
-	public Leaderboard() throws IOException{
+	public Leaderboard_p() throws IOException{
 		users = returnAllUsers();
 		//System.out.println(users.get(0).getTotalScore());
 		topTen = new User[10];
@@ -115,6 +115,19 @@ public class Leaderboard extends Database {
 			}
 		});
 		
+		JButton back2 = new JButton("Pause Menu");
+		controlPanel.add(back2);
+		back2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//back to menu
+				DrawPauseMenu pauseMenu = DrawPauseMenu.getInstance();
+				
+				pauseMenu.viewFrame(true);
+				main.setVisible(false);
+			}
+		});
+
 
 		
 		main.revalidate();
