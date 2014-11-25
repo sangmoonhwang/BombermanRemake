@@ -53,8 +53,8 @@ public class Bomberman extends Movable implements Serializable{
 	public void setSpeed(int i) {
 		speed = i;
 	}
-	public static void giveBombs() {
-		availableBombs += 1;
+	public static void giveBomb() {
+		bombs.add(new Bomb(false));
 	}
 	public static void setScore(int score) {
 		Bomberman.score = score;

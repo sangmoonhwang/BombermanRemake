@@ -14,6 +14,6 @@ public class UpBombs extends Powerup{
 	public void activate() {
 		Bomberman bombman = Map.getBomberman();
 		bombman.getBombs().add(new Bomb(false));
+		bombman.giveBomb();
 	}
-
 }

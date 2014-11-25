@@ -1,6 +1,7 @@
 package View;
 
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -9,14 +10,27 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
+import javax.xml.ws.Response;
 
 import Controller.Leaderboard;
 import Controller.LevelSelect;
+import Controller.Login;
 import Controller.Map;
 import Controller.ModifyAccount;
 
@@ -244,8 +258,68 @@ public class DrawMenu{
 		loadButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//Show user's loaded games
+				Map game = null;
+				String result = null;
+				try
+				{
+					File[] files;
+					//Show user's loaded games
+					List<String> results = new ArrayList<String>();
+					if((new File("save/" + Login.getUser().getUsername()).exists())){
+						files = new File("save/" + Login.getUser().getUsername()).listFiles();
+
+						//If this pathname does not denote a directory, then listFiles() returns null. 
+
+						for (File file : files) {
+							if (file.isFile()) {
+								results.add(file.getName());
+							}
+						}
+					}
+					else{
+						results.add(" ");
+					}
+					if (EventQueue.isDispatchThread()) {
+						JPanel panel = new JPanel();
+						panel.add(new JLabel("Please make a selection:"));
+						DefaultComboBoxModel model = new DefaultComboBoxModel();
+						for (String temp : results) {
+							model.addElement(temp);
+						}
+						JComboBox comboBox = new JComboBox(model);
+						panel.add(comboBox);
+
+						int iResult = JOptionPane.showConfirmDialog(null, panel, "Flavor", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+						switch (iResult) {
+						case JOptionPane.OK_OPTION:
+							result = (String) comboBox.getSelectedItem();
+							break;
+						}
+					}
+					if((new File("save/" + Login.getUser().getUsername()).exists())){
+						FileInputStream fileIn = new FileInputStream("save/" + Login.getUser().getUsername() + "/" + result);
+						ObjectInputStream in = new ObjectInputStream(fileIn);
+						game = (Map) in.readObject();
+						in.close();
+						fileIn.close();
+					}
+				}catch(IOException i)
+				{
+					i.printStackTrace();
+					return;
+				}catch(ClassNotFoundException c)
+				{
+					System.out.println("map class not found");
+					c.printStackTrace();
+					return;
+				}
+				
 				System.out.println("Load Game");
+//				DrawMap drawGame = DrawMap.getInstance();
+//				Map.setPaused(false);
+//				drawGame.getFrame().setVisible(true);
+//				viewFrame(false);
+//				game.run();
 			}
 		});
 		

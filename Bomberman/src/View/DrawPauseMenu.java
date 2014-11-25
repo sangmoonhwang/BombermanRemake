@@ -276,7 +276,7 @@ public class DrawPauseMenu{
 					out.writeObject(file);
 					out.close();
 					fileOut.close();
-					System.out.printf("Serialized data is saved /save/" + name);
+					System.out.printf("Serialized data is saved");
 				}catch(IOException i)
 				{
 					i.printStackTrace();
