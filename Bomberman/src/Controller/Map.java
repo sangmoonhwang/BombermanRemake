@@ -186,7 +186,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 							for(int i = 0; i < 4; i++){
 								activeBombs.get(0).getPersonalExplosions()[i].setExploding(false);
 							}
-							bombman.getBombs().add(new Bomb(false));
+							Bomberman.getBombs().add(new Bomb(false));
 							activeBombs.remove(0);
 						}
 					};
@@ -198,11 +198,11 @@ public class Map implements KeyListener, FocusListener, Serializable{
 			}
 			//activeBombs.get(0).explode();
 			//explosions = activeBombs.get(activeBombs.size()-1).getPersonalExplosions();
-		} else if(value == KeyEvent.VK_Z && !bombman.getBombs().isEmpty()){
-			System.out.println("bombs Size " + bombman.getBombs().size());
+		} else if(value == KeyEvent.VK_Z && !Bomberman.getBombs().isEmpty()){
+			System.out.println("bombs Size " + Bomberman.getBombs().size());
 			activeBombs.add(new Bomb(true));
-			bombman.getBombs().remove(bombman.getBombs().size()-1);
-			System.out.println("After removing bombs" + bombman.getBombs().size());
+			Bomberman.getBombs().remove(Bomberman.getBombs().size()-1);
+			System.out.println("After removing bombs" + Bomberman.getBombs().size());
 			int tilex = (int)bombman.getXval() + (int)(0.5*bombman.getWidth());
 			int tiley = (int)bombman.getYval() + (int)(0.5*bombman.getHeight());
 			tilex = (tilex/50) * 50;
@@ -247,7 +247,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 				bombermanXtemp = 0;
 			}
 		}
-		if(bombman.wallPass == false){
+		if(Bomberman.wallPass == false){
 			for(int j=0; j<bricks.size(); j++){
 				if(!detect.emptyLeft(bombman, bricks.get(j)) && xVel <= 0){
 					bombermanXtemp = 0;
@@ -272,7 +272,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 		}
 
 		//bomberman collision detection with bricks
-		if(bombman.wallPass == false){
+		if(Bomberman.wallPass == false){
 			for(int i=0; i<bricks.size(); i++){
 				if(!detect.emptyAbove(bombman, bricks.get(i)) && yVel <= 0){
 					bombermanYtemp = 0;
@@ -448,7 +448,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 
 					//Collision Detection
 					if(detect.collisionDetection(bombman, activeBombs.get(0).getPersonalExplosions()[i])){
-						if(!bombman.flamePass && !bombman.isMystery()){
+						if(!Bomberman.flamePass && !bombman.isMystery()){
 							dieBombman();
 						}
 
@@ -833,8 +833,8 @@ public class Map implements KeyListener, FocusListener, Serializable{
 		Bomberman.speed = 2;
 		Bomberman.flames = 1;
 		Bomberman.availableBombs = 1;
-		bombman.getBombs().clear();
-		bombman.getBombs().add(new Bomb(false));
+		Bomberman.getBombs().clear();
+		Bomberman.getBombs().add(new Bomb(false));
 		//bombman.getBombs().add(new Bomb());
 	}
 
