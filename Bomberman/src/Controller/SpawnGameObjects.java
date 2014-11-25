@@ -71,7 +71,7 @@ public class SpawnGameObjects implements Serializable{
 			for(int y = 1; y<12; y++){
 				if((x!=1 && y!=1) && (x!=1 && y!=2) && (x!=2 && y!=1) ){
 					double random = Math.random();
-					if(random<=0.1){
+					if(random<=0.3){
 						int xVal = x*50;
 						int yVal = y*50;
 						int tile = whichTileIsOn(xVal,yVal);
