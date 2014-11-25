@@ -47,7 +47,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 	private static Door door;
 	private int xVel;
 	private int yVel;
-	private static int life = 5;
+	private static int life = 2;
 	private int level;
 	//	private final ScheduledExecutorService scheduler;
 	private static int width;
@@ -80,6 +80,9 @@ public class Map implements KeyListener, FocusListener, Serializable{
 		bombman = new Bomberman();
 //		bombs = bombman.getBombs();
 		activeBombs = new ArrayList<Bomb>();
+		for(int i = 0; i<bombman.getavailableBombs(); i++) {
+			bombman.getBombs().add(new Bomb(false));
+		}
 		spawn = new SpawnGameObjects(level);
 		explosions = new Explosion[9];
 		for(int i = 0; i<8; i++){
@@ -124,9 +127,10 @@ public class Map implements KeyListener, FocusListener, Serializable{
 		detect = new CollisionDetection();
 		bombman.setXval(50);
 		bombman.setYval(50);
-//		bombman = new Bomberman();
-//		bombs = bombman.getBombs();
 		activeBombs = new ArrayList<Bomb>();
+		for(int i = 0; i<bombman.getavailableBombs(); i++) {
+			bombman.getBombs().add(new Bomb(false));
+		}
 		spawn = new SpawnGameObjects(level);
 		explosions = new Explosion[9];
 		for(int i = 0; i<8; i++){
@@ -155,6 +159,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 		//				d.getStatusBar().setText("Times Up!");
 		//			};
 		//		},200000);
+		
 		this.run();
 	}
 
@@ -197,6 +202,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 					pausedAt = System.nanoTime()/1000000000;
 			}
 		}
+
 	}
 
 	//react to keyPress by moving Bomberman
@@ -526,10 +532,12 @@ public class Map implements KeyListener, FocusListener, Serializable{
 			}
 		}
 
+		//level completion
 		if(detect.collisionDetection(bombman, door) && enemies.size() == 0) {
-			new Map(level+1, bombman);
 			System.out.println("Level Complete!");
 			user.setLevelCompleted(level);
+			new Map(level+1, bombman);
+			running = false;
 		}
 
 
@@ -896,7 +904,10 @@ public class Map implements KeyListener, FocusListener, Serializable{
 	public void setVelY(int yVel) {
 		this.yVel = yVel;
 	}
-
+	public static void setLife(int a){
+		life = a;
+	}
+	
 	//getters
 	public static int getWidth(){
 		return width;
@@ -934,8 +945,8 @@ public class Map implements KeyListener, FocusListener, Serializable{
 	public static Powerup getPowerup() {
 		return power;
 	}
-	public static void setLife(int a){
-		life = a;
+	public int getLevel() {
+		return level;
 	}
 	public static ArrayList<Bomb> getActiveBombs() {
 		return activeBombs;
