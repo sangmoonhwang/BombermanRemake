@@ -7,7 +7,6 @@ import Model.Destructible;
 import Model.Door;
 import Model.Explosion;
 import Model.Indestructible;
-import Model.Tile;
 import Model.Enemies.Balloom;
 import Model.Enemies.Enemy;
 import Model.PowerUps.Powerup;
