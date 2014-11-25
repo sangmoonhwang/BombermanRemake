@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -18,6 +19,7 @@ import javax.swing.JOptionPane;
 
 import Controller.Leaderboard;
 import Controller.Leaderboard_p;
+import Controller.Login;
 import Controller.Map;
 
 
@@ -255,18 +257,20 @@ public class DrawPauseMenu{
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("save stuff");
 				try
-				{
-					JFrame parent = new JFrame();
+				{	
+					if(!(new File("save/" + Login.getUser().getUsername()).exists())){
+						new File("save/" + Login.getUser().getUsername()).mkdir();
+					}
 					Map file = game;
 					FileOutputStream fileOut;
 					String name = JOptionPane.showInputDialog(pauseFrame, "Name of the save file? ", null);
 					if(name.equalsIgnoreCase(null) || name.equals("")){
 						Date date = new Date();
-						fileOut = new FileOutputStream("save/" + date.getYear() + date.getMonth() + date.getDate()
-								+ date.getHours() + date.getMinutes() + ".ser");
+						fileOut = new FileOutputStream("save/" + Login.getUser().getUsername() + "/" + date.getYear() + 
+								date.getMonth() + date.getDate() + date.getHours() + date.getMinutes() + ".ser");
 					}
 					else{
-						fileOut = new FileOutputStream("save/" + name + ".ser");
+						fileOut = new FileOutputStream("save/" + Login.getUser().getUsername() + "/" + name + ".ser");
 					}
 					ObjectOutputStream out = new ObjectOutputStream(fileOut);
 					out.writeObject(file);
