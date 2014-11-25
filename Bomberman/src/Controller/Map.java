@@ -170,12 +170,8 @@ public class Map implements KeyListener, FocusListener, Serializable{
 				setVelY(0);
 				setVelX(0);
 				d.getFrame().setVisible(false);
-				if(!DrawPauseMenu.getInstance().isRunning()){
-					DrawPauseMenu.getInstance().makeFrame();
-				}
-				DrawPauseMenu.getInstance().setMap(this);
-				DrawPauseMenu.getInstance().viewFrame(true);
 				DrawPauseMenu.getInstance().run();
+				DrawPauseMenu.getInstance().setMap(this);
 			}
 		} else if(value == KeyEvent.VK_X && Bomberman.detonate == true && !activeBombs.isEmpty()){
 			for(int i =0; i< activeBombs.size(); i++){
