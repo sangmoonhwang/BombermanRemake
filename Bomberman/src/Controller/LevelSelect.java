@@ -6,6 +6,8 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -32,6 +34,8 @@ public class LevelSelect extends Database {
 	private JLabel header_login;
 	private ArrayList<User> users;
 	private User[] topTen;
+	private JLabel levelShow;
+	private int level = 1;
 	
 	//draw modifyAccount view
 	public LevelSelect() throws IOException{
@@ -51,6 +55,7 @@ public class LevelSelect extends Database {
 			}
 		});
 		header_login = new JLabel("",SwingConstants.CENTER);
+		levelShow = new JLabel("",SwingConstants.CENTER);
 		controlPanel = new JPanel();
 		controlPanel.setLayout (new BoxLayout(controlPanel, BoxLayout.PAGE_AXIS));//(new FlowLayout());
 		main.add(header_login);
@@ -60,24 +65,28 @@ public class LevelSelect extends Database {
 	}
 	
 	private void drawpanel() {
-		header_login.setText("Level Select");
+		header_login.setText("Select Level using Up or Down arrow keys.");
 		header_login.setFont(new Font("Serif", Font.BOLD, 40));
+		levelShow.setText("Level: " + level + " (Max: " + Login.getUser().getLevelCompleted() + ")" + " Press Enter to Play");
+		levelShow.setFont(new Font("Serif", Font.BOLD, 30));
 		//controlPanel.removeAll();
 		
-		JButton selectButtons[] = new JButton[Login.getUser().getLevelCompleted()];
-		
-		for(int i =1; i < Login.getUser().getLevelCompleted(); i++){
-			selectButtons[i] = new JButton();
-			selectButtons[i].setText(Integer.toString(i));
-			controlPanel.add(selectButtons[i]);
-			final int lvl = i;
-			selectButtons[i].addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
+		controlPanel.addKeyListener(new KeyListener() {
+			public void keyTyped(KeyEvent e) {
+				int value = e.getKeyCode();
+				if (value == KeyEvent.VK_DOWN){
+					if(level > 1)
+						level--;
+				}
+				else if(value ==KeyEvent.VK_UP){
+					if(level < Login.getUser().getLevelCompleted())
+						level++;
+				}
+				else if( value == KeyEvent.VK_ENTER){
 					Thread thread = new Thread(){
 						public void run(){
 							Map.setLife(5);
-							Map play = new Map(lvl);//TODO should take user input of levels or next level when current level clears
+							Map play = new Map(level);//TODO should take user input of levels or next level when current level clears
 							Map.setPaused(false);
 							//play.run();
 						}
@@ -85,10 +94,54 @@ public class LevelSelect extends Database {
 					main.setVisible(false);
 					thread.start();
 				}
-			});
-		}
-		
+				levelShow.revalidate();
+				levelShow.repaint();
+				main.revalidate();
+				main.repaint();
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				int value = e.getKeyCode();
+				if (value == KeyEvent.VK_DOWN){
+					if(level > 1)
+						level--;
+				}
+				else if(value ==KeyEvent.VK_UP){
+					if(level < Login.getUser().getLevelCompleted())
+						level++;
+				}
+				else if(value == KeyEvent.VK_ENTER){
+					Thread thread = new Thread(){
+						public void run(){
+							Map.setLife(5);
+							Map play = new Map(level);//TODO should take user input of levels or next level when current level clears
+							Map.setPaused(false);
+							//play.run();
+						}
+					};
+					main.setVisible(false);
+					thread.start();
+				}
+				levelShow.revalidate();
+				levelShow.repaint();
+				main.revalidate();
+				main.repaint();
+			}
 
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub.
+				levelShow.setText("Level: " + level + " (Max: " + Login.getUser().getLevelCompleted() + ")" + " Press Enter to Play");
+				levelShow.setFont(new Font("Serif", Font.BOLD, 30));
+				levelShow.revalidate();
+				levelShow.repaint();
+				main.revalidate();
+				main.repaint();
+			}
+		});
+		
+		controlPanel.add(levelShow);
 
 		JButton back = new JButton("Main Menu");
 		controlPanel.add(back);
@@ -103,21 +156,79 @@ public class LevelSelect extends Database {
 			}
 		});
 		
-		JButton back2 = new JButton("Pause Menu");
-		controlPanel.add(back2);
-		back2.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//back to menu
-				DrawPauseMenu pauseMenu = DrawPauseMenu.getInstance();
+		back.addKeyListener(new KeyListener() {
+			public void keyTyped(KeyEvent e) {
+				int value = e.getKeyCode();
+				if (value == KeyEvent.VK_DOWN){
+					if(level > 1)
+						level--;
+				}
 				
-				pauseMenu.viewFrame(true);
-				main.setVisible(false);
+				else if(value ==KeyEvent.VK_UP){
+					if(level < Login.getUser().getLevelCompleted())
+						level++;
+				}
+				else if( value == KeyEvent.VK_ENTER ){
+					Thread thread = new Thread(){
+						public void run(){
+							Map.setLife(5);
+							Map play = new Map(level);//TODO should take user input of levels or next level when current level clears
+							Map.setPaused(false);
+							//play.run();
+						}
+					};
+					main.setVisible(false);
+					thread.start();
+				}
+				levelShow.revalidate();
+				levelShow.repaint();
+				main.revalidate();
+				main.repaint();
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				int value = e.getKeyCode();
+				if (value == KeyEvent.VK_DOWN){
+					if(level > 1)
+						level--;
+				}
+				else if(value ==KeyEvent.VK_UP){
+					if(level < Login.getUser().getLevelCompleted())
+						level++;
+				}
+				else if( value == KeyEvent.VK_ENTER){
+					Thread thread = new Thread(){
+						public void run(){
+							Map.setLife(5);
+							Map play = new Map(level);//TODO should take user input of levels or next level when current level clears
+							Map.setPaused(false);
+							//play.run();
+						}
+					};
+					main.setVisible(false);
+					thread.start();
+				}
+				levelShow.revalidate();
+				levelShow.repaint();
+				main.revalidate();
+				main.repaint();
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				levelShow.setText("Level: " + level + " (Max: " + Login.getUser().getLevelCompleted() + ")" + " Press Enter to Play");
+				levelShow.setFont(new Font("Serif", Font.BOLD, 30));
+				levelShow.revalidate();
+				levelShow.repaint();
+				main.revalidate();
+				main.repaint();
 			}
 		});
-
-
 		
+		levelShow.revalidate();
+		levelShow.repaint();
 		main.revalidate();
 		main.repaint();
 		//userText_newName.requestFocus();
