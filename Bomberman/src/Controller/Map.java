@@ -1,6 +1,3 @@
-// next step http://stackoverflow.com/questions/7537570/eliminating-initial-keypress-delay
-
-
 package Controller;
 
 import java.awt.event.*;
@@ -8,7 +5,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Timer;
-import java.util.TimerTask;
 import java.util.TreeMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -17,6 +13,7 @@ import static java.util.concurrent.TimeUnit.*;
 
 import javax.swing.JFrame;
 
+import Controller.CollisionDetection;
 import Model.Bomb;
 import Model.Bomberman;
 import Model.Box;
@@ -28,7 +25,6 @@ import Model.Database;
 import Model.User;
 import Model.Enemies.Enemy;
 import Model.PowerUps.Powerup;
-import Utils.GNode;
 import View.DrawMap;
 import View.DrawMenu;
 import View.DrawPauseMenu;
@@ -58,7 +54,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 	private long gameTime;
 //	private Timer gameTimer;
 	static boolean running = false;
-	private CollissionDetection detect;
+	private CollisionDetection detect;
 	private SpawnGameObjects spawn;
 	private static int bombermanState;
 	private long pausedAt = 0;
@@ -77,7 +73,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 
 		//new objects
 		user = Login.getUser();
-		detect = new CollissionDetection();
+		detect = new CollisionDetection();
 		bombman = new Bomberman();
 		bombs = bombman.getBombs();
 		activeBombs = new ArrayList<Bomb>();
@@ -168,9 +164,10 @@ public class Map implements KeyListener, FocusListener, Serializable{
 		else if(value == KeyEvent.VK_RIGHT && value !=KeyEvent.VK_LEFT){
 			bombermanState = 1;
 			setVelX(bombman.getSpeed());//2
-		}
-		if(value == KeyEvent.VK_ESCAPE || value == KeyEvent.VK_SPACE){
+		} else if(value == KeyEvent.VK_ESCAPE || value == KeyEvent.VK_SPACE){
 			paused = true;
+			setVelY(0);
+			setVelX(0);
 			d.getFrame().setVisible(false);
 			if(!DrawPauseMenu.getInstance().isRunning()){
 				DrawPauseMenu.getInstance().makeFrame();
@@ -178,8 +175,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 			DrawPauseMenu.getInstance().setMap(this);
 			DrawPauseMenu.getInstance().viewFrame(true);
 			DrawPauseMenu.getInstance().run();
-		}
-		if(value == KeyEvent.VK_X && Bomberman.detonate == true && activeBombs.size() >= 1){
+		} else if(value == KeyEvent.VK_X && Bomberman.detonate == true && activeBombs.size() >= 1){
 			for(int i =0; i< activeBombs.size(); i++){
 				if(!activeBombs.get(i).getUsed()){
 					final Runnable unExplode = new Runnable() {
@@ -201,14 +197,13 @@ public class Map implements KeyListener, FocusListener, Serializable{
 			}
 			//activeBombs.get(0).explode();
 			//explosions = activeBombs.get(activeBombs.size()-1).getPersonalExplosions();
-		}
-		if(value == KeyEvent.VK_Z){
+		} else if(value == KeyEvent.VK_Z && !bombs.isEmpty()){
 			//if(bombman.getavailableBombs() != 0){
-			if(bombs.size() != 1){
-				System.out.println(bombs.size());
+//			if(bombs.size() >= 1){
+				System.out.println("bombs Size " + bombs.size());
 				activeBombs.add(new Bomb());
 				bombs.remove(bombs.size()-1);
-				System.out.println(bombs.size());
+				System.out.println("After removing bombs" + bombs.size());
 				int tilex = (int)bombman.getXval() + (int)(0.5*bombman.getWidth());
 				int tiley = (int)bombman.getYval() + (int)(0.5*bombman.getHeight());
 				tilex = (tilex/50) * 50;
@@ -217,34 +212,26 @@ public class Map implements KeyListener, FocusListener, Serializable{
 				activeBombs.get(activeBombs.size()-1).setXval(tilex);
 				activeBombs.get(activeBombs.size()-1).setYval(tiley);
 				activeBombs.get(activeBombs.size()-1).activate();
-
-			}
+//			}
 		}
 	}
 
 	//stop moving when key is released
 	public void keyReleased(KeyEvent e) {
 		int value = e.getKeyCode();
-		if (value == KeyEvent.VK_DOWN){
+		if(value == KeyEvent.VK_DOWN) {
 			if(yVel == bombman.getSpeed())//2
 				setVelY(0);
-		}
-		else if(value ==KeyEvent.VK_UP){
+		} else if(value ==KeyEvent.VK_UP) {
 			if(yVel == -bombman.getSpeed())//-2
 				setVelY(0);
-		}
-		else if(value == KeyEvent.VK_LEFT){
+		} else if(value == KeyEvent.VK_LEFT) {
 			if(xVel == -bombman.getSpeed())//-2
 				setVelX(0);
-		}
-		else if(value == KeyEvent.VK_RIGHT){
+		} else if(value == KeyEvent.VK_RIGHT) {
 			if(xVel == bombman.getSpeed()) //2
 				setVelX(0);
-		}
-		else{
-			setVelX(0);
-			setVelY(0);
-		}
+		} 
 	}    
 
 
@@ -475,8 +462,6 @@ public class Map implements KeyListener, FocusListener, Serializable{
 				TreeMap<Integer, String> killedEnemies = new TreeMap<Integer, String>();
 				for(int j = 0; j < enemies.size(); j++){
 					if(detect.collisionDetection(enemies.get(j), activeBombs.get(0).getPersonalExplosions()[i])){
-						//User.updateScore(enemies.get(j).getPoints());
-						//System.out.println(User.getTotalScore());
 						killedEnemies.put(enemies.get(j).getPoints(), enemies.get(j).getIdentity());
 						enemies.remove(j);
 					}
@@ -512,11 +497,11 @@ public class Map implements KeyListener, FocusListener, Serializable{
 	}
 
 	public void tick2() {
-		//collision check for enemy with indestructibles and bricks
+		//collision check for enemy with indestructibles, bricks and active bombs
 
 		for(int k=0;k<enemies.size();k++) {
 			Enemy enemy = enemies.get(k);
-			enemy.searchFreePath(indestructibles, bricks);
+			enemy.searchFreePath(indestructibles, bricks, bombs);
 
 			//if intelligence is either 2 or 3 it will check if the bomberman is within a range and will try to chase the bomberman
 			if(enemy.getIntelligence() > 1) {
@@ -637,7 +622,6 @@ public class Map implements KeyListener, FocusListener, Serializable{
 		path = enemy.getPath();
 
 		int moveToTile = whichTileIsOn(path.get(path.size()-1).x, path.get(path.size()-1).y);
-		//System.out.println("Astar move to Tile " + moveToTile +" from " + tileEnemy);
 		if(moveToTile == (tileEnemy + 1) && isIntersection(enemy.getXval(), enemy.getYval())) {
 			enemy.setState(0);
 		} else if(moveToTile == (tileEnemy - 1) && isIntersection(enemy.getXval(), enemy.getYval())) {
@@ -903,6 +887,9 @@ public class Map implements KeyListener, FocusListener, Serializable{
 	public static void setLife(int a){
 		life = a;
 	}
+	public static ArrayList<Bomb> getActiveBombs() {
+		return activeBombs;
+	}
 
 	//detects an obstacle within the range of flame
 	public int get_MaxFlame(int i){
@@ -956,9 +943,4 @@ public class Map implements KeyListener, FocusListener, Serializable{
 	}
 	public void focusLost(FocusEvent e) {
 	}
-
-	public static ArrayList<Bomb> getActiveBombs() {
-		return activeBombs;
-	}
-
 }

@@ -29,7 +29,7 @@ public class User implements Serializable{
 		this.setRealName(data[2]);
 		setNumOfPlay(Integer.parseInt(data[3]));
 		setTotalScore(Integer.parseInt(data[4]));
-		System.out.println("Setting total score for "+ this.username + " to " + totalScore);
+		//System.out.println("Setting total score for "+ this.username + " to " + totalScore);
 		setLevelCompleted(Integer.parseInt(data[5]));
 	}
 	

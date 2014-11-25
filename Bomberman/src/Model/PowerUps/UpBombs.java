@@ -1,5 +1,7 @@
 package Model.PowerUps;
 
+import Controller.Map;
+import Model.Bomb;
 import Model.Bomberman;
 
 public class UpBombs extends Powerup{
@@ -10,8 +12,7 @@ public class UpBombs extends Powerup{
 	
 	@Override
 	public void activate() {
-		if(Bomberman.availableBombs <= 10)
-			Bomberman.availableBombs++;
+		Map.getBombs().add(new Bomb());
 	}
 
 }

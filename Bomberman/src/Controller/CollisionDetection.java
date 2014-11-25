@@ -8,7 +8,7 @@ import Model.Bomberman;
 import Model.Explosion;
 import Model.Movable;
 
-public class CollissionDetection implements Serializable{
+public class CollisionDetection implements Serializable{
 
 	public boolean collisionDetection(Movable test, Block i) {
 		boolean collision = false;

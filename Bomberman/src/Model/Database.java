@@ -114,7 +114,6 @@ public class Database {
 		writer.writeAll(userData);
 
 		writer.close();
-		System.out.println("Write complete");
 	}
 
 	/**
