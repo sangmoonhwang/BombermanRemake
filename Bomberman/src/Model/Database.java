@@ -33,8 +33,8 @@ public class Database {
 	}
 
 	/**
-	 * Read the user information
-	 * @param Username
+	 * Read the specified user information
+	 * @param String username
 	 * @return User information
 	 */
 	public static User readUserCSVEntry(String username) throws IOException {
@@ -78,7 +78,7 @@ public class Database {
 		for(int i = 0; i < userData.size(); i++) {
 			user = userData.get(i);
 
-			if(user.equals(username)) {
+			if(user[0].equals(username)) {
 				userData.remove(i);
 				break;
 			}
@@ -102,7 +102,7 @@ public class Database {
 			user[4] = Integer.toString(newTotalScore);
 		}
 
-		if(levelCompleted != Integer.parseInt(user[5])) {
+		if(levelCompleted > Integer.parseInt(user[5])) {
 			user[5] = Integer.toString(levelCompleted);
 		}
 
@@ -114,6 +114,7 @@ public class Database {
 		writer.writeAll(userData);
 
 		writer.close();
+		System.out.println("Write complete");
 	}
 
 	/**
