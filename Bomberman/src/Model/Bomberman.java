@@ -68,7 +68,7 @@ public class Bomberman extends Movable implements Serializable{
 		return availableBombs++;
 	}
 	public static int decrementBombs(){
-		return availableBombs++;
+		return availableBombs--;
 	}
 
 	//getters
@@ -95,7 +95,7 @@ public class Bomberman extends Movable implements Serializable{
 		//System.out.println((System.nanoTime() - mystery_From)/1000000000);
 		return (System.nanoTime() - mystery_From)/1000000000 <= 10; //10seconds?
 	}
-	public static ArrayList<Bomb> getBombs() {
+	public ArrayList<Bomb> getBombs() {
 		return bombs;
 	}
 	public static int getScore() {

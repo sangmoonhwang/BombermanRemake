@@ -128,7 +128,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 		bombman.setXval(50);
 		bombman.setYval(50);
 		activeBombs = new ArrayList<Bomb>();
-		for(int i = 0; i<bombman.getavailableBombs(); i++) {
+		for(int i = 0; i<bombman.getavailableBombs()+1; i++) {
 			bombman.getBombs().add(new Bomb(false));
 		}
 		spawn = new SpawnGameObjects(level);
@@ -894,7 +894,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 		Bomberman.availableBombs = 1;
 		bombman.getBombs().clear();
 		bombman.getBombs().add(new Bomb(false));
-		//bombman.getBombs().add(new Bomb());
+		bombman.getBombs().add(new Bomb(false));
 	}
 
 	//setters
