@@ -51,7 +51,7 @@ public class SpawnGameObjects implements Serializable{
 		}
 		return indestructibles;
 	}
-	
+
 	public ArrayList<Tile> spawnTiles() {
 		for(int x=0; x<31; x++){
 			for(int y=0; y<13; y++){
@@ -69,16 +69,16 @@ public class SpawnGameObjects implements Serializable{
 	public ArrayList<Destructible> spawnBricks() {
 		for(int x = 1; x<30; x++){
 			for(int y = 1; y<12; y++){
-				if((x!=1 && y!=1) && (x!=1 && y!=2) && (x!=2 && y!=1) ){
-					double random = Math.random();
-					if(random<=0.3){
-						int xVal = x*50;
-						int yVal = y*50;
-						int tile = whichTileIsOn(xVal,yVal);
-						if(validBrickSpawn(tile))
-							bricks.add(new Destructible(xVal,yVal));
+				double random = Math.random();
+				if(random<=0.15){
+					int xVal = x*50;
+					int yVal = y*50;
+					int tile = whichTileIsOn(xVal,yVal);
+					if(validBrickSpawn(tile) && (x!=50 && y!=50) && (x!=50 && y!=100) && (x!=100 && y!=50)){
+						bricks.add(new Destructible(xVal,yVal));
 					}
 				}
+
 			}
 		}
 		return bricks;
@@ -188,14 +188,14 @@ public class SpawnGameObjects implements Serializable{
 			if(whichTileIsOn(enemies.get(i).getXval(), enemies.get(i).getYval()) == tile)
 				return false;
 		}
-		
+
 		if(tile == 32 || tile == 33 || tile == 34 || tile == 35 || tile == 63 || tile == 65
 				|| tile == 94 || tile == 95 || tile == 96 || tile == 97 || tile == 125 || tile == 127)
 			return false;
 
 		return true;
 	}
-	
+
 	/**
 	 * check if the enemy will get stuck in the concrete when they are spwaned, if it is then change the moving direction
 	 * @param Enemy object
