@@ -8,6 +8,7 @@ import Model.Destructible;
 import Model.Door;
 import Model.Explosion;
 import Model.Indestructible;
+import Model.Tile;
 import Model.Enemies.Balloom;
 import Model.Enemies.Enemy;
 import Model.PowerUps.Powerup;
@@ -20,6 +21,7 @@ public class SpawnGameObjects implements Serializable{
 	private static ArrayList<Enemy> enemies;
 	private static ArrayList<String> enemy;
 	private static ArrayList<String> powerUp;
+	private static ArrayList<Tile> tiles; //background purposes only
 	private static Powerup power;
 	private static Door door;
 
@@ -29,6 +31,7 @@ public class SpawnGameObjects implements Serializable{
 		enemies = new ArrayList<Enemy>();
 		enemy = new ArrayList<String>(10);
 		powerUp = new ArrayList<String>(1);
+		tiles = new ArrayList<Tile>();
 		door = new Door();
 		levels(level);
 	}
@@ -47,6 +50,15 @@ public class SpawnGameObjects implements Serializable{
 			}
 		}
 		return indestructibles;
+	}
+	
+	public ArrayList<Tile> spawnTiles() {
+		for(int x=0; x<31; x++){
+			for(int y=0; y<13; y++){
+				tiles.add(new Tile(50*x, 50*y));
+			}
+		}
+		return tiles;
 	}
 
 	/**

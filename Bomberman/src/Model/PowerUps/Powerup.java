@@ -100,7 +100,7 @@ public class Powerup extends Block implements Serializable{
 		} else if(identity.equals("UpBombs")) {
 			if(Bomberman.availableBombs <= 10)
 				Bomberman.availableBombs++;
-			Bomberman.bombs.add(new Bomb());
+			Bomberman.bombs.add(new Bomb(false));
 		} else if(identity.equals("Wallpass")) {
 			Bomberman.wallPass = true;
 		}

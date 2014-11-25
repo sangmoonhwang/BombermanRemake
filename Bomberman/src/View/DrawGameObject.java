@@ -36,6 +36,7 @@ public class DrawGameObject extends JPanel{
 	private Image Pontan;
 	private Image speed;
 	private Image wallPass;
+	private Image Tile;
 	private int previousPosOfBomberman;
 	private int xVisible;
 
@@ -56,6 +57,7 @@ public class DrawGameObject extends JPanel{
 		mystery = Toolkit.getDefaultToolkit().getImage("Bomberman_Mystery.png");
 		speed = Toolkit.getDefaultToolkit().getImage("Bomberman_Speed.png");
 		wallPass = Toolkit.getDefaultToolkit().getImage("Bomberman_Wallpass.png");
+		Tile = Toolkit.getDefaultToolkit().getImage("Tile.jpg");
 
 		previousPosOfBomberman = 0;
 		xVisible = 0;
@@ -85,6 +87,13 @@ public class DrawGameObject extends JPanel{
 		else{
 			
 			g.translate(0,0);
+		}
+		
+		//draw tiles for background
+		for(int i = 0; i< Map.getTiles().size();i++){
+			int tilex = Map.getTiles().get(i).getXval();
+			int tiley = Map.getTiles().get(i).getYval();
+			g.drawImage(Tile, tilex, tiley, 50, 50, this);
 		}
 
 
@@ -161,6 +170,7 @@ public class DrawGameObject extends JPanel{
 		int bombermanWidth = bombman.getWidth();
 		int bombermanHeight = bombman.getHeight();
 		g.drawImage(bombermanSprite, bombermanX, bombermanY, bombermanWidth, bombermanHeight, this);
+		
 
 	}
 }
