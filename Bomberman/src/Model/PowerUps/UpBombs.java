@@ -12,7 +12,7 @@ public class UpBombs extends Powerup{
 	
 	@Override
 	public void activate() {
-		Map.getBombs().add(new Bomb());
+		Bomberman.getBombs().add(new Bomb(false));
 	}
 
 }
