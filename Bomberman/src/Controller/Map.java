@@ -163,11 +163,9 @@ public class Map implements KeyListener, FocusListener{
 			setVelX(bombman.getSpeed());//2
 		} else if(value == KeyEvent.VK_ESCAPE || value == KeyEvent.VK_SPACE){
 			paused = true;
+			setVelY(0);
+			setVelX(0);
 			d.getFrame().setVisible(false);
-			if(!DrawPauseMenu.getInstance().isRunning()){
-				DrawPauseMenu.getInstance().makeFrame();
-			}
-			DrawPauseMenu.getInstance().viewFrame(true);
 			DrawPauseMenu.getInstance().run();
 		} else if(value == KeyEvent.VK_X && Bomberman.detonate == true && activeBombs.size() >= 1){
 			for(int i =0; i< activeBombs.size(); i++){
