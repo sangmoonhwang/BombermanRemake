@@ -52,7 +52,7 @@ public class Map implements KeyListener, FocusListener{
 	private long gameTime;
 	private Timer gameTimer;
 	static boolean running = false;
-	private CollissionDetection detect;
+	private CollisionDetection detect;
 	private SpawnGameObjects spawn;
 	private static int bombermanState;
 	private long pausedAt = 0;
@@ -71,7 +71,7 @@ public class Map implements KeyListener, FocusListener{
 
 		//new objects
 		user = Login.getUser();
-		detect = new CollissionDetection();
+		detect = new CollisionDetection();
 		bombman = new Bomberman();
 		bombs = bombman.getBombs();
 		activeBombs = new ArrayList<Bomb>();
@@ -163,11 +163,9 @@ public class Map implements KeyListener, FocusListener{
 			setVelX(bombman.getSpeed());//2
 		} else if(value == KeyEvent.VK_ESCAPE || value == KeyEvent.VK_SPACE){
 			paused = true;
+			setVelY(0);
+			setVelX(0);
 			d.getFrame().setVisible(false);
-			if(!DrawPauseMenu.getInstance().isRunning()){
-				DrawPauseMenu.getInstance().makeFrame();
-			}
-			DrawPauseMenu.getInstance().viewFrame(true);
 			DrawPauseMenu.getInstance().run();
 		} else if(value == KeyEvent.VK_X && Bomberman.detonate == true && activeBombs.size() >= 1){
 			for(int i =0; i< activeBombs.size(); i++){
@@ -191,9 +189,9 @@ public class Map implements KeyListener, FocusListener{
 			}
 			//activeBombs.get(0).explode();
 			//explosions = activeBombs.get(activeBombs.size()-1).getPersonalExplosions();
-		} else if(value == KeyEvent.VK_Z){
+		} else if(value == KeyEvent.VK_Z && !bombs.isEmpty()){
 			//if(bombman.getavailableBombs() != 0){
-			if(bombs.size() >= 1){
+//			if(bombs.size() >= 1){
 				System.out.println("bombs Size " + bombs.size());
 				activeBombs.add(new Bomb());
 				bombs.remove(bombs.size()-1);
@@ -206,7 +204,7 @@ public class Map implements KeyListener, FocusListener{
 				activeBombs.get(activeBombs.size()-1).setXval(tilex);
 				activeBombs.get(activeBombs.size()-1).setYval(tiley);
 				activeBombs.get(activeBombs.size()-1).activate();
-			}
+//			}
 		}
 	}
 
@@ -881,6 +879,9 @@ public class Map implements KeyListener, FocusListener{
 	public static void setLife(int a){
 		life = a;
 	}
+	public static ArrayList<Bomb> getActiveBombs() {
+		return activeBombs;
+	}
 
 	//detects an obstacle within the range of flame
 	public int get_MaxFlame(int i){
@@ -931,9 +932,4 @@ public class Map implements KeyListener, FocusListener{
 	}
 	public void focusLost(FocusEvent e) {
 	}
-
-	public static ArrayList<Bomb> getActiveBombs() {
-		return activeBombs;
-	}
-
 }
