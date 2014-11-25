@@ -47,12 +47,12 @@ public class Map implements KeyListener, FocusListener, Serializable{
 	private int yVel;
 	private static int life = 5;
 	private int level;
-//	private final ScheduledExecutorService scheduler;
+	//	private final ScheduledExecutorService scheduler;
 	private static int width;
 	private static int height;
 	private long startTime = System.nanoTime()/1000000000;
 	private long gameTime;
-//	private Timer gameTimer;
+	//	private Timer gameTimer;
 	static boolean running = false;
 	private CollisionDetection detect;
 	private SpawnGameObjects spawn;
@@ -89,21 +89,21 @@ public class Map implements KeyListener, FocusListener, Serializable{
 		enemies = spawn.spawnEnemies();
 		power = spawn.spawnPowerup();
 		door = spawn.spawnDoor();
-		
 
-//		scheduler = Executors.newScheduledThreadPool(10);
+
+		//		scheduler = Executors.newScheduledThreadPool(10);
 
 		d = DrawMap.getInstance();
 		running = true;
 		paused = false;
-//		gameTimer = new Timer();
-//		gameTimer.schedule(new TimerTask(){
-//			public void run(){
-//				//change
-//				System.out.println("Times up!");
-//				d.getStatusBar().setText("Times Up!");
-//			};
-//		},200000);
+		//		gameTimer = new Timer();
+		//		gameTimer.schedule(new TimerTask(){
+		//			public void run(){
+		//				//change
+		//				System.out.println("Times up!");
+		//				d.getStatusBar().setText("Times Up!");
+		//			};
+		//		},200000);
 		this.run();
 	}
 
@@ -118,7 +118,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 		long start = System.nanoTime();
 		final double amountOfTicks = 60.0;
 		double ns = 1000000000 / amountOfTicks;
-		
+
 		while(running) {
 			if(!paused){
 				long now = System.nanoTime();
@@ -165,16 +165,14 @@ public class Map implements KeyListener, FocusListener, Serializable{
 			bombermanState = 1;
 			setVelX(bombman.getSpeed());//2
 		} else if(value == KeyEvent.VK_ESCAPE || value == KeyEvent.VK_SPACE){
-			paused = true;
-			setVelY(0);
-			setVelX(0);
-			d.getFrame().setVisible(false);
-			if(!DrawPauseMenu.getInstance().isRunning()){
-				DrawPauseMenu.getInstance().makeFrame();
+			if(!paused){
+				paused = true;
+				setVelY(0);
+				setVelX(0);
+				d.getFrame().setVisible(false);
+				DrawPauseMenu.getInstance().run();
+				DrawPauseMenu.getInstance().setMap(this);
 			}
-			DrawPauseMenu.getInstance().setMap(this);
-			DrawPauseMenu.getInstance().viewFrame(true);
-			DrawPauseMenu.getInstance().run();
 		} else if(value == KeyEvent.VK_X && Bomberman.detonate == true && !activeBombs.isEmpty()){
 			for(int i =0; i< activeBombs.size(); i++){
 				if(!activeBombs.get(i).getUsed()){
@@ -199,20 +197,20 @@ public class Map implements KeyListener, FocusListener, Serializable{
 			//explosions = activeBombs.get(activeBombs.size()-1).getPersonalExplosions();
 		} else if(value == KeyEvent.VK_Z && !bombs.isEmpty()){
 			//if(bombman.getavailableBombs() != 0){
-//			if(bombs.size() >= 1){
-				System.out.println("bombs Size " + bombs.size());
-				activeBombs.add(new Bomb());
-				bombs.remove(bombs.size()-1);
-				System.out.println("After removing bombs" + bombs.size());
-				int tilex = (int)bombman.getXval() + (int)(0.5*bombman.getWidth());
-				int tiley = (int)bombman.getYval() + (int)(0.5*bombman.getHeight());
-				tilex = (tilex/50) * 50;
-				tiley = (tiley/50) * 50;
+			//			if(bombs.size() >= 1){
+			System.out.println("bombs Size " + bombs.size());
+			activeBombs.add(new Bomb());
+			bombs.remove(bombs.size()-1);
+			System.out.println("After removing bombs" + bombs.size());
+			int tilex = (int)bombman.getXval() + (int)(0.5*bombman.getWidth());
+			int tiley = (int)bombman.getYval() + (int)(0.5*bombman.getHeight());
+			tilex = (tilex/50) * 50;
+			tiley = (tiley/50) * 50;
 
-				activeBombs.get(activeBombs.size()-1).setXval(tilex);
-				activeBombs.get(activeBombs.size()-1).setYval(tiley);
-				activeBombs.get(activeBombs.size()-1).activate();
-//			}
+			activeBombs.get(activeBombs.size()-1).setXval(tilex);
+			activeBombs.get(activeBombs.size()-1).setYval(tiley);
+			activeBombs.get(activeBombs.size()-1).activate();
+			//			}
 		}
 	}
 
@@ -299,7 +297,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 		}
 
 		//Bomberman and Bombs Collisions
-		if(!Bomberman.bombPass){
+		if(!Bomberman.bombPass && !activeBombs.isEmpty()){
 			for (int i=0; i<activeBombs.size(); i++){
 				if(detect.collisionDetection(bombman, activeBombs.get(i))){
 					if(activeBombs.get(i).getEscaped()){
@@ -315,165 +313,163 @@ public class Map implements KeyListener, FocusListener, Serializable{
 
 
 		//explosion check  
-		if(activeBombs.size() != 0 && activeBombs.get(0).getPersonalExplosions()[0].isExploding()){
-			for(int i = 0; i < 5; i++){
-				
-				
-				/* This massive ugly switch creates a test explosion to find the right
-				 * width/height/xval/yval depending on the explosion, then sets the real
-				 * explosion's values to the closest collision before making the important
-				 * collision detection that has an outcome in the game
-				 */
+		if(!activeBombs.isEmpty()) {
+			if(activeBombs.get(0).getPersonalExplosions()[0].isExploding()) {
+				for(int i = 0; i < 5; i++) {
+					/* This massive ugly switch creates a test explosion to find the right
+					 * width/height/xval/yval depending on the explosion, then sets the real
+					 * explosion's values to the closest collision before making the important
+					 * collision detection that has an outcome in the game
+					 */
 
-				switch(i) {
+					switch(i) {
 
-				case 1:
-					boolean rightAdjust = false;
-					Explosion testR = new Explosion();
-					testR = activeBombs.get(0).getPersonalExplosions()[1];
-					while(detect.collisionDetection(bombman, testR)){
-						testR.adjustWidth(-50);
-						rightAdjust = true;
-					}
-					for(int j = 0; j < enemies.size(); j++){
-						while(detect.collisionDetection(enemies.get(j), testR)){
+					case 1:
+						boolean rightAdjust = false;
+						Explosion testR = new Explosion();
+						testR = activeBombs.get(0).getPersonalExplosions()[1];
+						while(detect.collisionDetection(bombman, testR)){
 							testR.adjustWidth(-50);
 							rightAdjust = true;
 						}
-					}
-					for(int k = 0; k < bricks.size();k++){
-						while(detect.collisionDetection(testR, bricks.get(k))){
-							testR.adjustWidth(-50);
-							rightAdjust = true;
+						for(int j = 0; j < enemies.size(); j++){
+							while(detect.collisionDetection(enemies.get(j), testR)){
+								testR.adjustWidth(-50);
+								rightAdjust = true;
+							}
 						}
-					}
-					for(int k = 0; k < indestructibles.size();k++){
-						while(detect.collisionDetection(testR, indestructibles.get(k))){
-							testR.adjustWidth(-50);
-							rightAdjust = true;
+						for(int k = 0; k < bricks.size();k++){
+							while(detect.collisionDetection(testR, bricks.get(k))){
+								testR.adjustWidth(-50);
+								rightAdjust = true;
+							}
 						}
-					}
-					if(rightAdjust){
-						activeBombs.get(0).getPersonalExplosions()[1].setWidth(testR.getWidth()+50);
-					}
+						for(int k = 0; k < indestructibles.size();k++){
+							while(detect.collisionDetection(testR, indestructibles.get(k))){
+								testR.adjustWidth(-50);
+								rightAdjust = true;
+							}
+						}
+						if(rightAdjust){
+							activeBombs.get(0).getPersonalExplosions()[1].setWidth(testR.getWidth()+50);
+						}
 
-				case 2:
-					boolean leftAdjust = false;
-					Explosion testL = new Explosion();
-					testL = activeBombs.get(0).getPersonalExplosions()[2];
-					while(detect.collisionDetection(bombman, testL)){
-						testL.adjustXval(50);
-						leftAdjust = true;
-					}
-					for(int j = 0; j < enemies.size(); j++){
-						while(detect.collisionDetection(enemies.get(j), testL)){
+					case 2:
+						boolean leftAdjust = false;
+						Explosion testL = new Explosion();
+						testL = activeBombs.get(0).getPersonalExplosions()[2];
+						while(detect.collisionDetection(bombman, testL)){
 							testL.adjustXval(50);
 							leftAdjust = true;
 						}
-					}
-					for(int k = 0; k < bricks.size();k++){
-						while(detect.collisionDetection(testL, bricks.get(k))){
-							testL.adjustXval(50);
-							leftAdjust = true;
+						for(int j = 0; j < enemies.size(); j++){
+							while(detect.collisionDetection(enemies.get(j), testL)){
+								testL.adjustXval(50);
+								leftAdjust = true;
+							}
 						}
-					}
-					for(int k = 0; k < indestructibles.size();k++){
-						while(detect.collisionDetection(testL, indestructibles.get(k))){
-							testL.adjustXval(50);
-							leftAdjust = true;
+						for(int k = 0; k < bricks.size();k++){
+							while(detect.collisionDetection(testL, bricks.get(k))){
+								testL.adjustXval(50);
+								leftAdjust = true;
+							}
 						}
-					}
-					if(leftAdjust){
-						activeBombs.get(0).getPersonalExplosions()[2].setXval(testL.getXval()-50);
+						for(int k = 0; k < indestructibles.size();k++){
+							while(detect.collisionDetection(testL, indestructibles.get(k))){
+								testL.adjustXval(50);
+								leftAdjust = true;
+							}
+						}
+						if(leftAdjust){
+							activeBombs.get(0).getPersonalExplosions()[2].setXval(testL.getXval()-50);
+						}
+
+					case 3:
+						boolean topAdjust = false;
+						Explosion testT = new Explosion();
+						testT = activeBombs.get(0).getPersonalExplosions()[3];
+						while(detect.collisionDetection(bombman, testT)){
+							testT.adjustHeight(-50);
+							topAdjust = true;
+						}
+						for(int j = 0; j < enemies.size(); j++){
+							while(detect.collisionDetection(enemies.get(j), testT)){
+								testT.adjustHeight(-50);
+								topAdjust = true;
+							}
+						}
+						for(int k = 0; k < bricks.size();k++){
+							while(detect.collisionDetection(testT, bricks.get(k))){
+								testT.adjustHeight(-50);
+								topAdjust = true;
+							}
+						}
+						for(int k = 0; k < indestructibles.size();k++){
+							while(detect.collisionDetection(testT, indestructibles.get(k))){
+								testT.adjustHeight(-50);
+								topAdjust = true;
+							}
+						}
+						if(topAdjust){
+							activeBombs.get(0).getPersonalExplosions()[3].setHeight(testT.getHeight()+50);
+						}
+
+					case 4:
+						boolean botAdjust = false;
+						Explosion testB = new Explosion();
+						testB = activeBombs.get(0).getPersonalExplosions()[4];
+						while(detect.collisionDetection(bombman, testB)){
+							testB.adjustYval(50);
+							botAdjust = true;
+						}
+						for(int j = 0; j < enemies.size(); j++){
+							while(detect.collisionDetection(enemies.get(j), testB)){
+								testB.adjustYval(50);
+								botAdjust = true;
+							}
+						}
+						for(int k = 0; k < bricks.size();k++){
+							while(detect.collisionDetection(testB, bricks.get(k))){
+								testB.adjustYval(50);
+								botAdjust = true;
+							}
+						}
+						for(int k = 0; k < indestructibles.size();k++){
+							while(detect.collisionDetection(testB, indestructibles.get(k))){
+								testB.adjustYval(50);
+								botAdjust = true;
+							}
+						}
+						if(botAdjust){
+							activeBombs.get(0).getPersonalExplosions()[4].setYval(testB.getYval()-50);
+						}
 					}
 
-				case 3:
-					boolean topAdjust = false;
-					Explosion testT = new Explosion();
-					testT = activeBombs.get(0).getPersonalExplosions()[3];
-					while(detect.collisionDetection(bombman, testT)){
-						testT.adjustHeight(-50);
-						topAdjust = true;
+
+					//Collision Detection
+					if(detect.collisionDetection(bombman, activeBombs.get(0).getPersonalExplosions()[i])){
+						if(!bombman.flamePass && !bombman.isMystery()){
+							dieBombman();
+						}
+
 					}
+
+					TreeMap<Integer, String> killedEnemies = new TreeMap<Integer, String>();
 					for(int j = 0; j < enemies.size(); j++){
-						while(detect.collisionDetection(enemies.get(j), testT)){
-							testT.adjustHeight(-50);
-							topAdjust = true;
+						if(detect.collisionDetection(enemies.get(j), activeBombs.get(0).getPersonalExplosions()[i])){
+							killedEnemies.put(enemies.get(j).getPoints(), enemies.get(j).getIdentity());
+							enemies.remove(j);
 						}
 					}
+
+					//point Calculation
+					if(!killedEnemies.isEmpty())
+						pointCalculation(killedEnemies);
+
 					for(int k = 0; k < bricks.size();k++){
-						while(detect.collisionDetection(testT, bricks.get(k))){
-							testT.adjustHeight(-50);
-							topAdjust = true;
+						if(detect.collisionDetection(activeBombs.get(0).getPersonalExplosions()[i], bricks.get(k))){
+							bricks.remove(k);
 						}
-					}
-					for(int k = 0; k < indestructibles.size();k++){
-						while(detect.collisionDetection(testT, indestructibles.get(k))){
-							testT.adjustHeight(-50);
-							topAdjust = true;
-						}
-					}
-					if(topAdjust){
-						activeBombs.get(0).getPersonalExplosions()[3].setHeight(testT.getHeight()+50);
-					}
-
-				case 4:
-					boolean botAdjust = false;
-					Explosion testB = new Explosion();
-					testB = activeBombs.get(0).getPersonalExplosions()[4];
-					while(detect.collisionDetection(bombman, testB)){
-						testB.adjustYval(50);
-						botAdjust = true;
-					}
-					for(int j = 0; j < enemies.size(); j++){
-						while(detect.collisionDetection(enemies.get(j), testB)){
-							testB.adjustYval(50);
-							botAdjust = true;
-						}
-					}
-					for(int k = 0; k < bricks.size();k++){
-						while(detect.collisionDetection(testB, bricks.get(k))){
-							testB.adjustYval(50);
-							botAdjust = true;
-						}
-					}
-					for(int k = 0; k < indestructibles.size();k++){
-						while(detect.collisionDetection(testB, indestructibles.get(k))){
-							testB.adjustYval(50);
-							botAdjust = true;
-						}
-					}
-					if(botAdjust){
-						activeBombs.get(0).getPersonalExplosions()[4].setYval(testB.getYval()-50);
-					}
-
-
-				}
-
-
-				//Collision Detection
-				if(detect.collisionDetection(bombman, activeBombs.get(0).getPersonalExplosions()[i])){
-					if(!bombman.flamePass && !bombman.isMystery()){
-						dieBombman();
-					}
-					
-				}
-				
-				TreeMap<Integer, String> killedEnemies = new TreeMap<Integer, String>();
-				for(int j = 0; j < enemies.size(); j++){
-					if(detect.collisionDetection(enemies.get(j), activeBombs.get(0).getPersonalExplosions()[i])){
-						killedEnemies.put(enemies.get(j).getPoints(), enemies.get(j).getIdentity());
-						enemies.remove(j);
-					}
-				}
-				
-				//point Calculation
-				if(!killedEnemies.isEmpty())
-					pointCalculation(killedEnemies);
-				
-				for(int k = 0; k < bricks.size();k++){
-					if(detect.collisionDetection(activeBombs.get(0).getPersonalExplosions()[i], bricks.get(k))){
-						bricks.remove(k);
 					}
 				}
 			}
@@ -488,7 +484,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 
 
 		//Powerup obtaining
-//		System.out.println(whichTileIsOn(power.getXval(), power.getYval()));
+		//		System.out.println(whichTileIsOn(power.getXval(), power.getYval()));
 		if(detect.collisionDetection(bombman, power)){
 			power.setXval(0);
 			power.setYval(0);
@@ -766,7 +762,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 		int tmp = (y/50);
 		return  ((x/50) + tmp*31);
 	}
-	
+
 	/**
 	 * Calculates the killed enemy points and updates the User total points
 	 * @param TreeMap<Integer, String>
@@ -774,15 +770,15 @@ public class Map implements KeyListener, FocusListener, Serializable{
 	 */
 	public void pointCalculation(TreeMap<Integer, String> killedEnemies) {
 		int totalPoints = 0, key, numberOfKills = 2;
-		
+
 		key = killedEnemies.lastKey();
 		killedEnemies.remove(key);
 		totalPoints = key;
-		
+
 		while(!killedEnemies.isEmpty()){
 			key = killedEnemies.lastKey();
 			killedEnemies.remove(key);
-			
+
 			totalPoints += key * numberOfKills;
 			numberOfKills *= 2;
 		}
@@ -813,7 +809,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 			game.getFrame().dispose();
 		}
 	}
-	
+
 	/**
 	 * soft reset bombman in case of death: only preserves speed, bombs, flames
 	 */
@@ -824,7 +820,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 		Bomberman.wallPass = false;
 		Bomberman.mystery_From = -1000000000;
 	}
-	
+
 	/**
 	 * hard reset bombman
 	 */
