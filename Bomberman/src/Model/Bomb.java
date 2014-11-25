@@ -67,7 +67,7 @@ public class Bomb implements Serializable{
 				for(int i = 0; i < 4; i++){
 					personalExplosions[i].setExploding(false);
 				}
-				Bomberman.getBombs().add(new Bomb(false));
+				Map.getBomberman().getBombs().add(new Bomb(false));
 				Map.getActiveBombs().remove(Map.getActiveBombs().size()-1);
 			}
 		};

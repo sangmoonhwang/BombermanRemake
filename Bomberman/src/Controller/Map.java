@@ -109,6 +109,51 @@ public class Map implements KeyListener, FocusListener, Serializable{
 		//		},200000);
 		this.run();
 	}
+	
+	public Map(int level, Bomberman bombman){
+		this.level = level;
+		//attributes
+		width = 50;
+		height = 50;
+		xVel = 0;
+		yVel = 0;
+
+		//new objects
+		user = Login.getUser();
+		detect = new CollisionDetection();
+//		bombman = new Bomberman();
+//		bombs = bombman.getBombs();
+		activeBombs = new ArrayList<Bomb>();
+		spawn = new SpawnGameObjects(level);
+		explosions = new Explosion[9];
+		for(int i = 0; i<8; i++){
+			explosions[i] = new Explosion();
+		}
+
+		//spawn gameObjects
+		indestructibles = spawn.spawnIndestructibles();
+		bricks = spawn.spawnBricks();
+		enemies = spawn.spawnEnemies();
+		power = spawn.spawnPowerup();
+		door = spawn.spawnDoor();
+		tiles = spawn.spawnTiles();
+
+
+		//		scheduler = Executors.newScheduledThreadPool(10);
+
+		d = DrawMap.getInstance();
+		running = true;
+		paused = false;
+		//		gameTimer = new Timer();
+		//		gameTimer.schedule(new TimerTask(){
+		//			public void run(){
+		//				//change
+		//				System.out.println("Times up!");
+		//				d.getStatusBar().setText("Times Up!");
+		//			};
+		//		},200000);
+		this.run();
+	}
 
 	public void run(){
 		d.run();
@@ -186,7 +231,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 							for(int i = 0; i < 4; i++){
 								activeBombs.get(0).getPersonalExplosions()[i].setExploding(false);
 							}
-							Bomberman.getBombs().add(new Bomb(false));
+							bombman.getBombs().add(new Bomb(false));
 							activeBombs.remove(0);
 						}
 					};
@@ -198,11 +243,11 @@ public class Map implements KeyListener, FocusListener, Serializable{
 			}
 			//activeBombs.get(0).explode();
 			//explosions = activeBombs.get(activeBombs.size()-1).getPersonalExplosions();
-		} else if(value == KeyEvent.VK_Z && !Bomberman.getBombs().isEmpty()){
-			System.out.println("bombs Size " + Bomberman.getBombs().size());
+		} else if(value == KeyEvent.VK_Z && !bombman.getBombs().isEmpty()){
+			System.out.println("bombs Size " + bombman.getBombs().size());
 			activeBombs.add(new Bomb(true));
-			Bomberman.getBombs().remove(Bomberman.getBombs().size()-1);
-			System.out.println("After removing bombs" + Bomberman.getBombs().size());
+			bombman.getBombs().remove(bombman.getBombs().size()-1);
+			System.out.println("After removing bombs" + bombman.getBombs().size());
 			int tilex = (int)bombman.getXval() + (int)(0.5*bombman.getWidth());
 			int tiley = (int)bombman.getYval() + (int)(0.5*bombman.getHeight());
 			tilex = (tilex/50) * 50;
@@ -476,7 +521,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 		}
 
 		if(detect.collisionDetection(bombman, door) && enemies.size() == 0) {
-			new Map(level+1);
+			new Map(level+1, bombman);
 			System.out.println("Level Complete!");
 			user.setLevelCompleted(level);
 		}
@@ -833,8 +878,8 @@ public class Map implements KeyListener, FocusListener, Serializable{
 		Bomberman.speed = 2;
 		Bomberman.flames = 1;
 		Bomberman.availableBombs = 1;
-		Bomberman.getBombs().clear();
-		Bomberman.getBombs().add(new Bomb(false));
+		bombman.getBombs().clear();
+		bombman.getBombs().add(new Bomb(false));
 		//bombman.getBombs().add(new Bomb());
 	}
 
