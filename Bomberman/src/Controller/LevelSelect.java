@@ -10,7 +10,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.TreeMap;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -24,7 +23,7 @@ import Model.User;
 import View.DrawMenu;
 import View.DrawPauseMenu;
 
-public class Leaderboard extends Database {
+public class LevelSelect extends Database {
 	public String newUsername;
 	public String oldPassword;
 	public String newPassword;
@@ -35,9 +34,8 @@ public class Leaderboard extends Database {
 	private User[] topTen;
 	
 	//draw modifyAccount view
-	public Leaderboard() throws IOException{
-		users = returnAllUsers();
-		//System.out.println(users.get(0).getTotalScore());
+	public LevelSelect() throws IOException{
+		users = returnUsers();
 		topTen = new User[10];
 		sort();
 		main = new JFrame("Leaderboards");
@@ -62,43 +60,33 @@ public class Leaderboard extends Database {
 	}
 	
 	private void drawpanel() {
-		header_login.setText("Leaderboards");
+		header_login.setText("Level Select");
 		header_login.setFont(new Font("Serif", Font.BOLD, 40));
 		//controlPanel.removeAll();
 		
-		JLabel first = new JLabel("1. " + topTen[0].getUsername() + ", " + topTen[0].getTotalScore() + " Number of Plays " + topTen[0].getNumOfPlay());
-		JLabel second = new JLabel("2. " + topTen[1].getUsername() + ", " + topTen[1].getTotalScore() + " Number of Plays " + topTen[1].getNumOfPlay());
-		JLabel third = new JLabel("3. " + topTen[2].getUsername() + ", " + topTen[2].getTotalScore() + " Number of Plays " + topTen[2].getNumOfPlay());
-		JLabel fourth = new JLabel("4. " + topTen[3].getUsername() + ", " + topTen[3].getTotalScore() + " Number of Plays " + topTen[3].getNumOfPlay());
-		JLabel fifth = new JLabel("5. " + topTen[4].getUsername() + ", " + topTen[4].getTotalScore() + " Number of Plays " + topTen[4].getNumOfPlay());
-		JLabel sixth = new JLabel("6. " + topTen[5].getUsername() + ", " + topTen[5].getTotalScore() + " Number of Plays " + topTen[5].getNumOfPlay());
-		JLabel seventh = new JLabel("7. " + topTen[6].getUsername() + ", " + topTen[6].getTotalScore() + " Number of Plays " + topTen[6].getNumOfPlay());
-		JLabel eighth = new JLabel("8. " + topTen[7].getUsername() + ", " + topTen[7].getTotalScore() + " Number of Plays " + topTen[7].getNumOfPlay());
-		JLabel ninth = new JLabel("9. " + topTen[8].getUsername() + ", " + topTen[8].getTotalScore() + " Number of Plays " + topTen[8].getNumOfPlay());
-		JLabel tenth = new JLabel("10. " + topTen[9].getUsername() + ", " + topTen[9].getTotalScore() + " Number of Plays " + topTen[9].getNumOfPlay());
-		JLabel viewer = new JLabel("You: " + Login.getUser().getUsername() + ", " + Login.getUser().getTotalScore() + " Number of Plays " + Login.getUser().getNumOfPlay());
-		first.setFont(new Font("Serif", Font.BOLD, 20));
-		second.setFont(new Font("Serif", Font.BOLD, 20));
-		third.setFont(new Font("Serif", Font.BOLD, 20));
-		fourth.setFont(new Font("Serif", Font.BOLD, 20));
-		fifth.setFont(new Font("Serif", Font.BOLD, 20));
-		sixth.setFont(new Font("Serif", Font.BOLD, 20));
-		seventh.setFont(new Font("Serif", Font.BOLD, 20));
-		eighth.setFont(new Font("Serif", Font.BOLD, 20));
-		ninth.setFont(new Font("Serif", Font.BOLD, 20));
-		tenth.setFont(new Font("Serif", Font.BOLD, 20));
-		viewer.setFont(new Font("Serif", Font.BOLD, 20));
-		controlPanel.add(first);
-		controlPanel.add(second);
-		controlPanel.add(third);
-		controlPanel.add(fourth);
-		controlPanel.add(fifth);
-		controlPanel.add(sixth);
-		controlPanel.add(seventh);
-		controlPanel.add(eighth);
-		controlPanel.add(ninth);
-		controlPanel.add(tenth);
-		controlPanel.add(viewer);
+		JButton selectButtons[] = new JButton[Login.getUser().getLevelCompleted()];
+		
+		for(int i =1; i < Login.getUser().getLevelCompleted(); i++){
+			selectButtons[i] = new JButton();
+			selectButtons[i].setText(Integer.toString(i));
+			controlPanel.add(selectButtons[i]);
+			final int lvl = i;
+			selectButtons[i].addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					Thread thread = new Thread(){
+						public void run(){
+							Map.setLife(5);
+							Map play = new Map(lvl);//TODO should take user input of levels or next level when current level clears
+							Map.setPaused(false);
+							//play.run();
+						}
+					};
+					main.setVisible(false);
+					thread.start();
+				}
+			});
+		}
 		
 
 
@@ -135,12 +123,7 @@ public class Leaderboard extends Database {
 		//userText_newName.requestFocus();
 
 	}
-
-	/**
-	 * sorts the User data with total Points
-	 * @param None
-	 * @return None
-	 */
+	
 	private void sort(){
 		for(int i = 0; i < 10; i++){
 			int highest = 0;
@@ -160,4 +143,5 @@ public class Leaderboard extends Database {
 			}
 		}
 	}
+	
 }

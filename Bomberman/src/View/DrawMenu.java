@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 import Controller.Leaderboard;
+import Controller.LevelSelect;
 import Controller.Map;
 import Controller.ModifyAccount;
 
@@ -32,6 +33,7 @@ public class DrawMenu{
 	private JButton leaderButton;
 	private JButton loadButton;
 	private JButton saveButton;
+	private JButton selectButton;
 	
 	//singleton
 	private static DrawMenu instance = new DrawMenu();
@@ -48,6 +50,7 @@ public class DrawMenu{
 		modifyButton = new JButton("Modify Account");
 		logoutButton = new JButton("Logout");
 		saveButton = new JButton("Save Game");
+		selectButton = new JButton("Level Select");
 	}
 	
 	//singleton
@@ -81,6 +84,7 @@ public class DrawMenu{
 		menuFrame.add(leaderButton);
 		menuFrame.add(loadButton);
 		menuFrame.add(saveButton);
+		menuFrame.add(selectButton);
 		
 		addButtons();
 	}
@@ -134,7 +138,7 @@ public class DrawMenu{
 				Thread thread = new Thread(){
 					public void run(){
 						Map.setLife(5);
-						Map play = new Map(2);//TODO should take user input of levels or next level when current level clears
+						Map play = new Map(1);//TODO should take user input of levels or next level when current level clears
 						Map.setPaused(false);
 						//play.run();
 					}
@@ -399,6 +403,60 @@ public class DrawMenu{
 				}
 				viewFrame(false);
 				System.out.println("View Leaderboards");
+			}
+		});
+		
+		selectButton.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				int value = e.getKeyCode();
+				if (value == KeyEvent.VK_DOWN){
+					leaderButton.requestFocus();
+				}
+				else if(value == KeyEvent.VK_LEFT ){
+					saveButton.requestFocus();
+				}
+				else if(value ==KeyEvent.VK_UP){
+					leaderButton.requestFocus();
+				}
+				else if( value == KeyEvent.VK_RIGHT){
+					modifyButton.requestFocus();
+				}
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				int value = e.getKeyCode();
+				if (value == KeyEvent.VK_DOWN){
+					leaderButton.requestFocus();
+				}
+				else if(value == KeyEvent.VK_LEFT ){
+					saveButton.requestFocus();
+				}
+				else if(value ==KeyEvent.VK_UP){
+					leaderButton.requestFocus();
+				}
+				else if( value == KeyEvent.VK_RIGHT){
+					modifyButton.requestFocus();
+				}
+			}
+		});
+		selectButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				viewFrame(false);
+				try {
+					LevelSelect ls = new LevelSelect();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 	}
