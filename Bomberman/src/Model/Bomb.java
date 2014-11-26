@@ -4,6 +4,7 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Executors;
@@ -17,7 +18,7 @@ public class Bomb implements Serializable{
 	private int height, width;
 	private boolean active;
 	private boolean escaped;
-	private static Explosion[] personalExplosions;
+	private Explosion[] personalExplosions;
 	private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(10);
 	private boolean used;
 
@@ -32,11 +33,11 @@ public class Bomb implements Serializable{
 		}
 		used = false;
 	}
-	
+
 	//explosion
 	public void explode(){
 		used = true;
-		active = false;
+		//active = false;
 		personalExplosions[0].setXval(this.xval);
 		personalExplosions[0].setYval(this.yval);
 		personalExplosions[1].setXval(xval+50);
@@ -54,12 +55,10 @@ public class Bomb implements Serializable{
 		for(int i = 0; i < 5; i++){
 			personalExplosions[i].setExploding(true);
 		}
-		
 	}
-	
+
 	public void activate() {
-		//active = true;
-		
+
 		final Runnable unExplode = new Runnable() {
 
 			@Override
@@ -71,7 +70,7 @@ public class Bomb implements Serializable{
 				Map.getActiveBombs().remove(Map.getActiveBombs().size()-1);
 			}
 		};
-		
+
 		final Runnable fuse = new Runnable() {
 
 			@Override
@@ -81,18 +80,18 @@ public class Bomb implements Serializable{
 					scheduler.schedule(unExplode, 500, MILLISECONDS);
 				}
 			}
-			
+
 		};
 		final ScheduledFuture<?> fuseHandle = scheduler.schedule(fuse, 2, SECONDS);
-			     scheduler.schedule(new Runnable() {
-			       public void run() { fuseHandle.cancel(true); }
-			     }, 2, SECONDS);
-			     
+		scheduler.schedule(new Runnable() {
+			public void run() { fuseHandle.cancel(true); }
+		}, 2, SECONDS);
+
 
 		/*final ScheduledFuture<?> unExplodeHandle = *///scheduler.schedule(unExplode, 2500, MILLISECONDS);
-		
+
 	}
-	
+
 	//setters
 	public void setXval(int i){
 		xval = i;
@@ -103,11 +102,11 @@ public class Bomb implements Serializable{
 	public void setActive(boolean b){
 		active = b;
 	}
-	
+
 	public void setEscaped(boolean b){
 		escaped = b;
 	}
-	
+
 	//getters
 	public int getXval(){
 		return xval;
@@ -124,11 +123,11 @@ public class Bomb implements Serializable{
 	public boolean getActive(){
 		return active;
 	}
-	
+
 	public boolean getEscaped(){
 		return escaped;
 	}
-	
+
 	public Explosion[] getPersonalExplosions(){
 		return personalExplosions;
 	}
@@ -136,7 +135,7 @@ public class Bomb implements Serializable{
 	public boolean getUsed() {
 		return used;
 	}
-	
+
 	public ScheduledExecutorService getSchedule(){
 		return scheduler;
 	}

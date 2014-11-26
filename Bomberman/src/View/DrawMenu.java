@@ -28,6 +28,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import javax.xml.ws.Response;
 
+import Controller.GamePlay;
 import Controller.Leaderboard;
 import Controller.LevelSelect;
 import Controller.Login;
@@ -38,7 +39,7 @@ import Controller.ModifyAccount;
 public class DrawMenu{
 	//variables
 	private boolean running;
-	
+
 	//objects
 	private JFrame menuFrame;
 	private JButton playButton;
@@ -46,16 +47,16 @@ public class DrawMenu{
 	private JButton modifyButton;
 	private JButton leaderButton;
 	private JButton loadButton;
-//	private JButton saveButton;
+	//	private JButton saveButton;
 	private JButton selectButton;
-	
+
 	//singleton
 	private static DrawMenu instance = new DrawMenu();
-	
+
 	private DrawMenu() {
 		//variables
 		running = false;
-		
+
 		//objects
 		menuFrame = new JFrame();
 		playButton = new JButton("New Game");
@@ -63,15 +64,15 @@ public class DrawMenu{
 		leaderButton = new JButton("View Leaderboards");
 		modifyButton = new JButton("Modify Account");
 		logoutButton = new JButton("Logout");
-//		saveButton = new JButton("Save Game");
+		//		saveButton = new JButton("Save Game");
 		selectButton = new JButton("Level Select");
 	}
-	
+
 	//singleton
 	public static DrawMenu getInstance() {
 		return instance;
 	}
-	
+
 	public void run() {
 		//only makeFrame once
 		if(!running){
@@ -79,10 +80,10 @@ public class DrawMenu{
 		}
 		menuFrame.setVisible(true);
 	}
-	
+
 	public void makeFrame() {
 		running = true;
-		
+
 		//setup frame
 		menuFrame.setSize(800,500);
 		menuFrame.setUndecorated(true);
@@ -90,23 +91,23 @@ public class DrawMenu{
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		menuFrame.setLocation(dim.width/2-menuFrame.getSize().width/2, dim.height/2-menuFrame.getSize().height/2);
 		menuFrame.setLayout(new GridLayout(2,3));
-		
+
 		//add buttons
 		menuFrame.add(playButton);
 		menuFrame.add(modifyButton);
 		menuFrame.add(logoutButton);
 		menuFrame.add(leaderButton);
 		menuFrame.add(loadButton);
-//		menuFrame.add(saveButton);
+		//		menuFrame.add(saveButton);
 		menuFrame.add(selectButton);
-		
+
 		addButtons();
 	}
-	
+
 	public void addButtons(){
 		//play button
 		playButton.addKeyListener(new KeyListener() {
-			
+
 			@Override
 			public void keyTyped(KeyEvent e) {
 				int value = e.getKeyCode();
@@ -123,12 +124,12 @@ public class DrawMenu{
 					modifyButton.requestFocus();
 				}
 			}
-			
+
 			@Override
 			public void keyReleased(KeyEvent e) {
-				
+
 			}
-			
+
 			@Override
 			public void keyPressed(KeyEvent e) {
 				int value = e.getKeyCode();
@@ -149,21 +150,19 @@ public class DrawMenu{
 		playButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Thread thread = new Thread(){
-					public void run(){
-						Map.setLife(2);
-						Map.setPaused(false);
-						Map play = new Map(1);
+				Thread thread = new Thread() {
+					public void run() {
+						GamePlay.run();
 					}
 				};
 				viewFrame(false);
 				thread.start();
 			}
 		});
-		
+
 		//logout button
 		logoutButton.addKeyListener(new KeyListener() {
-			
+
 			@Override
 			public void keyTyped(KeyEvent e) {
 				int value = e.getKeyCode();
@@ -180,12 +179,12 @@ public class DrawMenu{
 					leaderButton.requestFocus();
 				}
 			}
-			
+
 			@Override
 			public void keyReleased(KeyEvent e) {
-				
+
 			}
-			
+
 			@Override
 			public void keyPressed(KeyEvent e) {
 				int value = e.getKeyCode();
@@ -211,10 +210,10 @@ public class DrawMenu{
 				viewFrame(false);
 			}
 		});
-		
+
 		//load button
 		loadButton.addKeyListener(new KeyListener() {
-			
+
 			@Override
 			public void keyTyped(KeyEvent e) {
 				int value = e.getKeyCode();
@@ -231,12 +230,12 @@ public class DrawMenu{
 					selectButton.requestFocus();
 				}
 			}
-			
+
 			@Override
 			public void keyReleased(KeyEvent e) {
-				
+
 			}
-			
+
 			@Override
 			public void keyPressed(KeyEvent e) {
 				int value = e.getKeyCode();
@@ -312,69 +311,69 @@ public class DrawMenu{
 					c.printStackTrace();
 					return;
 				}
-				
+
 				System.out.println("Load Game");
-//				DrawMap drawGame = DrawMap.getInstance();
-//				Map.setPaused(false);
-//				drawGame.getFrame().setVisible(true);
-//				viewFrame(false);
-//				game.run();
+				//				DrawMap drawGame = DrawMap.getInstance();
+				//				Map.setPaused(false);
+				//				drawGame.getFrame().setVisible(true);
+				//				viewFrame(false);
+				//				game.run();
 			}
 		});
-		
-//		//save button
-//		saveButton.addKeyListener(new KeyListener() {
-//			
-//			@Override
-//			public void keyTyped(KeyEvent e) {
-//				int value = e.getKeyCode();
-//				if (value == KeyEvent.VK_DOWN){
-//					logoutButton.requestFocus();
-//				}
-//				else if(value == KeyEvent.VK_LEFT ){
-//					loadButton.requestFocus();
-//				}
-//				else if(value ==KeyEvent.VK_UP){
-//					logoutButton.requestFocus();
-//				}
-//				else if( value == KeyEvent.VK_RIGHT){
-//					playButton.requestFocus();
-//				}
-//			}
-//			
-//			@Override
-//			public void keyReleased(KeyEvent e) {
-//				
-//			}
-//			
-//			@Override
-//			public void keyPressed(KeyEvent e) {
-//				int value = e.getKeyCode();
-//				if (value == KeyEvent.VK_DOWN){
-//					logoutButton.requestFocus();
-//				}
-//				else if(value == KeyEvent.VK_LEFT ){
-//					loadButton.requestFocus();
-//				}
-//				else if(value ==KeyEvent.VK_UP){
-//					logoutButton.requestFocus();
-//				}
-//				else if( value == KeyEvent.VK_RIGHT){
-//					playButton.requestFocus();
-//				}
-//			}
-//		});
-//		saveButton.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				//Save the user's current game, shouldn't be clickable if user is not in game
-//				System.out.println("Save Game");
-//			}
-//		});
-		
+
+		//		//save button
+		//		saveButton.addKeyListener(new KeyListener() {
+		//			
+		//			@Override
+		//			public void keyTyped(KeyEvent e) {
+		//				int value = e.getKeyCode();
+		//				if (value == KeyEvent.VK_DOWN){
+		//					logoutButton.requestFocus();
+		//				}
+		//				else if(value == KeyEvent.VK_LEFT ){
+		//					loadButton.requestFocus();
+		//				}
+		//				else if(value ==KeyEvent.VK_UP){
+		//					logoutButton.requestFocus();
+		//				}
+		//				else if( value == KeyEvent.VK_RIGHT){
+		//					playButton.requestFocus();
+		//				}
+		//			}
+		//			
+		//			@Override
+		//			public void keyReleased(KeyEvent e) {
+		//				
+		//			}
+		//			
+		//			@Override
+		//			public void keyPressed(KeyEvent e) {
+		//				int value = e.getKeyCode();
+		//				if (value == KeyEvent.VK_DOWN){
+		//					logoutButton.requestFocus();
+		//				}
+		//				else if(value == KeyEvent.VK_LEFT ){
+		//					loadButton.requestFocus();
+		//				}
+		//				else if(value ==KeyEvent.VK_UP){
+		//					logoutButton.requestFocus();
+		//				}
+		//				else if( value == KeyEvent.VK_RIGHT){
+		//					playButton.requestFocus();
+		//				}
+		//			}
+		//		});
+		//		saveButton.addActionListener(new ActionListener() {
+		//			@Override
+		//			public void actionPerformed(ActionEvent e) {
+		//				//Save the user's current game, shouldn't be clickable if user is not in game
+		//				System.out.println("Save Game");
+		//			}
+		//		});
+
 		//modify button
 		modifyButton.addKeyListener(new KeyListener() {
-			
+
 			@Override
 			public void keyTyped(KeyEvent e) {
 				int value = e.getKeyCode();
@@ -391,12 +390,12 @@ public class DrawMenu{
 					logoutButton.requestFocus();
 				}
 			}
-			
+
 			@Override
 			public void keyReleased(KeyEvent e) {
-				
+
 			}
-			
+
 			@Override
 			public void keyPressed(KeyEvent e) {
 				int value = e.getKeyCode();
@@ -423,10 +422,10 @@ public class DrawMenu{
 				System.out.println("Modify Account");
 			}
 		});
-		
+
 		//leaderboard button
 		leaderButton.addKeyListener(new KeyListener() {
-			
+
 			@Override
 			public void keyTyped(KeyEvent e) {
 				int value = e.getKeyCode();
@@ -443,12 +442,12 @@ public class DrawMenu{
 					loadButton.requestFocus();
 				}
 			}
-			
+
 			@Override
 			public void keyReleased(KeyEvent e) {
-				
+
 			}
-			
+
 			@Override
 			public void keyPressed(KeyEvent e) {
 				int value = e.getKeyCode();
@@ -478,9 +477,9 @@ public class DrawMenu{
 				System.out.println("View Leaderboards");
 			}
 		});
-		
+
 		selectButton.addKeyListener(new KeyListener() {
-			
+
 			@Override
 			public void keyTyped(KeyEvent e) {
 				int value = e.getKeyCode();
@@ -497,12 +496,12 @@ public class DrawMenu{
 					playButton.requestFocus();
 				}
 			}
-			
+
 			@Override
 			public void keyReleased(KeyEvent e) {
-				
+
 			}
-			
+
 			@Override
 			public void keyPressed(KeyEvent e) {
 				int value = e.getKeyCode();
@@ -533,7 +532,7 @@ public class DrawMenu{
 			}
 		});
 	}
-	
+
 	//setters
 	public void viewFrame(boolean b){
 		menuFrame.setVisible(b);

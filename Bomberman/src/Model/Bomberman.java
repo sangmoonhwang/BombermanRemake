@@ -40,7 +40,7 @@ public class Bomberman extends Movable implements Serializable{
 		detonate = false;
 		speed = 2;
 		bombs = new ArrayList<Bomb>();
-		//bombs.add(new Bomb(false));
+		bombs.add(new Bomb(false));
 	}
 	
 	//setters
@@ -88,7 +88,7 @@ public class Bomberman extends Movable implements Serializable{
 	public int getSpeed() {
 		return speed;
 	}
-	public int getavailableBombs() {
+	public static int getavailableBombs() {
 		return availableBombs;
 	}
 	public boolean isMystery(){

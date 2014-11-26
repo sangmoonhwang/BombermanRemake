@@ -39,50 +39,47 @@ public class Map implements KeyListener, FocusListener, Serializable{
 	private static ArrayList<Indestructible> indestructibles;
 	private static ArrayList<Destructible> bricks;
 	private static ArrayList<Enemy> enemies;
-//	private static ArrayList<Bomb> bombs;
 	private static ArrayList<Bomb> activeBombs;
 	private static ArrayList<Tile> tiles;
 	private static Explosion[] explosions;
 	private static Powerup power;
 	private static Door door;
-	private int xVel;
-	private int yVel;
+	private static int xVel;
+	private static int yVel;
 	private static int life = 2;
-	private int level;
-	//	private final ScheduledExecutorService scheduler;
+	private static int level;
 	private static int width;
 	private static int height;
-	private long startTime = System.nanoTime()/1000000000;
-	private long gameTime;
-	//	private Timer gameTimer;
-	static boolean running = false;
+	private static long startTime = System.nanoTime()/1000000000;
+	private static long gameTime;
+	private static boolean running = false;
 	private CollisionDetection detect;
-	private SpawnGameObjects spawn;
+	private static SpawnGameObjects spawn;
 	private static int bombermanState;
 	private long pausedAt = 0;
 	private long duration = 200;
 	private static boolean paused;
-	private boolean bombKeyPressed;
+	private boolean save;
+	private static boolean levelComplete;
+	private static boolean gameOver;
 	ArrayList<Box> path;
 
 
 	public Map(int level){
-		this.level = level;
+		Map.level = level;
 		//attributes
 		width = 50;
 		height = 50;
 		xVel = 0;
 		yVel = 0;
-		bombKeyPressed = false;
+		levelComplete = false;
+		gameOver = false;
+		
 		//new objects
 		user = Login.getUser();
 		detect = new CollisionDetection();
 		bombman = new Bomberman();
-//		bombs = bombman.getBombs();
 		activeBombs = new ArrayList<Bomb>();
-		for(int i = 0; i<bombman.getavailableBombs(); i++) {
-			bombman.getBombs().add(new Bomb(false));
-		}
 		spawn = new SpawnGameObjects(level);
 		explosions = new Explosion[9];
 		for(int i = 0; i<8; i++){
@@ -97,69 +94,8 @@ public class Map implements KeyListener, FocusListener, Serializable{
 		door = spawn.spawnDoor();
 		tiles = spawn.spawnTiles();
 
-
-		//		scheduler = Executors.newScheduledThreadPool(10);
-
 		d = DrawMap.getInstance();
-		running = true;
-		paused = false;
-		//		gameTimer = new Timer();
-		//		gameTimer.schedule(new TimerTask(){
-		//			public void run(){
-		//				//change
-		//				System.out.println("Times up!");
-		//				d.getStatusBar().setText("Times Up!");
-		//			};
-		//		},200000);
-		this.run();
-	}
-	
-	public Map(int level, Bomberman bombman){
-		this.level = level;
-		//attributes
-		width = 50;
-		height = 50;
-		xVel = 0;
-		yVel = 0;
-		bombKeyPressed = false;
-		//new objects
-		user = Login.getUser();
-		detect = new CollisionDetection();
-		bombman.setXval(50);
-		bombman.setYval(50);
-		activeBombs = new ArrayList<Bomb>();
-		for(int i = 0; i<bombman.getavailableBombs()+1; i++) {
-			bombman.getBombs().add(new Bomb(false));
-		}
-		spawn = new SpawnGameObjects(level);
-		explosions = new Explosion[9];
-		for(int i = 0; i<8; i++){
-			explosions[i] = new Explosion();
-		}
 
-		//spawn gameObjects
-		indestructibles = spawn.spawnIndestructibles();
-		bricks = spawn.spawnBricks();
-		enemies = spawn.spawnEnemies();
-		power = spawn.spawnPowerup();
-		door = spawn.spawnDoor();
-		tiles = spawn.spawnTiles();
-
-
-		//		scheduler = Executors.newScheduledThreadPool(10);
-
-		d = DrawMap.getInstance();
-		running = true;
-		paused = false;
-		//		gameTimer = new Timer();
-		//		gameTimer.schedule(new TimerTask(){
-		//			public void run(){
-		//				//change
-		//				System.out.println("Times up!");
-		//				d.getStatusBar().setText("Times Up!");
-		//			};
-		//		},200000);
-		
 		this.run();
 	}
 
@@ -177,6 +113,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 
 		while(running) {
 			if(!paused){
+				save = false;
 				long now = System.nanoTime();
 				if((now - start)/ns >= 1) {
 					if (pausedAt == 0)
@@ -200,6 +137,15 @@ public class Map implements KeyListener, FocusListener, Serializable{
 			else {
 				if(pausedAt == 0)
 					pausedAt = System.nanoTime()/1000000000;
+				if(!save) {
+					try {
+						Database.modifyUserCSVEntry(user.getUsername(), null, null, user.getNumOfPlay(), user.getTotalScore(), level);
+					} catch (IOException e) {
+						System.out.println("error saving data");
+						e.printStackTrace();
+					}
+					save = true;
+				}
 			}
 		}
 
@@ -252,10 +198,10 @@ public class Map implements KeyListener, FocusListener, Serializable{
 			}
 			//activeBombs.get(0).explode();
 			//explosions = activeBombs.get(activeBombs.size()-1).getPersonalExplosions();
-		} else if(value == KeyEvent.VK_Z && !bombman.getBombs().isEmpty() && !bombKeyPressed){
+		} else if(value == KeyEvent.VK_Z && !bombman.getBombs().isEmpty()){
 			System.out.println("bombs Size " + bombman.getBombs().size());
 			activeBombs.add(new Bomb(true));
-			bombman.getBombs().remove(bombman.getBombs().size()-1);
+			bombman.getBombs().remove(0);
 			System.out.println("After removing bombs" + bombman.getBombs().size());
 			int tilex = (int)bombman.getXval() + (int)(0.5*bombman.getWidth());
 			int tiley = (int)bombman.getYval() + (int)(0.5*bombman.getHeight());
@@ -265,7 +211,6 @@ public class Map implements KeyListener, FocusListener, Serializable{
 			activeBombs.get(activeBombs.size()-1).setXval(tilex);
 			activeBombs.get(activeBombs.size()-1).setYval(tiley);
 			activeBombs.get(activeBombs.size()-1).activate();
-			bombKeyPressed = true;
 		}
 	}
 
@@ -284,8 +229,6 @@ public class Map implements KeyListener, FocusListener, Serializable{
 		} else if(value == KeyEvent.VK_RIGHT) {
 			if(xVel == bombman.getSpeed()) //2
 				setVelX(0);
-		}else if(value == KeyEvent.VK_Z) {
-			bombKeyPressed = false;
 		}
 	}    
 
@@ -410,7 +353,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 						if(rightAdjust){
 							activeBombs.get(0).getPersonalExplosions()[1].setWidth(testR.getWidth()+50);
 						}
-
+					break;
 					case 2:
 						boolean leftAdjust = false;
 						Explosion testL = new Explosion();
@@ -440,7 +383,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 						if(leftAdjust){
 							activeBombs.get(0).getPersonalExplosions()[2].setXval(testL.getXval()-50);
 						}
-
+					break;
 					case 3:
 						boolean topAdjust = false;
 						Explosion testT = new Explosion();
@@ -470,7 +413,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 						if(topAdjust){
 							activeBombs.get(0).getPersonalExplosions()[3].setHeight(testT.getHeight()+50);
 						}
-
+					break;
 					case 4:
 						boolean botAdjust = false;
 						Explosion testB = new Explosion();
@@ -500,6 +443,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 						if(botAdjust){
 							activeBombs.get(0).getPersonalExplosions()[4].setYval(testB.getYval()-50);
 						}
+					break;
 					}
 
 
@@ -536,11 +480,9 @@ public class Map implements KeyListener, FocusListener, Serializable{
 		if(detect.collisionDetection(bombman, door) && enemies.size() == 0) {
 			System.out.println("Level Complete!");
 			user.setLevelCompleted(level);
-			new Map(level+1, bombman);
-			running = false;
+			levelComplete = true;
+			nextLevel(level+1);
 		}
-
-
 
 		//Powerup obtaining
 		//		System.out.println(whichTileIsOn(power.getXval(), power.getYval()));
@@ -848,8 +790,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 		if(life>0){
 			life --;
 			softResetBombman();
-			new Map(level);//should take user input of levels or next level when current level clears
-			Map.setPaused(false);
+			sameLevel();
 		}
 		else{
 			System.out.println("Game over");
@@ -865,6 +806,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 			}
 			menu.viewFrame(true);
 			Map.setRunning(false);
+			gameOver = true;
 			game.getFrame().dispose();
 		}
 	}
@@ -872,7 +814,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 	/**
 	 * soft reset bombman in case of death: only preserves speed, bombs, flames
 	 */
-	public void softResetBombman(){
+	public static void softResetBombman(){
 		Bomberman.bombPass = false;
 		Bomberman.flamePass = false;
 		Bomberman.detonate = false;
@@ -894,7 +836,6 @@ public class Map implements KeyListener, FocusListener, Serializable{
 		Bomberman.availableBombs = 1;
 		bombman.getBombs().clear();
 		bombman.getBombs().add(new Bomb(false));
-		bombman.getBombs().add(new Bomb(false));
 	}
 
 	//setters
@@ -906,6 +847,46 @@ public class Map implements KeyListener, FocusListener, Serializable{
 	}
 	public static void setLife(int a){
 		life = a;
+	}
+	public static void nextLevel(int level) {
+		//attributes
+		xVel = 0;
+		yVel = 0;
+		Map.level = level;
+		startTime = System.nanoTime()/1000000000;
+		levelComplete = false;
+		bombman.setXval(50);
+		bombman.setYval(50);
+		//new objects
+		spawn = new SpawnGameObjects(level);
+
+		//spawn gameObjects
+		indestructibles = spawn.spawnIndestructibles();
+		bricks = spawn.spawnBricks();
+		enemies = spawn.spawnEnemies();
+		power = spawn.spawnPowerup();
+		door = spawn.spawnDoor();
+		tiles = spawn.spawnTiles();
+}
+	public static void sameLevel() {
+		Map.softResetBombman();
+		//attributes
+		xVel = 0;
+		yVel = 0;
+		startTime = 0;
+		bombman.setXval(50);
+		bombman.setYval(50);
+		startTime = System.nanoTime()/1000000000;
+		//new objects
+		spawn = new SpawnGameObjects(level);
+
+		//spawn gameObjects
+		indestructibles = spawn.spawnIndestructibles();
+		bricks = spawn.spawnBricks();
+		enemies = spawn.spawnEnemies();
+		power = spawn.spawnPowerup();
+		door = spawn.spawnDoor();
+		tiles = spawn.spawnTiles();
 	}
 	
 	//getters
@@ -930,9 +911,6 @@ public class Map implements KeyListener, FocusListener, Serializable{
 	public static ArrayList<Tile> getTiles(){
 		return tiles;
 	}
-//	public static ArrayList<Bomb> getBombs(){
-//		return bombs;
-//	}
 	public static Door getDoor(){
 		return door;
 	}
@@ -945,11 +923,23 @@ public class Map implements KeyListener, FocusListener, Serializable{
 	public static Powerup getPowerup() {
 		return power;
 	}
-	public int getLevel() {
+	public static int getLevel() {
 		return level;
 	}
 	public static ArrayList<Bomb> getActiveBombs() {
 		return activeBombs;
+	}
+	public static boolean getRunning() {
+		return running;
+	}
+	public static boolean getPause() {
+		return paused;
+	}
+	public static boolean getlevelComplete() {
+		return levelComplete;
+	}
+	public static boolean getGameOver() {
+		return gameOver;
 	}
 
 	//detects an obstacle within the range of flame

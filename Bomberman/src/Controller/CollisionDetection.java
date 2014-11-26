@@ -23,11 +23,13 @@ public class CollisionDetection implements Serializable{
 	
 	public boolean collisionDetection(Movable test, Bomb i) {
 		boolean collision = false;
-		if ((test.getXval() + test.getWidth() > i.getXval() &&
-				test.getYval() < i.getYval() + i.getHeight() &&
-				test.getXval() < i.getXval() + i.getWidth() && 
-				test.getYval() + test.getHeight() > i.getYval())){
-			collision = true;
+		if(Map.getActiveBombs().isEmpty()) {
+			if ((test.getXval() + test.getWidth() > i.getXval() &&
+					test.getYval() < i.getYval() + i.getHeight() &&
+					test.getXval() < i.getXval() + i.getWidth() && 
+					test.getYval() + test.getHeight() > i.getYval())){
+				collision = true;
+			}
 		}
 		return collision;
 	}
