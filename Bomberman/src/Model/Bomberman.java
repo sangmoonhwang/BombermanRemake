@@ -41,7 +41,6 @@ public class Bomberman extends Movable implements Serializable{
 		speed = 2;
 		bombs = new ArrayList<Bomb>();
 		bombs.add(new Bomb(false));
-		bombs.add(new Bomb(false));
 	}
 	
 	//setters

@@ -72,12 +72,12 @@ public class Bomb implements Serializable, Runnable{
 
 				while(true) {
 					now = System.nanoTime();
-					if((now - start) >= 500000000) {
+					if((now - start) >= 500000000 || Map.getActiveBombs().getLast().getUsed()) {
 						for(int i = 0; i < 5; i++){
 							personalExplosions[i].setExploding(false);
 						}
 						Map.getBomberman().getBombs().add(new Bomb(false));
-						Map.getActiveBombs().remove(Map.getActiveBombs().size()-1);
+						Map.getActiveBombs().removeLast();
 						shutdown = true;
 						break;
 					}

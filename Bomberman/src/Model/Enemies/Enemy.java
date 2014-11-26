@@ -259,10 +259,10 @@ public class Enemy extends Movable implements Serializable{
 	 * search the Free path
 	 * @param ArrayList<Indestructible>
 	 * @param ArrayList<Destructible>
-	 * @param ArrayList<Bomb>
+	 * @param LinkedList<Bomb>
 	 * @return None
 	 */
-	public void searchFreePath(ArrayList<Indestructible> indestructibles, ArrayList<Destructible> bricks, ArrayList<Bomb> activeBombs) {
+	public void searchFreePath(ArrayList<Indestructible> indestructibles, ArrayList<Destructible> bricks, LinkedList<Bomb> activeBombs) {
 		statusReset();
 		int tileNum = whichTileIsOn(getXval(), getYval());
 		int enemyState = getState();
