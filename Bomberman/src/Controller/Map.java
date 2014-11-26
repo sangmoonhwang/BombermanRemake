@@ -4,6 +4,7 @@ import java.awt.event.*;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TreeMap;
 import java.util.concurrent.Executors;
@@ -62,6 +63,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 	private boolean save;
 	private static boolean levelComplete;
 	private static boolean gameOver;
+	private static boolean exploded;
 	ArrayList<Box> path;
 
 
@@ -199,10 +201,8 @@ public class Map implements KeyListener, FocusListener, Serializable{
 			//activeBombs.get(0).explode();
 			//explosions = activeBombs.get(activeBombs.size()-1).getPersonalExplosions();
 		} else if(value == KeyEvent.VK_Z && !bombman.getBombs().isEmpty()){
-			System.out.println("bombs Size " + bombman.getBombs().size());
 			activeBombs.add(new Bomb(true));
-			bombman.getBombs().remove(0);
-			System.out.println("After removing bombs" + bombman.getBombs().size());
+			bombman.getBombs().remove(bombman.getBombs().size()-1);
 			int tilex = (int)bombman.getXval() + (int)(0.5*bombman.getWidth());
 			int tiley = (int)bombman.getYval() + (int)(0.5*bombman.getHeight());
 			tilex = (tilex/50) * 50;
@@ -210,7 +210,9 @@ public class Map implements KeyListener, FocusListener, Serializable{
 
 			activeBombs.get(activeBombs.size()-1).setXval(tilex);
 			activeBombs.get(activeBombs.size()-1).setYval(tiley);
-			activeBombs.get(activeBombs.size()-1).activate();
+			Thread thread = new Thread(activeBombs.get(activeBombs.size()-1));
+			thread.start();
+			exploded = false;
 		}
 	}
 
@@ -445,6 +447,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 						}
 					break;
 					}
+					
 
 
 					//Collision Detection
@@ -462,7 +465,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 							enemies.remove(j);
 						}
 					}
-
+					
 					//point Calculation
 					if(!killedEnemies.isEmpty())
 						pointCalculation(killedEnemies);
@@ -940,6 +943,9 @@ public class Map implements KeyListener, FocusListener, Serializable{
 	}
 	public static boolean getGameOver() {
 		return gameOver;
+	}
+	public static boolean isExploded() {
+		return exploded;
 	}
 
 	//detects an obstacle within the range of flame

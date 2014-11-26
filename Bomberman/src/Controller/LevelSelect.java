@@ -85,10 +85,7 @@ public class LevelSelect extends Database {
 				else if( value == KeyEvent.VK_ENTER){
 					Thread thread = new Thread(){
 						public void run(){
-							Map.setLife(5);
-							Map play = new Map(level);
-							Map.setPaused(false);
-							//play.run();
+							GamePlay.run(level);
 						}
 					};
 					main.setVisible(false);
@@ -114,10 +111,7 @@ public class LevelSelect extends Database {
 				else if(value == KeyEvent.VK_ENTER){
 					Thread thread = new Thread(){
 						public void run(){
-							Map.setLife(5);
-							Map play = new Map(level);//TODO should take user input of levels or next level when current level clears
-							Map.setPaused(false);
-							//play.run();
+							GamePlay.run(level);
 						}
 					};
 					main.setVisible(false);
@@ -171,10 +165,7 @@ public class LevelSelect extends Database {
 				else if( value == KeyEvent.VK_ENTER ){
 					Thread thread = new Thread(){
 						public void run(){
-							Map.setLife(5);
-							Map play = new Map(level);//TODO should take user input of levels or next level when current level clears
-							Map.setPaused(false);
-							//play.run();
+							GamePlay.run(level);
 						}
 					};
 					main.setVisible(false);
@@ -200,10 +191,7 @@ public class LevelSelect extends Database {
 				else if( value == KeyEvent.VK_ENTER){
 					Thread thread = new Thread(){
 						public void run(){
-							Map.setLife(5);
-							Map play = new Map(level);//TODO should take user input of levels or next level when current level clears
-							Map.setPaused(false);
-							//play.run();
+							GamePlay.run(level);
 						}
 					};
 					main.setVisible(false);

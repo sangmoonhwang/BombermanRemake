@@ -20,10 +20,11 @@ public class CollisionDetection implements Serializable{
 		}
 		return collision;
 	}
-	
+
 	public boolean collisionDetection(Movable test, Bomb i) {
 		boolean collision = false;
-		if(Map.getActiveBombs().isEmpty()) {
+		if(i.getActive()){
+
 			if ((test.getXval() + test.getWidth() > i.getXval() &&
 					test.getYval() < i.getYval() + i.getHeight() &&
 					test.getXval() < i.getXval() + i.getWidth() && 
@@ -33,7 +34,7 @@ public class CollisionDetection implements Serializable{
 		}
 		return collision;
 	}
-	
+
 	/*public boolean collisionDetection_new(Movable test1, Block test, int i, int max) {
 		boolean collision = false;
 		switch(i){

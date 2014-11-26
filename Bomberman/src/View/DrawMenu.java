@@ -152,7 +152,7 @@ public class DrawMenu{
 			public void actionPerformed(ActionEvent e) {
 				Thread thread = new Thread() {
 					public void run() {
-						GamePlay.run();
+						GamePlay.run(1);
 					}
 				};
 				viewFrame(false);

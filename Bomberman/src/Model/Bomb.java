@@ -4,7 +4,6 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 import java.io.Serializable;
-import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Executors;
@@ -13,7 +12,7 @@ import java.util.concurrent.ScheduledFuture;
 
 import Controller.Map;
 
-public class Bomb implements Serializable{
+public class Bomb implements Serializable, Runnable{
 	private int xval, yval;
 	private int height, width;
 	private boolean active;
@@ -21,6 +20,7 @@ public class Bomb implements Serializable{
 	private Explosion[] personalExplosions;
 	private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(10);
 	private boolean used;
+	private int numOfBomb;
 
 	public Bomb(boolean active) {
 		xval = yval = 0;
@@ -57,8 +57,37 @@ public class Bomb implements Serializable{
 		}
 	}
 
-	public void activate() {
 
+	public void run() {
+		long start = System.nanoTime();
+		boolean shutdown = false;
+
+		System.out.println("threadID" + Thread.currentThread().getId());
+		while(!shutdown) {
+			long now = System.nanoTime();
+			if((now - start) >= 2000000000) {
+				explode();
+				System.out.println("threadID" + Thread.currentThread().getId() + "exploding");
+				start = now;
+
+				while(true) {
+					now = System.nanoTime();
+					if((now - start) >= 500000000) {
+						for(int i = 0; i < 5; i++){
+							personalExplosions[i].setExploding(false);
+						}
+						Map.getBomberman().getBombs().add(new Bomb(false));
+						Map.getActiveBombs().remove(Map.getActiveBombs().size()-1);
+						shutdown = true;
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	public void activate() {
+/*
 		final Runnable unExplode = new Runnable() {
 
 			@Override
@@ -86,10 +115,7 @@ public class Bomb implements Serializable{
 		scheduler.schedule(new Runnable() {
 			public void run() { fuseHandle.cancel(true); }
 		}, 2, SECONDS);
-
-
-		/*final ScheduledFuture<?> unExplodeHandle = *///scheduler.schedule(unExplode, 2500, MILLISECONDS);
-
+		  */
 	}
 
 	//setters
@@ -139,6 +165,5 @@ public class Bomb implements Serializable{
 	public ScheduledExecutorService getSchedule(){
 		return scheduler;
 	}
-
 
 }
