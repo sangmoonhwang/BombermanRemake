@@ -102,6 +102,7 @@ public class Map implements Serializable{
 		start = System.nanoTime();
 		amountOfTicks = 60.0;
 		ns = 1000000000 / amountOfTicks;
+
 	}
 
 	public void run(){
@@ -698,8 +699,7 @@ public class Map implements Serializable{
 			life --;
 			softResetBombman();
 			sameLevel();
-		}
-		else{
+		} else {
 			System.out.println("Game over");
 			//saveScore_to_Leaderboard();
 			DrawMap game = DrawMap.getInstance();
@@ -713,6 +713,7 @@ public class Map implements Serializable{
 			}
 			menu.viewFrame(true);
 			gameOver = true;
+			GamePlay.setShutdown(true);
 			game.getFrame().dispose();
 		}
 	}
@@ -741,7 +742,8 @@ public class Map implements Serializable{
 		Bomberman.flames = 1;
 		Bomberman.availableBombs = 1;
 		bombman.getBombs().clear();
-		bombman.getBombs().add(new Bomb(false));
+		bombman.getBombs().addFirst(new Bomb(false));
+		bombman.getBombs().addFirst(new Bomb(false));
 	}
 
 	//setters
@@ -778,11 +780,9 @@ public class Map implements Serializable{
 		tiles = spawn.spawnTiles();
 	}
 	public static void sameLevel() {
-		Map.softResetBombman();
 		//attributes
 		xVel = 0;
 		yVel = 0;
-		startTime = 0;
 		bombman.setXval(50);
 		bombman.setYval(50);
 		startTime = System.nanoTime()/1000000000;

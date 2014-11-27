@@ -173,7 +173,6 @@ public class DrawPauseMenu{
 				Map.setGameOver();
 				Map.setPaused(false);
 				game.getFrame().dispose();
-				GamePlay.setShutdown(true);
 				viewFrame(false);
 				pauseFrame.dispose();
 				

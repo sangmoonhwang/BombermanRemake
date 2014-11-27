@@ -28,7 +28,7 @@ public class CollisionDetection implements Serializable{
 			if ((test.getXval() + test.getWidth() > i.getXval() &&
 					test.getYval() < i.getYval() + i.getHeight() &&
 					test.getXval() < i.getXval() + i.getWidth() && 
-					test.getYval() + test.getHeight() > i.getYval())){
+					(test.getYval() + test.getHeight()) > i.getYval())){
 				collision = true;
 			}
 		}

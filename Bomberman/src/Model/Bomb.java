@@ -93,11 +93,11 @@ public class Bomb implements Serializable, Runnable {
 						start = now;
 					}
 					paused = false;
-					if((now - start) + pausedAt >= 500000000 || !Map.getActiveBombs().getLast().getUsed()) {
+					if((now - start) + pausedAt >= 800000000 || !Map.getActiveBombs().getLast().getUsed()) {
 						for(int i = 0; i < 5; i++){
 							personalExplosions[i].setExploding(false);
 						}
-						Map.getBomberman().getBombs().add(new Bomb(false));
+						Map.getBomberman().getBombs().addFirst(new Bomb(false));
 						Map.getActiveBombs().removeLast();
 						shutdown = true;
 						break;

@@ -76,9 +76,9 @@ public class DrawMenu{
 
 	public void run() {
 		//only makeFrame once
-//		if(!running){
+		if(!running){
 			makeFrame();
-//		}
+		}
 		menuFrame.setVisible(true);
 	}
 
@@ -154,7 +154,6 @@ public class DrawMenu{
 				GamePlay play = new GamePlay(1,null);
 				thread = new Thread(play);
 				viewFrame(false);
-				running = false;
 				thread.start();
 			}
 		});
@@ -316,7 +315,6 @@ public class DrawMenu{
 				Thread thread = new Thread(play);
 				viewFrame(false);
 				thread.start();
-				running = false;
 
 				//				DrawMap drawGame = DrawMap.getInstance();
 				//				Map.setPaused(false);

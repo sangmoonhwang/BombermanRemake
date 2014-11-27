@@ -2,6 +2,7 @@ package Model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Bomberman extends Movable implements Serializable{
 
@@ -23,7 +24,7 @@ public class Bomberman extends Movable implements Serializable{
 	public static boolean bombPass;
 	public static boolean flamePass;
 	
-	public static ArrayList<Bomb> bombs;
+	public static LinkedList<Bomb> bombs;
 
 
 	public Bomberman() {
@@ -39,9 +40,9 @@ public class Bomberman extends Movable implements Serializable{
 		bombPass = false;
 		detonate = true;
 		speed = 2;
-		bombs = new ArrayList<Bomb>();
-		bombs.add(new Bomb(false));
-		bombs.add(new Bomb(false));
+		bombs = new LinkedList<Bomb>();
+		bombs.addFirst(new Bomb(false));
+		bombs.addFirst(new Bomb(false));
 	}
 	
 	//setters
@@ -96,7 +97,7 @@ public class Bomberman extends Movable implements Serializable{
 		//System.out.println((System.nanoTime() - mystery_From)/1000000000);
 		return (System.nanoTime() - mystery_From)/1000000000 <= 10; //10seconds?
 	}
-	public ArrayList<Bomb> getBombs() {
+	public LinkedList<Bomb> getBombs() {
 		return bombs;
 	}
 	public static int getScore() {

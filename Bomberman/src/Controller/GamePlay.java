@@ -45,15 +45,17 @@ public class GamePlay implements Runnable, FocusListener, KeyListener {
 				System.out.println("Times up!");
 				d.getStatusBar().setText("Times Up!");
 				play.dieBombman();
+				shutdown = true;
 				break;
+			}
+			
+			if(play.getGameOver()) {
+				shutdown = true;
+				System.out.println("Gameover");
 			}
 			while(play.getPause()) {
 				System.out.println("Paused");
 				play.run();
-				if(play.getGameOver()) {
-					shutdown = true;
-					System.out.println("Gameover");
-				}
 			}
 		}
 		System.out.println("Thread terminate");
@@ -61,9 +63,6 @@ public class GamePlay implements Runnable, FocusListener, KeyListener {
 
 	public static boolean getPause() {
 		return play.getPause();
-	}
-	public boolean getShutdown() {
-		return shutdown;
 	}
 	public static void setShutdown(boolean bool) {
 		shutdown = bool;
@@ -113,7 +112,7 @@ public class GamePlay implements Runnable, FocusListener, KeyListener {
 			//explosions = activeBombs.get(activeBombs.size()-1).getPersonalExplosions();
 		} else if(value == KeyEvent.VK_Z && !bombman.getBombs().isEmpty()){
 			Map.getActiveBombs().addFirst(new Bomb(true));
-			bombman.getBombs().remove(0);
+			bombman.getBombs().removeLast();
 			int tilex = (int)bombman.getXval() + (int)(0.5*bombman.getWidth());
 			int tiley = (int)bombman.getYval() + (int)(0.5*bombman.getHeight());
 			tilex = (tilex/50) * 50;
