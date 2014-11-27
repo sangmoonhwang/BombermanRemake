@@ -32,7 +32,7 @@ import View.DrawMenu;
 import View.DrawPauseMenu;
 
 
-public class Map implements KeyListener, FocusListener, Serializable{
+public class Map implements Serializable{
 	public JFrame main;
 	private User user;
 	private static DrawMap d;
@@ -52,17 +52,20 @@ public class Map implements KeyListener, FocusListener, Serializable{
 	private static int width;
 	private static int height;
 	private static long startTime = System.nanoTime()/1000000000;
-	private static long gameTime;
-	private static boolean running = false;
+	private static long gameTime = 200;
 	private CollisionDetection detect;
 	private static SpawnGameObjects spawn;
 	private static int bombermanState;
 	private long pausedAt = 0;
 	private long duration = 200;
+	private long pausedTime = 0;
 	private static boolean paused;
 	private boolean save;
 	private static boolean levelComplete;
 	private static boolean gameOver;
+	private long start;
+	final private double amountOfTicks;
+	private double ns;
 	ArrayList<Box> path;
 
 
@@ -75,7 +78,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 		yVel = 0;
 		levelComplete = false;
 		gameOver = false;
-		
+
 		//new objects
 		user = Login.getUser();
 		detect = new CollisionDetection();
@@ -95,138 +98,46 @@ public class Map implements KeyListener, FocusListener, Serializable{
 		door = spawn.spawnDoor();
 		tiles = spawn.spawnTiles();
 
-		d = DrawMap.getInstance();
-
-		this.run();
+		paused = false;
+		start = System.nanoTime();
+		amountOfTicks = 60.0;
+		ns = 1000000000 / amountOfTicks;
 	}
 
 	public void run(){
-		d.run();
-		d.getFrame().addFocusListener(this);
-		d.getFrame().addKeyListener(this);
-		d.getFrame().requestFocus();
-		running = true;
-		paused = false;
 
-		long start = System.nanoTime();
-		final double amountOfTicks = 60.0;
-		double ns = 1000000000 / amountOfTicks;
-
-		while(running) {
-			if(!paused){
-				save = false;
-				long now = System.nanoTime();
-				if((now - start)/ns >= 1) {
-					if (pausedAt == 0)
-						gameTime = duration  + startTime - System.nanoTime()/1000000000;
-					else{
-						startTime += (System.nanoTime()/1000000000 - pausedAt);
-						pausedAt = 0;
-					}
-					tick();
-					tick2();
-					start = now;
-					d.draw();
-					d.getStatusBar().setText("Level: "+ level +"        Time: " + gameTime + "        Life: " + life + "       Score: " + user.getTotalScore());
-					if(gameTime < 0){
-						System.out.println("Times up!");
-						d.getStatusBar().setText("Times Up!");
-						dieBombman();
-					}
+		if(!paused){
+			save = false;
+			long now = System.nanoTime();
+			if((now - start)/ns >= 1) {
+				if (pausedAt == 0)
+					gameTime = duration - (System.nanoTime()/1000000000 - startTime) + pausedTime;
+				else{
+					pausedTime += (System.nanoTime()/1000000000 - pausedAt);
+					//startTime += pausedAt;
+					gameTime = duration - (System.nanoTime()/1000000000 - startTime) + pausedTime;
+					System.out.println("gameTime " + gameTime);
+					pausedAt = 0;
 				}
+				tick();
+				tick2();
+				start = now;
 			}
-			else {
-				if(pausedAt == 0)
-					pausedAt = System.nanoTime()/1000000000;
-				if(!save) {
-					try {
-						Database.modifyUserCSVEntry(user.getUsername(), null, null, user.getNumOfPlay(), user.getTotalScore(), level);
-					} catch (IOException e) {
-						System.out.println("error saving data");
-						e.printStackTrace();
-					}
-					save = true;
+		}
+		else {
+			if(pausedAt == 0)
+				pausedAt = System.nanoTime()/1000000000;
+			if(!save) {
+				try {
+					Database.modifyUserCSVEntry(user.getUsername(), null, null, user.getNumOfPlay(), user.getTotalScore(), level);
+				} catch (IOException e) {
+					System.out.println("error saving data");
+					e.printStackTrace();
 				}
+				save = true;
 			}
-		}
-
-	}
-
-	//react to keyPress by moving Bomberman
-	public void keyPressed ( KeyEvent e ){
-		int value = e.getKeyCode();
-		if (value == KeyEvent.VK_DOWN && value !=KeyEvent.VK_UP){
-			setVelY(bombman.getSpeed());//2
-		}
-		else if(value != KeyEvent.VK_DOWN && value ==KeyEvent.VK_UP){
-			setVelY(-bombman.getSpeed());//-2
-		}
-		else if(value == KeyEvent.VK_LEFT && value !=KeyEvent.VK_RIGHT){
-			bombermanState = 2;
-			setVelX(-bombman.getSpeed());//-2
-		}
-		else if(value == KeyEvent.VK_RIGHT && value !=KeyEvent.VK_LEFT){
-			bombermanState = 1;
-			setVelX(bombman.getSpeed());//2
-		} else if(value == KeyEvent.VK_ESCAPE || value == KeyEvent.VK_SPACE){
-			setVelY(0);
-			setVelX(0);
-			if(!paused){
-				paused = true;
-				d.getFrame().setVisible(false);
-				DrawPauseMenu.getInstance().run();
-				DrawPauseMenu.getInstance().setMap(this);
-			}
-		} else if(value == KeyEvent.VK_X && Bomberman.detonate == true && !activeBombs.isEmpty()){
-			for(int i =0; i< activeBombs.size(); i++){
-				if(!activeBombs.get(i).getUsed()){
-					final Runnable unExplode = new Runnable() {
-
-						@Override
-						public void run() {
-						}
-					};
-					activeBombs.get(i).explode();
-					activeBombs.get(i).getSchedule().schedule(unExplode, 500, MILLISECONDS);
-
-					break;
-				}
-			}
-			//activeBombs.get(0).explode();
-			//explosions = activeBombs.get(activeBombs.size()-1).getPersonalExplosions();
-		} else if(value == KeyEvent.VK_Z && !bombman.getBombs().isEmpty()){
-			activeBombs.addFirst(new Bomb(true));
-			bombman.getBombs().remove(0);
-			int tilex = (int)bombman.getXval() + (int)(0.5*bombman.getWidth());
-			int tiley = (int)bombman.getYval() + (int)(0.5*bombman.getHeight());
-			tilex = (tilex/50) * 50;
-			tiley = (tiley/50) * 50;
-
-			activeBombs.getFirst().setXval(tilex);
-			activeBombs.getFirst().setYval(tiley);
-			Thread thread = new Thread(activeBombs.getFirst());
-			thread.start();
 		}
 	}
-
-	//stop moving when key is released
-	public void keyReleased(KeyEvent e) {
-		int value = e.getKeyCode();
-		if(value == KeyEvent.VK_DOWN) {
-			if(yVel == bombman.getSpeed())//2
-				setVelY(0);
-		} else if(value ==KeyEvent.VK_UP) {
-			if(yVel == -bombman.getSpeed())//-2
-				setVelY(0);
-		} else if(value == KeyEvent.VK_LEFT) {
-			if(xVel == -bombman.getSpeed())//-2
-				setVelX(0);
-		} else if(value == KeyEvent.VK_RIGHT) {
-			if(xVel == bombman.getSpeed()) //2
-				setVelX(0);
-		}
-	}    
-
 
 	public void tick() {
 		int bombermanXtemp = xVel;
@@ -348,7 +259,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 						if(rightAdjust){
 							activeBombs.getLast().getPersonalExplosions()[1].setWidth(testR.getWidth()+50);
 						}
-					break;
+						break;
 					case 2:
 						boolean leftAdjust = false;
 						Explosion testL = new Explosion();
@@ -378,7 +289,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 						if(leftAdjust){
 							activeBombs.getLast().getPersonalExplosions()[2].setXval(testL.getXval()-50);
 						}
-					break;
+						break;
 					case 3:
 						boolean topAdjust = false;
 						Explosion testT = new Explosion();
@@ -408,7 +319,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 						if(topAdjust){
 							activeBombs.getLast().getPersonalExplosions()[3].setHeight(testT.getHeight()+50);
 						}
-					break;
+						break;
 					case 4:
 						boolean botAdjust = false;
 						Explosion testB = new Explosion();
@@ -438,9 +349,9 @@ public class Map implements KeyListener, FocusListener, Serializable{
 						if(botAdjust){
 							activeBombs.getLast().getPersonalExplosions()[4].setYval(testB.getYval()-50);
 						}
-					break;
+						break;
 					}
-					
+
 
 
 					//Collision Detection
@@ -458,7 +369,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 							enemies.remove(j);
 						}
 					}
-					
+
 					//point Calculation
 					if(!killedEnemies.isEmpty())
 						pointCalculation(killedEnemies);
@@ -801,7 +712,6 @@ public class Map implements KeyListener, FocusListener, Serializable{
 				e.printStackTrace();
 			}
 			menu.viewFrame(true);
-			Map.setRunning(false);
 			gameOver = true;
 			game.getFrame().dispose();
 		}
@@ -844,6 +754,9 @@ public class Map implements KeyListener, FocusListener, Serializable{
 	public static void setLife(int a){
 		life = a;
 	}
+	public void setBombermanState(int i) {
+		bombermanState = i;
+	}
 	public static void nextLevel(int level) {
 		//attributes
 		xVel = 0;
@@ -863,7 +776,7 @@ public class Map implements KeyListener, FocusListener, Serializable{
 		power = spawn.spawnPowerup();
 		door = spawn.spawnDoor();
 		tiles = spawn.spawnTiles();
-}
+	}
 	public static void sameLevel() {
 		Map.softResetBombman();
 		//attributes
@@ -884,13 +797,25 @@ public class Map implements KeyListener, FocusListener, Serializable{
 		door = spawn.spawnDoor();
 		tiles = spawn.spawnTiles();
 	}
-	
+
 	//getters
+	public int getxVel() {
+		return xVel;
+	}
+	public int getyVel() {
+		return yVel;
+	}
 	public static int getWidth(){
 		return width;
 	}
 	public static int getHeight(){
 		return height;
+	}
+	public long getGameTime() {
+		return gameTime;
+	}
+	public int getLife() {
+		return life;
 	}
 	public static ArrayList<Indestructible> getIndestructible(){
 		return indestructibles;
@@ -919,23 +844,23 @@ public class Map implements KeyListener, FocusListener, Serializable{
 	public static Powerup getPowerup() {
 		return power;
 	}
-	public static int getLevel() {
+	public int getLevel() {
 		return level;
 	}
 	public static LinkedList<Bomb> getActiveBombs() {
 		return activeBombs;
 	}
-	public static boolean getRunning() {
-		return running;
-	}
-	public static boolean getPause() {
+	public boolean getPause() {
 		return paused;
 	}
 	public static boolean getlevelComplete() {
 		return levelComplete;
 	}
-	public static boolean getGameOver() {
+	public boolean getGameOver() {
 		return gameOver;
+	}
+	public User getUser() {
+		return user;
 	}
 
 	//detects an obstacle within the range of flame
@@ -974,20 +899,13 @@ public class Map implements KeyListener, FocusListener, Serializable{
 		}
 	}
 
-	public static void setRunning(boolean b){
-		running = b;
-	}
 	public static void setPaused(boolean b){
 		paused = b;
 	}
+	public static void setGameOver() {
+		gameOver = true;
+	}
 	public Map getMap(){
 		return this;
-	}
-	//empty methods
-	public void keyTyped(KeyEvent e) {
-	}
-	public void focusGained(FocusEvent e) {
-	}
-	public void focusLost(FocusEvent e) {
 	}
 }

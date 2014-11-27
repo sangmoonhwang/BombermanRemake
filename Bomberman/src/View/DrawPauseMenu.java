@@ -169,12 +169,16 @@ public class DrawPauseMenu{
 				//temporary variables
 				DrawMap game = DrawMap.getInstance();
 				DrawMenu menu = DrawMenu.getInstance();
-				
-				Map.setRunning(false);
-				GamePlay.setShutdown();
-				menu.viewFrame(true);
+			
+				Map.setGameOver();
+				Map.setPaused(false);
 				game.getFrame().dispose();
+				GamePlay.setShutdown(true);
 				viewFrame(false);
+				pauseFrame.dispose();
+				
+				menu.setRunnning(true);
+				menu.viewFrame(true);
 			}
 		});
 		
@@ -278,7 +282,7 @@ public class DrawPauseMenu{
 					out.writeObject(file);
 					out.close();
 					fileOut.close();
-					System.out.printf("Serialized data is saved");
+					System.out.println("Serialized data is saved");
 				}catch(IOException i)
 				{
 					i.printStackTrace();

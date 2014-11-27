@@ -6,6 +6,7 @@ import java.util.TimerTask;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
+import Controller.GamePlay;
 import Controller.Map;
 
 public class Bomb implements Serializable, Runnable {
@@ -63,7 +64,7 @@ public class Bomb implements Serializable, Runnable {
 		System.out.println("threadID" + Thread.currentThread().getId());
 		while(!shutdown) {
 			long now = System.nanoTime();
-			while(Map.getPause()) {
+			while(GamePlay.getPause()) {
 				if(!paused) {
 					pausedAt += now - start;
 					paused  = true;
@@ -82,7 +83,7 @@ public class Bomb implements Serializable, Runnable {
 
 				while(true) {
 					now = System.nanoTime();
-					while(Map.getPause()) {
+					while(GamePlay.getPause()) {
 						if(!paused) {
 							pausedAt += now - start;
 							paused  = true;
@@ -105,6 +106,7 @@ public class Bomb implements Serializable, Runnable {
 				pausedAt = 0;
 			}
 		}
+		System.out.println("Bomb thread terminated");
 	}
 
 

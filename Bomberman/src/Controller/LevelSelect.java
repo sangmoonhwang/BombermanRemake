@@ -83,11 +83,8 @@ public class LevelSelect extends Database {
 						level++;
 				}
 				else if( value == KeyEvent.VK_ENTER){
-					Thread thread = new Thread(){
-						public void run(){
-							GamePlay.run(level,null);
-						}
-					};
+					GamePlay play = new GamePlay(level, null);
+					Thread thread = new Thread(play);
 					main.setVisible(false);
 					thread.start();
 				}
@@ -109,11 +106,8 @@ public class LevelSelect extends Database {
 						level++;
 				}
 				else if(value == KeyEvent.VK_ENTER){
-					Thread thread = new Thread(){
-						public void run(){
-							GamePlay.run(level,null);
-						}
-					};
+					GamePlay play = new GamePlay(level, null);
+					Thread thread = new Thread(play);
 					main.setVisible(false);
 					thread.start();
 				}
@@ -163,11 +157,8 @@ public class LevelSelect extends Database {
 						level++;
 				}
 				else if( value == KeyEvent.VK_ENTER ){
-					Thread thread = new Thread(){
-						public void run(){
-							GamePlay.run(level,null);
-						}
-					};
+					GamePlay play = new GamePlay(level, null);
+					Thread thread = new Thread(play);
 					main.setVisible(false);
 					thread.start();
 				}
@@ -189,11 +180,8 @@ public class LevelSelect extends Database {
 						level++;
 				}
 				else if( value == KeyEvent.VK_ENTER){
-					Thread thread = new Thread(){
-						public void run(){
-							GamePlay.run(level,null);
-						}
-					};
+					GamePlay play = new GamePlay(level, null);
+					Thread thread = new Thread(play);
 					main.setVisible(false);
 					thread.start();
 				}

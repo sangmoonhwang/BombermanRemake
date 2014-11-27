@@ -40,7 +40,7 @@ public class DrawMenu{
 	//variables
 	private boolean running;
 	Map game;
-
+	Thread thread;
 	//objects
 	private JFrame menuFrame;
 	private JButton playButton;
@@ -76,9 +76,9 @@ public class DrawMenu{
 
 	public void run() {
 		//only makeFrame once
-		if(!running){
+//		if(!running){
 			makeFrame();
-		}
+//		}
 		menuFrame.setVisible(true);
 	}
 
@@ -151,12 +151,10 @@ public class DrawMenu{
 		playButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Thread thread = new Thread() {
-					public void run() {
-						GamePlay.run(1,null);
-					}
-				};
+				GamePlay play = new GamePlay(1,null);
+				thread = new Thread(play);
 				viewFrame(false);
+				running = false;
 				thread.start();
 			}
 		});
@@ -314,14 +312,12 @@ public class DrawMenu{
 				
 				System.out.println("Load Game");
 				viewFrame(false);
-				game.setPaused(false);
-				Thread thread = new Thread() {
-					public void run() {
-						GamePlay.run(0,game);
-					}
-				};
+				GamePlay play = new GamePlay(0, game);
+				Thread thread = new Thread(play);
 				viewFrame(false);
 				thread.start();
+				running = false;
+
 				//				DrawMap drawGame = DrawMap.getInstance();
 				//				Map.setPaused(false);
 				//				drawGame.getFrame().setVisible(true);
@@ -493,8 +489,15 @@ public class DrawMenu{
 		});
 	}
 
+	public boolean getRunning() {
+		return running;
+	}
+	
 	//setters
 	public void viewFrame(boolean b){
 		menuFrame.setVisible(b);
+	}
+	public void setRunnning(boolean bool) {
+		running = bool;
 	}
 }
