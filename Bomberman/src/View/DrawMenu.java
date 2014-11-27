@@ -39,6 +39,7 @@ import Controller.ModifyAccount;
 public class DrawMenu{
 	//variables
 	private boolean running;
+	Map game;
 
 	//objects
 	private JFrame menuFrame;
@@ -152,7 +153,7 @@ public class DrawMenu{
 			public void actionPerformed(ActionEvent e) {
 				Thread thread = new Thread() {
 					public void run() {
-						GamePlay.run(1);
+						GamePlay.run(1,null);
 					}
 				};
 				viewFrame(false);
@@ -256,7 +257,6 @@ public class DrawMenu{
 		loadButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Map game = null;
 				String result = null;
 				try
 				{
@@ -311,8 +311,17 @@ public class DrawMenu{
 					c.printStackTrace();
 					return;
 				}
-
+				
 				System.out.println("Load Game");
+				viewFrame(false);
+				game.setPaused(false);
+				Thread thread = new Thread() {
+					public void run() {
+						GamePlay.run(0,game);
+					}
+				};
+				viewFrame(false);
+				thread.start();
 				//				DrawMap drawGame = DrawMap.getInstance();
 				//				Map.setPaused(false);
 				//				drawGame.getFrame().setVisible(true);
@@ -321,55 +330,6 @@ public class DrawMenu{
 			}
 		});
 
-		//		//save button
-		//		saveButton.addKeyListener(new KeyListener() {
-		//			
-		//			@Override
-		//			public void keyTyped(KeyEvent e) {
-		//				int value = e.getKeyCode();
-		//				if (value == KeyEvent.VK_DOWN){
-		//					logoutButton.requestFocus();
-		//				}
-		//				else if(value == KeyEvent.VK_LEFT ){
-		//					loadButton.requestFocus();
-		//				}
-		//				else if(value ==KeyEvent.VK_UP){
-		//					logoutButton.requestFocus();
-		//				}
-		//				else if( value == KeyEvent.VK_RIGHT){
-		//					playButton.requestFocus();
-		//				}
-		//			}
-		//			
-		//			@Override
-		//			public void keyReleased(KeyEvent e) {
-		//				
-		//			}
-		//			
-		//			@Override
-		//			public void keyPressed(KeyEvent e) {
-		//				int value = e.getKeyCode();
-		//				if (value == KeyEvent.VK_DOWN){
-		//					logoutButton.requestFocus();
-		//				}
-		//				else if(value == KeyEvent.VK_LEFT ){
-		//					loadButton.requestFocus();
-		//				}
-		//				else if(value ==KeyEvent.VK_UP){
-		//					logoutButton.requestFocus();
-		//				}
-		//				else if( value == KeyEvent.VK_RIGHT){
-		//					playButton.requestFocus();
-		//				}
-		//			}
-		//		});
-		//		saveButton.addActionListener(new ActionListener() {
-		//			@Override
-		//			public void actionPerformed(ActionEvent e) {
-		//				//Save the user's current game, shouldn't be clickable if user is not in game
-		//				System.out.println("Save Game");
-		//			}
-		//		});
 
 		//modify button
 		modifyButton.addKeyListener(new KeyListener() {

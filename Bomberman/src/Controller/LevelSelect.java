@@ -85,7 +85,7 @@ public class LevelSelect extends Database {
 				else if( value == KeyEvent.VK_ENTER){
 					Thread thread = new Thread(){
 						public void run(){
-							GamePlay.run(level);
+							GamePlay.run(level,null);
 						}
 					};
 					main.setVisible(false);
@@ -111,7 +111,7 @@ public class LevelSelect extends Database {
 				else if(value == KeyEvent.VK_ENTER){
 					Thread thread = new Thread(){
 						public void run(){
-							GamePlay.run(level);
+							GamePlay.run(level,null);
 						}
 					};
 					main.setVisible(false);
@@ -165,7 +165,7 @@ public class LevelSelect extends Database {
 				else if( value == KeyEvent.VK_ENTER ){
 					Thread thread = new Thread(){
 						public void run(){
-							GamePlay.run(level);
+							GamePlay.run(level,null);
 						}
 					};
 					main.setVisible(false);
@@ -191,7 +191,7 @@ public class LevelSelect extends Database {
 				else if( value == KeyEvent.VK_ENTER){
 					Thread thread = new Thread(){
 						public void run(){
-							GamePlay.run(level);
+							GamePlay.run(level,null);
 						}
 					};
 					main.setVisible(false);

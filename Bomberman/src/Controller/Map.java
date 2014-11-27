@@ -184,11 +184,6 @@ public class Map implements KeyListener, FocusListener, Serializable{
 
 						@Override
 						public void run() {
-						///	for(int i = 0; i < 4; i++){
-						//		activeBombs.getLast().getPersonalExplosions()[i].setExploding(false);
-						//	}
-							//bombman.getBombs().add(new Bomb(false));
-							//activeBombs.removeLast();
 						}
 					};
 					activeBombs.get(i).explode();

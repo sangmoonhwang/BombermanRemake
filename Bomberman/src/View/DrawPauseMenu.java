@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import Controller.GamePlay;
 import Controller.Leaderboard;
 import Controller.Leaderboard_p;
 import Controller.Login;
@@ -169,8 +170,9 @@ public class DrawPauseMenu{
 				DrawMap game = DrawMap.getInstance();
 				DrawMenu menu = DrawMenu.getInstance();
 				
-				menu.viewFrame(true);
 				Map.setRunning(false);
+				GamePlay.setShutdown();
+				menu.viewFrame(true);
 				game.getFrame().dispose();
 				viewFrame(false);
 			}

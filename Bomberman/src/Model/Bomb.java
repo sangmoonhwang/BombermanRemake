@@ -1,18 +1,14 @@
 package Model;
 
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
-import static java.util.concurrent.TimeUnit.SECONDS;
-
 import java.io.Serializable;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
 
 import Controller.Map;
 
-public class Bomb implements Serializable, Runnable{
+public class Bomb implements Serializable, Runnable {
 	private int xval, yval;
 	private int height, width;
 	private boolean active;
@@ -20,7 +16,8 @@ public class Bomb implements Serializable, Runnable{
 	private Explosion[] personalExplosions;
 	private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(10);
 	private boolean used;
-	private int numOfBomb;
+	private boolean paused = false;
+	private long pausedAt = 0;
 
 	public Bomb(boolean active) {
 		xval = yval = 0;
@@ -59,20 +56,43 @@ public class Bomb implements Serializable, Runnable{
 
 
 	public void run() {
+		
 		long start = System.nanoTime();
 		boolean shutdown = false;
 
 		System.out.println("threadID" + Thread.currentThread().getId());
 		while(!shutdown) {
 			long now = System.nanoTime();
-			if((now - start) >= 2000000000) {
+			while(Map.getPause()) {
+				if(!paused) {
+					pausedAt += now - start;
+					paused  = true;
+				}
+				System.out.println("paused");
+				now = System.nanoTime();
+				start = now;
+			}
+			paused = false;
+			if((now - start) + pausedAt >= 2000000000) {
+				pausedAt = 0;
+				
 				explode();
 				System.out.println("threadID" + Thread.currentThread().getId() + "exploding");
 				start = now;
 
 				while(true) {
 					now = System.nanoTime();
-					if((now - start) >= 500000000 || Map.getActiveBombs().getLast().getUsed()) {
+					while(Map.getPause()) {
+						if(!paused) {
+							pausedAt += now - start;
+							paused  = true;
+						}
+						System.out.println("paused after expolode");
+						now = System.nanoTime();
+						start = now;
+					}
+					paused = false;
+					if((now - start) + pausedAt >= 500000000 || !Map.getActiveBombs().getLast().getUsed()) {
 						for(int i = 0; i < 5; i++){
 							personalExplosions[i].setExploding(false);
 						}
@@ -82,41 +102,11 @@ public class Bomb implements Serializable, Runnable{
 						break;
 					}
 				}
+				pausedAt = 0;
 			}
 		}
 	}
 
-	public void activate() {
-/*
-		final Runnable unExplode = new Runnable() {
-
-			@Override
-			public void run() {
-				for(int i = 0; i < 4; i++){
-					personalExplosions[i].setExploding(false);
-				}
-				Map.getBomberman().getBombs().add(new Bomb(false));
-				Map.getActiveBombs().remove(Map.getActiveBombs().size()-1);
-			}
-		};
-
-		final Runnable fuse = new Runnable() {
-
-			@Override
-			public void run() {
-				if(!used){
-					explode();
-					scheduler.schedule(unExplode, 500, MILLISECONDS);
-				}
-			}
-
-		};
-		final ScheduledFuture<?> fuseHandle = scheduler.schedule(fuse, 2, SECONDS);
-		scheduler.schedule(new Runnable() {
-			public void run() { fuseHandle.cancel(true); }
-		}, 2, SECONDS);
-		  */
-	}
 
 	//setters
 	public void setXval(int i){

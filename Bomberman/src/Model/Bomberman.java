@@ -37,9 +37,10 @@ public class Bomberman extends Movable implements Serializable{
 		wallPass = false;
 		flamePass = false;
 		bombPass = false;
-		detonate = false;
+		detonate = true;
 		speed = 2;
 		bombs = new ArrayList<Bomb>();
+		bombs.add(new Bomb(false));
 		bombs.add(new Bomb(false));
 	}
 	
