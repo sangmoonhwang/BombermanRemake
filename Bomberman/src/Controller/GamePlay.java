@@ -14,7 +14,7 @@ import View.DrawMenu;
 import View.DrawPauseMenu;
 
 public class GamePlay implements Runnable, FocusListener, KeyListener {
-	private static boolean shutdown;
+	private static boolean shutdown,l_Pressed, r_Pressed, u_Pressed, d_Pressed;
 	private static Map play;
 	private static DrawMap d;
 	private Bomberman bombman;
@@ -73,26 +73,46 @@ public class GamePlay implements Runnable, FocusListener, KeyListener {
 		int value = e.getKeyCode();
 		bombman.setMoving(true);
 		if (value == KeyEvent.VK_DOWN && value !=KeyEvent.VK_UP){
+			d_Pressed = true;
 			play.setVelY(bombman.getSpeed());//2
-		if(value != KeyEvent.VK_LEFT && value !=KeyEvent.VK_RIGHT)
+			if(!l_Pressed && !r_Pressed)
 				bombman.setDirection(2);
+			else if(l_Pressed)
+				bombman.setDirection(5);
+			else if(r_Pressed)
+				bombman.setDirection(6);
 		}
 		else if(value != KeyEvent.VK_DOWN && value ==KeyEvent.VK_UP){
+			u_Pressed = true;
 			play.setVelY(-bombman.getSpeed());//-2
-			if(value != KeyEvent.VK_LEFT && value !=KeyEvent.VK_RIGHT)
+			if(!l_Pressed && !r_Pressed)
 				bombman.setDirection(0);
+			else if(l_Pressed)
+				bombman.setDirection(4);
+			else if(r_Pressed)
+				bombman.setDirection(7);
 		}
 		else if(value == KeyEvent.VK_LEFT && value !=KeyEvent.VK_RIGHT){
+			l_Pressed = true;
 			play.setBombermanState(2);
 			play.setVelX(-bombman.getSpeed());//-2
-			if(value != KeyEvent.VK_DOWN && value !=KeyEvent.VK_UP)
+			if(!u_Pressed && !d_Pressed)
 				bombman.setDirection(1);
+			else if(u_Pressed)
+				bombman.setDirection(4);
+			else if(d_Pressed)
+				bombman.setDirection(5);
 		}
 		else if(value == KeyEvent.VK_RIGHT && value !=KeyEvent.VK_LEFT){
+			r_Pressed = true;
 			play.setBombermanState(1);
 			play.setVelX(bombman.getSpeed());//2
-			if(value != KeyEvent.VK_DOWN && value !=KeyEvent.VK_UP)
+			if(!u_Pressed && !d_Pressed)
 				bombman.setDirection(3);
+			else if(u_Pressed)
+				bombman.setDirection(7);
+			else if(d_Pressed)
+				bombman.setDirection(6);
 		} else if(value == KeyEvent.VK_ESCAPE || value == KeyEvent.VK_SPACE){
 			play.setVelY(0);
 			play.setVelX(0);
@@ -137,26 +157,94 @@ public class GamePlay implements Runnable, FocusListener, KeyListener {
 	//stop moving when key is released
 	public void keyReleased(KeyEvent e) {
 		int value = e.getKeyCode();
-		bombman.setMoving(false);
+		if(value == KeyEvent.VK_UP && value == KeyEvent.VK_DOWN && value == KeyEvent.VK_LEFT && value == KeyEvent.VK_RIGHT)
+			bombman.setMoving(false);
 		if(value == KeyEvent.VK_DOWN) {
+			d_Pressed = false;
 			if(play.getyVel() == bombman.getSpeed())//2
 				play.setVelY(0);
+			if(bombman.getDirection() == 2)
+				bombman.setMoving(false);
+			else if(bombman.getDirection() == 5)
+				bombman.setDirection(1);
+			else if(bombman.getDirection() == 6)
+				bombman.setDirection(3);
+				
 		} else if(value ==KeyEvent.VK_UP) {
+			u_Pressed = false;
 			if(play.getyVel() == -bombman.getSpeed())//-2
 				play.setVelY(0);
+			if(bombman.getDirection() == 0)
+				bombman.setMoving(false);
+			else if(bombman.getDirection() == 4)
+				bombman.setDirection(1);
+			else if(bombman.getDirection() == 7)
+				bombman.setDirection(3);
 		} else if(value == KeyEvent.VK_LEFT) {
+			l_Pressed = false;
 			if(play.getxVel() == -bombman.getSpeed())//-2
 				play.setVelX(0);
+			if(bombman.getDirection() == 1)
+				bombman.setMoving(false);
+			else if(bombman.getDirection() == 4)
+				bombman.setDirection(0);
+			else if(bombman.getDirection() == 5)
+				bombman.setDirection(2);
 		} else if(value == KeyEvent.VK_RIGHT) {
+			r_Pressed = false;
 			if(play.getxVel() == bombman.getSpeed()) //2
 				play.setVelX(0);
+			if(bombman.getDirection() == 3)
+				bombman.setMoving(false);
+			else if(bombman.getDirection() == 6)
+				bombman.setDirection(2);
+			else if(bombman.getDirection() == 7)
+				bombman.setDirection(0);
 		}
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-
+		int value = e.getKeyCode();
+		bombman.setMoving(true);
+		if (value == KeyEvent.VK_DOWN && value !=KeyEvent.VK_UP){
+			play.setVelY(bombman.getSpeed());//2
+			if(value != KeyEvent.VK_LEFT && value !=KeyEvent.VK_RIGHT)
+				bombman.setDirection(2);
+			else if(value == KeyEvent.VK_LEFT)
+				bombman.setDirection(5);
+			else 
+				bombman.setDirection(6);
+		}
+		else if(value != KeyEvent.VK_DOWN && value ==KeyEvent.VK_UP){
+			play.setVelY(-bombman.getSpeed());//-2
+			if(value != KeyEvent.VK_LEFT && value !=KeyEvent.VK_RIGHT)
+				bombman.setDirection(0);
+			else if(value == KeyEvent.VK_LEFT)
+				bombman.setDirection(4);
+			else
+				bombman.setDirection(7);
+		}
+		else if(value == KeyEvent.VK_LEFT && value !=KeyEvent.VK_RIGHT){
+			play.setBombermanState(2);
+			play.setVelX(-bombman.getSpeed());//-2
+			if(value != KeyEvent.VK_DOWN && value !=KeyEvent.VK_UP)
+				bombman.setDirection(1);
+			else if(value == KeyEvent.VK_UP)
+				bombman.setDirection(4);
+			else
+				bombman.setDirection(5);
+		}
+		else if(value == KeyEvent.VK_RIGHT && value !=KeyEvent.VK_LEFT){
+			play.setBombermanState(1);
+			play.setVelX(bombman.getSpeed());//2
+			if(value != KeyEvent.VK_DOWN && value !=KeyEvent.VK_UP)
+				bombman.setDirection(3);
+			else if(value == KeyEvent.VK_UP)
+				bombman.setDirection(7);
+			else
+				bombman.setDirection(6);
+		}
 	}
 
 	@Override

@@ -9,7 +9,7 @@ public class Bomberman extends Movable implements Serializable{
 	//physical attributes
 	private static float xval, yval;
 	private static int height, width;
-	private int direction = 2; //0n 1w 2s 3e
+	private int direction = 2; //0n 1w 2s 3e 4nw 5sw 6se 7ne
 	private boolean isMoving;
 
 	//bomberman values

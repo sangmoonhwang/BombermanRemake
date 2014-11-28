@@ -88,6 +88,70 @@ public class AnimateBombman {
 				y = 113;
 			}
 			break;
+		case 4: //nw
+			if(bm.isMoving()){
+				if(System.currentTimeMillis()/100 % 2 == 0){
+					x = 157;
+					y = 2;
+				}
+				else{
+					x = 174;
+					y = 2;
+				}
+			}
+			else{
+				x = 141;
+				y = 2;
+			}
+			break;
+		case 5: //sw
+			if(bm.isMoving()){
+				if(System.currentTimeMillis()/100 % 2 == 0){
+					x = 74;
+					y = 2;
+				}
+				else{
+					x = 57;
+					y = 2;
+				}
+			}
+			else{
+				x = 41;
+				y = 2;
+			}
+			break;
+		case 6: //se
+			if(bm.isMoving()){
+				if(System.currentTimeMillis()/100 % 2 == 0){
+					x = 140;
+					y = 29;
+				}
+				else{
+					x = 157;
+					y = 29;
+				}
+			}
+			else{
+				x = 174;
+				y = 28;
+			}
+			break;
+		case 7: //ne
+			if(bm.isMoving()){
+				if(System.currentTimeMillis()/100 % 2 == 0){
+					x = 40;
+					y = 29;
+				}
+				else{
+					x = 57;
+					y = 29;
+				}
+			}
+			else{
+				x = 74;
+				y = 29;
+			}
+			break;
 		}
 		img = img.getSubimage(x, y, width, height);
 		return img;
