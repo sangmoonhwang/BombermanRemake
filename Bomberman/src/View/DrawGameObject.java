@@ -4,7 +4,11 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -13,6 +17,7 @@ import Model.Bomberman;
 
 public class DrawGameObject extends JPanel{
 
+	private AnimateBombman abm;
 	private Image bombermanSprite;
 	private Image HardBlock;
 	private Image Brick;
@@ -42,6 +47,7 @@ public class DrawGameObject extends JPanel{
 
 	public DrawGameObject(){
 
+		abm = new AnimateBombman(Map.getBomberman());
 		bombermanSprite = Toolkit.getDefaultToolkit().getImage("Bomberman.gif");
 		HardBlock = Toolkit.getDefaultToolkit().getImage("HardBlock.png");
 		Brick = Toolkit.getDefaultToolkit().getImage("Brick.jpg");
@@ -169,8 +175,8 @@ public class DrawGameObject extends JPanel{
 		int bombermanY = bombman.getYval();
 		int bombermanWidth = bombman.getWidth();
 		int bombermanHeight = bombman.getHeight();
-		g.drawImage(bombermanSprite, bombermanX, bombermanY, bombermanWidth, bombermanHeight, this);
-		
+		g.drawImage(abm.animateBm(), bombermanX, bombermanY, bombermanWidth, bombermanHeight, this);
+//		g.drawImage(bombermanSprite, bombermanX, bombermanY, bombermanWidth, bombermanHeight, this);
 
 	}
 }

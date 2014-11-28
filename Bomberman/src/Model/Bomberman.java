@@ -9,6 +9,8 @@ public class Bomberman extends Movable implements Serializable{
 	//physical attributes
 	private static float xval, yval;
 	private static int height, width;
+	private int direction = 2; //0n 1w 2s 3e
+	private boolean isMoving;
 
 	//bomberman values
 	private static int score;
@@ -58,6 +60,12 @@ public class Bomberman extends Movable implements Serializable{
 	public static void setScore(int score) {
 		Bomberman.score = score;
 	}
+	public void setDirection (int i) {
+		direction = i;
+	}
+	public void setMoving(boolean b) {
+		isMoving = b;
+	}
 
 	//increment
 	public void incrementXval(int i) {
@@ -74,6 +82,9 @@ public class Bomberman extends Movable implements Serializable{
 	}
 
 	//getters
+	public int getDirection(){
+		return direction;
+	}
 	public int getXval() {
 		return (int) xval;
 	}
@@ -102,5 +113,9 @@ public class Bomberman extends Movable implements Serializable{
 	}
 	public static int getScore() {
 		return score;
+	}
+
+	public boolean isMoving() {
+		return isMoving;
 	}
 }

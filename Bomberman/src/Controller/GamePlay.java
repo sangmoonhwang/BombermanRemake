@@ -71,19 +71,28 @@ public class GamePlay implements Runnable, FocusListener, KeyListener {
 	//react to keyPress by moving Bomberman
 	public void keyPressed ( KeyEvent e ){
 		int value = e.getKeyCode();
+		bombman.setMoving(true);
 		if (value == KeyEvent.VK_DOWN && value !=KeyEvent.VK_UP){
 			play.setVelY(bombman.getSpeed());//2
+		if(value != KeyEvent.VK_LEFT && value !=KeyEvent.VK_RIGHT)
+				bombman.setDirection(2);
 		}
 		else if(value != KeyEvent.VK_DOWN && value ==KeyEvent.VK_UP){
 			play.setVelY(-bombman.getSpeed());//-2
+			if(value != KeyEvent.VK_LEFT && value !=KeyEvent.VK_RIGHT)
+				bombman.setDirection(0);
 		}
 		else if(value == KeyEvent.VK_LEFT && value !=KeyEvent.VK_RIGHT){
 			play.setBombermanState(2);
 			play.setVelX(-bombman.getSpeed());//-2
+			if(value != KeyEvent.VK_DOWN && value !=KeyEvent.VK_UP)
+				bombman.setDirection(1);
 		}
 		else if(value == KeyEvent.VK_RIGHT && value !=KeyEvent.VK_LEFT){
 			play.setBombermanState(1);
 			play.setVelX(bombman.getSpeed());//2
+			if(value != KeyEvent.VK_DOWN && value !=KeyEvent.VK_UP)
+				bombman.setDirection(3);
 		} else if(value == KeyEvent.VK_ESCAPE || value == KeyEvent.VK_SPACE){
 			play.setVelY(0);
 			play.setVelX(0);
@@ -128,6 +137,7 @@ public class GamePlay implements Runnable, FocusListener, KeyListener {
 	//stop moving when key is released
 	public void keyReleased(KeyEvent e) {
 		int value = e.getKeyCode();
+		bombman.setMoving(false);
 		if(value == KeyEvent.VK_DOWN) {
 			if(play.getyVel() == bombman.getSpeed())//2
 				play.setVelY(0);
