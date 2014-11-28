@@ -4,6 +4,10 @@ import Controller.Map;
 import Model.Bomb;
 import Model.Bomberman;
 
+/**
+ * This class increases the amount of the bombs the bomberman possesses
+ *
+ */
 public class UpBombs extends Powerup{
 
 	public UpBombs(String identity){

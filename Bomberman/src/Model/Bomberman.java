@@ -7,28 +7,76 @@ import java.util.LinkedList;
 public class Bomberman extends Movable implements Serializable{
 
 	//physical attributes
+	/**
+	 * x and y position of the bomberman
+	 */
 	private static float xval, yval;
+	/**
+	 * height and the width of the bomberman
+	 */
 	private static int height, width;
-	private int direction = 2; //0n 1w 2s 3e 4nw 5sw 6se 7ne
+	/**
+	 * 0:north 1:west 2:south 3:east 4:north-west 5:south-west 6:south-east 7:north-east
+	 */
+	private int direction = 2; 
+	/**
+	 * indicator if the bomberman is moving
+	 */
 	private boolean isMoving;
 
 	//bomberman values
+	/**
+	 * the score obtained
+	 */
 	private static int score;
+	/**
+	 * life left
+	 */
 	private static int life;
 	
+	/**
+	 * speed of the bomberman
+	 */
 	public static int speed;
+	/**
+	 * Number of bombs the bomberman can use
+	 */
 	public static int availableBombs;
+	/**
+	 * flame length
+	 */
 	public static int flames;
+	/**
+	 * time at which the bomberman obtains the mystery powerup 
+	 */
 	public static long mystery_From;
 	
+	/**
+	 * detonate ability indicator
+	 */
 	public static boolean detonate;
+	/**
+	 * wallpass ability indicator
+	 */
 	public static boolean wallPass;
+	/**
+	 * bombpass ability indicator
+	 */
 	public static boolean bombPass;
+	/**
+	 * flamepass ability indicator
+	 */
 	public static boolean flamePass;
 	
+	/**
+	 * bombs belonging to the bomberman
+	 */
 	public static LinkedList<Bomb> bombs;
 
 
+	/**
+	 * constructor
+	 */
 	public Bomberman() {
 		xval = 50;
 		yval = 50;//starting pos
@@ -57,31 +105,63 @@ public class Bomberman extends Movable implements Serializable{
 	public void setSpeed(int i) {
 		speed = i;
 	}
+	/**
+	 * sets the score
+	 * @param score score
+	 */
 	public static void setScore(int score) {
 		Bomberman.score = score;
 	}
+	/**
+	 * sets the direction of the bomberman
+	 * @param i direction to be set
+	 */
 	public void setDirection (int i) {
 		direction = i;
 	}
+	/**
+	 * sets the indicator if the bomberman is moving
+	 * @param b indicator if the bomberman is moving
+	 */
 	public void setMoving(boolean b) {
 		isMoving = b;
 	}
 
 	//increment
+	/**
+	 * moves horizontally the bomberman by i pixels
+	 * @param i speed of the bomberman
+	 */
 	public void incrementXval(int i) {
 		xval += i;
 	}
+	/**
+	 * moves vertically the bomberman by i pixels
+	 * @param i speed of the bomberman
+	 */
 	public void incrementYval(int i) {
 		yval += i;
 	}
+	/**
+	 * increases the amount of bombs left the to bomberman
+	 * 
+	 */
 	public static int incrementBombs(){
 		return availableBombs++;
 	}
+	/**
+	 * decreases the amount of bombs left to the bomberman
+	 * 
+	 */
 	public static int decrementBombs(){
 		return availableBombs--;
 	}
 
 	//getters
+	/**
+	 * getter for direction
+	 * @return direction
+	 */
 	public int getDirection(){
 		return direction;
 	}
@@ -101,20 +181,40 @@ public class Bomberman extends Movable implements Serializable{
 	public int getSpeed() {
 		return speed;
 	}
+	/**
+	 * getter for the availablebombs
+	 * @return available bombs
+	 */
 	public static int getavailableBombs() {
 		return availableBombs;
 	}
+	/**
+	 * This indicates whether the bomberman is mystery or not
+	 * @return
+	 */
 	public boolean isMystery(){
 		//System.out.println((System.nanoTime() - mystery_From)/1000000000);
 		return (System.nanoTime() - mystery_From)/1000000000 <= 10; //10seconds?
 	}
+	/**
+	 * getter for the bombs
+	 * @return bombs
+	 */
 	public LinkedList<Bomb> getBombs() {
 		return bombs;
 	}
+	/**
+	 * getter for the score
+	 * @return score
+	 */
 	public static int getScore() {
 		return score;
 	}
 
+	/**
+	 * indicating if bomberman is moving
+	 * @return moving indicator
+	 */
 	public boolean isMoving() {
 		return isMoving;
 	}

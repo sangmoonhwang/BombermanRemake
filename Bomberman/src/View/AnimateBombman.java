@@ -9,13 +9,36 @@ import javax.imageio.ImageIO;
 
 import Model.Bomberman;
 
+/**
+ * This class animates the bomberman
+ *
+ */
 public class AnimateBombman {
+	/**
+	 * Bomberman object
+	 */
 	Bomberman bm = null;
+	/**
+	 * x starting position of the sprite image to be cut
+	 */
 	int x;
+	/**
+	 * y starting position of the sprite image to be cut
+	 */
 	int y;
+	/**
+	 * width of the sprite image to be cut
+	 */
 	int width;
+	/**
+	 * height of the sprite image to be cut
+	 */
 	int height;
 
+	/**
+	 * constructor
+	 * @param bm bomberman object in the game
+	 */
 	public AnimateBombman(Bomberman bm){
 		this.bm = bm;
 		this.width = 17;
@@ -24,6 +47,10 @@ public class AnimateBombman {
 
     
 	
+	/**
+	 * This method is animating the bomberman according to the keyboard input
+	 * @return corresponding image to be rendered
+	 */
 	public Image animateBm(){
 		BufferedImage img = null;
 		try {

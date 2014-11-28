@@ -8,16 +8,42 @@ import Model.Block;
 import Model.Bomb;
 import Model.Bomberman;
 
+/**
+ * This class implements all powerups and their effects
+ *
+ */
 public class Powerup extends Block implements Serializable{
 
 	//physical attributes
+	/**
+	 * X position of the powerup 
+	 */
 	private int xval;
+	/**
+	 * Y position of the powerup
+	 */
 	private int yval;
+	/**
+	 * Height of the powerup
+	 */
 	private int height;
+	/**
+	 * Width of the powerup
+	 */
 	private int width;
+	/**
+	 * Identifier of the powerup
+	 */
 	private String identity;
+	/**
+	 * Power up image
+	 */
 	private Image image;
 
+	/**
+	 * constructor
+	 * @param identity The identity of the powerup
+	 */
 	public Powerup(String identity) {
 		this.identity = identity;
 		setImage();
@@ -26,7 +52,7 @@ public class Powerup extends Block implements Serializable{
 	}
 
 	/**
-	 * move the enemy depending on the current moving direction
+	 * sets the powerup image according to its identity
 	 * @param None
 	 * @return None
 	 */
@@ -77,13 +103,24 @@ public class Powerup extends Block implements Serializable{
 	public int getWidth() {
 		return width;
 	}
+	/**
+	 * setter for identity of the powerup
+	 * @return Identity of the powerup
+	 */
 	public String getIdentity() {
 		return identity;
 	}
+	/**
+	 * setter for image of the powerup
+	 * @return Image of the powerup
+	 */
 	public Image getImage() {
 		return image;
 	}
 
+	/**
+	 * This method activate the powerup so that it becomes effective
+	 */
 	public void activate() {
 		if(identity.equals("Bombpass")){
 			Bomberman.bombPass = true;
