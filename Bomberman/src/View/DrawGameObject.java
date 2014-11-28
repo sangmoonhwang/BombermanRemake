@@ -96,7 +96,15 @@ public class DrawGameObject extends JPanel{
 			g.drawImage(Tile, tilex, tiley, 50, 50, this);
 		}
 
-
+		//draw bombs
+		for(int i = 0; i < Map.getActiveBombs().size(); i++){
+			if(Map.getActiveBombs().get(i).getActive()){
+				int bombx = Map.getActiveBombs().get(i).getXval();
+				int bomby = Map.getActiveBombs().get(i).getYval();
+				g.drawImage(Bomb, bombx, bomby, 50, 50, this);
+			}
+		}
+		
 		//draw explosions
 		//if(Map.getExplosion(0).isExploding()){
 		if(Map.getActiveBombs().size() != 0 && Map.getActiveBombs().getLast().getPersonalExplosions()[0].isExploding()){
@@ -154,14 +162,6 @@ public class DrawGameObject extends JPanel{
 			int enemyy = Map.getEnemy().get(i).getYval();
 			g.setColor(Color.BLACK);
 			g.drawImage(Map.getEnemy().get(i).getImage(), enemyx, enemyy, 50, 50, this);
-		}
-
-		for(int i = 0; i < Map.getActiveBombs().size(); i++){
-			if(Map.getActiveBombs().get(i).getActive()){
-				int bombx = Map.getActiveBombs().get(i).getXval();
-				int bomby = Map.getActiveBombs().get(i).getYval();
-				g.drawImage(Bomb, bombx, bomby, 50, 50, this);
-			}
 		}
 
 		//draw Bomberman

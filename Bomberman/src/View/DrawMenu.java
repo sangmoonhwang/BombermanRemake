@@ -315,12 +315,6 @@ public class DrawMenu{
 				Thread thread = new Thread(play);
 				viewFrame(false);
 				thread.start();
-
-				//				DrawMap drawGame = DrawMap.getInstance();
-				//				Map.setPaused(false);
-				//				drawGame.getFrame().setVisible(true);
-				//				viewFrame(false);
-				//				game.run();
 			}
 		});
 
