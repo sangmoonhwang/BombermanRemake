@@ -21,7 +21,13 @@ import Utils.GNode;
 public class Enemy extends Movable implements Serializable{
 
 	//physical attributes
+	/**
+	 * x and y position of the enemy
+	 */
 	private float xval,yval;
+	/**
+	 * height and width of the enemy
+	 */
 	private int height, width;
 
 	//enemy values
@@ -69,6 +75,10 @@ public class Enemy extends Movable implements Serializable{
 	private int cols = 13;
 	ArrayList<Box> path = new ArrayList<Box>();
 
+	/**
+	 * constructor
+	 * @param enemy enemy to use
+	 */
 	public Enemy(String enemy){
 		xval = (float)0;
 		yval = (float)0;
@@ -465,6 +475,10 @@ public class Enemy extends Movable implements Serializable{
 	public void setYval(float i) {
 		yval = i;
 	}
+	/**
+	 * setter for the state
+	 * @param state state
+	 */
 	public void setState(int state) {
 		this.state = state;
 	}
@@ -477,6 +491,10 @@ public class Enemy extends Movable implements Serializable{
 	}
 
 	//getters
+	/**
+	 * getter for the identity
+	 * @return identity identity
+	 */
 	public String getIdentity() {
 		return identity;
 	}
@@ -492,12 +510,24 @@ public class Enemy extends Movable implements Serializable{
 	public int getWidth() {
 		return width;
 	}
+	/**
+	 * getter for points
+	 * @return points
+	 */
 	public int getPoints() {
 		return points;
 	}
+	/**
+	 * getter for the state
+	 * @return the state
+	 */
 	public int getState() {
 		return state;
 	}
+	/**
+	 * getter for the intelligence
+	 * @return intelligence
+	 */
 	public int getIntelligence() {
 		return intelligence;
 	}
