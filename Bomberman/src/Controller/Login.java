@@ -11,6 +11,10 @@ import Model.User;
 import View.DrawLogin;
 import View.DrawMenu;
 
+/**
+ * Login controller
+ *
+ */
 public class Login extends Database implements KeyListener, FocusListener {
 	private static boolean running = false;
 	private static User u;
@@ -23,16 +27,27 @@ public class Login extends Database implements KeyListener, FocusListener {
 	static String blank = "                                         ";
 
 	//draw login with button listener
+	/**
+	 * constructor
+	 */
 	public Login() {
 		running = true;
 		loginFrame = DrawLogin.getInstance();
 	}
 
+	/**
+	 * activate the Login screen
+	 */
 	public void run(){
 		loginFrame.run();
 	}
 
 	//if user exists then login to menu else display user does not exist
+	/**
+	 * user validation method
+	 * @param username
+	 * @param password
+	 */
 	public static void loginUser(String username, String password) {
 		boolean user = false;
 		boolean pass = false;

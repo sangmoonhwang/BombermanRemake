@@ -24,6 +24,10 @@ import Model.User;
 import View.DrawMenu;
 import View.DrawPauseMenu;
 
+/**
+ * This class is responsible for leaderboard control when the game is paused
+ *
+ */
 public class Leaderboard_p extends Database {
 	public String newUsername;
 	public String oldPassword;
@@ -35,9 +39,12 @@ public class Leaderboard_p extends Database {
 	private User[] topTen;
 	
 	//draw modifyAccount view
+	/**
+	 * constructor
+	 * @throws IOException
+	 */
 	public Leaderboard_p() throws IOException{
 		users = returnAllUsers();
-		//System.out.println(users.get(0).getTotalScore());
 		topTen = new User[10];
 		sort();
 		main = new JFrame("Leaderboards");
@@ -61,10 +68,12 @@ public class Leaderboard_p extends Database {
 		drawpanel();
 	}
 	
+	/**
+	 * set up the GUI
+	 */
 	private void drawpanel() {
 		header_login.setText("Leaderboards");
 		header_login.setFont(new Font("Serif", Font.BOLD, 40));
-		//controlPanel.removeAll();
 		
 		JLabel first = new JLabel("1. " + topTen[0].getUsername() + ", " + topTen[0].getTotalScore() + " Number of Plays " + topTen[0].getNumOfPlay());
 		JLabel second = new JLabel("2. " + topTen[1].getUsername() + ", " + topTen[1].getTotalScore() + " Number of Plays " + topTen[1].getNumOfPlay());
@@ -132,7 +141,6 @@ public class Leaderboard_p extends Database {
 		
 		main.revalidate();
 		main.repaint();
-		//userText_newName.requestFocus();
 
 	}
 
@@ -148,11 +156,8 @@ public class Leaderboard_p extends Database {
 			for(int j = 0; j < users.size(); j++){
 				if(users.get(j).getTotalScore() > highest){
 					highest = users.get(j).getTotalScore();
-					//System.out.println(j + ": " + users.get(j).getUsername());
-					//System.out.println(j + ": " + users.get(j).getTotalScore());
 					topTen[i] = users.get(j);
 					winner = j;
-					//System.out.println(j);
 				}
 			}
 			if(users.size() != 0){

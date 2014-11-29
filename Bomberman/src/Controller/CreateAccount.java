@@ -19,6 +19,10 @@ import Model.User;
 import Model.Database;
 import View.DrawLogin;
 
+/**
+ * Controller for creating an account
+ *
+ */
 public class CreateAccount extends Database {
 
 	public String username;
@@ -34,6 +38,13 @@ public class CreateAccount extends Database {
 	public boolean success = false;
 
 	//draw create account and button listener
+	/**
+	 * constructor
+	 * @param label_Header title bar
+	 * @param panel_Login main panel
+	 * @param label_Status status bar
+	 * @param main main frame
+	 */
 	public CreateAccount(JLabel label_Header, JPanel panel_Login, JLabel label_Status, JFrame main) {
 		this.main = main;
 		controlPanel = panel_Login;
@@ -47,6 +58,9 @@ public class CreateAccount extends Database {
 		
 	}
 
+	/**
+	 * set up the GUI
+	 */
 	private void drawpanel() {
 		header_login.setText("Create An account to play!");
 		controlPanel.removeAll();
@@ -149,6 +163,13 @@ public class CreateAccount extends Database {
 	}
 
 	//creates the account after create button being pressed
+	/**
+	 * account creation validation method
+	 * @param username
+	 * @param password
+	 * @param realName
+	 * @return
+	 */
 	public boolean accountCreate(String username, String password, String realName) {
 		User newUser = new User(username, password, realName);
 

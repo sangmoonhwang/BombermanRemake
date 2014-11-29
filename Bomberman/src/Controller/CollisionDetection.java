@@ -8,8 +8,18 @@ import Model.Bomberman;
 import Model.Explosion;
 import Model.Movable;
 
+/**
+ * Collision detector
+ *
+ */
 public class CollisionDetection implements Serializable{
 
+	/**
+	 * collision detector between block and movable
+	 * @param test movable
+	 * @param i block
+	 * @return true if collided false otherwise
+	 */
 	public boolean collisionDetection(Movable test, Block i) {
 		boolean collision = false;
 		if ((test.getXval() + test.getWidth() > i.getXval() &&
@@ -21,6 +31,12 @@ public class CollisionDetection implements Serializable{
 		return collision;
 	}
 
+	/**
+	 * collision detector between movable and bomb
+	 * @param test movable
+	 * @param i bomb
+	 * @return true if collided false otherwise
+	 */
 	public boolean collisionDetection(Movable test, Bomb i) {
 		boolean collision = false;
 		if(i.getActive()){
@@ -35,6 +51,12 @@ public class CollisionDetection implements Serializable{
 		return collision;
 	}
 
+	/**
+	 * collision detector between two movables
+	 * @param test movable
+	 * @param test1 movable
+	 * @return true if collided false otherwise
+	 */
 	public boolean collisionDetection(Movable test, Movable test1){
 		boolean collision = false;
 		if ((test.getXval() + test.getWidth() > test1.getXval() &&
@@ -46,6 +68,14 @@ public class CollisionDetection implements Serializable{
 		return collision;
 	}
 
+	/**
+	 * collision detector between explosion and movable
+	 * @param test movable
+	 * @param test1 explosion
+	 * @param i direction of explosion
+	 * @param max 0:north 1:west 2:south 3:east
+	 * @return true if collided false otherwise
+	 */
 	public boolean collisionDetection(Movable test, Explosion test1, int i, int max){
 		boolean collision = false;
 		switch(i){
@@ -94,6 +124,12 @@ public class CollisionDetection implements Serializable{
 	}
 
 
+	/**
+	 * check emptiness above movable
+	 * @param b movable
+	 * @param i block
+	 * @return true if empty false otherwise
+	 */
 	public boolean emptyAbove(Movable b, Block i) {
 		Movable copy = new Movable();
 		copy.setYval(b.getYval() - Bomberman.speed);
@@ -107,6 +143,12 @@ public class CollisionDetection implements Serializable{
 		return true;
 	}
 
+	/**
+	 * check emptiness below movable
+	 * @param b movable
+	 * @param i block
+	 * @return true if empty false otherwise
+	 */
 	public boolean emptyBelow(Movable b, Block i) {
 		Movable copy = new Movable();
 		copy.setYval(b.getYval() + Bomberman.speed);
@@ -120,6 +162,12 @@ public class CollisionDetection implements Serializable{
 		return true;
 	}
 
+	/**
+	 * check emptiness left of the movable
+	 * @param b movable
+	 * @param i block
+	 * @return true if empty false otherwise
+	 */
 	public boolean emptyLeft(Movable b, Block i) {
 		Movable copy = new Movable();
 		copy.setYval(b.getYval());
@@ -132,7 +180,13 @@ public class CollisionDetection implements Serializable{
 		}
 		return true;
 	}
-
+	
+	/**
+	 * check emptiness right of the movable
+	 * @param b movable
+	 * @param i block
+	 * @return true if empty false otherwise
+	 */
 	public boolean emptyRight(Movable b, Block i) {
 		Movable copy = new Movable();
 		copy.setYval(b.getYval());

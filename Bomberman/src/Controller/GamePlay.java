@@ -13,11 +13,23 @@ import View.DrawMap;
 import View.DrawMenu;
 import View.DrawPauseMenu;
 
+/**
+ * This class is responsible for user interaction in the main gameplay
+ *
+ */
 public class GamePlay implements Runnable, FocusListener, KeyListener {
+	/**
+	 * switches for key holding
+	 */
 	private static boolean shutdown,l_Pressed, r_Pressed, u_Pressed, d_Pressed;
 	private static Map play;
 	private static DrawMap d;
 	private Bomberman bombman;
+	/**
+	 * constructor
+	 * @param level level
+	 * @param game game controller to use
+	 */
 	public GamePlay(int level, Map game) {
 		shutdown = false;
 		if(game != null) {

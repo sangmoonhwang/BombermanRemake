@@ -32,7 +32,14 @@ import View.DrawMenu;
 import View.DrawPauseMenu;
 
 
+/**
+ * Main game controller
+ *
+ */
 public class Map implements Serializable{
+	/**
+	 * main frame
+	 */
 	public JFrame main;
 	private User user;
 	private static DrawMap d;
@@ -69,6 +76,10 @@ public class Map implements Serializable{
 	ArrayList<Box> path;
 
 
+	/**
+	 * constructor
+	 * @param level 
+	 */
 	public Map(int level){
 		Map.level = level;
 		//attributes
@@ -105,6 +116,9 @@ public class Map implements Serializable{
 
 	}
 
+	/**
+	 * activate the game controller
+	 */
 	public void run(){
 
 		if(!paused){
@@ -140,6 +154,9 @@ public class Map implements Serializable{
 		}
 	}
 
+	/**
+	 * update bomberman and environment
+	 */
 	public void tick() {
 		int bombermanXtemp = xVel;
 		int bombermanYtemp = yVel;
@@ -401,6 +418,9 @@ public class Map implements Serializable{
 		}
 	}
 
+	/**
+	 * update enemies and environment
+	 */
 	public void tick2() {
 		//collision check for enemy with indestructibles, bricks and active bombs
 
@@ -694,6 +714,9 @@ public class Map implements Serializable{
 		user.updateScore(totalPoints);
 	}
 
+	/**
+	 * reset the game if life > 0 exit the game otherwise
+	 */
 	public void dieBombman(){
 		if(life>0){
 			life --;
@@ -864,6 +887,11 @@ public class Map implements Serializable{
 	}
 
 	//detects an obstacle within the range of flame
+	/**
+	 * obstacle detector within the range of a flame 
+	 * @param i flame length
+	 * @return max length of the flame
+	 */
 	public int get_MaxFlame(int i){
 		if(Bomberman.flames == 1){
 			return 1;

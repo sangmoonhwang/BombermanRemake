@@ -22,9 +22,22 @@ import javax.swing.SwingConstants;
 
 import View.DrawLogin;
 
+/**
+ * controller for modifying an account
+ *
+ */
 public class ModifyAccount extends CreateAccount{
+	/**
+	 * new username
+	 */
 	public String newUsername;
+	/**
+	 * old password
+	 */
 	public String oldPassword;
+	/**
+	 * new password
+	 */
 	public String newPassword;
 	private JFrame main;
 	private JPanel controlPanel;	
@@ -35,6 +48,9 @@ public class ModifyAccount extends CreateAccount{
 	private final JPasswordField userText_newPass;
 	
 	//draw modifyAccount view
+	/**
+	 * constructor
+	 */
 	public ModifyAccount(){
 		main = new JFrame("Modify Account");
 		main.setSize(800, 500);
@@ -63,6 +79,9 @@ public class ModifyAccount extends CreateAccount{
 		drawpanel();
 	}
 	
+	/**
+	 * set up the GUI
+	 */
 	private void drawpanel() {
 		header_login.setText("Modify your account information");
 

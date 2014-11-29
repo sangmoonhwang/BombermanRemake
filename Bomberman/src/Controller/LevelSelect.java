@@ -25,6 +25,10 @@ import Model.User;
 import View.DrawMenu;
 import View.DrawPauseMenu;
 
+/**
+ * This class starts a new game at a selected level
+ *
+ */
 public class LevelSelect extends Database {
 	public String newUsername;
 	public String oldPassword;
@@ -38,6 +42,10 @@ public class LevelSelect extends Database {
 	private int level = 1;
 	
 	//draw modifyAccount view
+	/**
+	 * constructor
+	 * @throws IOException
+	 */
 	public LevelSelect() throws IOException{
 		users = returnAllUsers();
 		topTen = new User[10];
@@ -64,12 +72,14 @@ public class LevelSelect extends Database {
 		drawpanel();
 	}
 	
+	/**
+	 * draw GUI
+	 */
 	private void drawpanel() {
 		header_login.setText("Select Level using Up or Down arrow keys.");
 		header_login.setFont(new Font("Serif", Font.BOLD, 40));
 		levelShow.setText("Level: " + level + " (Max: " + Login.getUser().getLevelCompleted() + ")" + " Press Enter to Play");
 		levelShow.setFont(new Font("Serif", Font.BOLD, 30));
-		//controlPanel.removeAll();
 		
 		controlPanel.addKeyListener(new KeyListener() {
 			public void keyTyped(KeyEvent e) {
@@ -119,7 +129,6 @@ public class LevelSelect extends Database {
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub.
 				levelShow.setText("Level: " + level + " (Max: " + Login.getUser().getLevelCompleted() + ")" + " Press Enter to Play");
 				levelShow.setFont(new Font("Serif", Font.BOLD, 30));
 				levelShow.revalidate();
@@ -136,7 +145,6 @@ public class LevelSelect extends Database {
 		back.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//back to menu
 				DrawMenu menu = DrawMenu.getInstance();
 				
 				menu.viewFrame(true);
@@ -193,7 +201,6 @@ public class LevelSelect extends Database {
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
 				levelShow.setText("Level: " + level + " (Max: " + Login.getUser().getLevelCompleted() + ")" + " Press Enter to Play");
 				levelShow.setFont(new Font("Serif", Font.BOLD, 30));
 				levelShow.revalidate();
@@ -207,7 +214,6 @@ public class LevelSelect extends Database {
 		levelShow.repaint();
 		main.revalidate();
 		main.repaint();
-		//userText_newName.requestFocus();
 
 	}
 	
@@ -218,11 +224,8 @@ public class LevelSelect extends Database {
 			for(int j = 0; j < users.size(); j++){
 				if(users.get(j).getTotalScore() > highest){
 					highest = users.get(j).getTotalScore();
-					//System.out.println(j + ": " + users.get(j).getUsername());
-					//System.out.println(j + ": " + users.get(j).getTotalScore());
 					topTen[i] = users.get(j);
 					winner = j;
-					//System.out.println(j);
 				}
 			}
 			if(users.size() != 0){
