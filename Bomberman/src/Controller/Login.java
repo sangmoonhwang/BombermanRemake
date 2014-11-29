@@ -36,8 +36,8 @@ public class Login extends Database implements KeyListener, FocusListener {
 	public static void loginUser(String username, String password) {
 		boolean user = false;
 		boolean pass = false;
-		loginFrame.name_typed.setText (blank);//("                                         ");
-		loginFrame.password_typed.setText (blank);//("                                         ");
+		loginFrame.name_typed.setText (blank);
+		loginFrame.password_typed.setText (blank);
 		if(username.equals("")){
 			loginFrame.name_typed.setText("Enter your username!");
 		}

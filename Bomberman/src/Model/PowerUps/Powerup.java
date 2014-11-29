@@ -58,21 +58,21 @@ public class Powerup extends Block implements Serializable{
 	 */
 	public void setImage() {
 		if(identity.equals("Bombpass")){
-			image = Toolkit.getDefaultToolkit().getImage("Bombpass.png");
+			image = Toolkit.getDefaultToolkit().getImage("res/image/Bombpass.png");
 		} else if(identity.equals("Detonator")) {
-			image = Toolkit.getDefaultToolkit().getImage("Detonator.png");
+			image = Toolkit.getDefaultToolkit().getImage("res/image/Detonator.png");
 		} else if(identity.equals("Flamepass")) {
-			image = Toolkit.getDefaultToolkit().getImage("Flamepass.png");
+			image = Toolkit.getDefaultToolkit().getImage("res/image/Flamepass.png");
 		} else if(identity.equals("Flames")) {
-			image = Toolkit.getDefaultToolkit().getImage("Flames.png");
+			image = Toolkit.getDefaultToolkit().getImage("res/image/Flames.png");
 		} else if(identity.equals("Mystery")) {
-			image = Toolkit.getDefaultToolkit().getImage("Mystery.png");
+			image = Toolkit.getDefaultToolkit().getImage("res/image/Mystery.png");
 		} else if(identity.equals("Speed")) {
-			image = Toolkit.getDefaultToolkit().getImage("Speed.png");
+			image = Toolkit.getDefaultToolkit().getImage("res/image/Speed.png");
 		} else if(identity.equals("UpBombs")) {
-			image = Toolkit.getDefaultToolkit().getImage("UpBombs.png");
+			image = Toolkit.getDefaultToolkit().getImage("res/image/UpBombs.png");
 		} else if(identity.equals("Wallpass")) {
-			image = Toolkit.getDefaultToolkit().getImage("Wallpass.png");
+			image = Toolkit.getDefaultToolkit().getImage("res/image/Wallpass.png");
 		}
 	}
 

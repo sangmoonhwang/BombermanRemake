@@ -54,7 +54,7 @@ public class AnimateBombman {
 	public Image animateBm(){
 		BufferedImage img = null;
 		try {
-			img = ImageIO.read(new File("Bomberman-BombermanTournament.gif"));
+			img = ImageIO.read(new File("res/image/Bomberman-BombermanTournament.gif"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		} 

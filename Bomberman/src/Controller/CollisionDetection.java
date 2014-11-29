@@ -35,53 +35,6 @@ public class CollisionDetection implements Serializable{
 		return collision;
 	}
 
-	/*public boolean collisionDetection_new(Movable test1, Block test, int i, int max) {
-		boolean collision = false;
-		switch(i){
-		case 0:
-			if ((test.getXval() + test.getWidth() > test1.getXval() &&
-					test.getYval() < test1.getYval() + test1.getHeight() &&
-					test.getXval() < test1.getXval() + test1.getWidth() && 
-					test.getYval() + test.getHeight() > test1.getYval())){
-				collision = true;
-			}
-			break;
-		case 1:
-			if ((test.getXval() + test.getWidth() > test1.getXval() &&
-					test.getYval() < test1.getYval() + test1.getHeight() &&
-					test.getXval() < test1.getXval() + test1.getWidth()*max&& 
-					test.getYval() + test.getHeight() > test1.getYval())){
-				collision = true;
-			}
-			break;
-		case 2:	
-			if ((test.getXval() + test.getWidth() > test1.getXval() - max * test1.getWidth() &&
-					test.getYval() < test1.getYval() + test1.getHeight() &&
-					test.getXval() < test1.getXval() + test1.getWidth() && 
-					test.getYval() + test.getHeight() > test1.getYval())){
-				collision = true;
-			}
-			break;
-		case 3:	
-			if ((test.getXval() + test.getWidth() > test1.getXval() &&
-					test.getYval() < test1.getYval() + test1.getHeight() * max &&
-					test.getXval() < test1.getXval() + test1.getWidth() && 
-					test.getYval() + test.getHeight() > test1.getYval())){
-				collision = true;
-			}
-			break;
-		case 4:	
-			if ((test.getXval() + test.getWidth() > test1.getXval() &&
-					test.getYval() < test1.getYval() + test1.getHeight() &&
-					test.getXval() < test1.getXval() + test1.getWidth() && 
-					test.getYval() + test.getHeight() > test1.getYval()- max * test1.getWidth())){
-				collision = true;
-			}
-			break;
-		}
-		return collision;
-	}*/
-
 	public boolean collisionDetection(Movable test, Movable test1){
 		boolean collision = false;
 		if ((test.getXval() + test.getWidth() > test1.getXval() &&

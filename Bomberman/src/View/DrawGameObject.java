@@ -136,22 +136,22 @@ public class DrawGameObject extends JPanel{
 	public DrawGameObject(){
 
 		abm = new AnimateBombman(Map.getBomberman());
-		bombermanSprite = Toolkit.getDefaultToolkit().getImage("Bomberman.gif");
-		HardBlock = Toolkit.getDefaultToolkit().getImage("HardBlock.png");
-		Brick = Toolkit.getDefaultToolkit().getImage("Brick.jpg");
-		Enemy = Toolkit.getDefaultToolkit().getImage("Enemy.png");
-		Bomb = Toolkit.getDefaultToolkit().getImage("Bomb.gif");
-		Explode = Toolkit.getDefaultToolkit().getImage("Explosion.jpg");
-		Exit = Toolkit.getDefaultToolkit().getImage("Exit.jpg");
-		ExtraBombs = Toolkit.getDefaultToolkit().getImage("Bomberman_Bombs.png");
-		bombPass = Toolkit.getDefaultToolkit().getImage("Bomberman_Bombpass.png");
-		detonator = Toolkit.getDefaultToolkit().getImage("Bomberman_Detonator.png");
-		flamePass = Toolkit.getDefaultToolkit().getImage("Bomberman_Flamepass.png");
-		flames = Toolkit.getDefaultToolkit().getImage("Bomberman_Flames.png");
-		mystery = Toolkit.getDefaultToolkit().getImage("Bomberman_Mystery.png");
-		speed = Toolkit.getDefaultToolkit().getImage("Bomberman_Speed.png");
-		wallPass = Toolkit.getDefaultToolkit().getImage("Bomberman_Wallpass.png");
-		Tile = Toolkit.getDefaultToolkit().getImage("Tile.jpg");
+		bombermanSprite = Toolkit.getDefaultToolkit().getImage("res/image/Bomberman.gif");
+		HardBlock = Toolkit.getDefaultToolkit().getImage("res/image/HardBlock.png");
+		Brick = Toolkit.getDefaultToolkit().getImage("res/image/Brick.jpg");
+		Enemy = Toolkit.getDefaultToolkit().getImage("res/image/Enemy.png");
+		Bomb = Toolkit.getDefaultToolkit().getImage("res/image/Bomb.gif");
+		Explode = Toolkit.getDefaultToolkit().getImage("res/image/Explosion.jpg");
+		Exit = Toolkit.getDefaultToolkit().getImage("res/image/Exit.jpg");
+		ExtraBombs = Toolkit.getDefaultToolkit().getImage("res/image/Bomberman_Bombs.png");
+		bombPass = Toolkit.getDefaultToolkit().getImage("res/image/Bomberman_Bombpass.png");
+		detonator = Toolkit.getDefaultToolkit().getImage("res/image/Bomberman_Detonator.png");
+		flamePass = Toolkit.getDefaultToolkit().getImage("res/image/Bomberman_Flamepass.png");
+		flames = Toolkit.getDefaultToolkit().getImage("res/image/Bomberman_Flames.png");
+		mystery = Toolkit.getDefaultToolkit().getImage("res/image/Bomberman_Mystery.png");
+		speed = Toolkit.getDefaultToolkit().getImage("res/image/Bomberman_Speed.png");
+		wallPass = Toolkit.getDefaultToolkit().getImage("res/image/Bomberman_Wallpass.png");
+		Tile = Toolkit.getDefaultToolkit().getImage("res/image/Tile.jpg");
 
 		previousPosOfBomberman = 0;
 		xVisible = 0;

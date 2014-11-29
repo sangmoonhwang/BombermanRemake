@@ -11,6 +11,10 @@ import java.util.TreeMap;
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 
+/**
+ * Database class
+ *
+ */
 public class Database {
 
 	public Database() {
@@ -23,7 +27,7 @@ public class Database {
 	 * @return None
 	 */
 	public void writeUserCSVEntry(User newUser) throws IOException {
-		FileWriter fileWriter = new FileWriter("user.csv", true);
+		FileWriter fileWriter = new FileWriter("res/data/user.csv", true);
 		CSVWriter writer = new CSVWriter(fileWriter, ',');
 		String[] entry = new String[]{newUser.getUsername(), newUser.getPassword(), newUser.getRealName(), Integer.toString(0), Integer.toString(0),
 				Integer.toString(0)};
@@ -38,7 +42,7 @@ public class Database {
 	 * @return User information
 	 */
 	public static User readUserCSVEntry(String username) throws IOException {
-		FileReader fileReader = new FileReader("user.csv");
+		FileReader fileReader = new FileReader("res/data/user.csv");
 		CSVReader reader = new CSVReader(fileReader);
 
 		String [] nextLine;
@@ -67,7 +71,7 @@ public class Database {
 	 * @return User information
 	 */
 	public static void modifyUserCSVEntry(String username, String newPassword, String newRealName, int numOfPlay, int newTotalScore, int levelCompleted) throws IOException {
-		FileReader fileReader = new FileReader("user.csv");
+		FileReader fileReader = new FileReader("res/data/user.csv");
 		CSVReader reader = new CSVReader(fileReader);
 
 
@@ -109,7 +113,7 @@ public class Database {
 		userData.add(user);
 
 
-		FileWriter fileWriter = new FileWriter("user.csv");
+		FileWriter fileWriter = new FileWriter("res/data/user.csv");
 		CSVWriter writer = new CSVWriter(fileWriter, ',');
 		writer.writeAll(userData);
 
@@ -123,7 +127,7 @@ public class Database {
 	 */
 
 	public boolean isUserExist(String username) throws IOException {
-		FileReader fileReader = new FileReader("user.csv");
+		FileReader fileReader = new FileReader("res/data/user.csv");
 		CSVReader reader = new CSVReader(fileReader);
 
 		String [] nextLine;
@@ -196,7 +200,7 @@ public class Database {
 	 */
 
 	public void loadGameDataCSVEntry(String save) throws IOException {
-		FileReader fileReader = new FileReader("user.csv");
+		FileReader fileReader = new FileReader("res/data/user.csv");
 		CSVReader reader = new CSVReader(fileReader);
 
 		String [] nextLine;
@@ -213,7 +217,7 @@ public class Database {
 	 * @return ArrayList<User>
 	 */
 	public ArrayList<User> returnAllUsers() throws IOException {
-		FileReader fileReader = new FileReader("user.csv");
+		FileReader fileReader = new FileReader("res/data/user.csv");
 		CSVReader reader = new CSVReader(fileReader);
 
 

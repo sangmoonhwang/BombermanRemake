@@ -92,7 +92,7 @@ public class Enemy extends Movable implements Serializable{
 			speed = balloom.getSpeed();
 			points = balloom.getPoints();
 			wallPass = balloom.getWallPass();
-			image = Toolkit.getDefaultToolkit().getImage("Balloom.png");
+			image = Toolkit.getDefaultToolkit().getImage("res/image/Balloom.png");
 			state = (int) (Math.random()*3) + 1;
 		} else if(identity.equals("Oneal")) {
 			oneal = new Oneal();
@@ -100,7 +100,7 @@ public class Enemy extends Movable implements Serializable{
 			speed = oneal.getSpeed();
 			points = oneal.getPoints();
 			wallPass = oneal.getWallPass();
-			image = Toolkit.getDefaultToolkit().getImage("Oneal.png");
+			image = Toolkit.getDefaultToolkit().getImage("res/image/Oneal.png");
 			state = (int) (Math.random()*3) + 1;
 		} else if(identity.equals("Doll")) {
 			doll = new Doll();
@@ -108,7 +108,7 @@ public class Enemy extends Movable implements Serializable{
 			speed = doll.getSpeed();
 			points = doll.getPoints();
 			wallPass = doll.getWallPass();
-			image = Toolkit.getDefaultToolkit().getImage("Doll.png");
+			image = Toolkit.getDefaultToolkit().getImage("res/image/Doll.png");
 			state = (int) (Math.random()*3) + 1;
 		} else if(identity.equals("Minvo")) {
 			minvo = new Minvo();
@@ -116,7 +116,7 @@ public class Enemy extends Movable implements Serializable{
 			speed = minvo.getSpeed();
 			points = minvo.getPoints();
 			wallPass = minvo.getWallPass();
-			image = Toolkit.getDefaultToolkit().getImage("Minvo.png");
+			image = Toolkit.getDefaultToolkit().getImage("res/image/Minvo.png");
 			state = (int) (Math.random()*3) + 1;
 		} else if(identity.equals("Kondoria")) {
 			kondoria = new Kondoria();
@@ -124,7 +124,7 @@ public class Enemy extends Movable implements Serializable{
 			speed = kondoria.getSpeed();
 			points = kondoria.getPoints();
 			wallPass = kondoria.getWallPass();
-			image = Toolkit.getDefaultToolkit().getImage("Kondoria.png");
+			image = Toolkit.getDefaultToolkit().getImage("res/image/Kondoria.png");
 			state = (int) (Math.random()*3) + 1;
 		} else if(identity.equals("Ovapi")) {
 			ovapi = new Ovapi();
@@ -132,7 +132,7 @@ public class Enemy extends Movable implements Serializable{
 			speed = ovapi.getSpeed();
 			points = ovapi.getPoints();
 			wallPass = ovapi.getWallPass();
-			image = Toolkit.getDefaultToolkit().getImage("Ovapi.png");
+			image = Toolkit.getDefaultToolkit().getImage("res/image/Ovapi.png");
 			state = (int) (Math.random()*3) + 1;
 		} else if(identity.equals("Pass")) {
 			pass = new Pass();
@@ -140,7 +140,7 @@ public class Enemy extends Movable implements Serializable{
 			speed = pass.getSpeed();
 			points = pass.getPoints();
 			wallPass = pass.getWallPass();
-			image = Toolkit.getDefaultToolkit().getImage("Pass.png");
+			image = Toolkit.getDefaultToolkit().getImage("res/image/Pass.png");
 			state = (int) (Math.random()*3) + 1;
 		} else if(identity.equals("Pontan")) {
 			pontan = new Pontan();
@@ -148,7 +148,7 @@ public class Enemy extends Movable implements Serializable{
 			speed = pontan.getSpeed();
 			points = pontan.getPoints();
 			wallPass = pontan.getWallPass();
-			image = Toolkit.getDefaultToolkit().getImage("Pontan.png");
+			image = Toolkit.getDefaultToolkit().getImage("res/image/Pontan.png");
 			state = (int) (Math.random()*3) + 1;
 		}
 	}

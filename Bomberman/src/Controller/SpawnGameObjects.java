@@ -13,6 +13,10 @@ import Model.Enemies.Balloom;
 import Model.Enemies.Enemy;
 import Model.PowerUps.Powerup;
 
+/**
+ * This class is responsible for spawning game objects accordingly
+ *
+ */
 public class SpawnGameObjects implements Serializable{
 
 	private static Explosion[] explosions;
@@ -25,6 +29,10 @@ public class SpawnGameObjects implements Serializable{
 	private static Powerup power;
 	private static Door door;
 
+	/**
+	 * constructor
+	 * @param level
+	 */
 	public SpawnGameObjects(int level) {
 		indestructibles = new ArrayList<Indestructible>();
 		bricks = new ArrayList<Destructible>();
@@ -52,6 +60,10 @@ public class SpawnGameObjects implements Serializable{
 		return indestructibles;
 	}
 
+	/**
+	 * Spawns the tiles
+	 * @return tiles
+	 */
 	public ArrayList<Tile> spawnTiles() {
 		for(int x=0; x<31; x++){
 			for(int y=0; y<13; y++){
