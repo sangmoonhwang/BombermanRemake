@@ -2,11 +2,18 @@ package Model;
 
 import java.io.Serializable;
 
+/**
+ * Door model
+ *
+ */
 public class Door extends Block implements Serializable{
 	
 	private int xval, yval;
 	private int height, width;
 
+	/**
+	 * constructor
+	 */
 	public Door() {
 		xval = yval = 50;
 		height = width = 50;

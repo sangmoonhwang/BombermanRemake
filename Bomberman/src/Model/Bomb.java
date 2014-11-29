@@ -9,10 +9,17 @@ import java.util.concurrent.ScheduledExecutorService;
 import Controller.GamePlay;
 import Controller.Map;
 
+/**
+ * Bomb model
+ *
+ */
 public class Bomb implements Serializable, Runnable {
 	private int xval, yval;
 	private int height, width;
 	private boolean active;
+	/**
+	 * indicates whether the user got out of the bomb after laying it
+	 */
 	private boolean escaped;
 	private Explosion[] personalExplosions;
 	private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(10);
@@ -20,6 +27,10 @@ public class Bomb implements Serializable, Runnable {
 	private boolean paused = false;
 	private long pausedAt = 0;
 
+	/**
+	 * constructor
+	 * @param active true if bomb is activated false otherwise
+	 */
 	public Bomb(boolean active) {
 		xval = yval = 0;
 		height = width = 50;
@@ -33,6 +44,9 @@ public class Bomb implements Serializable, Runnable {
 	}
 
 	//explosion
+	/**
+	 * explodes the bomb
+	 */
 	public void explode(){
 		used = true;
 		//active = false;

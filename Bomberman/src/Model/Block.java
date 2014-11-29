@@ -1,5 +1,9 @@
 package Model;
 
+/**
+ * Block model
+ *
+ */
 public class Block{
 
 	//physical attributes
@@ -7,6 +11,9 @@ public class Block{
 	private int height, width;
 
 
+	/**
+	 * constructor
+	 */
 	public Block() {
 		//physical attributes
 		xval = yval = 0;

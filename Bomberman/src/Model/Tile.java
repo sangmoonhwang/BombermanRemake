@@ -1,11 +1,23 @@
 package Model;
 
+/**
+ * Tile model
+ *
+ */
 public class Tile {
 	private int xval, yval;
 	
+	/**
+	 * constructor
+	 */
 	public Tile() {
 		xval = yval = 0;
 	}
+	/**
+	 * constructor
+	 * @param x x position
+	 * @param y y position
+	 */
 	public Tile(int x, int y) {
 		xval = x;
 		yval = y;

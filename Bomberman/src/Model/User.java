@@ -2,6 +2,10 @@ package Model;
 
 import java.io.Serializable;
 
+/**
+ * User model
+ *
+ */
 public class User implements Serializable{
 	
 	private String username;
@@ -13,6 +17,12 @@ public class User implements Serializable{
 	private String[] savedGame;
 	
 	//creating new user
+	/**
+	 * constructor
+	 * @param username new username
+	 * @param password new password
+	 * @param realName new realname
+	 */
 	public User(String username, String password, String realName) {
 		this.setUsername(username);
 		this.setPassword(password);
@@ -23,6 +33,10 @@ public class User implements Serializable{
 	}
 	
 	//existing user
+	/**
+	 * constructor
+	 * @param data existing user
+	 */
 	public User(String[] data) {
 		this.setUsername(data[0]);
 		this.setPassword(data[1]);
@@ -70,6 +84,10 @@ public class User implements Serializable{
 		return totalScore;
 	}
 	
+	/**
+	 * adds up the score by i
+	 * @param i score to increase by
+	 */
 	public void updateScore(int i) {
 		totalScore += i;
 	}

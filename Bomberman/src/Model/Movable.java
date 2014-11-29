@@ -1,5 +1,9 @@
 package Model;
 
+/**
+ * Movable model
+ *
+ */
 public class Movable {
 	
 	//physical attributes
@@ -25,9 +29,17 @@ public class Movable {
 	}
 	
 	//increment
+	/**
+	 * increments x position by i
+	 * @param i increase x position by
+	 */
 	public void incrementXval(float i) {
 		xval += i;
 	}
+	/**
+	 * increments y position by i
+	 * @param i increase y position by
+	 */
 	public void incrementYval(float i) {
 		yval += i;
 	}

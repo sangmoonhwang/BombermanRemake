@@ -2,14 +2,26 @@ package Model;
 
 import java.io.Serializable;
 
+/**
+ * Indestructible model
+ *
+ */
 public class Indestructible extends Block implements Serializable{
 	private int xval, yval;
 	private int height, width;
 
+	/**
+	 * constructor
+	 */
 	public Indestructible() {
 		xval = yval = 0;
 		height = width = 50;
 	}
+	/**
+	 * constructor
+	 * @param x x position
+	 * @param y y position
+	 */
 	public Indestructible(int x, int y) {
 		xval = x;
 		yval = y;

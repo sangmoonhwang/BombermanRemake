@@ -2,14 +2,26 @@ package Model;
 
 import java.io.Serializable;
 
+/**
+ * Destructible block model
+ *
+ */
 public class Destructible extends Block implements Serializable{
 	private int xval, yval;
 	private int height, width;
 
+	/**
+	 * constructor
+	 */
 	public Destructible() {
 		xval = yval = 0;
 		height = width = 50;
 	}
+	/**
+	 * constructor
+	 * @param x x position
+	 * @param y y position
+	 */
 	public Destructible(int x, int y) {
 		xval = x;
 		yval = y;
