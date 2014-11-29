@@ -49,7 +49,6 @@ public class Bomb implements Serializable, Runnable {
 	 */
 	public void explode(){
 		used = true;
-		//active = false;
 		personalExplosions[0].setXval(this.xval);
 		personalExplosions[0].setYval(this.yval);
 		personalExplosions[1].setXval(xval+50);
@@ -71,7 +70,7 @@ public class Bomb implements Serializable, Runnable {
 
 
 	public void run() {
-		
+
 		long start = System.nanoTime();
 		boolean shutdown = false;
 
@@ -90,7 +89,7 @@ public class Bomb implements Serializable, Runnable {
 			paused = false;
 			if((now - start) + pausedAt >= 2000000000) {
 				pausedAt = 0;
-				
+
 				explode();
 				System.out.println("threadID" + Thread.currentThread().getId() + "exploding");
 				start = now;

@@ -46,7 +46,7 @@ public class ModifyAccount extends CreateAccount{
 	private final JTextField userText_newName;
 	private final JPasswordField userText_oldPass;
 	private final JPasswordField userText_newPass;
-	
+
 	//draw modifyAccount view
 	/**
 	 * constructor
@@ -78,7 +78,7 @@ public class ModifyAccount extends CreateAccount{
 		main.setVisible(true);
 		drawpanel();
 	}
-	
+
 	/**
 	 * set up the GUI
 	 */
@@ -177,5 +177,5 @@ public class ModifyAccount extends CreateAccount{
 		userText_newName.requestFocus();
 
 	}
-	
+
 }

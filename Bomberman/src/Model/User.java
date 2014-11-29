@@ -7,7 +7,7 @@ import java.io.Serializable;
  *
  */
 public class User implements Serializable{
-	
+
 	private String username;
 	private String password;
 	private String realName;
@@ -15,7 +15,7 @@ public class User implements Serializable{
 	private int totalScore;
 	private int levelCompleted;
 	private String[] savedGame;
-	
+
 	//creating new user
 	/**
 	 * constructor
@@ -31,7 +31,7 @@ public class User implements Serializable{
 		setTotalScore(0);
 		setLevelCompleted(0);
 	}
-	
+
 	//existing user
 	/**
 	 * constructor
@@ -43,10 +43,9 @@ public class User implements Serializable{
 		this.setRealName(data[2]);
 		setNumOfPlay(Integer.parseInt(data[3]));
 		setTotalScore(Integer.parseInt(data[4]));
-		//System.out.println("Setting total score for "+ this.username + " to " + totalScore);
 		setLevelCompleted(Integer.parseInt(data[5]));
 	}
-	
+
 
 	public String getUsername() {
 		return username;
@@ -83,7 +82,7 @@ public class User implements Serializable{
 	public int getTotalScore() {
 		return totalScore;
 	}
-	
+
 	/**
 	 * adds up the score by i
 	 * @param i score to increase by
@@ -111,5 +110,5 @@ public class User implements Serializable{
 	public void setSavedGame(String[] savedGame) {
 		this.savedGame = savedGame;
 	}
-	
+
 }

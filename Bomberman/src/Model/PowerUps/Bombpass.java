@@ -8,7 +8,7 @@ import Model.Bomberman;
  */
 public class Bombpass extends Powerup{
 	String identity = "BombPass";
-	
+
 	public Bombpass(String identity){
 		super(identity);
 	}

@@ -179,10 +179,10 @@ public class DrawGameObject extends JPanel{
 			g.translate(-750, 0);
 		}
 		else{
-			
+
 			g.translate(0,0);
 		}
-		
+
 		//draw tiles for background
 		for(int i = 0; i< Map.getTiles().size();i++){
 			int tilex = Map.getTiles().get(i).getXval();
@@ -198,14 +198,13 @@ public class DrawGameObject extends JPanel{
 				g.drawImage(Bomb, bombx, bomby, 50, 50, this);
 			}
 		}
-		
+
 		//draw explosions
-		//if(Map.getExplosion(0).isExploding()){
 		if(Map.getActiveBombs().size() != 0 && Map.getActiveBombs().getLast().getPersonalExplosions()[0].isExploding()){
 			for(int i = 0; i < 5; i++){
 				int explosionX = Map.getActiveBombs().getLast().getPersonalExplosions()[i].getXval();
 				int explosionY = Map.getActiveBombs().getLast().getPersonalExplosions()[i].getYval();
-	
+
 				if(i == 1){
 					g.drawImage(Explode, explosionX, explosionY, Map.getActiveBombs().getLast().getPersonalExplosions()[i].getWidth(),Map.getActiveBombs().getLast().getPersonalExplosions()[i].getHeight(),this);
 				}
@@ -264,7 +263,6 @@ public class DrawGameObject extends JPanel{
 		int bombermanWidth = bombman.getWidth();
 		int bombermanHeight = bombman.getHeight();
 		g.drawImage(abm.animateBm(), bombermanX, bombermanY, bombermanWidth, bombermanHeight, this);
-//		g.drawImage(bombermanSprite, bombermanX, bombermanY, bombermanWidth, bombermanHeight, this);
 
 	}
 }

@@ -33,7 +33,7 @@ public class Bomberman extends Movable implements Serializable{
 	 * life left
 	 */
 	private static int life;
-	
+
 	/**
 	 * speed of the bomberman
 	 */
@@ -50,7 +50,7 @@ public class Bomberman extends Movable implements Serializable{
 	 * time at which the bomberman obtains the mystery powerup 
 	 */
 	public static long mystery_From;
-	
+
 	/**
 	 * detonate ability indicator
 	 */
@@ -67,7 +67,7 @@ public class Bomberman extends Movable implements Serializable{
 	 * flamepass ability indicator
 	 */
 	public static boolean flamePass;
-	
+
 	/**
 	 * bombs belonging to the bomberman
 	 */
@@ -94,7 +94,7 @@ public class Bomberman extends Movable implements Serializable{
 		bombs.addFirst(new Bomb(false));
 		bombs.addFirst(new Bomb(false));
 	}
-	
+
 	//setters
 	public void setXval(int i) {
 		xval = i;
@@ -171,7 +171,7 @@ public class Bomberman extends Movable implements Serializable{
 	public int getYval() {
 		return (int) yval;
 	}
-	
+
 	public int getHeight() {
 		return height;
 	}
@@ -193,7 +193,6 @@ public class Bomberman extends Movable implements Serializable{
 	 * @return
 	 */
 	public boolean isMystery(){
-		//System.out.println((System.nanoTime() - mystery_From)/1000000000);
 		return (System.nanoTime() - mystery_From)/1000000000 <= 10; //10seconds?
 	}
 	/**

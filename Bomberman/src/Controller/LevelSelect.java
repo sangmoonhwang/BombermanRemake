@@ -40,7 +40,7 @@ public class LevelSelect extends Database {
 	private User[] topTen;
 	private JLabel levelShow;
 	private int level = 1;
-	
+
 	//draw modifyAccount view
 	/**
 	 * constructor
@@ -71,7 +71,7 @@ public class LevelSelect extends Database {
 		main.setVisible(true);
 		drawpanel();
 	}
-	
+
 	/**
 	 * draw GUI
 	 */
@@ -80,7 +80,7 @@ public class LevelSelect extends Database {
 		header_login.setFont(new Font("Serif", Font.BOLD, 40));
 		levelShow.setText("Level: " + level + " (Max: " + Login.getUser().getLevelCompleted() + ")" + " Press Enter to Play");
 		levelShow.setFont(new Font("Serif", Font.BOLD, 30));
-		
+
 		controlPanel.addKeyListener(new KeyListener() {
 			public void keyTyped(KeyEvent e) {
 				int value = e.getKeyCode();
@@ -103,7 +103,7 @@ public class LevelSelect extends Database {
 				main.revalidate();
 				main.repaint();
 			}
-			
+
 			@Override
 			public void keyPressed(KeyEvent e) {
 				int value = e.getKeyCode();
@@ -137,7 +137,7 @@ public class LevelSelect extends Database {
 				main.repaint();
 			}
 		});
-		
+
 		controlPanel.add(levelShow);
 
 		JButton back = new JButton("Main Menu");
@@ -146,12 +146,12 @@ public class LevelSelect extends Database {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				DrawMenu menu = DrawMenu.getInstance();
-				
+
 				menu.viewFrame(true);
 				main.setVisible(false);
 			}
 		});
-		
+
 		back.addKeyListener(new KeyListener() {
 			public void keyTyped(KeyEvent e) {
 				int value = e.getKeyCode();
@@ -159,7 +159,7 @@ public class LevelSelect extends Database {
 					if(level > 1)
 						level--;
 				}
-				
+
 				else if(value ==KeyEvent.VK_UP){
 					if(level < Login.getUser().getLevelCompleted())
 						level++;
@@ -175,7 +175,7 @@ public class LevelSelect extends Database {
 				main.revalidate();
 				main.repaint();
 			}
-			
+
 			@Override
 			public void keyPressed(KeyEvent e) {
 				int value = e.getKeyCode();
@@ -209,14 +209,14 @@ public class LevelSelect extends Database {
 				main.repaint();
 			}
 		});
-		
+
 		levelShow.revalidate();
 		levelShow.repaint();
 		main.revalidate();
 		main.repaint();
 
 	}
-	
+
 	private void sort(){
 		for(int i = 0; i < 10; i++){
 			int highest = 0;
@@ -233,5 +233,5 @@ public class LevelSelect extends Database {
 			}
 		}
 	}
-	
+
 }

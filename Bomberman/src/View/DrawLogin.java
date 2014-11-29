@@ -37,12 +37,12 @@ public class DrawLogin{
 	 * main frame
 	 */
 	public static JFrame mainFrame;
-	
+
 	/**
 	 * String that represent blankness
 	 */
 	static String blank = "                                         ";
-	
+
 	/**
 	 * initializer for the username input field auxiliary display
 	 */
@@ -59,7 +59,7 @@ public class DrawLogin{
 	 * password field indicator
 	 */
 	public static JLabel password_typed = new JLabel(p_typed, SwingConstants.CENTER);
-	
+
 	/**
 	 * username text field
 	 */
@@ -92,7 +92,7 @@ public class DrawLogin{
 	 * singletone object
 	 */
 	private static DrawLogin instance = new DrawLogin();
-	
+
 	/**
 	 * running indicator
 	 */
@@ -104,7 +104,7 @@ public class DrawLogin{
 	private DrawLogin(){
 		//variables
 		running = false;
-		
+
 		//objects
 		mainFrame = new JFrame("Login");
 		userText = new JTextField(13);
@@ -113,7 +113,7 @@ public class DrawLogin{
 		headerLabel = new JLabel("",SwingConstants.CENTER);
 		statusLabel = new JLabel("",SwingConstants.CENTER);
 	}
-	
+
 	//singleton
 	/**
 	 * getter for the singletone object
@@ -122,7 +122,7 @@ public class DrawLogin{
 	public static DrawLogin getInstance() {
 		return instance;
 	}
-	
+
 	/**
 	 * activate the login screen display
 	 */
@@ -139,7 +139,7 @@ public class DrawLogin{
 	 */
 	public void makeFrame() {
 		running = true;
-		
+
 		//setup frame
 		mainFrame.setSize(800, 500);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -151,7 +151,7 @@ public class DrawLogin{
 				System.exit(0);
 			}
 		});
-		
+
 		//add labels and buttons
 		statusLabel.setSize(350,100);
 		controlPanel.setLayout (new GridBagLayout());//(new FlowLayout());
@@ -264,30 +264,30 @@ public class DrawLogin{
 	}
 
 	//setters
-		/**
-		 * setter for the status bar
-		 * @param s status string
-		 */
-		public static void setStatus(String s){
-			statusLabel.setText(s);
-		}
-		/**
-		 * visibility control method
-		 * @param b true to show false to hide
-		 */
-		public void viewFrame(boolean b){
-			clearText();
-			mainFrame.setVisible(b);
-		}
-		/**
-		 * clears the username and password field
-		 */
-		public void clearText(){
-			userText.setText("");
-			userText.requestFocus();
-			passwordText.setText("");
-		}
-	
+	/**
+	 * setter for the status bar
+	 * @param s status string
+	 */
+	public static void setStatus(String s){
+		statusLabel.setText(s);
+	}
+	/**
+	 * visibility control method
+	 * @param b true to show false to hide
+	 */
+	public void viewFrame(boolean b){
+		clearText();
+		mainFrame.setVisible(b);
+	}
+	/**
+	 * clears the username and password field
+	 */
+	public void clearText(){
+		userText.setText("");
+		userText.requestFocus();
+		passwordText.setText("");
+	}
+
 	//getters
 	/**
 	 * username getter

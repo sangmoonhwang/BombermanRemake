@@ -29,13 +29,13 @@ import Controller.Map;
  *
  */
 public class DrawPauseMenu{
-	
+
 	//frame
 	/**
 	 * Main frame for the paused menu
 	 */
 	private JFrame pauseFrame;
-	
+
 	//buttons
 	/**
 	 * Button to go back to the game
@@ -53,7 +53,7 @@ public class DrawPauseMenu{
 	 * Button to show leaderboard
 	 */
 	private JButton leaderboardButton;
-	
+
 	//variables
 	/**
 	 * running indicator
@@ -63,31 +63,31 @@ public class DrawPauseMenu{
 	 * Game controller
 	 */
 	private Map game;
-	
+
 	//singleton
 	/**
 	 * singletone object
 	 */
 	private static DrawPauseMenu instance = new DrawPauseMenu();
-	
+
 	/**
 	 * constructor
 	 */
 	private DrawPauseMenu() {
-		
+
 		//frame
 		pauseFrame = new JFrame();
-		
+
 		//buttons
 		resumeButton = new JButton("Resume Game");
 		quitButton = new JButton("Exit to Menu");
 		saveButton = new JButton("Save Game");
 		leaderboardButton = new JButton("View Leaderboards");
-		
+
 		//variables
 		running = false;
 	}
-	
+
 	//singleton
 	/**
 	 * getter for the singletone object
@@ -96,7 +96,7 @@ public class DrawPauseMenu{
 	public static DrawPauseMenu getInstance() {
 		return instance;
 	}
-	
+
 	/**
 	 * activate the paused menu
 	 */
@@ -107,37 +107,37 @@ public class DrawPauseMenu{
 		}
 		viewFrame(true);
 	}
-	
+
 	/**
 	 * set up the paused menu
 	 */
 	public void makeFrame() {
 		running = true;
-		
+
 		//set layout
 		pauseFrame.setSize(800,500);
 		pauseFrame.setUndecorated(true);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		pauseFrame.setLocation(dim.width/2-pauseFrame.getSize().width/2, dim.height/2-pauseFrame.getSize().height/2);
 		pauseFrame.setLayout(new GridLayout(1,3));
-		
+
 		//add buttons
 		pauseFrame.add(resumeButton);
 		pauseFrame.add(quitButton);
 		pauseFrame.add(saveButton);
 		pauseFrame.add(leaderboardButton);
 		pauseFrame.setVisible(true);
-		
+
 		addButtons();
 	}
-	
+
 	/**
 	 * append the buttons to the display
 	 */
 	public void addButtons(){
 		//resume button
 		resumeButton.addKeyListener(new KeyListener() {
-			
+
 			@Override
 			public void keyTyped(KeyEvent e) {
 				int value = e.getKeyCode();
@@ -148,12 +148,12 @@ public class DrawPauseMenu{
 					leaderboardButton.requestFocus();
 				}
 			}
-			
+
 			@Override
 			public void keyReleased(KeyEvent e) {
-				
+
 			}
-			
+
 			@Override
 			public void keyPressed(KeyEvent e) {
 				int value = e.getKeyCode();
@@ -174,10 +174,10 @@ public class DrawPauseMenu{
 				viewFrame(false);
 			}
 		});		
-		
+
 		//quit button
 		quitButton.addKeyListener(new KeyListener() {
-			
+
 			@Override
 			public void keyTyped(KeyEvent e) {
 				int value = e.getKeyCode();
@@ -188,14 +188,14 @@ public class DrawPauseMenu{
 					resumeButton.requestFocus();
 				}
 			}
-			
-			
-			
+
+
+
 			@Override
 			public void keyReleased(KeyEvent e) {
-				
+
 			}
-			
+
 			@Override
 			public void keyPressed(KeyEvent e) {
 				int value = e.getKeyCode();
@@ -207,26 +207,26 @@ public class DrawPauseMenu{
 				}
 			}
 		});
-		
+
 		quitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//temporary variables
 				DrawMap game = DrawMap.getInstance();
 				DrawMenu menu = DrawMenu.getInstance();
-			
+
 				Map.setGameOver();
 				Map.setPaused(false);
 				game.getFrame().dispose();
 				viewFrame(false);
 				pauseFrame.dispose();
-				
+
 				menu.setRunnning(true);
 				menu.viewFrame(true);
 			}
 		});
-		
+
 		leaderboardButton.addKeyListener(new KeyListener() {
-			
+
 			@Override
 			public void keyTyped(KeyEvent e) {
 				int value = e.getKeyCode();
@@ -237,14 +237,14 @@ public class DrawPauseMenu{
 					saveButton.requestFocus();
 				}
 			}
-			
-			
-			
+
+
+
 			@Override
 			public void keyReleased(KeyEvent e) {
-				
+
 			}
-			
+
 			@Override
 			public void keyPressed(KeyEvent e) {
 				int value = e.getKeyCode();
@@ -256,7 +256,7 @@ public class DrawPauseMenu{
 				}
 			}
 		});
-		
+
 		leaderboardButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//temporary variables
@@ -266,15 +266,14 @@ public class DrawPauseMenu{
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
-				//Map.setRunning(false);
+
 				viewFrame(false);
 			}
 		});
-		
+
 		//save button
 		saveButton.addKeyListener(new KeyListener() {
-			
+
 			@Override
 			public void keyTyped(KeyEvent e) {
 				int value = e.getKeyCode();
@@ -285,12 +284,12 @@ public class DrawPauseMenu{
 					quitButton.requestFocus();
 				}
 			}
-			
+
 			@Override
 			public void keyReleased(KeyEvent e) {
-				
+
 			}
-			
+
 			@Override
 			public void keyPressed(KeyEvent e) {
 				int value = e.getKeyCode();
@@ -333,7 +332,7 @@ public class DrawPauseMenu{
 			}
 		});
 	}
-	
+
 	//setters
 	/**
 	 * visibility control method
@@ -342,7 +341,7 @@ public class DrawPauseMenu{
 	public void viewFrame(boolean b){
 		pauseFrame.setVisible(b);
 	}
-	
+
 	/**
 	 * setter for the game controller
 	 * @param g game controller to use
@@ -350,7 +349,7 @@ public class DrawPauseMenu{
 	public void setMap(Map g){
 		this.game = g;
 	}
-	
+
 	//getters
 	/**
 	 * getter for the running status

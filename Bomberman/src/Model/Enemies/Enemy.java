@@ -342,7 +342,7 @@ public class Enemy extends Movable implements Serializable{
 
 		if(!activeBombs.isEmpty()) {
 			for(int i=0; i<activeBombs.size(); i++) {
-				
+
 				if(activeBombs.get(i).getActive()) {
 					int bombsTileNum = whichTileIsOn(activeBombs.get(i).getXval(), activeBombs.get(i).getYval());
 					if(bombsTileNum == (tileNum) && (enemyState == 1)) {

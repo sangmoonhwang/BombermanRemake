@@ -32,7 +32,7 @@ public class Pontan {
 		wallPass = true;
 
 	}
-	
+
 	/**
 	 * getter for the intelligence
 	 * @return intelligence

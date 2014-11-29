@@ -13,7 +13,7 @@ public class DatabaseTest {
 	String username = "david252";
 	String password = "david252!";
 	String realName = "Young";
-	
+
 	@Before
 	public void setup() throws IOException {
 		data = new Database();
@@ -22,7 +22,7 @@ public class DatabaseTest {
 	public void test() throws IOException {
 		user = new User(username,password,realName);
 		data.writeUserCSVEntry(user);
-		
+
 		user2 = data.readUserCSVEntry(username);
 		System.out.println(user2.getUsername());
 		assertTrue("user name", username.equals(user2.getUsername()));
@@ -31,7 +31,7 @@ public class DatabaseTest {
 		assertTrue("num play", 0 == user2.getNumOfPlay());
 		assertTrue("total score", 0 == user2.getTotalScore());
 		assertTrue("level completed", 0 == user.getLevelCompleted());
-		
+
 	}
 
 }

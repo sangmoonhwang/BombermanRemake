@@ -6,7 +6,7 @@ package Model;
  */
 public class Tile {
 	private int xval, yval;
-	
+
 	/**
 	 * constructor
 	 */
@@ -22,14 +22,14 @@ public class Tile {
 		xval = x;
 		yval = y;
 	}
-	
+
 	public void setXval(int i){
 		xval = i;
 	}
 	public void setYval(int i){
 		yval = i;
 	}
-	
+
 	//getters
 	public int getXval(){
 		return xval;

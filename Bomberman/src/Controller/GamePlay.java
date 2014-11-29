@@ -60,7 +60,7 @@ public class GamePlay implements Runnable, FocusListener, KeyListener {
 				shutdown = true;
 				break;
 			}
-			
+
 			if(play.getGameOver()) {
 				shutdown = true;
 				System.out.println("Gameover");
@@ -149,8 +149,6 @@ public class GamePlay implements Runnable, FocusListener, KeyListener {
 					break;
 				}
 			}
-			//activeBombs.get(0).explode();
-			//explosions = activeBombs.get(activeBombs.size()-1).getPersonalExplosions();
 		} else if(value == KeyEvent.VK_Z && !bombman.getBombs().isEmpty()){
 			Map.getActiveBombs().addFirst(new Bomb(true));
 			bombman.getBombs().removeLast();
@@ -181,7 +179,7 @@ public class GamePlay implements Runnable, FocusListener, KeyListener {
 				bombman.setDirection(1);
 			else if(bombman.getDirection() == 6)
 				bombman.setDirection(3);
-				
+
 		} else if(value ==KeyEvent.VK_UP) {
 			u_Pressed = false;
 			if(play.getyVel() == -bombman.getSpeed())//-2

@@ -35,7 +35,7 @@ public class Indestructible extends Block implements Serializable{
 	public void setYval(int i){
 		yval = i;
 	}
-	
+
 	//getters
 	public int getXval(){
 		return xval;

@@ -32,7 +32,7 @@ public class Ovapi {
 		wallPass = true;
 
 	}
-	
+
 	/**
 	 * getter for the intelligence
 	 * @return intelligence

@@ -10,8 +10,8 @@ public class Explosion extends Movable implements Serializable {
 	private float xval, yval;
 	private int height, width;
 	private boolean exploding;
-	
-	
+
+
 	/**
 	 * constructor
 	 */
@@ -21,9 +21,9 @@ public class Explosion extends Movable implements Serializable {
 		height = 50;
 		width = 50;
 		exploding = false;
-		
+
 	}
-	
+
 	public void setExploding(boolean b){
 		exploding = b;
 	}
@@ -34,7 +34,7 @@ public class Explosion extends Movable implements Serializable {
 	public boolean isExploding(){
 		return exploding;
 	}
-	
+
 	public void setXval(int i){
 		xval = i;
 	}
@@ -47,7 +47,7 @@ public class Explosion extends Movable implements Serializable {
 	public int getYval(){
 		return (int)yval;
 	}
-	
+
 	//for powerup
 	public void setWidth(int i){
 		width = i;

@@ -24,12 +24,12 @@ public class GNode {
 	 * gCost of this tile
 	 */
 	public float gCost;
-	
+
 	/**
 	 * the parent tile
 	 */
 	public GNode eParent;
-	
+
 	/**
 	 * constructor
 	 * @param current current tile

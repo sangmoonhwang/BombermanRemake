@@ -5,12 +5,12 @@ package Model;
  *
  */
 public class Movable {
-	
+
 	//physical attributes
 	private float xval, yval;
 	private int height, width;
 	private int speed;
-	
+
 	//setters
 	public void setXval(float i) {
 		xval = i;
@@ -27,7 +27,7 @@ public class Movable {
 	public void setSpeed(int i) {
 		speed = i;
 	}
-	
+
 	//increment
 	/**
 	 * increments x position by i

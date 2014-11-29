@@ -32,7 +32,7 @@ public class Pass {
 		wallPass = false;
 
 	}
-	
+
 	/**
 	 * getter for the intelligence
 	 * @return intelligence

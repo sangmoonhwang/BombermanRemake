@@ -45,8 +45,8 @@ public class AnimateBombman {
 		this.height = 22;
 	}
 
-    
-	
+
+
 	/**
 	 * This method is animating the bomberman according to the keyboard input
 	 * @return corresponding image to be rendered
@@ -70,7 +70,7 @@ public class AnimateBombman {
 				y = 2;
 			}
 			break;
-		//west	
+			//west	
 		case 1:
 			if(bm.isMoving()){
 				if(System.currentTimeMillis()/100 % 2 == 0){
@@ -87,7 +87,7 @@ public class AnimateBombman {
 				y = 3;
 			}
 			break;
-		//south
+			//south
 		case 2:
 			if(bm.isMoving() && System.currentTimeMillis()/100 % 2 == 0){
 				x = 23;
@@ -98,7 +98,7 @@ public class AnimateBombman {
 				y = 2;
 			}
 			break;
-		//east
+			//east
 		case 3:
 			if(bm.isMoving()){
 				if(System.currentTimeMillis()/100 % 2 == 0){

@@ -180,7 +180,7 @@ public class CollisionDetection implements Serializable{
 		}
 		return true;
 	}
-	
+
 	/**
 	 * check emptiness right of the movable
 	 * @param b movable

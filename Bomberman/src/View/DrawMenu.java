@@ -103,7 +103,6 @@ public class DrawMenu{
 		leaderButton = new JButton("View Leaderboards");
 		modifyButton = new JButton("Modify Account");
 		logoutButton = new JButton("Logout");
-		//		saveButton = new JButton("Save Game");
 		selectButton = new JButton("Level Select");
 	}
 
@@ -147,7 +146,6 @@ public class DrawMenu{
 		menuFrame.add(logoutButton);
 		menuFrame.add(leaderButton);
 		menuFrame.add(loadButton);
-		//		menuFrame.add(saveButton);
 		menuFrame.add(selectButton);
 
 		addButtons();
@@ -359,7 +357,7 @@ public class DrawMenu{
 					c.printStackTrace();
 					return;
 				}
-				
+
 				System.out.println("Load Game");
 				viewFrame(false);
 				GamePlay play = new GamePlay(0, game);
@@ -539,7 +537,7 @@ public class DrawMenu{
 	public boolean getRunning() {
 		return running;
 	}
-	
+
 	//setters
 	/**
 	 * visibility control method

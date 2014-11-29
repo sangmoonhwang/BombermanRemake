@@ -7,7 +7,7 @@ import java.io.Serializable;
  *
  */
 public class Door extends Block implements Serializable{
-	
+
 	private int xval, yval;
 	private int height, width;
 
@@ -26,7 +26,7 @@ public class Door extends Block implements Serializable{
 	public void setYval(int i){
 		yval = i;
 	}
-	
+
 	//getters
 	public int getXval(){
 		return xval;

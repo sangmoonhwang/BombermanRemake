@@ -52,10 +52,10 @@ public class CreateAccount extends Database {
 		status = label_Status;
 		drawpanel();
 	}
-	
+
 	//for test purpose 
 	public CreateAccount() {
-		
+
 	}
 
 	/**
@@ -177,7 +177,7 @@ public class CreateAccount extends Database {
 			status.setText("Username should contain only numbers and alphabets");
 			return false;
 		}
-		
+
 		try {
 			if(isUserExist(username)) {
 				status.setText("An account with this username already exists.");
@@ -186,13 +186,13 @@ public class CreateAccount extends Database {
 		} catch (IOException e1) {
 			System.out.println(e1.toString());
 		}
-		
+
 		if(!passwordValidate(password)){
 			status.setText("Password must be 8-20 characters and contain at least one capital "
 					+ "letter, one lowercase letter, one number and one special character.");
 			return false;
 		}
-		
+
 		//after successful login it should proceed to menu not the login screen
 		//TODO
 		try {
@@ -218,7 +218,7 @@ public class CreateAccount extends Database {
 	public boolean usernameValidate(String username) {
 		return username.matches("((?=.+\\w).{6,20})");
 	}	
-	
+
 	/**
 	 * Validate password 
 	 * @param password to validate

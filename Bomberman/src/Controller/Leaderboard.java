@@ -37,7 +37,7 @@ public class Leaderboard extends Database {
 	private JLabel header_login;
 	private ArrayList<User> users;
 	private User[] topTen;
-	
+
 	//draw modifyAccount view
 	/**
 	 * constructor
@@ -67,14 +67,14 @@ public class Leaderboard extends Database {
 		main.setVisible(true);
 		drawpanel();
 	}
-	
+
 	/**
 	 * set up the GUI
 	 */
 	private void drawpanel() {
 		header_login.setText("Leaderboards");
 		header_login.setFont(new Font("Serif", Font.BOLD, 40));
-		
+
 		JLabel first = new JLabel("1. " + topTen[0].getUsername() + ", " + topTen[0].getTotalScore() + " Number of Plays " + topTen[0].getNumOfPlay());
 		JLabel second = new JLabel("2. " + topTen[1].getUsername() + ", " + topTen[1].getTotalScore() + " Number of Plays " + topTen[1].getNumOfPlay());
 		JLabel third = new JLabel("3. " + topTen[2].getUsername() + ", " + topTen[2].getTotalScore() + " Number of Plays " + topTen[2].getNumOfPlay());
@@ -108,7 +108,7 @@ public class Leaderboard extends Database {
 		controlPanel.add(ninth);
 		controlPanel.add(tenth);
 		controlPanel.add(viewer);
-		
+
 
 
 		JButton back = new JButton("Main Menu");
@@ -118,14 +118,14 @@ public class Leaderboard extends Database {
 			public void actionPerformed(ActionEvent e) {
 				//back to menu
 				DrawMenu menu = DrawMenu.getInstance();
-				
+
 				menu.viewFrame(true);
 				main.setVisible(false);
 			}
 		});
-		
 
-		
+
+
 		main.revalidate();
 		main.repaint();
 

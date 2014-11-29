@@ -18,7 +18,7 @@ public class Box implements Serializable{
 	 * width and height of the tile
 	 */
 	public static int size = 50;
-	
+
 	/**
 	 * constructor
 	 * @param x x position
@@ -28,8 +28,8 @@ public class Box implements Serializable{
 		this.x = x;
 		this.y = y;
 	}
-	
-	
+
+
 	/**
 	 * determines if the equality of the tiles
 	 * @param b tile to compare

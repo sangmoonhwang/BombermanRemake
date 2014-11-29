@@ -14,13 +14,13 @@ import javax.swing.JLabel;
  *
  */
 public class DrawMap implements Serializable{
-	
+
 	//variables
 	/**
 	 * running indicator
 	 */
 	private boolean running;
-	
+
 	//objects
 	/**
 	 * main frame
@@ -34,21 +34,21 @@ public class DrawMap implements Serializable{
 	 * status bar
 	 */
 	private JLabel status;
-	
+
 	//singleton
 	/**
 	 * singletone object
 	 */
 	private static DrawMap instance = new DrawMap();
-		
+
 	/**
 	 * constructor
 	 */
 	public DrawMap(){
-		
+
 		//variables
 		running = false;
-		
+
 		//objects
 		gamePanel = new DrawGameObject();
 		gameFrame = new JFrame();
@@ -81,13 +81,13 @@ public class DrawMap implements Serializable{
 	 */
 	public void makeFrame(){
 		running = true;
-		
+
 		gameFrame.setSize(800,666);
 		gameFrame.setUndecorated(true);
 		gameFrame.setLayout(new BorderLayout());
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		gameFrame.setLocation(dim.width/2-gameFrame.getSize().width/2, dim.height/2-gameFrame.getSize().height/2);
-		
+
 		gameFrame.add(status,BorderLayout.NORTH);
 		gameFrame.add(gamePanel);
 		gameFrame.setVisible(true);
@@ -101,7 +101,7 @@ public class DrawMap implements Serializable{
 	public void draw(){
 		gamePanel.repaint();
 	}
-	
+
 	//getters
 	/**
 	 * getter for the main frame

@@ -11,7 +11,7 @@ public class Speed extends Powerup{
 	public Speed(String identity){
 		super(identity);
 	}
-	
+
 	@Override
 	public void activate() {
 		Bomberman.speed++;

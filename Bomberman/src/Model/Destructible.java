@@ -27,7 +27,7 @@ public class Destructible extends Block implements Serializable{
 		yval = y;
 		height = width = 50;
 	}
-	
+
 	//setters
 	public void setXval(int i){
 		xval = i;
@@ -35,7 +35,7 @@ public class Destructible extends Block implements Serializable{
 	public void setYval(int i){
 		yval = i;
 	}
-	
+
 	//getters
 	public int getXval(){
 		return xval;

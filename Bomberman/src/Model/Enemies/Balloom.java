@@ -28,7 +28,7 @@ public class Balloom {
 	 * score that is returned when killed
 	 */
 	private int scoreValue;
-	
+
 	//Sets the attribute for the Balloom. state indicating the movement direction(0-right, 1-left, 2-down, 3-up)
 
 	/**
