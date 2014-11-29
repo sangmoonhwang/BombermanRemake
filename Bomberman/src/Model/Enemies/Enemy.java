@@ -14,6 +14,10 @@ import Model.Indestructible;
 import Model.Movable;
 import Utils.GNode;
 
+/**
+ * This class implements all enemy attributes accordingly
+ *
+ */
 public class Enemy extends Movable implements Serializable{
 
 	//physical attributes

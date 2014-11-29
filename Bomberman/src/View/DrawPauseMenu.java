@@ -24,24 +24,55 @@ import Controller.Login;
 import Controller.Map;
 
 
+/**
+ * This class is responsible for drawing the paused menu
+ *
+ */
 public class DrawPauseMenu{
 	
 	//frame
+	/**
+	 * Main frame for the paused menu
+	 */
 	private JFrame pauseFrame;
 	
 	//buttons
+	/**
+	 * Button to go back to the game
+	 */
 	private JButton resumeButton;
+	/**
+	 * Button to return to the main menu
+	 */
 	private JButton quitButton;
+	/**
+	 * Button to save the current game
+	 */
 	private JButton saveButton;
+	/**
+	 * Button to show leaderboard
+	 */
 	private JButton leaderboardButton;
 	
 	//variables
+	/**
+	 * running indicator
+	 */
 	private boolean running;
+	/**
+	 * Game controller
+	 */
 	private Map game;
 	
 	//singleton
+	/**
+	 * singletone object
+	 */
 	private static DrawPauseMenu instance = new DrawPauseMenu();
 	
+	/**
+	 * constructor
+	 */
 	private DrawPauseMenu() {
 		
 		//frame
@@ -58,10 +89,17 @@ public class DrawPauseMenu{
 	}
 	
 	//singleton
+	/**
+	 * getter for the singletone object
+	 * @return singletone object
+	 */
 	public static DrawPauseMenu getInstance() {
 		return instance;
 	}
 	
+	/**
+	 * activate the paused menu
+	 */
 	public void run(){
 		//only make once
 		if(!running){
@@ -70,6 +108,9 @@ public class DrawPauseMenu{
 		viewFrame(true);
 	}
 	
+	/**
+	 * set up the paused menu
+	 */
 	public void makeFrame() {
 		running = true;
 		
@@ -90,6 +131,9 @@ public class DrawPauseMenu{
 		addButtons();
 	}
 	
+	/**
+	 * append the buttons to the display
+	 */
 	public void addButtons(){
 		//resume button
 		resumeButton.addKeyListener(new KeyListener() {
@@ -291,15 +335,27 @@ public class DrawPauseMenu{
 	}
 	
 	//setters
+	/**
+	 * visibility control method
+	 * @param b true to show false to hide
+	 */
 	public void viewFrame(boolean b){
 		pauseFrame.setVisible(b);
 	}
 	
+	/**
+	 * setter for the game controller
+	 * @param g game controller to use
+	 */
 	public void setMap(Map g){
 		this.game = g;
 	}
 	
 	//getters
+	/**
+	 * getter for the running status
+	 * @return running indicator
+	 */
 	public boolean isRunning(){
 		return running;
 	}

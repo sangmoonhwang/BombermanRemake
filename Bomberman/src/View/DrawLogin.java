@@ -27,28 +27,80 @@ import Controller.CreateAccount;
 import Controller.Login;
 
 
+/**
+ * This class is responsible for drawing login screen
+ *
+ */
 public class DrawLogin{
 
+	/**
+	 * main frame
+	 */
 	public static JFrame mainFrame;
 	
+	/**
+	 * String that represent blankness
+	 */
 	static String blank = "                                         ";
 	
+	/**
+	 * initializer for the username input field auxiliary display
+	 */
 	public static String n_typed = "                                         ";
+	/**
+	 * initializer for the possword input field auxiliary display
+	 */
 	public static String p_typed = "                                         ";
+	/**
+	 * username text field indicator
+	 */
 	public static JLabel name_typed = new JLabel(n_typed, SwingConstants.CENTER);
+	/**
+	 * password field indicator
+	 */
 	public static JLabel password_typed = new JLabel(p_typed, SwingConstants.CENTER);
 	
+	/**
+	 * username text field
+	 */
 	private final JTextField userText;
+	/**
+	 * password field
+	 */
 	private final JPasswordField passwordText;
+	/**
+	 * the title display label
+	 */
 	private static JLabel headerLabel;
+	/**
+	 * the status bar at the bottom
+	 */
 	private static JLabel statusLabel;
+	/**
+	 * the main panel
+	 */
 	private static JPanel controlPanel;
+	/**
+	 * username string
+	 */
 	private static String username;
+	/**
+	 * password string
+	 */
 	private static String password;
+	/**
+	 * singletone object
+	 */
 	private static DrawLogin instance = new DrawLogin();
 	
+	/**
+	 * running indicator
+	 */
 	private static boolean running;
 
+	/**
+	 * constructor
+	 */
 	private DrawLogin(){
 		//variables
 		running = false;
@@ -63,10 +115,17 @@ public class DrawLogin{
 	}
 	
 	//singleton
+	/**
+	 * getter for the singletone object
+	 * @return singletone object
+	 */
 	public static DrawLogin getInstance() {
 		return instance;
 	}
 	
+	/**
+	 * activate the login screen display
+	 */
 	public void run(){
 		//only make once
 		if(!running){
@@ -75,6 +134,9 @@ public class DrawLogin{
 		mainFrame.setVisible(true);
 	}
 
+	/**
+	 * set up the main frame
+	 */
 	public void makeFrame() {
 		running = true;
 		
@@ -100,6 +162,9 @@ public class DrawLogin{
 
 	}
 
+	/**
+	 * set up the login screen
+	 */
 	public void showLogin(){
 		headerLabel.setText("Login to play BomberMan!");
 		headerLabel.setFont(new Font("Serif", Font.BOLD, 55));
@@ -199,13 +264,24 @@ public class DrawLogin{
 	}
 
 	//setters
+		/**
+		 * setter for the status bar
+		 * @param s status string
+		 */
 		public static void setStatus(String s){
 			statusLabel.setText(s);
 		}
+		/**
+		 * visibility control method
+		 * @param b true to show false to hide
+		 */
 		public void viewFrame(boolean b){
 			clearText();
 			mainFrame.setVisible(b);
 		}
+		/**
+		 * clears the username and password field
+		 */
 		public void clearText(){
 			userText.setText("");
 			userText.requestFocus();
@@ -213,9 +289,17 @@ public class DrawLogin{
 		}
 	
 	//getters
+	/**
+	 * username getter
+	 * @return username
+	 */
 	public static String getUsername(){
 		return username;
 	}
+	/**
+	 * password getter
+	 * @return password
+	 */
 	public static String getPassword(){
 		return password;
 	}

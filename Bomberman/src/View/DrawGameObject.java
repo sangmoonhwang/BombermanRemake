@@ -15,36 +15,124 @@ import javax.swing.JPanel;
 import Controller.Map;
 import Model.Bomberman;
 
+/**
+ * This class draws all game objects according to the game status such as level
+ *
+ */
 public class DrawGameObject extends JPanel{
 
+	/**
+	 * bomberman animation class
+	 */
 	private AnimateBombman abm;
+	/**
+	 * bomberman image
+	 */
 	private Image bombermanSprite;
+	/**
+	 * Indestructible image
+	 */
 	private Image HardBlock;
+	/**
+	 * Destructible image
+	 */
 	private Image Brick;
+	/**
+	 * Enemy image
+	 */
 	private Image Enemy;
+	/**
+	 * Bomb image
+	 */
 	private Image Bomb;
+	/**
+	 * Explodeing bomb image
+	 */
 	private Image Explode;
+	/**
+	 * Exit Door image
+	 */
 	private Image Exit;
+	/**
+	 * Bomb image
+	 */
 	private Image ExtraBombs;
+	/**
+	 * bombpass powerup image
+	 */
 	private Image bombPass;
+	/**
+	 * detonator powerup image
+	 */
 	private Image detonator;
+	/**
+	 * flamepass powerup image
+	 */
 	private Image flamePass;
+	/**
+	 * flames powerup image
+	 */
 	private Image flames;
+	/**
+	 * mystery powerup image
+	 */
 	private Image mystery;
+	/**
+	 * Balloom enemy image
+	 */
 	private Image Balloom;
+	/**
+	 * Kondoria enemy image
+	 */
 	private Image Kondoria;
+	/**
+	 * Minvo enemy image
+	 */
 	private Image Minvo;
+	/**
+	 * Doll enemy image
+	 */
 	private Image Doll;
+	/**
+	 * Oneal enemy image
+	 */
 	private Image Oneal;
+	/**
+	 * Ovapi enemy image
+	 */
 	private Image Ovapi;
+	/**
+	 * Pass enemy image
+	 */
 	private Image Pass;
+	/**
+	 * Pontan enemy image
+	 */
 	private Image Pontan;
+	/**
+	 * Speed powerup image
+	 */
 	private Image speed;
+	/**
+	 * wallpass powerup image
+	 */
 	private Image wallPass;
+	/**
+	 * Tile image
+	 */
 	private Image Tile;
+	/**
+	 * previous position of the bomberman
+	 */
 	private int previousPosOfBomberman;
+	/**
+	 * x position of the visible map
+	 */
 	private int xVisible;
 
+	/**
+	 * constructor
+	 */
 	public DrawGameObject(){
 
 		abm = new AnimateBombman(Map.getBomberman());

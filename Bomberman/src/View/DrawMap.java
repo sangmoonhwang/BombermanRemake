@@ -9,19 +9,41 @@ import java.io.Serializable;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+/**
+ * This class is responsible for showing the game play display
+ *
+ */
 public class DrawMap implements Serializable{
 	
 	//variables
+	/**
+	 * running indicator
+	 */
 	private boolean running;
 	
 	//objects
+	/**
+	 * main frame
+	 */
 	private JFrame gameFrame;
+	/**
+	 * the main panel for the game play
+	 */
 	private DrawGameObject gamePanel;
+	/**
+	 * status bar
+	 */
 	private JLabel status;
 	
 	//singleton
+	/**
+	 * singletone object
+	 */
 	private static DrawMap instance = new DrawMap();
 		
+	/**
+	 * constructor
+	 */
 	public DrawMap(){
 		
 		//variables
@@ -34,11 +56,18 @@ public class DrawMap implements Serializable{
 	}
 
 	//singleton
+	/**
+	 * getter for the singletone object
+	 * @return singletone object
+	 */
 	public static DrawMap getInstance(){
 		return instance;
 	}
 
 
+	/**
+	 * activate the game play display
+	 */
 	public void run(){
 		//only make frame one time
 		if(!running){
@@ -47,6 +76,9 @@ public class DrawMap implements Serializable{
 		gameFrame.setVisible(true);
 	}
 
+	/**
+	 * set up the gameplay display
+	 */
 	public void makeFrame(){
 		running = true;
 		
@@ -63,14 +95,25 @@ public class DrawMap implements Serializable{
 	}
 
 	//update panel
+	/**
+	 * update the game panel
+	 */
 	public void draw(){
 		gamePanel.repaint();
 	}
 	
 	//getters
+	/**
+	 * getter for the main frame
+	 * @return main frame
+	 */
 	public JFrame getFrame(){
 		return gameFrame;
 	}
+	/**
+	 * getter for the status bar
+	 * @return status bar
+	 */
 	public JLabel getStatusBar(){
 		return status;
 	}

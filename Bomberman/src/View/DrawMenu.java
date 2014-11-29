@@ -36,24 +36,62 @@ import Controller.Map;
 import Controller.ModifyAccount;
 
 
+/**
+ * This class is responsible for displaying the main menu
+ *
+ */
 public class DrawMenu{
 	//variables
+	/**
+	 * running indicator
+	 */
 	private boolean running;
+	/**
+	 * Game controller
+	 */
 	Map game;
+	/**
+	 * Thread used to initiate the game
+	 */
 	Thread thread;
-	//objects
+	/**
+	 * main frame of the main menu
+	 */
 	private JFrame menuFrame;
+	/**
+	 * button to play a new game
+	 */
 	private JButton playButton;
+	/**
+	 * button to logout
+	 */
 	private JButton logoutButton;
+	/**
+	 * button to modify account
+	 */
 	private JButton modifyButton;
+	/**
+	 * button to show leaderboard
+	 */
 	private JButton leaderButton;
+	/**
+	 * button to load a saved game
+	 */
 	private JButton loadButton;
-	//	private JButton saveButton;
+	/**
+	 * button to select a game from a selected level
+	 */
 	private JButton selectButton;
 
 	//singleton
+	/**
+	 * singleton object
+	 */
 	private static DrawMenu instance = new DrawMenu();
 
+	/**
+	 * constructor
+	 */
 	private DrawMenu() {
 		//variables
 		running = false;
@@ -70,10 +108,17 @@ public class DrawMenu{
 	}
 
 	//singleton
+	/**
+	 * getter for the singletone object
+	 * @return singleton object
+	 */
 	public static DrawMenu getInstance() {
 		return instance;
 	}
 
+	/**
+	 * activate the main menu
+	 */
 	public void run() {
 		//only makeFrame once
 		if(!running){
@@ -82,6 +127,9 @@ public class DrawMenu{
 		menuFrame.setVisible(true);
 	}
 
+	/**
+	 * setup the frame
+	 */
 	public void makeFrame() {
 		running = true;
 
@@ -105,6 +153,9 @@ public class DrawMenu{
 		addButtons();
 	}
 
+	/**
+	 * append all buttons to the main menu display
+	 */
 	public void addButtons(){
 		//play button
 		playButton.addKeyListener(new KeyListener() {
@@ -481,14 +532,26 @@ public class DrawMenu{
 		});
 	}
 
+	/**
+	 * getter for the running indicator
+	 * @return running indicator
+	 */
 	public boolean getRunning() {
 		return running;
 	}
 	
 	//setters
+	/**
+	 * visibility control method
+	 * @param b true to show false to hide
+	 */
 	public void viewFrame(boolean b){
 		menuFrame.setVisible(b);
 	}
+	/**
+	 * running indicator control method
+	 * @param bool running status true if running false otherwise
+	 */
 	public void setRunnning(boolean bool) {
 		running = bool;
 	}
