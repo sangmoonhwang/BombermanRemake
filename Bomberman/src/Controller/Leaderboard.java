@@ -17,7 +17,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
 
 import Model.Database;
 import Model.User;
@@ -74,42 +76,19 @@ public class Leaderboard extends Database {
 	private void drawpanel() {
 		header_login.setText("Leaderboards");
 		header_login.setFont(new Font("Serif", Font.BOLD, 40));
-
-		JLabel first = new JLabel("1. " + topTen[0].getUsername() + ", " + topTen[0].getTotalScore() + " Number of Plays " + topTen[0].getNumOfPlay());
-		JLabel second = new JLabel("2. " + topTen[1].getUsername() + ", " + topTen[1].getTotalScore() + " Number of Plays " + topTen[1].getNumOfPlay());
-		JLabel third = new JLabel("3. " + topTen[2].getUsername() + ", " + topTen[2].getTotalScore() + " Number of Plays " + topTen[2].getNumOfPlay());
-		JLabel fourth = new JLabel("4. " + topTen[3].getUsername() + ", " + topTen[3].getTotalScore() + " Number of Plays " + topTen[3].getNumOfPlay());
-		JLabel fifth = new JLabel("5. " + topTen[4].getUsername() + ", " + topTen[4].getTotalScore() + " Number of Plays " + topTen[4].getNumOfPlay());
-		JLabel sixth = new JLabel("6. " + topTen[5].getUsername() + ", " + topTen[5].getTotalScore() + " Number of Plays " + topTen[5].getNumOfPlay());
-		JLabel seventh = new JLabel("7. " + topTen[6].getUsername() + ", " + topTen[6].getTotalScore() + " Number of Plays " + topTen[6].getNumOfPlay());
-		JLabel eighth = new JLabel("8. " + topTen[7].getUsername() + ", " + topTen[7].getTotalScore() + " Number of Plays " + topTen[7].getNumOfPlay());
-		JLabel ninth = new JLabel("9. " + topTen[8].getUsername() + ", " + topTen[8].getTotalScore() + " Number of Plays " + topTen[8].getNumOfPlay());
-		JLabel tenth = new JLabel("10. " + topTen[9].getUsername() + ", " + topTen[9].getTotalScore() + " Number of Plays " + topTen[9].getNumOfPlay());
-		JLabel viewer = new JLabel("You: " + Login.getUser().getUsername() + ", " + Login.getUser().getTotalScore() + " Number of Plays " + Login.getUser().getNumOfPlay());
-		first.setFont(new Font("Serif", Font.BOLD, 20));
-		second.setFont(new Font("Serif", Font.BOLD, 20));
-		third.setFont(new Font("Serif", Font.BOLD, 20));
-		fourth.setFont(new Font("Serif", Font.BOLD, 20));
-		fifth.setFont(new Font("Serif", Font.BOLD, 20));
-		sixth.setFont(new Font("Serif", Font.BOLD, 20));
-		seventh.setFont(new Font("Serif", Font.BOLD, 20));
-		eighth.setFont(new Font("Serif", Font.BOLD, 20));
-		ninth.setFont(new Font("Serif", Font.BOLD, 20));
-		tenth.setFont(new Font("Serif", Font.BOLD, 20));
-		viewer.setFont(new Font("Serif", Font.BOLD, 20));
-		controlPanel.add(first);
-		controlPanel.add(second);
-		controlPanel.add(third);
-		controlPanel.add(fourth);
-		controlPanel.add(fifth);
-		controlPanel.add(sixth);
-		controlPanel.add(seventh);
-		controlPanel.add(eighth);
-		controlPanel.add(ninth);
-		controlPanel.add(tenth);
-		controlPanel.add(viewer);
-
-
+		JTable table = new JTable();
+		controlPanel.add(table);
+		
+		String columnNames[] = {"Column 1", "Column 2", "Column 3", "Column 4", "Column 5"};
+		
+		DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+		for(int i=0; i<10; i++){
+			Object rowData[] = { i+1 + ".", topTen[i].getUsername() + ",", topTen[i].getTotalScore(), " Number of Plays ", topTen[i].getNumOfPlay()};
+			model.addRow(rowData);
+		}
+		Object rowData[] = { "You", Login.getUser().getUsername() + ",", Login.getUser().getTotalScore(), " Number of Plays ", Login.getUser().getNumOfPlay()};
+		model.addRow(rowData);
+		table.setModel(model);
 
 		JButton back = new JButton("Main Menu");
 		controlPanel.add(back);
