@@ -1,9 +1,9 @@
 Sangmoon Hwang 	- 260569675
 Young Gouk Cho  - 260166864    young.g.cho@mail.mcgill.ca
-_
+Alexander Makrigiorgs - 260573080   alexander.makrigiorgos@mail.mcgill.ca
 _
 
-All rights reserved ®œ Sangmoon Hwang, Young Gouk Cho, _, _
+All rights reserved ¬®√è Sangmoon Hwang, Young Gouk Cho, Alexander Makrigiorgos, _
 
 Github: https://github.com/mcgill-ecse321/Team-10
 
