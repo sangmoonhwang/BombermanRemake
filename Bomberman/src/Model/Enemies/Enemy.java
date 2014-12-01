@@ -91,7 +91,7 @@ public class Enemy extends Movable implements Serializable{
 			intelligence = balloom.getIntelligence();
 			speed = balloom.getSpeed();
 			points = balloom.getPoints();
-			wallPass = balloom.getWallPass();
+			setWallPass(balloom.getWallPass());
 			image = Toolkit.getDefaultToolkit().getImage("res/image/Balloom.png");
 			state = (int) (Math.random()*3) + 1;
 		} else if(identity.equals("Oneal")) {
@@ -99,7 +99,7 @@ public class Enemy extends Movable implements Serializable{
 			intelligence = oneal.getIntelligence();
 			speed = oneal.getSpeed();
 			points = oneal.getPoints();
-			wallPass = oneal.getWallPass();
+			setWallPass(oneal.getWallPass());
 			image = Toolkit.getDefaultToolkit().getImage("res/image/Oneal.png");
 			state = (int) (Math.random()*3) + 1;
 		} else if(identity.equals("Doll")) {
@@ -107,7 +107,7 @@ public class Enemy extends Movable implements Serializable{
 			intelligence = doll.getIntelligence();
 			speed = doll.getSpeed();
 			points = doll.getPoints();
-			wallPass = doll.getWallPass();
+			setWallPass(doll.getWallPass());
 			image = Toolkit.getDefaultToolkit().getImage("res/image/Doll.png");
 			state = (int) (Math.random()*3) + 1;
 		} else if(identity.equals("Minvo")) {
@@ -115,7 +115,7 @@ public class Enemy extends Movable implements Serializable{
 			intelligence = minvo.getIntelligence();
 			speed = minvo.getSpeed();
 			points = minvo.getPoints();
-			wallPass = minvo.getWallPass();
+			setWallPass(minvo.getWallPass());
 			image = Toolkit.getDefaultToolkit().getImage("res/image/Minvo.png");
 			state = (int) (Math.random()*3) + 1;
 		} else if(identity.equals("Kondoria")) {
@@ -123,7 +123,7 @@ public class Enemy extends Movable implements Serializable{
 			intelligence = kondoria.getIntelligence();
 			speed = kondoria.getSpeed();
 			points = kondoria.getPoints();
-			wallPass = kondoria.getWallPass();
+			setWallPass(kondoria.getWallPass());
 			image = Toolkit.getDefaultToolkit().getImage("res/image/Kondoria.png");
 			state = (int) (Math.random()*3) + 1;
 		} else if(identity.equals("Ovapi")) {
@@ -131,7 +131,7 @@ public class Enemy extends Movable implements Serializable{
 			intelligence = ovapi.getIntelligence();
 			speed = ovapi.getSpeed();
 			points = ovapi.getPoints();
-			wallPass = ovapi.getWallPass();
+			setWallPass(ovapi.getWallPass());
 			image = Toolkit.getDefaultToolkit().getImage("res/image/Ovapi.png");
 			state = (int) (Math.random()*3) + 1;
 		} else if(identity.equals("Pass")) {
@@ -139,7 +139,7 @@ public class Enemy extends Movable implements Serializable{
 			intelligence = pass.getIntelligence();
 			speed = pass.getSpeed();
 			points = pass.getPoints();
-			wallPass = pass.getWallPass();
+			setWallPass(pass.getWallPass());
 			image = Toolkit.getDefaultToolkit().getImage("res/image/Pass.png");
 			state = (int) (Math.random()*3) + 1;
 		} else if(identity.equals("Pontan")) {
@@ -147,7 +147,7 @@ public class Enemy extends Movable implements Serializable{
 			intelligence = pontan.getIntelligence();
 			speed = pontan.getSpeed();
 			points = pontan.getPoints();
-			wallPass = pontan.getWallPass();
+			setWallPass(pontan.getWallPass());
 			image = Toolkit.getDefaultToolkit().getImage("res/image/Pontan.png");
 			state = (int) (Math.random()*3) + 1;
 		}
@@ -309,7 +309,7 @@ public class Enemy extends Movable implements Serializable{
 			} 
 
 		}
-		if(!wallPass) {
+		if(!isWallPass()) {
 			for(int i=0; i<bricks.size(); i++) {
 				int bricksTileNum = whichTileIsOn(bricks.get(i).getXval(), bricks.get(i).getYval());
 				if(bricksTileNum == (tileNum) && (enemyState == 1)) {
@@ -632,5 +632,13 @@ public class Enemy extends Movable implements Serializable{
 	}
 	public boolean get2AboveFreeBrick() {
 		return twoAboveFreeBrick;
+	}
+
+	public boolean isWallPass() {
+		return wallPass;
+	}
+
+	public void setWallPass(boolean wallPass) {
+		this.wallPass = wallPass;
 	}
 }

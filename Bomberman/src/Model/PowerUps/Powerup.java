@@ -73,6 +73,8 @@ public class Powerup extends Block implements Serializable{
 			image = Toolkit.getDefaultToolkit().getImage("res/image/UpBombs.png");
 		} else if(identity.equals("Wallpass")) {
 			image = Toolkit.getDefaultToolkit().getImage("res/image/Wallpass.png");
+		} else {
+			this.identity = null;
 		}
 	}
 
