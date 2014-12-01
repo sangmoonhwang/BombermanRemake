@@ -76,8 +76,18 @@ public class CreateAccount extends Database {
 		final JTextField realNameText = new JTextField(13);
 		final JPasswordField passwordText = new JPasswordField(13);
 
+		JButton backButton = new JButton("Back");
 		JButton createButton = new JButton("Create");
 
+		backButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controlPanel.removeAll();
+				DrawLogin loginFrame = DrawLogin.getInstance();
+				loginFrame.showLogin();
+			}
+		});
+		
 		createButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -152,6 +162,10 @@ public class CreateAccount extends Database {
 		c.insets = new Insets(1, 0, 0, 0);
 		controlPanel.add(passwordText,c);
 
+		c.gridx = 0;
+		c.gridy = 3;
+		controlPanel.add(backButton, c);
+		
 		c.gridx = 1;
 		c.gridy = 3;
 		c.insets = new Insets(10, 1, 0, 1);
