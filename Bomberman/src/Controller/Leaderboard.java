@@ -83,10 +83,10 @@ public class Leaderboard extends Database {
 		
 		DefaultTableModel model = new DefaultTableModel(columnNames, 0);
 		for(int i=0; i<10; i++){
-			Object rowData[] = { i+1 + ".", getTopTen()[i].getUsername() + ",", getTopTen()[i].getTotalScore(), " Number of Plays ", getTopTen()[i].getNumOfPlay()};
+			Object rowData[] = { i+1 + ".", getTopTen()[i].getUsername(), getTopTen()[i].getTotalScore(), " Number of Plays ", getTopTen()[i].getNumOfPlay()};
 			model.addRow(rowData);
 		}
-		Object rowData[] = { "You", Login.getUser().getUsername() + ",", Login.getUser().getTotalScore(), " Number of Plays ", Login.getUser().getNumOfPlay()};
+		Object rowData[] = { "You", Login.getUser().getUsername(), Login.getUser().getTotalScore(), " Number of Plays ", Login.getUser().getNumOfPlay()};
 		model.addRow(rowData);
 		table.setModel(model);
 
