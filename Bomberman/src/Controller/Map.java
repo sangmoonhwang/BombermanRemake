@@ -96,18 +96,14 @@ public class Map implements Serializable{
 		bombman = new Bomberman();
 		activeBombs = new LinkedList<Bomb>();
 		spawn = new SpawnGameObjects(level);
-		explosions = new Explosion[9];
-		for(int i = 0; i<8; i++){
-			explosions[i] = new Explosion();
-		}
 
 		//spawn gameObjects
-		indestructibles = spawn.spawnIndestructibles();
-		bricks = spawn.spawnBricks();
-		enemies = spawn.spawnEnemies();
-		power = spawn.spawnPowerup();
-		door = spawn.spawnDoor();
-		tiles = spawn.spawnTiles();
+		indestructibles = getSpawn().spawnIndestructibles();
+		bricks = getSpawn().spawnBricks();
+		enemies = getSpawn().spawnEnemies();
+		power = getSpawn().spawnPowerup();
+		door = getSpawn().spawnDoor();
+		tiles = getSpawn().spawnTiles();
 
 		paused = false;
 		start = System.nanoTime();
@@ -121,7 +117,7 @@ public class Map implements Serializable{
 	 */
 	public void run(){
 
-		if(!paused){
+		if(!isPaused()){
 			save = false;
 			long now = System.nanoTime();
 			if((now - start)/ns >= 1) {
@@ -164,19 +160,19 @@ public class Map implements Serializable{
 		//bomberman and indestructible collision
 		for(int i = 0; i < indestructibles.size(); i++){
 
-			if(!detect.emptyLeft(bombman, indestructibles.get(i)) && xVel <= 0){
+			if(!getDetect().emptyLeft(bombman, indestructibles.get(i)) && xVel <= 0){
 				bombermanXtemp = 0;
 			}
-			if(!detect.emptyRight(bombman, indestructibles.get(i)) && xVel >= 0){
+			if(!getDetect().emptyRight(bombman, indestructibles.get(i)) && xVel >= 0){
 				bombermanXtemp = 0;
 			}
 		}
 		if(Bomberman.wallPass == false){
 			for(int j=0; j<bricks.size(); j++){
-				if(!detect.emptyLeft(bombman, bricks.get(j)) && xVel <= 0){
+				if(!getDetect().emptyLeft(bombman, bricks.get(j)) && xVel <= 0){
 					bombermanXtemp = 0;
 				}
-				if(!detect.emptyRight(bombman, bricks.get(j)) && xVel >= 0){
+				if(!getDetect().emptyRight(bombman, bricks.get(j)) && xVel >= 0){
 					bombermanXtemp = 0;
 				}
 			}
@@ -187,10 +183,10 @@ public class Map implements Serializable{
 
 
 		for(int i = 0; i < indestructibles.size(); i++){
-			if(!detect.emptyAbove(bombman, indestructibles.get(i)) && yVel <= 0){
+			if(!getDetect().emptyAbove(bombman, indestructibles.get(i)) && yVel <= 0){
 				bombermanYtemp = 0;
 			}
-			if(!detect.emptyBelow(bombman, indestructibles.get(i)) && yVel >= 0){
+			if(!getDetect().emptyBelow(bombman, indestructibles.get(i)) && yVel >= 0){
 				bombermanYtemp = 0;
 			}
 		}
@@ -198,10 +194,10 @@ public class Map implements Serializable{
 		//bomberman collision detection with bricks
 		if(Bomberman.wallPass == false){
 			for(int i=0; i<bricks.size(); i++){
-				if(!detect.emptyAbove(bombman, bricks.get(i)) && yVel <= 0){
+				if(!getDetect().emptyAbove(bombman, bricks.get(i)) && yVel <= 0){
 					bombermanYtemp = 0;
 				}
-				if(!detect.emptyBelow(bombman, bricks.get(i)) && yVel >= 0){
+				if(!getDetect().emptyBelow(bombman, bricks.get(i)) && yVel >= 0){
 					bombermanYtemp = 0;
 				}
 			}
@@ -210,12 +206,11 @@ public class Map implements Serializable{
 
 		//Bomberman and Enemy Collisions
 		for (int i=0; i<enemies.size(); i++){
-			if(detect.collisionDetection(bombman, enemies.get(i))){
+			if(getDetect().collisionDetection(bombman, enemies.get(i))){
 				bombman.incrementXval(-xVel);
 				bombman.incrementYval(-yVel);
 				if(!bombman.isMystery()){
 					dieBombman();
-					System.out.println("You died!!");
 				}
 			}
 		}
@@ -223,7 +218,7 @@ public class Map implements Serializable{
 		//Bomberman and Bombs Collisions
 		if(!Bomberman.bombPass && !activeBombs.isEmpty()){
 			for (int i=0; i<activeBombs.size(); i++){
-				if(detect.collisionDetection(bombman, activeBombs.get(i))){
+				if(getDetect().collisionDetection(bombman, activeBombs.get(i))){
 					if(activeBombs.get(i).getEscaped()){
 						bombman.incrementXval(-xVel);
 						bombman.incrementYval(-yVel);
@@ -252,24 +247,24 @@ public class Map implements Serializable{
 						boolean rightAdjust = false;
 						Explosion testR = new Explosion();
 						testR = activeBombs.getLast().getPersonalExplosions()[1];
-						while(detect.collisionDetection(bombman, testR)){
+						while(getDetect().collisionDetection(bombman, testR)){
 							testR.adjustWidth(-50);
 							rightAdjust = true;
 						}
 						for(int j = 0; j < enemies.size(); j++){
-							while(detect.collisionDetection(enemies.get(j), testR)){
+							while(getDetect().collisionDetection(enemies.get(j), testR)){
 								testR.adjustWidth(-50);
 								rightAdjust = true;
 							}
 						}
 						for(int k = 0; k < bricks.size();k++){
-							while(detect.collisionDetection(testR, bricks.get(k))){
+							while(getDetect().collisionDetection(testR, bricks.get(k))){
 								testR.adjustWidth(-50);
 								rightAdjust = true;
 							}
 						}
 						for(int k = 0; k < indestructibles.size();k++){
-							while(detect.collisionDetection(testR, indestructibles.get(k))){
+							while(getDetect().collisionDetection(testR, indestructibles.get(k))){
 								testR.adjustWidth(-50);
 								rightAdjust = true;
 							}
@@ -282,24 +277,24 @@ public class Map implements Serializable{
 						boolean leftAdjust = false;
 						Explosion testL = new Explosion();
 						testL = activeBombs.getLast().getPersonalExplosions()[2];
-						while(detect.collisionDetection(bombman, testL)){
+						while(getDetect().collisionDetection(bombman, testL)){
 							testL.adjustXval(50);
 							leftAdjust = true;
 						}
 						for(int j = 0; j < enemies.size(); j++){
-							while(detect.collisionDetection(enemies.get(j), testL)){
+							while(getDetect().collisionDetection(enemies.get(j), testL)){
 								testL.adjustXval(50);
 								leftAdjust = true;
 							}
 						}
 						for(int k = 0; k < bricks.size();k++){
-							while(detect.collisionDetection(testL, bricks.get(k))){
+							while(getDetect().collisionDetection(testL, bricks.get(k))){
 								testL.adjustXval(50);
 								leftAdjust = true;
 							}
 						}
 						for(int k = 0; k < indestructibles.size();k++){
-							while(detect.collisionDetection(testL, indestructibles.get(k))){
+							while(getDetect().collisionDetection(testL, indestructibles.get(k))){
 								testL.adjustXval(50);
 								leftAdjust = true;
 							}
@@ -312,24 +307,24 @@ public class Map implements Serializable{
 						boolean topAdjust = false;
 						Explosion testT = new Explosion();
 						testT = activeBombs.getLast().getPersonalExplosions()[3];
-						while(detect.collisionDetection(bombman, testT)){
+						while(getDetect().collisionDetection(bombman, testT)){
 							testT.adjustHeight(-50);
 							topAdjust = true;
 						}
 						for(int j = 0; j < enemies.size(); j++){
-							while(detect.collisionDetection(enemies.get(j), testT)){
+							while(getDetect().collisionDetection(enemies.get(j), testT)){
 								testT.adjustHeight(-50);
 								topAdjust = true;
 							}
 						}
 						for(int k = 0; k < bricks.size();k++){
-							while(detect.collisionDetection(testT, bricks.get(k))){
+							while(getDetect().collisionDetection(testT, bricks.get(k))){
 								testT.adjustHeight(-50);
 								topAdjust = true;
 							}
 						}
 						for(int k = 0; k < indestructibles.size();k++){
-							while(detect.collisionDetection(testT, indestructibles.get(k))){
+							while(getDetect().collisionDetection(testT, indestructibles.get(k))){
 								testT.adjustHeight(-50);
 								topAdjust = true;
 							}
@@ -342,24 +337,24 @@ public class Map implements Serializable{
 						boolean botAdjust = false;
 						Explosion testB = new Explosion();
 						testB = activeBombs.getLast().getPersonalExplosions()[4];
-						while(detect.collisionDetection(bombman, testB)){
+						while(getDetect().collisionDetection(bombman, testB)){
 							testB.adjustYval(50);
 							botAdjust = true;
 						}
 						for(int j = 0; j < enemies.size(); j++){
-							while(detect.collisionDetection(enemies.get(j), testB)){
+							while(getDetect().collisionDetection(enemies.get(j), testB)){
 								testB.adjustYval(50);
 								botAdjust = true;
 							}
 						}
 						for(int k = 0; k < bricks.size();k++){
-							while(detect.collisionDetection(testB, bricks.get(k))){
+							while(getDetect().collisionDetection(testB, bricks.get(k))){
 								testB.adjustYval(50);
 								botAdjust = true;
 							}
 						}
 						for(int k = 0; k < indestructibles.size();k++){
-							while(detect.collisionDetection(testB, indestructibles.get(k))){
+							while(getDetect().collisionDetection(testB, indestructibles.get(k))){
 								testB.adjustYval(50);
 								botAdjust = true;
 							}
@@ -373,7 +368,7 @@ public class Map implements Serializable{
 
 
 					//Collision Detection
-					if(detect.collisionDetection(bombman, activeBombs.getLast().getPersonalExplosions()[i])){
+					if(getDetect().collisionDetection(bombman, activeBombs.getLast().getPersonalExplosions()[i])){
 						if(!Bomberman.flamePass && !bombman.isMystery()){
 							dieBombman();
 						}
@@ -382,7 +377,7 @@ public class Map implements Serializable{
 
 					TreeMap<Integer, String> killedEnemies = new TreeMap<Integer, String>();
 					for(int j = 0; j < enemies.size(); j++){
-						if(detect.collisionDetection(enemies.get(j), activeBombs.getLast().getPersonalExplosions()[i])){
+						if(getDetect().collisionDetection(enemies.get(j), activeBombs.getLast().getPersonalExplosions()[i])){
 							killedEnemies.put(enemies.get(j).getPoints(), enemies.get(j).getIdentity());
 							enemies.remove(j);
 						}
@@ -393,7 +388,7 @@ public class Map implements Serializable{
 						pointCalculation(killedEnemies);
 
 					for(int k = 0; k < bricks.size();k++){
-						if(detect.collisionDetection(activeBombs.getLast().getPersonalExplosions()[i], bricks.get(k))){
+						if(getDetect().collisionDetection(activeBombs.getLast().getPersonalExplosions()[i], bricks.get(k))){
 							bricks.remove(k);
 						}
 					}
@@ -402,8 +397,7 @@ public class Map implements Serializable{
 		}
 
 		//level completion
-		if(detect.collisionDetection(bombman, door) && enemies.size() == 0) {
-			System.out.println("Level Complete!");
+		if(getDetect().collisionDetection(bombman, door) && enemies.size() == 0) {
 			user.setLevelCompleted(level);
 			levelComplete = true;
 			nextLevel(level+1);
@@ -411,7 +405,7 @@ public class Map implements Serializable{
 
 		//Powerup obtaining
 		//		System.out.println(whichTileIsOn(power.getXval(), power.getYval()));
-		if(detect.collisionDetection(bombman, power)){
+		if(getDetect().collisionDetection(bombman, power)){
 			power.setXval(0);
 			power.setYval(0);
 			power.activate();
@@ -723,7 +717,6 @@ public class Map implements Serializable{
 			softResetBombman();
 			sameLevel();
 		} else {
-			System.out.println("Game over");
 			//saveScore_to_Leaderboard();
 			DrawMap game = DrawMap.getInstance();
 			DrawMenu menu = DrawMenu.getInstance();
@@ -792,15 +785,15 @@ public class Map implements Serializable{
 		bombman.setXval(50);
 		bombman.setYval(50);
 		//new objects
-		spawn = new SpawnGameObjects(level);
+		setSpawn(new SpawnGameObjects(level));
 
 		//spawn gameObjects
-		indestructibles = spawn.spawnIndestructibles();
-		bricks = spawn.spawnBricks();
-		enemies = spawn.spawnEnemies();
-		power = spawn.spawnPowerup();
-		door = spawn.spawnDoor();
-		tiles = spawn.spawnTiles();
+		indestructibles = getSpawn().spawnIndestructibles();
+		bricks = getSpawn().spawnBricks();
+		enemies = getSpawn().spawnEnemies();
+		power = getSpawn().spawnPowerup();
+		door = getSpawn().spawnDoor();
+		tiles = getSpawn().spawnTiles();
 	}
 	public static void sameLevel() {
 		//attributes
@@ -810,15 +803,15 @@ public class Map implements Serializable{
 		bombman.setYval(50);
 		startTime = System.nanoTime()/1000000000;
 		//new objects
-		spawn = new SpawnGameObjects(level);
+		setSpawn(new SpawnGameObjects(level));
 
 		//spawn gameObjects
-		indestructibles = spawn.spawnIndestructibles();
-		bricks = spawn.spawnBricks();
-		enemies = spawn.spawnEnemies();
-		power = spawn.spawnPowerup();
-		door = spawn.spawnDoor();
-		tiles = spawn.spawnTiles();
+		indestructibles = getSpawn().spawnIndestructibles();
+		bricks = getSpawn().spawnBricks();
+		enemies = getSpawn().spawnEnemies();
+		power = getSpawn().spawnPowerup();
+		door = getSpawn().spawnDoor();
+		tiles = getSpawn().spawnTiles();
 	}
 
 	//getters
@@ -874,7 +867,7 @@ public class Map implements Serializable{
 		return activeBombs;
 	}
 	public boolean getPause() {
-		return paused;
+		return isPaused();
 	}
 	public static boolean getlevelComplete() {
 		return levelComplete;
@@ -895,5 +888,25 @@ public class Map implements Serializable{
 	}
 	public Map getMap(){
 		return this;
+	}
+
+	public CollisionDetection getDetect() {
+		return detect;
+	}
+
+	public void setDetect(CollisionDetection detect) {
+		this.detect = detect;
+	}
+
+	public static SpawnGameObjects getSpawn() {
+		return spawn;
+	}
+
+	public static void setSpawn(SpawnGameObjects spawn) {
+		Map.spawn = spawn;
+	}
+
+	public static boolean isPaused() {
+		return paused;
 	}
 }

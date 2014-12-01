@@ -272,6 +272,10 @@ public class GamePlay implements Runnable, FocusListener, KeyListener {
 	public DrawMap getDrawMap(){
 		return d;
 	}
+	
+	public boolean getShutDown(){
+		return shutdown;
+	}
 
 
 }

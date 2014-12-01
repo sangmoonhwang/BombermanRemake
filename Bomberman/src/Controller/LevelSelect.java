@@ -47,10 +47,7 @@ public class LevelSelect extends Database {
 	 * @throws IOException
 	 */
 	public LevelSelect() throws IOException{
-		users = returnAllUsers();
-		topTen = new User[10];
-		sort();
-		main = new JFrame("Leaderboards");
+		main = new JFrame("Level Select");
 		main.setSize(1000, 800);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		main.setLocation(dim.width/2-main.getSize().width/2, dim.height/2-main.getSize().height/2);
@@ -75,7 +72,7 @@ public class LevelSelect extends Database {
 	/**
 	 * draw GUI
 	 */
-	private void drawpanel() {
+	public void drawpanel() {
 		header_login.setText("Select Level using Up or Down arrow keys.");
 		header_login.setFont(new Font("Serif", Font.BOLD, 40));
 		levelShow.setText("Level: " + level + " (Max: " + Login.getUser().getLevelCompleted() + ")" + " Press Enter to Play");
@@ -217,21 +214,5 @@ public class LevelSelect extends Database {
 
 	}
 
-	private void sort(){
-		for(int i = 0; i < 10; i++){
-			int highest = 0;
-			int winner = 0;
-			for(int j = 0; j < users.size(); j++){
-				if(users.get(j).getTotalScore() > highest){
-					highest = users.get(j).getTotalScore();
-					topTen[i] = users.get(j);
-					winner = j;
-				}
-			}
-			if(users.size() != 0){
-				users.remove(winner);
-			}
-		}
-	}
 
 }

@@ -127,4 +127,7 @@ public class Login extends Database implements KeyListener, FocusListener {
 	public static User getUser(){
 		return u;
 	}
+	public void setUser(User u){
+		this.u = u;
+	}
 }

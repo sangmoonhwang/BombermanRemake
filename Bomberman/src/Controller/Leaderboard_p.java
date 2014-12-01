@@ -46,8 +46,8 @@ public class Leaderboard_p extends Database {
 	 * @throws IOException
 	 */
 	public Leaderboard_p() throws IOException{
-		users = returnAllUsers();
-		topTen = new User[10];
+		setUsers(returnAllUsers());
+		setTopTen(new User[10]);
 		sort();
 		main = new JFrame("Leaderboards");
 		main.setSize(1000, 800);
@@ -73,7 +73,7 @@ public class Leaderboard_p extends Database {
 	/**
 	 * set up the GUI
 	 */
-	private void drawpanel() {
+	public void drawpanel() {
 		header_login.setText("Leaderboards");
 		header_login.setFont(new Font("Serif", Font.BOLD, 40));
 		
@@ -84,7 +84,7 @@ public class Leaderboard_p extends Database {
 		
 		DefaultTableModel model = new DefaultTableModel(columnNames, 0);
 		for(int i=0; i<10; i++){
-			Object rowData[] = { i+1 + ".", topTen[i].getUsername() + ",", topTen[i].getTotalScore(), " Number of Plays ", topTen[i].getNumOfPlay()};
+			Object rowData[] = { i+1 + ".", getTopTen()[i].getUsername() + ",", getTopTen()[i].getTotalScore(), " Number of Plays ", getTopTen()[i].getNumOfPlay()};
 			model.addRow(rowData);
 		}
 		Object rowData[] = { "You", Login.getUser().getUsername() + ",", Login.getUser().getTotalScore(), " Number of Plays ", Login.getUser().getNumOfPlay()};
@@ -130,20 +130,36 @@ public class Leaderboard_p extends Database {
 	 * @param None
 	 * @return None
 	 */
-	private void sort(){
+	public void sort(){
 		for(int i = 0; i < 10; i++){
 			int highest = 0;
 			int winner = 0;
-			for(int j = 0; j < users.size(); j++){
-				if(users.get(j).getTotalScore() > highest){
-					highest = users.get(j).getTotalScore();
-					topTen[i] = users.get(j);
+			for(int j = 0; j < getUsers().size(); j++){
+				if(getUsers().get(j).getTotalScore() > highest){
+					highest = getUsers().get(j).getTotalScore();
+					getTopTen()[i] = getUsers().get(j);
 					winner = j;
 				}
 			}
-			if(users.size() != 0){
-				users.remove(winner);
+			if(getUsers().size() != 0){
+				getUsers().remove(winner);
 			}
 		}
+	}
+
+	public ArrayList<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(ArrayList<User> users) {
+		this.users = users;
+	}
+
+	public User[] getTopTen() {
+		return topTen;
+	}
+
+	public void setTopTen(User[] topTen) {
+		this.topTen = topTen;
 	}
 }
