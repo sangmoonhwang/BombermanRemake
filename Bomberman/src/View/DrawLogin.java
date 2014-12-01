@@ -271,6 +271,9 @@ public class DrawLogin{
 	public static void setStatus(String s){
 		statusLabel.setText(s);
 	}
+	public static String getStatus()  {
+		return statusLabel.getText();
+	}
 	/**
 	 * visibility control method
 	 * @param b true to show false to hide
