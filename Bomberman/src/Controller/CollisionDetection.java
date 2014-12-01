@@ -68,60 +68,6 @@ public class CollisionDetection implements Serializable{
 		return collision;
 	}
 
-	/**
-	 * collision detector between explosion and movable
-	 * @param test movable
-	 * @param test1 explosion
-	 * @param i direction of explosion
-	 * @param max 0:north 1:west 2:south 3:east
-	 * @return true if collided false otherwise
-	 */
-	public boolean collisionDetection(Movable test, Explosion test1, int i, int max){
-		boolean collision = false;
-		switch(i){
-		case 0:
-			if ((test.getXval() + test.getWidth() > test1.getXval() &&
-					test.getYval() < test1.getYval() + test1.getHeight() &&
-					test.getXval() < test1.getXval() + test1.getWidth() && 
-					test.getYval() + test.getHeight() > test1.getYval())){
-				collision = true;
-			}
-			break;
-		case 1:	
-			if ((test.getXval() + test.getWidth() > test1.getXval() &&
-					test.getYval() < test1.getYval() + test1.getHeight() &&
-					test.getXval() < test1.getXval() + test1.getWidth()*max && 
-					test.getYval() + test.getHeight() > test1.getYval())){
-				collision = true;
-			}
-			break;
-		case 2:	
-			if ((test.getXval() + test.getWidth() > test1.getXval() - max * test1.getWidth() &&
-					test.getYval() < test1.getYval() + test1.getHeight() &&
-					test.getXval() < test1.getXval() + test1.getWidth() && 
-					test.getYval() + test.getHeight() > test1.getYval())){
-				collision = true;
-			}
-			break;
-		case 3:	
-			if ((test.getXval() + test.getWidth() > test1.getXval() &&
-					test.getYval() < test1.getYval() + test1.getHeight() * max &&
-					test.getXval() < test1.getXval() + test1.getWidth() && 
-					test.getYval() + test.getHeight() > test1.getYval())){
-				collision = true;
-			}
-			break;
-		case 4:	
-			if ((test.getXval() + test.getWidth() > test1.getXval() &&
-					test.getYval() < test1.getYval() + test1.getHeight() &&
-					test.getXval() < test1.getXval() + test1.getWidth() && 
-					test.getYval() + test.getHeight() > test1.getYval()- max * test1.getWidth())){
-				collision = true;
-			}
-			break;
-		}
-		return collision;
-	}
 
 
 	/**
