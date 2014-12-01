@@ -21,7 +21,6 @@ public class Login extends Database implements KeyListener, FocusListener {
 	private static DrawLogin loginFrame;
 
 	CreateAccount newUser;
-	ModifyAccount modifyUser;
 
 	//to keep the structure of the components static
 	static String blank = "                                         ";
