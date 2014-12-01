@@ -1,4 +1,4 @@
-Sangmoon Hwang 	- 260569675
+﻿Sangmoon Hwang 	- 260569675	sangmoon.hwang@mail.mcgill.ca
 Young Gouk Cho  - 260166864    young.g.cho@mail.mcgill.ca
 Alexander Makrigiorgs - 260573080   alexander.makrigiorgos@mail.mcgill.ca
 _
@@ -26,4 +26,4 @@ opencsv 3.1 (http://sourceforge.net/projects/opencsv/) Install by including the 
 
 	A Java build file (Ant, Maven, or Makefile) that includes actions build, run, and test for
 
-Not yet
+Ant: build.xml
