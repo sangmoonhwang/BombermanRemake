@@ -29,11 +29,14 @@ public class Database {
 	public void writeUserCSVEntry(User newUser) throws IOException {
 		FileWriter fileWriter = new FileWriter("res/data/user.csv", true);
 		CSVWriter writer = new CSVWriter(fileWriter, ',');
-		String[] entry = new String[]{newUser.getUsername(), newUser.getPassword(), newUser.getRealName(), Integer.toString(0), Integer.toString(0),
-				Integer.toString(0)};
-		writer.writeNext(entry);
+		if(!newUser.equals(null)) {
+			String[] entry = new String[]{newUser.getUsername(), newUser.getPassword(), newUser.getRealName(), Integer.toString(0), Integer.toString(0),
+					Integer.toString(0)};
+			writer.writeNext(entry);
 
-		writer.close();
+			writer.close();
+		}
+
 	}
 
 	/**
@@ -48,16 +51,15 @@ public class Database {
 		String [] nextLine;
 
 		while ((nextLine = reader.readNext()) != null) {
-			if(username.equals(nextLine[0]))
-				break;
+			if(username.equals(nextLine[0])) {
+				reader.close();
+				return new User(nextLine);
+			}
 		}
 
 		reader.close();
 
-		if(nextLine == null)
-			return null;
-
-		return new User(nextLine);
+		return null;
 	}
 
 	/**
@@ -78,17 +80,19 @@ public class Database {
 		//Read all rows at once
 		List<String[]> userData = reader.readAll();
 		String[] user = null;
-
+		boolean noUser = true;
 		for(int i = 0; i < userData.size(); i++) {
 			user = userData.get(i);
 
 			if(user[0].equals(username)) {
 				userData.remove(i);
+				noUser = false;
 				break;
 			}
 		}
 		reader.close();
-
+		if(noUser == true)
+			return;
 		//writes the modified data
 		if(newPassword != null) {
 			user[1] = newPassword; 
@@ -137,78 +141,6 @@ public class Database {
 				return true;
 		}
 		return false;
-	}
-
-	/**
-	 * Writes the save game data name and the username associated
-	 * @param User and save data name
-	 * @return None
-	 */
-
-	public void writeGameDataCSVEntry(User user, String save) throws IOException {
-		FileWriter fileWriter = new FileWriter("save.csv", true);
-		CSVWriter writer = new CSVWriter(fileWriter, ',');
-		String[] entry = new String[]{user.getUsername(), save};    
-		writer.writeNext(entry);
-
-		writer.close();
-
-		writeSaveDataCSVEntry(save);
-	}
-
-	/**
-	 * Writes the save game data variables
-	 * @param Save name
-	 * @return None
-	 */
-
-	public void writeSaveDataCSVEntry(String save) throws IOException {
-		FileWriter fileWriter = new FileWriter(save+".csv", false);
-		CSVWriter writer = new CSVWriter(fileWriter, ',');
-		String[] entry = new String[]{};    ///also add all the variables that needs to be saved.
-		writer.writeNext(entry);
-
-		writer.close();
-	}
-
-	/**
-	 * read all the saved game data name of the current user from the save.csv
-	 * @param User
-	 * @return Arraylist of all the saved game of the user
-	 */
-
-	public ArrayList<String> readGameDataCSVEntry(User user) throws IOException {
-		FileReader fileReader = new FileReader("save.csv");
-		CSVReader reader = new CSVReader(fileReader);
-
-		String [] nextLine;
-		ArrayList<String> list = new ArrayList<String>();
-
-		while ((nextLine = reader.readNext()) != null) {
-			if(user.getUsername().equals(nextLine[0]))
-				list.add(nextLine[1]);
-		}
-		reader.close();
-		return list;
-
-	}
-
-	/**
-	 * read all the saved game data of the current user from the save.csv
-	 * @param User
-	 * @return Arraylist of all the saved game of the user
-	 */
-
-	public void loadGameDataCSVEntry(String save) throws IOException {
-		FileReader fileReader = new FileReader("res/data/user.csv");
-		CSVReader reader = new CSVReader(fileReader);
-
-		String [] nextLine;
-
-		nextLine = reader.readNext();
-		reader.close();
-
-		//add the correct load game sequence on the bottom
 	}
 
 	/**
