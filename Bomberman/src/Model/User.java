@@ -8,7 +8,7 @@ import java.io.Serializable;
  */
 public class User implements Serializable{
 
-	private String username;
+	private static String username;
 	private String password;
 	private String realName;
 	private int numOfPlay;
@@ -47,7 +47,7 @@ public class User implements Serializable{
 	}
 
 
-	public String getUsername() {
+	public static String getUsername() {
 		return username;
 	}
 

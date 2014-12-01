@@ -415,8 +415,6 @@ public class DrawMenu{
 			public void actionPerformed(ActionEvent e) {
 				ModifyAccount md = new ModifyAccount();
 				viewFrame(false);
-				//Show modifyAccount GUI
-				System.out.println("Modify Account");
 			}
 		});
 
