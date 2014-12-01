@@ -268,6 +268,10 @@ public class GamePlay implements Runnable, FocusListener, KeyListener {
 		// TODO Auto-generated method stub
 
 	}    
+	
+	public DrawMap getDrawMap(){
+		return d;
+	}
 
 
 }
