@@ -766,7 +766,7 @@ public class Map implements Serializable{
 		Bomberman.availableBombs = 1;
 		bombman.getBombs().clear();
 		bombman.getBombs().addFirst(new Bomb(false));
-		bombman.getBombs().addFirst(new Bomb(false));
+		//bombman.getBombs().addFirst(new Bomb(false));  //should start with one bomb not two
 	}
 
 	//setters
@@ -886,46 +886,6 @@ public class Map implements Serializable{
 		return user;
 	}
 
-	//detects an obstacle within the range of flame
-	/**
-	 * obstacle detector within the range of a flame 
-	 * @param i flame length
-	 * @return max length of the flame
-	 */
-	public int get_MaxFlame(int i){
-		if(Bomberman.flames == 1){
-			return 1;
-		}
-		else{
-			int max = 0;
-			int tile = whichTileIsOn(explosions[i].getXval(), explosions[i].getYval());
-			for(int j = 0; j <= Bomberman.flames; j++){
-				if((whichTileIsOn(indestructibles.get(j).getXval(), indestructibles.get(j).getYval())) == tile) {
-					break;
-				}
-				if((whichTileIsOn(bricks.get(j).getXval(), bricks.get(j).getYval())) == tile){
-					max++;
-					break;
-				}
-				max++;
-				switch(i){
-				case 1:
-					tile = whichTileIsOn(explosions[i].getXval()+50*j, explosions[i].getYval());
-					break;
-				case 2:
-					tile = whichTileIsOn(explosions[i].getXval()-50*j, explosions[i].getYval());
-					break;
-				case 3:
-					tile = whichTileIsOn(explosions[i].getXval(), explosions[i].getYval()+50*j);
-					break;
-				case 4:
-					tile = whichTileIsOn(explosions[i].getXval(), explosions[i].getYval()-50*j);
-					break;
-				}
-			}
-			return max;
-		}
-	}
 
 	public static void setPaused(boolean b){
 		paused = b;

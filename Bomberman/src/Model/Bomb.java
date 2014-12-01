@@ -101,7 +101,7 @@ public class Bomb implements Serializable, Runnable {
 							pausedAt += now - start;
 							paused  = true;
 						}
-						System.out.println("paused after expolode");
+						System.out.println("paused after explode");
 						now = System.nanoTime();
 						start = now;
 					}

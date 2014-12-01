@@ -88,11 +88,11 @@ public class Bomberman extends Movable implements Serializable{
 		wallPass = false;
 		flamePass = false;
 		bombPass = false;
-		detonate = true;
+		detonate = false;
 		speed = 2;
 		bombs = new LinkedList<Bomb>();
 		bombs.addFirst(new Bomb(false));
-		bombs.addFirst(new Bomb(false));
+		//bombs.addFirst(new Bomb(false));
 	}
 
 	//setters
@@ -109,7 +109,7 @@ public class Bomberman extends Movable implements Serializable{
 	 * sets the score
 	 * @param score score
 	 */
-	public static void setScore(int score) {
+	public void setScore(int score) {
 		Bomberman.score = score;
 	}
 	/**
@@ -181,11 +181,14 @@ public class Bomberman extends Movable implements Serializable{
 	public int getSpeed() {
 		return speed;
 	}
+	public int getFlames() {
+		return flames;
+	}
 	/**
 	 * getter for the availablebombs
 	 * @return available bombs
 	 */
-	public static int getavailableBombs() {
+	public int getavailableBombs() {
 		return availableBombs;
 	}
 	/**
@@ -206,7 +209,7 @@ public class Bomberman extends Movable implements Serializable{
 	 * getter for the score
 	 * @return score
 	 */
-	public static int getScore() {
+	public int getScore() {
 		return score;
 	}
 
