@@ -76,8 +76,13 @@ public class GamePlay implements Runnable, FocusListener, KeyListener, ActionLis
 
 			if(play.getGameOver()) {
 				shutdown = true;
-				DrawMenu.getInstance().getTimer().stop();
-				DrawMenu.getLevelInstance().getTimer().stop();
+				try {
+					DrawMenu.getInstance().getTimer().stop();
+					DrawMenu.getLevelInstance().getTimer().stop();
+				} catch (RuntimeException e ){
+					
+				}
+				
 				System.out.println("Gameover");
 			}
 	}
