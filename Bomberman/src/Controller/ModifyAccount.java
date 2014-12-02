@@ -119,7 +119,7 @@ public class ModifyAccount extends CreateAccount{
 				if(newPassword.equals(verifynewPassword)) {
 					if(passwordValidate(newPassword)) {
 						try {
-							Database.modifyUserCSVEntry(User.getUsername(), newPassword, newUsername, 0, 0, 0);
+							Database.modifyUserCSVEntry(Login.getUser().getUsername(), newPassword, newUsername, 0, 0, 0);
 							main.setVisible(false);
 							DrawMenu.getInstance().viewFrame(true);
 
