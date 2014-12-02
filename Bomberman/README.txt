@@ -1,6 +1,7 @@
 ﻿Sangmoon Hwang 	- 260569675	sangmoon.hwang@mail.mcgill.ca
 Young Gouk Cho  - 260166864    young.g.cho@mail.mcgill.ca
 Alexander Makrigiorgs - 260573080   alexander.makrigiorgos@mail.mcgill.ca
+Daniel Lim - 260625969 daniel.lim@mail.mcgill.ca
 _
 
 All rights reserved ¨Ï Sangmoon Hwang, Young Gouk Cho, Alexander Makrigiorgos, Daniel Lim_
