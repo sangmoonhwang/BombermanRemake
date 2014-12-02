@@ -50,10 +50,12 @@ public class Leaderboard_p extends Database {
 		setTopTen(new User[10]);
 		sort();
 		main = new JFrame("Leaderboards");
-		main.setSize(1000, 800);
+		
+		main.setSize(800, 500);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		main.setLocation(dim.width/2-main.getSize().width/2, dim.height/2-main.getSize().height/2);
-
+		main.setUndecorated(true);
+		
 		main.setLayout(new GridLayout(2,1));
 		main.addWindowListener(new WindowAdapter() {
 			@Override

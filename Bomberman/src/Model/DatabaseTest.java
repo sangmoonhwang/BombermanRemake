@@ -27,6 +27,7 @@ public class DatabaseTest {
 		//write the new user and compare with the data written with original data
 		user2 = Database.readUserCSVEntry(username);
 		assertTrue("user name", username.equals(user2.getUsername()));
+		System.out.println(username + " " + user2.getUsername());
 		assertTrue("password", password.equals(user2.getPassword()));
 		assertTrue("real name", realName.equals(user2.getRealName()));
 		assertTrue("num play", 0 == user2.getNumOfPlay());
@@ -81,6 +82,6 @@ public class DatabaseTest {
 		//counting total number of user in user database
 		ArrayList<User> user = new ArrayList<User>();
 		user = data.returnAllUsers();
-		assertTrue("total user in database", user.size() == 16);
+		assertTrue("total user in database", user.size() == 18);
 	}
 }

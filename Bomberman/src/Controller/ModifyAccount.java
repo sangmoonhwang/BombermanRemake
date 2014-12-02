@@ -62,7 +62,7 @@ public class ModifyAccount extends CreateAccount{
 		main.setSize(800, 500);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		main.setLocation(dim.width/2-main.getSize().width/2, dim.height/2-main.getSize().height/2);
-
+		main.setUndecorated(true);
 		main.setLayout(new GridLayout(3,1));
 		main.addWindowListener(new WindowAdapter() {
 			@Override
@@ -106,8 +106,18 @@ public class ModifyAccount extends CreateAccount{
 		final JPasswordField userText_newPass = new JPasswordField(13);
 		final JPasswordField userText_verifynewPass = new JPasswordField(13);
 
+		JButton backButton = new JButton("Back");
 		JButton modifyButton = new JButton("Apply Changes");
 
+		backButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				main.setVisible(false);
+				DrawMenu.getInstance().viewFrame(true);
+			}
+		});
+
+		
 		modifyButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -119,7 +129,7 @@ public class ModifyAccount extends CreateAccount{
 				if(newPassword.equals(verifynewPassword)) {
 					if(passwordValidate(newPassword)) {
 						try {
-							Database.modifyUserCSVEntry(User.getUsername(), newPassword, newUsername, 0, 0, 0);
+							Database.modifyUserCSVEntry(Login.getUser().getUsername(), newPassword, newUsername, 0, 0, 0);
 							main.setVisible(false);
 							DrawMenu.getInstance().viewFrame(true);
 
@@ -223,6 +233,11 @@ public class ModifyAccount extends CreateAccount{
 		c.insets = new Insets(1, 0, 0, 0);
 		controlPanel.add(userText_verifynewPass,c);
 
+		c.gridx = 0;
+		c.gridy = 4;
+		c.insets = new Insets(10, 1, 0, 1);
+		controlPanel.add(backButton,c);
+		
 		c.gridx = 1;
 		c.gridy = 4;
 		c.insets = new Insets(10, 1, 0, 1);

@@ -50,10 +50,12 @@ public class Leaderboard extends Database {
 		setTopTen(new User[10]);
 		sort();
 		main = new JFrame("Leaderboards");
-		main.setSize(1000, 800);
+		
+		main.setSize(800, 500);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		main.setLocation(dim.width/2-main.getSize().width/2, dim.height/2-main.getSize().height/2);
-
+		main.setUndecorated(true);
+		
 		main.setLayout(new GridLayout(2,1));
 		main.addWindowListener(new WindowAdapter() {
 			@Override
@@ -83,10 +85,11 @@ public class Leaderboard extends Database {
 		
 		DefaultTableModel model = new DefaultTableModel(columnNames, 0);
 		for(int i=0; i<10; i++){
-			Object rowData[] = { i+1 + ".", getTopTen()[i].getUsername(), getTopTen()[i].getTotalScore(), " Number of Plays ", getTopTen()[i].getNumOfPlay()};
+			Object rowData[] = { i+1 + ".", topTen[i].getUsername(),  topTen[i].getTotalScore(), " Number of Plays ",  topTen[i].getNumOfPlay()};
 			model.addRow(rowData);
 		}
-		Object rowData[] = { "You", Login.getUser().getUsername(), Login.getUser().getTotalScore(), " Number of Plays ", Login.getUser().getNumOfPlay()};
+		User user = Login.getUser();
+		Object rowData[] = { "You", user.getUsername(), user.getTotalScore(), " Number of Plays ", user.getNumOfPlay()};
 		model.addRow(rowData);
 		table.setModel(model);
 
@@ -131,7 +134,7 @@ public class Leaderboard extends Database {
 			}
 		}
 	}
-
+	
 	public ArrayList<User> getUsers() {
 		return users;
 	}
@@ -139,7 +142,7 @@ public class Leaderboard extends Database {
 	public void setUsers(ArrayList<User> users) {
 		this.users = users;
 	}
-
+	
 	public User[] getTopTen() {
 		return topTen;
 	}
