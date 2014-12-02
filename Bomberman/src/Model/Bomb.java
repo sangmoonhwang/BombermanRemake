@@ -85,13 +85,11 @@ public class Bomb implements Serializable, Runnable, ActionListener {
 			state = 1;
 			counter++;
 		} else if(state == 1 && counter > 4) {
-			if(!Map.getActiveBombs().isEmpty()) {
 				Map.getBomberman().getBombs().addFirst(new Bomb(false));
 				Map.getActiveBombs().removeLast();
 				GamePlay.getTimer().removeLast();
-				numOfBombs--;
-			}		
-			counter = 0;
+				GamePlay.getTimer().getLast().stop();
+				counter = 0;
 		} else {
 			counter++;
 		}
@@ -157,9 +155,5 @@ public class Bomb implements Serializable, Runnable, ActionListener {
 		if(!Map.isPaused()) {
 			run();
 		} 
-
-		if(numOfBombs == 0) {
-			GamePlay.getTimer().getLast().stop();
-		}
 	}
 }
