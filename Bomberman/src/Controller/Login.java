@@ -19,6 +19,7 @@ public class Login extends Database implements KeyListener, FocusListener {
 	private static boolean running = false;
 	private static User u;
 	private static DrawLogin loginFrame;
+	private static boolean success;
 
 	CreateAccount newUser;
 
@@ -30,15 +31,16 @@ public class Login extends Database implements KeyListener, FocusListener {
 	 * constructor
 	 */
 	public Login() {
+		setSuccess(false);
 		running = true;
-		loginFrame = DrawLogin.getInstance();
+		setLoginFrame(DrawLogin.getInstance());
 	}
 
 	/**
 	 * activate the Login screen
 	 */
 	public void run(){
-		loginFrame.run();
+		getLoginFrame().run();
 	}
 
 	//if user exists then login to menu else display user does not exist
@@ -50,13 +52,13 @@ public class Login extends Database implements KeyListener, FocusListener {
 	public static void loginUser(String username, String password) {
 		boolean user = false;
 		boolean pass = false;
-		loginFrame.name_typed.setText (blank);
-		loginFrame.password_typed.setText (blank);
+		getLoginFrame().name_typed.setText (blank);
+		getLoginFrame().password_typed.setText (blank);
 		if(username.equals("")){
-			loginFrame.name_typed.setText("Enter your username!");
+			getLoginFrame().name_typed.setText("Enter your username!");
 		}
 		if(password.equals("")){
-			loginFrame.password_typed.setText("Enter your password!");
+			getLoginFrame().password_typed.setText("Enter your password!");
 		}
 		try {
 			u = readUserCSVEntry(username);
@@ -76,10 +78,11 @@ public class Login extends Database implements KeyListener, FocusListener {
 
 			}
 			if(user && pass){
+				setSuccess(true);
 				DrawLogin.setStatus("Login Successful!");
 				DrawMenu menuFrame = DrawMenu.getInstance();
 				menuFrame.run();
-				loginFrame.viewFrame(false);
+				getLoginFrame().viewFrame(false);
 			}
 		}
 		if((!user || !pass) && u != null){
@@ -128,5 +131,21 @@ public class Login extends Database implements KeyListener, FocusListener {
 	}
 	public void setUser(User u){
 		this.u = u;
+	}
+
+	public static DrawLogin getLoginFrame() {
+		return loginFrame;
+	}
+
+	public static void setLoginFrame(DrawLogin loginFrame) {
+		Login.loginFrame = loginFrame;
+	}
+
+	public static boolean isSuccess() {
+		return success;
+	}
+
+	public static void setSuccess(boolean success) {
+		Login.success = success;
 	}
 }
