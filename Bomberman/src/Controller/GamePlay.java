@@ -77,10 +77,8 @@ public class GamePlay implements Runnable, FocusListener, KeyListener, ActionLis
 			if(play.getGameOver()) {
 				shutdown = true;
 				DrawMenu.getInstance().getTimer().stop();
+				DrawMenu.getLevelInstance().getTimer().stop();
 				System.out.println("Gameover");
-			}
-			while(play.getPause()) {
-				play.run();
 			}
 	}
 
@@ -171,6 +169,7 @@ public class GamePlay implements Runnable, FocusListener, KeyListener, ActionLis
 			Map.getActiveBombs().getFirst().setXval(tilex);
 			Map.getActiveBombs().getFirst().setYval(tiley);
 			bombTimer.add(new Timer(500, Map.getActiveBombs().getFirst()));
+			Bomb.incrementnumOfBombs();
 			bombTimer.getFirst().start();
 		}
 	}
@@ -298,6 +297,7 @@ public class GamePlay implements Runnable, FocusListener, KeyListener, ActionLis
 			run();
 			d.draw();
 			d.getStatusBar().setText("Level: "+ play.getLevel() +"        Time: " + gameTime + "        Life: " + play.getLife() + "       Score: " + play.getUser().getTotalScore());
+				
 		} else {
 			if(!state) {
 				pausedAt = System.nanoTime()/1000000000;

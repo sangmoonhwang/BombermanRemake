@@ -31,12 +31,14 @@ public class Bomb implements Serializable, Runnable, ActionListener {
 	private long pausedAt = 0;
 	private int state;
 	private int counter;
+	private static int numOfBombs;
 
 	/**
 	 * constructor
 	 * @param active true if bomb is activated false otherwise
 	 */
 	public Bomb(boolean active) {
+		numOfBombs = 0;
 		xval = yval = 0;
 		height = width = 50;
 		state = 0;
@@ -77,16 +79,18 @@ public class Bomb implements Serializable, Runnable, ActionListener {
 
 
 	public void run() {
-		
+
 		if(state == 0 && counter > 3) {
 			explode();
 			state = 1;
 			counter++;
-		}else if(state == 1 && counter > 4) {
-			GamePlay.getTimer().getLast().stop();
-			Map.getBomberman().getBombs().addFirst(new Bomb(false));
-			Map.getActiveBombs().removeLast();
-			GamePlay.getTimer().removeLast();
+		} else if(state == 1 && counter > 4) {
+			if(!Map.getActiveBombs().isEmpty()) {
+				Map.getBomberman().getBombs().addFirst(new Bomb(false));
+				Map.getActiveBombs().removeLast();
+				GamePlay.getTimer().removeLast();
+				numOfBombs--;
+			}		
 			counter = 0;
 		} else {
 			counter++;
@@ -141,11 +145,21 @@ public class Bomb implements Serializable, Runnable, ActionListener {
 	public ScheduledExecutorService getSchedule(){
 		return scheduler;
 	}
+	public static int getnumOfBombs() {
+		return numOfBombs;
+	}
+	public static void incrementnumOfBombs() {
+		numOfBombs++;
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(!Map.isPaused()) {
 			run();
+		} 
+
+		if(numOfBombs == 0) {
+			GamePlay.getTimer().getLast().stop();
 		}
 	}
 }

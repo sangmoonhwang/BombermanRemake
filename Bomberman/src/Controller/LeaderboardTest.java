@@ -19,12 +19,10 @@ public class LeaderboardTest {
 		ln.setUser(u);
 		Leaderboard ld = new Leaderboard();
 		assertNotNull(ld.getUsers());
-		//assertNotNull(ld.getTopTen());
 	}
 	
 
 	@Test
-	//not working no idea why
 	public void testSort() throws IOException {
 		User u = new User("Amak1020","Abcdef1!","AlexMakri");
 		Login ln = new Login();

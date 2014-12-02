@@ -42,7 +42,7 @@ public class LevelSelect extends Database {
 	private JLabel levelShow;
 	private int level = 1;
 	private Timer timer;
-
+	
 	//draw modifyAccount view
 	/**
 	 * constructor
@@ -70,7 +70,7 @@ public class LevelSelect extends Database {
 		main.setVisible(true);
 		drawpanel();
 	}
-
+	
 	/**
 	 * draw GUI
 	 */

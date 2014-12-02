@@ -17,7 +17,6 @@ public class Leaderboard_pTest {
 		ln.setUser(u);
 		Leaderboard_p ld = new Leaderboard_p();
 		assertNotNull(ld.getUsers());
-		assertNotNull(ld.getTopTen());
 	}
 	
 	@Test
@@ -27,7 +26,6 @@ public class Leaderboard_pTest {
 		Login ln = new Login();
 		ln.setUser(u);
 		Leaderboard_p ld = new Leaderboard_p();
-		ld.sort();
 		for(int i =0; i< 9; i++){
 			assertTrue(ld.getTopTen()[i].getTotalScore() > ld.getTopTen()[i+1].getTotalScore()); 
 		}

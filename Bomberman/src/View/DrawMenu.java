@@ -85,6 +85,8 @@ public class DrawMenu{
 	private JButton selectButton;
 	
 	private Timer timer;
+	
+	private static LevelSelect ls;
 
 	//singleton
 	/**
@@ -522,7 +524,7 @@ public class DrawMenu{
 			public void actionPerformed(ActionEvent e) {
 				viewFrame(false);
 				try {
-					LevelSelect ls = new LevelSelect();
+					ls = new LevelSelect();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -544,6 +546,9 @@ public class DrawMenu{
 	 */
 	public Timer getTimer() {
 		return timer;
+	}
+	public static LevelSelect getLevelInstance() {
+		return ls;
 	}
 
 	//setters
