@@ -3,7 +3,7 @@ Young Gouk Cho  - 260166864    young.g.cho@mail.mcgill.ca
 Alexander Makrigiorgs - 260573080   alexander.makrigiorgos@mail.mcgill.ca
 _
 
-All rights reserved ¨Ï Sangmoon Hwang, Young Gouk Cho, Alexander Makrigiorgos, _
+All rights reserved ¨Ï Sangmoon Hwang, Young Gouk Cho, Alexander Makrigiorgos, Daniel Lim_
 
 Github: https://github.com/mcgill-ecse321/Team-10
 
@@ -14,7 +14,7 @@ Extra: Junit 4, opencsv 3.0
 
 	The platform(s) on which you developed and tested your code: include operating system(s),compiler version(s), IDE (if used).
 
-OS: Ubuntu 14.04, Windows 8.1, ios xx
+OS: Ubuntu 14.04, Windows 8.1, ios xx, OSX 10.10
 Compiler version: JDK 1.7.0_25
 IDE: Eclipse Luna 4.4.0
 
