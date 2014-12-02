@@ -130,7 +130,7 @@ public class Leaderboard_p extends Database {
 	 * @param None
 	 * @return None
 	 */
-	public void sort(){
+	private void sort(){
 		for(int i = 0; i < 10; i++){
 			int highest = 0;
 			int winner = 0;

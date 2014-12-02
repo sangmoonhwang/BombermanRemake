@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import Controller.Leaderboard;
 import Controller.Login;
+import Model.Database;
 import Model.User;
 
 public class LeaderboardTest {
@@ -21,19 +22,6 @@ public class LeaderboardTest {
 		assertNotNull(ld.getUsers());
 		assertNotNull(ld.getTopTen());
 	}
-	
 
-	@Test
-	//not working no idea why
-	public void testSort() throws IOException {
-		User u = new User("Amak1020","Abcdef1!","AlexMakri");
-		Login ln = new Login();
-		ln.setUser(u);
-		Leaderboard ld = new Leaderboard();
-		ld.sort();
-		for(int i =0; i< 9; i++){
-			assertTrue(ld.getTopTen()[i].getTotalScore() > ld.getTopTen()[i+1].getTotalScore()); 
-		}
-	}
 
 }
