@@ -83,8 +83,7 @@ public class Leaderboard extends Database {
 		
 		DefaultTableModel model = new DefaultTableModel(columnNames, 0);
 		for(int i=0; i<10; i++){
-			
-			Object rowData[] = { i+1 + ".", topTen[i].getUsername(), getTopTen()[i].getTotalScore(), " Number of Plays ", getTopTen()[i].getNumOfPlay()};
+			Object rowData[] = { i+1 + ".", topTen[i].getUsername(),  topTen[i].getTotalScore(), " Number of Plays ",  topTen[i].getNumOfPlay()};
 			model.addRow(rowData);
 		}
 		User user = Login.getUser();
@@ -133,7 +132,7 @@ public class Leaderboard extends Database {
 			}
 		}
 	}
-
+	
 	public ArrayList<User> getUsers() {
 		return users;
 	}
@@ -141,7 +140,7 @@ public class Leaderboard extends Database {
 	public void setUsers(ArrayList<User> users) {
 		this.users = users;
 	}
-
+	
 	public User[] getTopTen() {
 		return topTen;
 	}
