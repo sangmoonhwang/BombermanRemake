@@ -48,7 +48,6 @@ public class GamePlay implements Runnable, FocusListener, KeyListener {
 	}
 
 	public void run() {
-		System.out.println("threadID" + Thread.currentThread().getId() + "running");
 		while(!shutdown) {
 			play.run();
 			d.draw();
@@ -66,7 +65,7 @@ public class GamePlay implements Runnable, FocusListener, KeyListener {
 				System.out.println("Gameover");
 			}
 			while(play.getPause()) {
-				System.out.println("Paused");
+				//System.out.println("Paused");
 				play.run();
 			}
 		}
