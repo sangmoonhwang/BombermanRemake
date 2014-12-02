@@ -61,63 +61,6 @@ public class BombTest {
 		
 	}
 
-	@Test
-	public void testRun() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/*public void run() {
-
-		long start = System.nanoTime();
-		boolean shutdown = false;
-
-		System.out.println("threadID" + Thread.currentThread().getId());
-		while(!shutdown) {
-			long now = System.nanoTime();
-			while(GamePlay.getPause()) {
-				if(!paused) {
-					pausedAt += now - start;
-					paused  = true;
-				}
-				System.out.println("paused");
-				now = System.nanoTime();
-				start = now;
-			}
-			paused = false;
-			if((now - start) + pausedAt >= 2000000000) {
-				pausedAt = 0;
-
-				explode();
-				System.out.println("threadID" + Thread.currentThread().getId() + "exploding");
-				start = now;
-
-				while(true) {
-					now = System.nanoTime();
-					while(GamePlay.getPause()) {
-						if(!paused) {
-							pausedAt += now - start;
-							paused  = true;
-						}
-						System.out.println("paused after explode");
-						now = System.nanoTime();
-						start = now;
-					}
-					paused = false;
-					if((now - start) + pausedAt >= 800000000 || !Map.getActiveBombs().getLast().getUsed()) {
-						for(int i = 0; i < 5; i++){
-							personalExplosions[i].setExploding(false);
-						}
-						Map.getBomberman().getBombs().addFirst(new Bomb(false));
-						Map.getActiveBombs().removeLast();
-						shutdown = true;
-						break;
-					}
-				}
-				pausedAt = 0;
-			}
-		}
-		System.out.println("Bomb thread terminated");
-	}*/
 
 
 }
