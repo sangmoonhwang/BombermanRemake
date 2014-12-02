@@ -25,6 +25,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 import javax.swing.WindowConstants;
 import javax.xml.ws.Response;
 
@@ -82,6 +83,8 @@ public class DrawMenu{
 	 * button to select a game from a selected level
 	 */
 	private JButton selectButton;
+	
+	private Timer timer;
 
 	//singleton
 	/**
@@ -201,9 +204,9 @@ public class DrawMenu{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				GamePlay play = new GamePlay(1,null);
-				thread = new Thread(play);
+				timer = new Timer(1000/60, play);
+				timer.start();
 				viewFrame(false);
-				thread.start();
 			}
 		});
 
@@ -361,9 +364,9 @@ public class DrawMenu{
 				System.out.println("Load Game");
 				viewFrame(false);
 				GamePlay play = new GamePlay(0, game);
-				Thread thread = new Thread(play);
+				timer = new Timer(1000/60, play);
+				timer.start();
 				viewFrame(false);
-				thread.start();
 			}
 		});
 
@@ -534,6 +537,13 @@ public class DrawMenu{
 	 */
 	public boolean getRunning() {
 		return running;
+	}
+	/**
+	 * getter for timer
+	 * @return timer
+	 */
+	public Timer getTimer() {
+		return timer;
 	}
 
 	//setters

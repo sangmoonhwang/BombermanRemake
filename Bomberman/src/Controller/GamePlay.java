@@ -2,10 +2,15 @@ package Controller;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.LinkedList;
+
+import javax.swing.Timer;
 
 import Model.Bomb;
 import Model.Bomberman;
@@ -17,7 +22,7 @@ import View.DrawPauseMenu;
  * This class is responsible for user interaction in the main gameplay
  *
  */
-public class GamePlay implements Runnable, FocusListener, KeyListener {
+public class GamePlay implements Runnable, FocusListener, KeyListener, ActionListener {
 	/**
 	 * switches for key holding
 	 */
@@ -25,6 +30,13 @@ public class GamePlay implements Runnable, FocusListener, KeyListener {
 	private static Map play;
 	private static DrawMap d;
 	private Bomberman bombman;
+	private boolean state;
+	private long startTime;
+	private long gameTime;
+	private long duration;
+	private long pausedTime;
+	private long pausedAt;
+	private static LinkedList<Timer> bombTimer;
 	/**
 	 * constructor
 	 * @param level level
@@ -39,6 +51,10 @@ public class GamePlay implements Runnable, FocusListener, KeyListener {
 			play = new Map(level);
 			Map.setLife(2);
 		}
+		bombTimer = new LinkedList<Timer>();
+		state = false;
+		duration = 200;
+		startTime = System.nanoTime()/1000000000;
 		bombman = Map.getBomberman();
 		d = DrawMap.getInstance();
 		d.run();
@@ -48,28 +64,24 @@ public class GamePlay implements Runnable, FocusListener, KeyListener {
 	}
 
 	public void run() {
-		while(!shutdown) {
 			play.run();
-			d.draw();
-			d.getStatusBar().setText("Level: "+ play.getLevel() +"        Time: " + play.getGameTime() + "        Life: " + play.getLife() + "       Score: " + play.getUser().getTotalScore());
-			if(play.getGameTime() < 0){
+			
+			gameTime = duration - (System.nanoTime()/1000000000 - startTime) + pausedTime;
+			if(gameTime < 0){
 				System.out.println("Times up!");
 				d.getStatusBar().setText("Times Up!");
 				play.dieBombman();
 				shutdown = true;
-				break;
 			}
 
 			if(play.getGameOver()) {
 				shutdown = true;
+				DrawMenu.getInstance().getTimer().stop();
 				System.out.println("Gameover");
 			}
 			while(play.getPause()) {
-				//System.out.println("Paused");
 				play.run();
 			}
-		}
-		System.out.println("Thread terminate");
 	}
 
 	public static boolean getPause() {
@@ -158,8 +170,8 @@ public class GamePlay implements Runnable, FocusListener, KeyListener {
 
 			Map.getActiveBombs().getFirst().setXval(tilex);
 			Map.getActiveBombs().getFirst().setYval(tiley);
-			Thread thread = new Thread(Map.getActiveBombs().getFirst());
-			thread.start();
+			bombTimer.add(new Timer(500, Map.getActiveBombs().getFirst()));
+			bombTimer.getFirst().start();
 		}
 	}
 
@@ -276,5 +288,29 @@ public class GamePlay implements Runnable, FocusListener, KeyListener {
 		return shutdown;
 	}
 
-
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		if(!play.getPause()) {
+			if(state) {
+				pausedTime += System.nanoTime()/1000000000 - pausedAt;
+				state = false;
+			}
+			run();
+			d.draw();
+			d.getStatusBar().setText("Level: "+ play.getLevel() +"        Time: " + gameTime + "        Life: " + play.getLife() + "       Score: " + play.getUser().getTotalScore());
+		} else {
+			if(!state) {
+				pausedAt = System.nanoTime()/1000000000;
+				state = true;
+			}
+		}
+	}
+	
+	/**
+	 * getter for timer
+	 * @return timer
+	 */
+	public static LinkedList<Timer> getTimer() {
+		return bombTimer;
+	}
 }

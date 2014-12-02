@@ -19,6 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.Timer;
 
 import Model.Database;
 import Model.User;
@@ -40,6 +41,7 @@ public class LevelSelect extends Database {
 	private User[] topTen;
 	private JLabel levelShow;
 	private int level = 1;
+	private Timer timer;
 
 	//draw modifyAccount view
 	/**
@@ -91,9 +93,9 @@ public class LevelSelect extends Database {
 				}
 				else if( value == KeyEvent.VK_ENTER){
 					GamePlay play = new GamePlay(level, null);
-					Thread thread = new Thread(play);
+					timer = new Timer(1000/60, play);
+					timer.start();
 					main.setVisible(false);
-					thread.start();
 				}
 				levelShow.revalidate();
 				levelShow.repaint();
@@ -114,9 +116,9 @@ public class LevelSelect extends Database {
 				}
 				else if(value == KeyEvent.VK_ENTER){
 					GamePlay play = new GamePlay(level, null);
-					Thread thread = new Thread(play);
+					timer = new Timer(1000/60, play);
+					timer.start();
 					main.setVisible(false);
-					thread.start();
 				}
 				levelShow.revalidate();
 				levelShow.repaint();
@@ -163,9 +165,9 @@ public class LevelSelect extends Database {
 				}
 				else if( value == KeyEvent.VK_ENTER ){
 					GamePlay play = new GamePlay(level, null);
-					Thread thread = new Thread(play);
+					timer = new Timer(1000/60, play);
+					timer.start();
 					main.setVisible(false);
-					thread.start();
 				}
 				levelShow.revalidate();
 				levelShow.repaint();
@@ -186,9 +188,9 @@ public class LevelSelect extends Database {
 				}
 				else if( value == KeyEvent.VK_ENTER){
 					GamePlay play = new GamePlay(level, null);
-					Thread thread = new Thread(play);
+					timer = new Timer(1000/60, play);
+					timer.start();
 					main.setVisible(false);
-					thread.start();
 				}
 				levelShow.revalidate();
 				levelShow.repaint();
@@ -212,6 +214,14 @@ public class LevelSelect extends Database {
 		main.revalidate();
 		main.repaint();
 
+	}
+	
+	/**
+	 * getter for timer
+	 * @return timer
+	 */
+	public Timer getTimer() {
+		return timer;
 	}
 
 

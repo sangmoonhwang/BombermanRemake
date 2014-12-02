@@ -58,21 +58,13 @@ public class Map implements Serializable{
 	private static int level;
 	private static int width;
 	private static int height;
-	private static long startTime = System.nanoTime()/1000000000;
-	private static long gameTime = 200;
 	private CollisionDetection detect;
 	private static SpawnGameObjects spawn;
 	private static int bombermanState;
-	private long pausedAt = 0;
-	private long duration = 200;
-	private long pausedTime = 0;
 	private static boolean paused;
 	private boolean save;
 	private static boolean levelComplete;
 	private static boolean gameOver;
-	private long start;
-	final private double amountOfTicks;
-	private double ns;
 	ArrayList<Box> path;
 
 
@@ -106,10 +98,6 @@ public class Map implements Serializable{
 		tiles = getSpawn().spawnTiles();
 
 		paused = false;
-		start = System.nanoTime();
-		amountOfTicks = 60.0;
-		ns = 1000000000 / amountOfTicks;
-
 	}
 
 	/**
@@ -119,25 +107,11 @@ public class Map implements Serializable{
 
 		if(!isPaused()){
 			save = false;
-			long now = System.nanoTime();
-			if((now - start)/ns >= 1) {
-				if (pausedAt == 0)
-					gameTime = duration - (System.nanoTime()/1000000000 - startTime) + pausedTime;
-				else{
-					pausedTime += (System.nanoTime()/1000000000 - pausedAt);
-					//startTime += pausedAt;
-					gameTime = duration - (System.nanoTime()/1000000000 - startTime) + pausedTime;
-					System.out.println("gameTime " + gameTime);
-					pausedAt = 0;
-				}
-				tick();
-				tick2();
-				start = now;
-			}
+			tick();
+			tick2();
+
 		}
 		else {
-			if(pausedAt == 0)
-				pausedAt = System.nanoTime()/1000000000;
 			if(!save) {
 				try {
 					Database.modifyUserCSVEntry(user.getUsername(), null, null, user.getNumOfPlay(), user.getTotalScore(), level);
@@ -780,7 +754,6 @@ public class Map implements Serializable{
 		xVel = 0;
 		yVel = 0;
 		Map.level = level;
-		startTime = System.nanoTime()/1000000000;
 		levelComplete = false;
 		bombman.setXval(50);
 		bombman.setYval(50);
@@ -801,7 +774,6 @@ public class Map implements Serializable{
 		yVel = 0;
 		bombman.setXval(50);
 		bombman.setYval(50);
-		startTime = System.nanoTime()/1000000000;
 		//new objects
 		setSpawn(new SpawnGameObjects(level));
 
@@ -826,9 +798,6 @@ public class Map implements Serializable{
 	}
 	public static int getHeight(){
 		return height;
-	}
-	public long getGameTime() {
-		return gameTime;
 	}
 	public int getLife() {
 		return life;

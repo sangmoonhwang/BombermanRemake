@@ -1,11 +1,14 @@
 package Model;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.Serializable;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
+import View.DrawMap;
 import Controller.GamePlay;
 import Controller.Map;
 
@@ -13,7 +16,7 @@ import Controller.Map;
  * Bomb model
  *
  */
-public class Bomb implements Serializable, Runnable {
+public class Bomb implements Serializable, Runnable, ActionListener {
 	private int xval, yval;
 	private int height, width;
 	private boolean active;
@@ -26,6 +29,8 @@ public class Bomb implements Serializable, Runnable {
 	private boolean used;
 	private boolean paused = false;
 	private long pausedAt = 0;
+	private int state;
+	private int counter;
 
 	/**
 	 * constructor
@@ -34,6 +39,8 @@ public class Bomb implements Serializable, Runnable {
 	public Bomb(boolean active) {
 		xval = yval = 0;
 		height = width = 50;
+		state = 0;
+		counter = 0;
 		this.active = active;
 		escaped = false;
 		personalExplosions = new Explosion[5];
@@ -70,56 +77,20 @@ public class Bomb implements Serializable, Runnable {
 
 
 	public void run() {
-
-		long start = System.nanoTime();
-		boolean shutdown = false;
-
-		System.out.println("threadID" + Thread.currentThread().getId());
-		while(!shutdown) {
-			long now = System.nanoTime();
-			while(GamePlay.getPause()) {
-				if(!paused) {
-					pausedAt += now - start;
-					paused  = true;
-				}
-				System.out.println("paused");
-				now = System.nanoTime();
-				start = now;
-			}
-			paused = false;
-			if((now - start) + pausedAt >= 2000000000) {
-				pausedAt = 0;
-
-				explode();
-				System.out.println("threadID" + Thread.currentThread().getId() + "exploding");
-				start = now;
-
-				while(true) {
-					now = System.nanoTime();
-					while(GamePlay.getPause()) {
-						if(!paused) {
-							pausedAt += now - start;
-							paused  = true;
-						}
-						System.out.println("paused after explode");
-						now = System.nanoTime();
-						start = now;
-					}
-					paused = false;
-					if((now - start) + pausedAt >= 800000000 || !Map.getActiveBombs().getLast().getUsed()) {
-						for(int i = 0; i < 5; i++){
-							personalExplosions[i].setExploding(false);
-						}
-						Map.getBomberman().getBombs().addFirst(new Bomb(false));
-						Map.getActiveBombs().removeLast();
-						shutdown = true;
-						break;
-					}
-				}
-				pausedAt = 0;
-			}
+		
+		if(state == 0 && counter > 3) {
+			explode();
+			state = 1;
+			counter++;
+		}else if(state == 1 && counter > 4) {
+			GamePlay.getTimer().getLast().stop();
+			Map.getBomberman().getBombs().addFirst(new Bomb(false));
+			Map.getActiveBombs().removeLast();
+			GamePlay.getTimer().removeLast();
+			counter = 0;
+		} else {
+			counter++;
 		}
-		System.out.println("Bomb thread terminated");
 	}
 
 
@@ -171,4 +142,10 @@ public class Bomb implements Serializable, Runnable {
 		return scheduler;
 	}
 
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(!Map.isPaused()) {
+			run();
+		}
+	}
 }
