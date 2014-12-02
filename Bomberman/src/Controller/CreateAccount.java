@@ -28,6 +28,7 @@ public class CreateAccount extends Database {
 	public String username;
 	public String password;
 	public String realName;
+	public String verify;
 	private String error = "Username must consist of 6-20 alphanumeric characters.";
 	public static String n_typed = "Enter your username!";
 	public static String p_typed = "Enter your password!";
@@ -68,13 +69,17 @@ public class CreateAccount extends Database {
 		JLabel namelabel = new JLabel("Username: ", SwingConstants.RIGHT);
 		JLabel realNamelabel = new JLabel("Realname: ", SwingConstants.RIGHT);
 		JLabel passwordLabel = new JLabel("Password: ", SwingConstants.CENTER);
+		JLabel verifyLabel = new JLabel("Verify Password: ", SwingConstants.CENTER);
+		
 		namelabel.setFont(new Font("Serif", Font.BOLD, 20));
 		realNamelabel.setFont(new Font("Serif", Font.BOLD, 20));
 		passwordLabel.setFont(new Font("Serif", Font.BOLD, 20));
+		verifyLabel.setFont(new Font("Serif", Font.BOLD, 20));
 
 		final JTextField userText = new JTextField(13);
 		final JTextField realNameText = new JTextField(13);
 		final JPasswordField passwordText = new JPasswordField(13);
+		final JPasswordField verifyText = new JPasswordField(13);
 
 		JButton backButton = new JButton("Back");
 		JButton createButton = new JButton("Create");
@@ -94,7 +99,8 @@ public class CreateAccount extends Database {
 				username = userText.getText();
 				realName = realNameText.getText();
 				password = new String(passwordText.getPassword());
-				accountCreate(username, password, realName);
+				verify = new String(verifyText.getPassword());
+				accountCreate(username, password, realName, verify);
 			}
 		});
 
@@ -104,7 +110,8 @@ public class CreateAccount extends Database {
 				username = userText.getText();
 				realName = realNameText.getText();
 				password = new String(passwordText.getPassword());
-				accountCreate(username, password, realName);
+				verify = new String(verifyText.getPassword());
+				accountCreate(username, password, realName, verify);
 			}
 		});
 
@@ -114,7 +121,8 @@ public class CreateAccount extends Database {
 				username = userText.getText();
 				realName = realNameText.getText();
 				password = new String(passwordText.getPassword());
-				accountCreate(username, password, realName);
+				verify = new String(verifyText.getPassword());
+				accountCreate(username, password, realName, verify);
 			}
 		});
 
@@ -124,7 +132,19 @@ public class CreateAccount extends Database {
 				username = userText.getText();
 				realName = realNameText.getText();
 				password = new String(passwordText.getPassword());
-				accountCreate(username, password, realName);
+				verify = new String(verifyText.getPassword());
+				accountCreate(username, password, realName, verify);
+			}
+		});
+		
+		verifyText.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				username = userText.getText();
+				realName = realNameText.getText();
+				password = new String(passwordText.getPassword());
+				verify = new String(verifyText.getPassword());
+				accountCreate(username, password, realName, verify);
 			}
 		});
 		GridBagConstraints c = new GridBagConstraints();
@@ -161,13 +181,23 @@ public class CreateAccount extends Database {
 		c.gridy = 2;
 		c.insets = new Insets(1, 0, 0, 0);
 		controlPanel.add(passwordText,c);
-
+		
 		c.gridx = 0;
 		c.gridy = 3;
+		c.insets = new Insets(1, 0, 0, 0);
+		controlPanel.add(verifyLabel,c);
+
+		c.gridx = 1;
+		c.gridy = 3;
+		c.insets = new Insets(1, 0, 0, 0);
+		controlPanel.add(verifyText,c);
+
+		c.gridx = 0;
+		c.gridy = 4;
 		controlPanel.add(backButton, c);
 		
 		c.gridx = 1;
-		c.gridy = 3;
+		c.gridy = 4;
 		c.insets = new Insets(10, 1, 0, 1);
 		controlPanel.add(createButton,c);
 		main.revalidate();
@@ -184,7 +214,7 @@ public class CreateAccount extends Database {
 	 * @param realName
 	 * @return
 	 */
-	public boolean accountCreate(String username, String password, String realName) {
+	public boolean accountCreate(String username, String password, String realName, String verify) {
 		User newUser = new User(username, password, realName);
 
 		if(!usernameValidate(username)){
@@ -204,6 +234,10 @@ public class CreateAccount extends Database {
 		if(!passwordValidate(password)){
 			status.setText("Password must be 8-20 characters and contain at least one capital "
 					+ "letter, one lowercase letter, one number and one special character.");
+			return false;
+		}
+		if(!verify.equals(password)){
+			status.setText("Password does not match");
 			return false;
 		}
 

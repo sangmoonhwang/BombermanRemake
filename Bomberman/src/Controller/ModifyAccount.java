@@ -143,7 +143,7 @@ public class ModifyAccount extends CreateAccount{
 					}
 					
 				} else {
-					status.setText("password does not match");
+					status.setText("Password does not match");
 				}
 
 			}

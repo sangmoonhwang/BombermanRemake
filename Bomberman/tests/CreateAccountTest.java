@@ -18,7 +18,8 @@ public class CreateAccountTest {
 	String username = "david252";
 	String password = "daviD252!";
 	String realName = "Young";
-
+	String verify = "daviD252!";
+	
 	@Before
 	public void setup() throws IOException {
 		data = new Database();
@@ -29,7 +30,7 @@ public class CreateAccountTest {
 		user = new User(username,password,realName);
 		data.writeUserCSVEntry(user);
 
-		boolean create = account.accountCreate(username,password,realName);
+		boolean create = account.accountCreate(username,password,realName,verify);
 
 		//user2 = data.readUserCSVEntry(username);
 		System.out.println(user2.getUsername());
