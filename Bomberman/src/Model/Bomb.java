@@ -86,9 +86,9 @@ public class Bomb implements Serializable, Runnable, ActionListener {
 			counter++;
 		} else if(state == 1 && counter > 4) {
 				Map.getBomberman().getBombs().addFirst(new Bomb(false));
+				GamePlay.getTimer().getLast().stop();
 				Map.getActiveBombs().removeLast();
 				GamePlay.getTimer().removeLast();
-				GamePlay.getTimer().getLast().stop();
 				counter = 0;
 		} else {
 			counter++;
